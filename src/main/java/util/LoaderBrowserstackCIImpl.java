@@ -31,7 +31,4 @@ public class LoaderBrowserstackCIImpl implements Loader {
     public URL loadUrl() throws MalformedURLException {
         return new URL("http://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub");
     }
-
-
-
 }
