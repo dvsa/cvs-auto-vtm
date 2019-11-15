@@ -2,6 +2,7 @@ package pages;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,8 +26,8 @@ public class LoginPage extends GenericPage {
     private WebElementFacade loginHeader;
 
     public void inputEmail(String arg0){
-        waitForTextToAppear(header, "Sign in");
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(emailInput));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Sign in"));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.type(arg0);
     }
 
@@ -35,14 +36,10 @@ public class LoginPage extends GenericPage {
     }
 
     public void inputPassword(String arg0){
-        try {
-            waitForTextToAppear(loginHeader, "Enter password");
-        }
-        catch (org.openqa.selenium.StaleElementReferenceException ex) {
-            new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(passwordInput));
-            passwordInput.type(arg0);
-        }
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(passwordInput));
+
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.visibilityOf(passwordInput));
         passwordInput.type(arg0);
     }
 

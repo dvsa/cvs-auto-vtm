@@ -4,6 +4,7 @@ import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -49,5 +50,24 @@ public class GenericPage extends PageObject{
         jsExecutor.executeScript("localStorage.removeItem('adal.token.renew.status');");
         getDriver().get("https://login.microsoftonline.com/dvsagov.onmicrosoft.com/oauth2/logout");
         ThucydidesWebDriverSupport.clearSession();
+    }
+
+    protected WebElement findElementById(String id) {
+        System.out.println("Searching for element: " + id);
+        return getDriver().findElement(By.id(id));
+    }
+
+    protected WebElement findElementByClassName(String className) {
+        return getDriver().findElement(By.className(className));
+    }
+
+    protected WebElement findElementByXpath(String xpath) {
+        System.out.println("Finding element: " + xpath);
+        return getDriver().findElement(By.xpath(xpath));
+    }
+
+    protected WebElement findElementByCss(String css) {
+        System.out.println("Finding element: " + css);
+        return getDriver().findElement(By.cssSelector(css));
     }
 }
