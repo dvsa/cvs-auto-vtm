@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
         plugin = {"pretty"},
         features = "src/test/resources/features/TechRecordView_CVSB_7239.feature",
         glue = {"stepDefinitions"},
-        tags = {"~@skip"}
+        tags = {"not @skip"}
 )
 public class TechRecordView_CVSB_7239 {
 

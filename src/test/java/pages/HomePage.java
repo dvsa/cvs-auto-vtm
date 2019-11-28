@@ -9,19 +9,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends GenericPage {
 
-    private static final String SEARCH_INPUT = ".sc-ion-searchbar-md-h";
+    private static final String SEARCH_INPUT = "#searchIdentifier";
+    private static final String SEARCH_BUTTON = "a.govuk-button";
 
     public void inputVehicleIdentifier(String arg0) {
-//        searchVinVrmInput.shouldBeVisible();
-//        searchVinVrmInput.shouldBeEnabled();
         (new WebDriverWait(getDriver(), 10)).until(ExpectedConditions.
                 presenceOfElementLocated(By.cssSelector(SEARCH_INPUT)));
         findElementByCss(SEARCH_INPUT).sendKeys(arg0);
     }
 
     public void searchVehicle() {
-        findElementByCss(SEARCH_INPUT).sendKeys(Keys.ENTER);
+        findElementByCss(SEARCH_BUTTON).click();
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                textToBePresentInElement(getDriver().findElement(By.cssSelector(".grid-container-technical-record-status")), "Status"));
+                visibilityOfElementLocated(By.cssSelector("h1.title")));
+        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+                textToBePresentInElement(getDriver().findElement(By.cssSelector("h1.title")), "Technical record"));
     }
 }

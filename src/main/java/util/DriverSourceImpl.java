@@ -20,7 +20,9 @@ public class DriverSourceImpl implements DriverSource {
 
         switch (envType) {
             case CI_BROWSERSTACK:
+                String  webdriverBaseUrl = System.getProperty("MICROSOFT_URL");
                 webDriver = setupWebDriver(new LoaderBrowserstackCIImpl());
+                webDriver.get(webdriverBaseUrl);
                 break;
             case LOCAL_BROWSERSTACK:
                 webDriver = setupWebDriver(new LoaderBrowserstackLocalImpl());

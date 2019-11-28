@@ -21,4 +21,19 @@ public class TechRecordPageSteps {
     public void openAllSections() {
         techRecordPage.openAllSections();
     }
+
+    @Step
+    public void closeAllSections() {
+        techRecordPage.closeAllSections();
+    }
+
+    @Step
+    public void openSection(String arg0) {
+        techRecordPage.openSection(arg0);
+    }
+
+    @Step
+    public void closeSection(String arg0) {
+        techRecordPage.closeSection(arg0);
+    }
 }

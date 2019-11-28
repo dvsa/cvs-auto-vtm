@@ -10,24 +10,26 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TechRecordPage extends GenericPage {
 
-    @FindBy(css = "ion-searchbar>div.searchbar-input-container>input")
-    private WebElementFacade searchInput;
+    private static final String OPEN_CLOSE_ALL_SECTIONS = "a.govuk-link";
+    private static final String OPEN_VEHICLE_SUMMARY_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_BODY_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_WEIGHTS_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_TYRES_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_DIMENSIONS_SECTION_ = "#test-fa-plus-summary";
+    private static final String OPEN_ADR_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_NOTES_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_TEST_HISTORY_SECTION = "#test-fa-plus-summary";
+    private static final String OPEN_TECHNICAL_RECORD_HISTORY_SECTION = "#test-fa-plus-summary";
+    private static final String CLOSE_VEHICLE_SUMMARY_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_BODY_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_WEIGHTS_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_TYRES_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_DIMENSIONS_SECTION_ = "#test-fa-minus-summary";
+    private static final String CLOSE_ADR_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_NOTES_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_TEST_HISTORY_SECTION = "#test-fa-minus-summary";
+    private static final String CLOSE_TECHNICAL_RECORD_HISTORY_SECTION = "#test-fa-minus-summary";
 
-    @FindBy(css = "ion-searchbar>div.searchbar-input-container>ion-icon")
-    private WebElementFacade searchButton;
-
-    @FindBy(css = "div.open-close-all a")
-    private WebElementFacade openCloseAll;
-
-    public void inputVehicleIdentifier(String arg0) {
-        searchInput.shouldBeVisible();
-        searchInput.shouldBeEnabled();
-        searchInput.type(arg0);
-    }
-
-    public void searchVehicle() {
-        searchButton.click();
-    }
 
     public String getValueForTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
@@ -41,10 +43,96 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void openAllSections() {
+
+        WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
+        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
+        wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Open all"));
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element);
+        actions.perform();
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)))));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS))));
+        getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)).click();
+        waitForTextToAppear("Close all");
+    }
+
+    public void closeAllSections() {
+
+        WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
+        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
+        wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Close all"));
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element);
+        actions.perform();
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)))));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS))));
+        getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)).click();
         waitForTextToAppear("Open all");
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(openCloseAll)));
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(openCloseAll));
-        openCloseAll.click();
-        waitForTextToAppear("Vehicle type");
+    }
+
+    public void openSection(String arg0) {
+        switch (arg0) {
+            case "Vehicle summary":
+                getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
+                break;
+            case "Body":
+                getDriver().findElement(By.cssSelector(OPEN_BODY_SECTION)).click();
+                break;
+            case "Weights":
+                getDriver().findElement(By.cssSelector(OPEN_WEIGHTS_SECTION)).click();
+                break;
+            case "Tyres":
+                getDriver().findElement(By.cssSelector(OPEN_TYRES_SECTION)).click();
+                break;
+            case "Dimensions":
+                getDriver().findElement(By.cssSelector(OPEN_DIMENSIONS_SECTION_)).click();
+                break;
+            case "ADR":
+                getDriver().findElement(By.cssSelector(OPEN_ADR_SECTION)).click();
+                break;
+            case "Notes":
+                getDriver().findElement(By.cssSelector(OPEN_NOTES_SECTION)).click();
+                break;
+            case "Test history":
+                getDriver().findElement(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).click();
+                break;
+            case "Technical record history":
+                getDriver().findElement(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                break;
+        }
+    }
+
+    public void closeSection(String arg0) {
+        switch (arg0) {
+            case "Vehicle summary":
+                getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
+                break;
+            case "Body":
+                getDriver().findElement(By.cssSelector(CLOSE_BODY_SECTION)).click();
+                break;
+            case "Weights":
+                getDriver().findElement(By.cssSelector(CLOSE_WEIGHTS_SECTION)).click();
+                break;
+            case "Tyres":
+                getDriver().findElement(By.cssSelector(CLOSE_TYRES_SECTION)).click();
+                break;
+            case "Dimensions":
+                getDriver().findElement(By.cssSelector(CLOSE_DIMENSIONS_SECTION_)).click();
+                break;
+            case "ADR":
+                getDriver().findElement(By.cssSelector(CLOSE_ADR_SECTION)).click();
+                break;
+            case "Notes":
+                getDriver().findElement(By.cssSelector(CLOSE_NOTES_SECTION)).click();
+                break;
+            case "Test history":
+                getDriver().findElement(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).click();
+                break;
+            case "Technical record history":
+                getDriver().findElement(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                break;
+        }
     }
 }

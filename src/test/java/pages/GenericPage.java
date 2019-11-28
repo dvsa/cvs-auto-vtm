@@ -26,6 +26,11 @@ public class GenericPage extends PageObject{
                 until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
     }
 
+    public void checkTextIsNotPresentInPage(String text) {
+        new WebDriverWait(getDriver(), 5).
+                until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text)));
+    }
+
     public void waitForPageToLoad() {
         new WebDriverWait(getDriver(), 15).until(
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
