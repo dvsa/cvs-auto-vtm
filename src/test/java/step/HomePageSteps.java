@@ -26,4 +26,9 @@ public class HomePageSteps {
     public void checkTextIsPresentInPage(String arg0) {
         homePage.checkTextIsPresentInPage(arg0);
     }
+
+    @Step
+    public void checkTextIsNotPresentInPage(String arg0) {
+        homePage.checkTextIsNotPresentInPage(arg0);
+    }
 }
