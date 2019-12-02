@@ -202,7 +202,7 @@ Feature: Search tech record
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then hgv tech record fields should have values
+    Then trl tech record fields should have values
       | Field                       | Value        |
       | status                      | Provisional  |
       | vin                         | T12111000    |
@@ -287,13 +287,13 @@ Feature: Search tech record
       | createdAt-1                 | 24/06/2019   |
 
 
-  Scenario: Search using vin for TRL with a current tech record
+  Scenario: Search using partial vin for TRL with a current tech record and without primary or secondary vrms and without any axle that is fitted with a parking brake
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
-    Given I search for vehicle with identifier "T12111111"
+    Given I search for vehicle with identifier "111111"
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then hgv tech record fields should have values
+    Then trl tech record fields should have values
       | Field           | Value       |
       | status          | Current     |
       | vin             | T12111111   |

@@ -24,7 +24,7 @@ public class TechRecordPageStepDefinition {
         }
     }
 
-    @Then("^trl tech record field should have value$")
+    @Then("^trl tech record fields should have values$")
     public void trlTechRecordFieldShouldHaveValue(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
