@@ -1,6 +1,7 @@
 Feature: Search tech record
   As an admin user I can log in the VTM app
-  And search for tech records using Vin, primary Vrm, partial Vin or trailerId
+  After I search for a tech record
+  I should see all required attributes displayed for the tech record
 
   Background:
     Given I login with admin credentials
@@ -115,7 +116,7 @@ Feature: Search tech record
   @skip
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
-  AC8: "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
+  AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
     Given I search for vehicle with identifier "CT70001"
     Then wait until I see "Technical record"
     Then I open all sections

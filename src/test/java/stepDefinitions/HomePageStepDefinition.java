@@ -1,6 +1,6 @@
 package stepDefinitions;
 
-import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -39,5 +39,15 @@ public class HomePageStepDefinition {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @And("^element with id \"([^\"]*)\" should be present$")
+    public void elementWithIdShouldBePresent(String arg0) throws Throwable {
+        homePageSteps.elementWithIdShouldBePresent(arg0);
+    }
+
+    @When("^I go back to search page$")
+    public void iGoBackToSearchPage() {
+        homePageSteps.goBackToSearchPage();
     }
 }

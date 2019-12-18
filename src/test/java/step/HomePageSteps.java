@@ -31,4 +31,14 @@ public class HomePageSteps {
     public void checkTextIsNotPresentInPage(String arg0) {
         homePage.checkTextIsNotPresentInPage(arg0);
     }
+
+    @Step
+    public void elementWithIdShouldBePresent(String id) {
+        homePage.elementWithIdShouldBePresent(id);
+    }
+
+    @Step
+    public void goBackToSearchPage() {
+        homePage.goBackToSearchPage();
+    }
 }
