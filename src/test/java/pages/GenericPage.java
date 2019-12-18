@@ -2,6 +2,7 @@ package pages;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -27,8 +28,8 @@ public class GenericPage extends PageObject{
     }
 
     public void checkTextIsNotPresentInPage(String text) {
-        new WebDriverWait(getDriver(), 5).
-                until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text)));
+        String bodyText = getDriver().findElement(By.tagName("body")).getText();
+        Assert.assertFalse("Text was found!", bodyText.contains(text));
     }
 
     public void waitForPageToLoad() {
