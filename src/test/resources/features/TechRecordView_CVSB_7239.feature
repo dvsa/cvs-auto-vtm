@@ -1,12 +1,13 @@
 Feature: Search tech record
   As an admin user I can log in the VTM app
-  And search for tech records using Vin, primary Vrm, partial Vin or trailerId
+  After I search for a tech record
+  I should see all required attributes displayed for the tech record
 
   Background:
     Given I login with admin credentials
     Then I should see "Vehicle Testing Management"
 
-  @skip
+
   Scenario: Search using vin for HGV with current, provisional and archived tech records
   AC1 - After searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
   AC4 - HGV tech records are structured correctly
@@ -112,7 +113,7 @@ Feature: Search tech record
     When I close "Vehicle summary" section
     Then I should not see "Vehicle type"
 
-  @skip
+
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
   AC8: "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
@@ -289,7 +290,7 @@ Feature: Search tech record
     And I should not see "Speed limiter exempt"
     And I should not see "Tacho exempt"
 
-  @skip
+
   Scenario: Search using partial vin for TRL with a current tech record and without primary or secondary vrms and without any axle that is fitted with a parking brake
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
     Given I search for vehicle with identifier "111111"
