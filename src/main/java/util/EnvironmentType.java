@@ -9,7 +9,7 @@ public enum EnvironmentType {
     LOCAL_BROWSERSTACK("localBrowserstack"),
     CI_BROWSERSTACK("CI");
 
-    private static final Map<String,EnvironmentType> ENUM_MAP;
+    private static final Map<String, EnvironmentType> ENUM_MAP;
 
     private String  envType;
 
@@ -22,7 +22,7 @@ public enum EnvironmentType {
     }
 
     static {
-        Map<String,EnvironmentType> map = new ConcurrentHashMap<>();
+        Map<String, EnvironmentType> map = new ConcurrentHashMap<>();
         for (EnvironmentType instance : EnvironmentType.values()) {
             map.put(instance.getEnvType(),instance);
         }
