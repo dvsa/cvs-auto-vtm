@@ -12,6 +12,7 @@ public class LoaderBrowserstackCIImpl implements Loader {
     private final static String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
     private final static String browserstackBrowser = System.getenv("BROWSERSTACK_BROWSER");
     private final static String browserstackBrowserVersion = System.getenv("BROWSERSTACK_BROWSER_VERSION");
+    private final static String browserstackSeleniumVersion = System.getenv("BROWSERSTACK_SELENIUM_VERSION");
 
 
     @Override
@@ -22,7 +23,11 @@ public class LoaderBrowserstackCIImpl implements Loader {
         caps.setCapability("browser", browserstackBrowser);
         caps.setCapability("browser_version", browserstackBrowserVersion);
         caps.setCapability("browserstack.local", browserstackLocal);
-        caps.setCapability("browserstack.selenium_version", "3.5.2");
+        caps.setCapability("browserstack.selenium_version", browserstackSeleniumVersion);
+        caps.setCapability("browserstack.video", "false");
+        caps.setCapability("browserstack.timezone", "UTC");
+        caps.setCapability("browserstack.idleTimeout", "300");
+        caps.setCapability("browserstack.networkLogs", "true");
         return caps;
     }
 
