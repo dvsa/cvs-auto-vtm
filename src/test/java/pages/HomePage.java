@@ -34,6 +34,6 @@ public class HomePage extends GenericPage {
     }
 
     public void goBackToSearchPage() {
-        getDriver().get(getEnvironmentVariables().getProperty("webdriver.base.url"));
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
     }
 }
