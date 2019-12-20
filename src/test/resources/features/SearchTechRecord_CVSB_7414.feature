@@ -40,3 +40,34 @@ Feature: Search tech record
     Given I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
 
+
+  Scenario: Search technical record negative scenarios
+  AC8 -
+  AC9 -
+  AC10 -
+  AC11 -
+    #search using string that is not a valid VIN/Partial VIN/Primary VRM/Trailer ID
+    When I search for vehicle with identifier "P111222333444"
+    Then wait until I see "CT70000"
+    When I go back to search page
+    Then I should see "Search for a technical record"
+    #search using partial VIN
+    Given I search for vehicle with identifier "230000"
+    Then wait until I see "CT70000"
+    When I go back to search page
+    Then I should see "Search for a technical record"
+    #search using primary VRM
+    Given I search for vehicle with identifier "CT70001"
+    Then wait until I see "P012301230001"
+    When I go back to search page
+    Then I should see "Search for a technical record"
+    #search using primary VRM in Z number format
+    Given I search for vehicle with identifier "112233Z"
+    Then wait until I see "T12111000"
+    When I go back to search page
+    Then I should see "Search for a technical record"
+    #search using trailer id
+    Given I search for vehicle with identifier "C123456"
+    Then wait until I see "T12111000"
+
+
