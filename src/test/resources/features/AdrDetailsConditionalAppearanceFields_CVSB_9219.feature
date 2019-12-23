@@ -6,7 +6,6 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Vehicle Testing Management"
-    And element with id "searchIdentifier" should be present
 
 
   Scenario: Search using vin for HGV with current, provisional and archived tech records
@@ -117,7 +116,7 @@ Feature: Search tech record
 
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
-  AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
+  AC8: "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
     Given I search for vehicle with identifier "CT70001"
     Then wait until I see "Technical record"
     Then I open all sections

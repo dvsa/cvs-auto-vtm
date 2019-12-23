@@ -40,4 +40,14 @@ public class HomePageStepDefinition {
             e.printStackTrace();
         }
     }
+
+    @Then("^element with id \"([^\"]*)\" should be present$")
+    public void elementWithIdShouldBePresent(String arg0) throws Throwable {
+        homePageSteps.elementWithIdShouldBePresent(arg0);
+    }
+
+    @When("^I go back to search page$")
+    public void iGoBackToSearchPage() {
+        homePageSteps.goBackToSearchPage();
+    }
 }
