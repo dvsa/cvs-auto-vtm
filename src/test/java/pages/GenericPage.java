@@ -76,4 +76,10 @@ public class GenericPage extends PageObject{
         System.out.println("Finding element: " + css);
         return getDriver().findElement(By.cssSelector(css));
     }
+
+    public void waitUntilISeeErrorMessage(String text) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span#name-error")));
+        new WebDriverWait(getDriver(), 10).
+                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("span#name-error"), text));
+    }
 }

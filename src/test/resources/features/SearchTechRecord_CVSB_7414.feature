@@ -9,7 +9,7 @@ Feature: Search tech record
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
 
-
+  @skip
   Scenario: Search using full vin
   AC2 - User Searches For Technical Records Using Full VIN
   AC4 - User Searches For Technical Records Using Partial VIN
@@ -22,52 +22,39 @@ Feature: Search tech record
     When I go back to search page
     Then I should see "Search for a technical record"
     #search using partial VIN
-    Given I search for vehicle with identifier "230000"
+    When I search for vehicle with identifier "230000"
     Then wait until I see "CT70000"
     When I go back to search page
     Then I should see "Search for a technical record"
     #search using primary VRM
-    Given I search for vehicle with identifier "CT70001"
+    When I search for vehicle with identifier "CT70001"
     Then wait until I see "P012301230001"
     When I go back to search page
     Then I should see "Search for a technical record"
     #search using primary VRM in Z number format
-    Given I search for vehicle with identifier "112233Z"
+    When I search for vehicle with identifier "112233Z"
     Then wait until I see "T12111000"
     When I go back to search page
     Then I should see "Search for a technical record"
     #search using trailer id
-    Given I search for vehicle with identifier "C123456"
+    When I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
 
 
   Scenario: Search technical record negative scenarios
-  AC8 -
-  AC9 -
-  AC10 -
-  AC11 -
+  AC8 - User Searches For Technical Records Using Something That Is Not A Valid VIN/Partial VIN/Primary VRM/Trailer ID
+  AC9 - User Searches For Technical Records Without Entering Any Search Criteria
+  AC10 - Partial VIN search returns duplicated full VINs
+  AC11 - VRM search returns multiple vehicles
     #search using string that is not a valid VIN/Partial VIN/Primary VRM/Trailer ID
-    When I search for vehicle with identifier "P111222333444"
-    Then wait until I see "CT70000"
-    When I go back to search page
-    Then I should see "Search for a technical record"
-    #search using partial VIN
-    Given I search for vehicle with identifier "230000"
-    Then wait until I see "CT70000"
-    When I go back to search page
-    Then I should see "Search for a technical record"
-    #search using primary VRM
-    Given I search for vehicle with identifier "CT70001"
-    Then wait until I see "P012301230001"
-    When I go back to search page
-    Then I should see "Search for a technical record"
-    #search using primary VRM in Z number format
-    Given I search for vehicle with identifier "112233Z"
-    Then wait until I see "T12111000"
-    When I go back to search page
-    Then I should see "Search for a technical record"
-    #search using trailer id
-    Given I search for vehicle with identifier "C123456"
-    Then wait until I see "T12111000"
-
-
+    When I search for vehicle using wrong identifier "P111222333444"
+    Then wait until I see error message "Vehicle not found, check the vehicle registration mark, trailer ID or vehicle identification number"
+    #partial VIN search returns duplicated full VINs
+    When I search for vehicle using wrong identifier "678413"
+    Then wait until I see error message "Multiple vehicles found, search using the full vehicle identification number"
+    #search without entering any search criteria
+    When I search for vehicle using wrong identifier ""
+    Then wait until I see error message "Enter a vehicle registration mark, trailer ID or vehicle identification number"
+    #VRM search returns multiple vehicles
+    Given I search for vehicle using wrong identifier "CT70VRL"
+    Then wait until I see error message "Multiple vehicles found, search using the full vehicle identification number"

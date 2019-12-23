@@ -13,6 +13,11 @@ public class HomePageSteps {
     }
 
     @Step
+    public void clearSearchInput() {
+        homePage.clearSearchInput();
+    }
+
+    @Step
     public void searchVehicle() {
         homePage.searchVehicle();
     }
@@ -40,5 +45,15 @@ public class HomePageSteps {
     @Step
     public void goBackToSearchPage() {
         homePage.goBackToSearchPage();
+    }
+
+    @Step
+    public void searchVehicleIncorrectIdentifier() {
+        homePage.searchVehicleIncorrectIdentifier();
+    }
+
+    @Step
+    public void waitUntilISeeErrorMessage(String arg0) {
+        homePage.waitUntilISeeErrorMessage(arg0);
     }
 }

@@ -1,14 +1,9 @@
 package pages;
 
-import net.serenitybdd.core.annotations.findby.FindBy;
-import net.serenitybdd.core.pages.WebElementFacade;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static net.serenitybdd.core.environment.WebDriverConfiguredEnvironment.getEnvironmentVariables;
 
 public class HomePage extends GenericPage {
 
@@ -35,5 +30,19 @@ public class HomePage extends GenericPage {
 
     public void goBackToSearchPage() {
         getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
+    }
+
+    public void searchVehicleIncorrectIdentifier() {
+        findElementByCss(SEARCH_BUTTON).click();
+        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+                visibilityOfElementLocated(By.cssSelector("span#name-error")));
+    }
+
+    public void clearInput(String cssSelector) {
+        findElementByCss(cssSelector).clear();
+    }
+
+    public void clearSearchInput() {
+        clearInput(SEARCH_INPUT);
     }
 }
