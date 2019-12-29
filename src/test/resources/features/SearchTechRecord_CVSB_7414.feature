@@ -9,7 +9,7 @@ Feature: Search tech record
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
 
-  @skip
+
   Scenario: Search using full vin
   AC2 - User Searches For Technical Records Using Full VIN
   AC4 - User Searches For Technical Records Using Partial VIN

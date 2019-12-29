@@ -50,7 +50,7 @@ public class LoginPage extends GenericPage {
 
     public void additionalSignIn() {
         waitForTextToAppear(header, "Stay signed in?");
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.elementToBeClickable(signIn));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(signIn));
         signIn.click();
     }
 }

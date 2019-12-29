@@ -47,6 +47,7 @@ public class HomePageSteps {
         homePage.goBackToSearchPage();
     }
 
+
     @Step
     public void searchVehicleIncorrectIdentifier() {
         homePage.searchVehicleIncorrectIdentifier();
