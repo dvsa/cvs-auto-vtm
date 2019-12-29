@@ -13,6 +13,11 @@ public class HomePageSteps {
     }
 
     @Step
+    public void clearSearchInput() {
+        homePage.clearSearchInput();
+    }
+
+    @Step
     public void searchVehicle() {
         homePage.searchVehicle();
     }
@@ -30,5 +35,25 @@ public class HomePageSteps {
     @Step
     public void checkTextIsNotPresentInPage(String arg0) {
         homePage.checkTextIsNotPresentInPage(arg0);
+    }
+
+    @Step
+    public void elementWithIdShouldBePresent(String id) {
+        homePage.elementWithIdShouldBePresent(id);
+    }
+
+    @Step
+    public void goBackToSearchPage() {
+        homePage.goBackToSearchPage();
+    }
+
+    @Step
+    public void searchVehicleIncorrectIdentifier() {
+        homePage.searchVehicleIncorrectIdentifier();
+    }
+
+    @Step
+    public void waitUntilISeeErrorMessage(String arg0) {
+        homePage.waitUntilISeeErrorMessage(arg0);
     }
 }

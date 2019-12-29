@@ -1,9 +1,7 @@
 package pages;
 
-import net.serenitybdd.core.annotations.findby.FindBy;
-import net.serenitybdd.core.pages.WebElementFacade;
+import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,5 +22,27 @@ public class HomePage extends GenericPage {
                 visibilityOfElementLocated(By.cssSelector("h1.title")));
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
                 textToBePresentInElement(getDriver().findElement(By.cssSelector("h1.title")), "Technical record"));
+    }
+
+    public void elementWithIdShouldBePresent(String id) {
+        Assert.assertNotNull(findElementById(id));
+    }
+
+    public void goBackToSearchPage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
+    }
+
+    public void searchVehicleIncorrectIdentifier() {
+        findElementByCss(SEARCH_BUTTON).click();
+        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+                visibilityOfElementLocated(By.cssSelector("span#name-error")));
+    }
+
+    public void clearInput(String cssSelector) {
+        findElementByCss(cssSelector).clear();
+    }
+
+    public void clearSearchInput() {
+        clearInput(SEARCH_INPUT);
     }
 }
