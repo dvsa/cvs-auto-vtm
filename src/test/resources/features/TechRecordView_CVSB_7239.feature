@@ -16,7 +16,7 @@ Feature: Search tech record
   AC6 - User clicks the call to action to "open all" headings
   AC7 - User clicks the call to action to "close all" headings
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space in DynamoDB
-    Given I search for vehicle with identifier "P012301230000"
+    When I search for vehicle with identifier "P012301230000"
     Then wait until I see "Technical record"
     When I open all sections
     Then I should see "Vehicle type"
@@ -118,9 +118,9 @@ Feature: Search tech record
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
-    Given I search for vehicle with identifier "CT70001"
+    When I search for vehicle with identifier "CT70001"
     Then wait until I see "Technical record"
-    Then I open all sections
+    When I open all sections
     Then hgv tech record fields should have values
       | Field                          | Value         |
       | status                         | Archived      |
@@ -200,7 +200,7 @@ Feature: Search tech record
   AC2 - After searching, technical record with status "provisional" is displayed, if this vehicle does not have a technical record with status "current" in DynamoDB
   AC4 - TRL tech records are structured correctly
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
-    Given I search for vehicle with identifier "C123456"
+    When I search for vehicle with identifier "C123456"
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
@@ -294,7 +294,7 @@ Feature: Search tech record
 
   Scenario: Search using partial vin for TRL with a current tech record and without primary or secondary vrms and without any axle that is fitted with a parking brake
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
-    Given I search for vehicle with identifier "111111"
+    When I search for vehicle with identifier "111111"
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"

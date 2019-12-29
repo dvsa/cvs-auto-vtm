@@ -76,4 +76,24 @@ public class GenericPage extends PageObject{
         System.out.println("Finding element: " + css);
         return getDriver().findElement(By.cssSelector(css));
     }
+
+    public void waitUntilISeeErrorMessage(String text) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span#name-error")));
+        new WebDriverWait(getDriver(), 10).
+                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("span#name-error"), text));
+    }
+
+    public void selectCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")));
+        if (!(getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).isSelected())) {
+            getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).click();
+        }
+    }
+
+    public void deselectCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")));
+        if (getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).isSelected()) {
+            getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).click();
+        }
+    }
 }

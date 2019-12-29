@@ -31,4 +31,18 @@ public class HomePage extends GenericPage {
     public void goBackToSearchPage() {
         getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
     }
+
+    public void searchVehicleIncorrectIdentifier() {
+        findElementByCss(SEARCH_BUTTON).click();
+        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+                visibilityOfElementLocated(By.cssSelector("span#name-error")));
+    }
+
+    public void clearInput(String cssSelector) {
+        findElementByCss(cssSelector).clear();
+    }
+
+    public void clearSearchInput() {
+        clearInput(SEARCH_INPUT);
+    }
 }
