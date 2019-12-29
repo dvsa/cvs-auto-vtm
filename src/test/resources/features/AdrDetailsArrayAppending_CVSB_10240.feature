@@ -60,7 +60,9 @@ Feature: Search tech record
 #    When I select "No" from battery list applicable
 #    Then I should not see "Reference number" battery list field
     #selecting "Brake endurance" from "manufacturer brake declaration" will display "Weight (kg)" field
-  
+
+
+
   @skip
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
