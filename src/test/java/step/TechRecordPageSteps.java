@@ -131,4 +131,54 @@ public class TechRecordPageSteps {
     public void iShouldNotSeeProductListFields() {
         techRecordPage.checkProductListFieldsNotPresent();
     }
+
+    @Step
+    public void iClickLink(String arg0) throws  Exception {
+        techRecordPage.clickLink(arg0);
+    }
+
+    @Step
+    public void iSelectCustomDangerousGoodCheckbox(String arg0) {
+        techRecordPage.selectCustomDangerousGoodCheckbox(arg0);
+    }
+
+    @Step
+    public void iDeselectCustomDangerousGoodCheckbox(String arg0) {
+        techRecordPage.deselectCustomDangerousGoodCheckbox(arg0);
+    }
+
+    @Step
+    public void iInputCustomDangerousGood(String arg0) {
+        techRecordPage.inputCustomDangerousGood(arg0);
+    }
+
+    @Step
+    public void iInputCustomGuidanceNote(String arg0) {
+        techRecordPage.inputCustomGuidanceNote(arg0);
+    }
+
+    @Step
+    public void iSelectCustomGuidanceNoteCheckbox(String arg0) {
+        techRecordPage.selectCustomGuidanceNoteCheckbox(arg0);
+    }
+
+    @Step
+    public void iDeselectCustomGuidanceNoteCheckbox(String arg0) {
+        techRecordPage.deselectCustomGuidanceNoteCheckbox(arg0);
+    }
+
+    @Step
+    public void iInputNewUnNumber(String arg0) {
+        techRecordPage.inputUnNewNumber(arg0);
+    }
+
+    @Step
+    public void iInputForTheUnNumber(String unNumber, String ordinal) {
+        techRecordPage.inputForTheUnNumber(unNumber, ordinal);
+    }
+
+    @Step
+    public void iShouldSeeTheSubsequentInspectionFields() {
+        techRecordPage.checkSubsequentInspectionFields();
+    }
 }
