@@ -1,6 +1,8 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -149,5 +151,55 @@ public class TechRecordPageStepDefinition {
     @Then("^I should not see \"([^\"]*)\" brake endurance field$")
     public void iShouldNotSeeBrakeEnduranceField(String arg0) throws Throwable {
         techRecordPageSteps.iShouldNotSeeBrakeEndurance(arg0);
+    }
+
+    @When("^I click \"([^\"]*)\" link$")
+    public void iClickLink(String arg0) throws Throwable {
+        techRecordPageSteps.iClickLink(arg0);
+    }
+
+    @When("^I select \"([^\"]*)\" custom dangerous good$")
+    public void iSelectCustomDangerousGood(String arg0) throws Throwable {
+        techRecordPageSteps.iSelectCustomDangerousGoodCheckbox(arg0);
+    }
+
+    @When("^I deselect \"([^\"]*)\" custom dangerous good$")
+    public void iDeselectCustomDangerousGood(String arg0) throws Throwable {
+        techRecordPageSteps.iDeselectCustomDangerousGoodCheckbox(arg0);
+    }
+
+    @When("^I input \"([^\"]*)\" custom dangerous good$")
+    public void iInputCustomDangerousGood(String arg0) throws Throwable {
+        techRecordPageSteps.iInputCustomDangerousGood(arg0);
+    }
+
+    @When("^I input \"([^\"]*)\" custom guidance note$")
+    public void iInputCustomGuidanceNote(String arg0) throws Throwable {
+        techRecordPageSteps.iInputCustomGuidanceNote(arg0);
+    }
+
+    @When("^I select \"([^\"]*)\" custom guidance note$")
+    public void iSelectCustomGuidanceNote(String arg0) throws Throwable {
+        techRecordPageSteps.iSelectCustomGuidanceNoteCheckbox(arg0);
+    }
+
+    @When("^I deselect \"([^\"]*)\" custom guidance note$")
+    public void iDeselectCustomGuidanceNote(String arg0) throws Throwable {
+        techRecordPageSteps.iDeselectCustomGuidanceNoteCheckbox(arg0);
+    }
+
+    @When("^I input \"([^\"]*)\" as new UN number$")
+    public void iInputNewUnNumber(String arg0) throws Throwable {
+        techRecordPageSteps.iInputNewUnNumber(arg0);
+    }
+
+    @When("^I input \"([^\"]*)\" for the \"([^\"]*)\" UN number$")
+    public void iInputTheUnNumber(String unNumber, String ordinal) throws Throwable {
+        techRecordPageSteps.iInputForTheUnNumber(unNumber, ordinal);
+    }
+
+    @And("^I should see the subsequent inspection fields$")
+    public void iShouldSeeTheSubsequentInspectionFields() {
+        techRecordPageSteps.iShouldSeeTheSubsequentInspectionFields();
     }
 }

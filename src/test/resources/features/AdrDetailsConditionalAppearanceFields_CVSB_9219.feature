@@ -1,7 +1,7 @@
 Feature: Search tech record
   As an admin user I can log in the VTM app
   After I search for a tech record
-  I should see all required attributes displayed for the tech record
+  I should see specific adr fields will appear only under certain conditions
 
   Background:
     Given I login with admin credentials
@@ -9,7 +9,7 @@ Feature: Search tech record
     And element with id "searchIdentifier" should be present
 
 
-  Scenario: Search using vin for HGV with current, provisional and archived tech records
+  Scenario: Check adr fields appear under certain conditions
   AC1 - Selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "CompatilibityGroupJ" appear
   AC2 - User can only select statement OR product list
   AC3 - User selects statement
@@ -17,13 +17,13 @@ Feature: Search tech record
   AC5 - User selects Battery list applicable
   AC6 - User selects Manufacturer brake declaration
   AC7 - User selects Brake endurance
-    #selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "Compatilibity Group J" appear
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "Technical record"
     When I open "ADR" section
     Then I should see "Change technical record"
     When I click the change technical record button
     Then I should see "Save technical record"
+    #selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "Compatilibity Group J" appear
     When I select "Explosives (type 2)" dangerous good
     Then I should see "Compatibility group J"
     When I deselect "Explosives (type 2)" dangerous good

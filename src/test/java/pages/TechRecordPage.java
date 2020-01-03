@@ -1,7 +1,7 @@
 package pages;
 
-import net.serenitybdd.core.annotations.findby.FindBy;
-import net.serenitybdd.core.pages.WebElementFacade;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -53,6 +53,13 @@ public class TechRecordPage extends GenericPage {
     private static final String BATTERY_LIST_APPLICABLE_FIELDS = "//input[@id='batteryListNumber']/parent::div";
     private static final String MANUFACTURER_BRAKE_DECLARATION = "//input[@id='brakeDeclarationIssuer']/parent::div";
     private static final String BRAKE_ENDURANCE_DECLARATION = "//input[@id='weight']/parent::div";
+    private static final String ADD_DANGEROUS_GOOD_LINK = "a.add-dangerous-note";
+    private static final String ADD_GUIDANCE_NOTE_LINK = "a.add-guidance-note";
+    private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-inspection-details + p > a";
+    private static final String ADD_UN_NUMBER_LINK = "a.add-a-un-number";
+    private static final String CUSTOM_DANGEROUS_GOOD_INPUT = "a.add-dangerous-note + input";
+    private static final String GUIDANCE_NOTE_INPUT = "#addGuidanceNote";
+    private static final String NEW_UN_NUMBER_INPUT = "#adrDetails\\.productListUnNo\\.0";
 
 
     public String getValueForTechRecordField(String field) {
@@ -383,5 +390,115 @@ public class TechRecordPage extends GenericPage {
     public void checkBrakeEnduranceFieldNotPresent(String arg0) {
         List<WebElement> elements = getDriver().findElements(By.xpath(BRAKE_ENDURANCE_DECLARATION));
         Assert.assertEquals(0, elements.size());
+    }
+
+    public void clickLink(String arg0) throws Exception {
+        String option = arg0.toLowerCase();
+        switch (option) {
+            case "add a dangerous good":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)));
+                getDriver().findElement(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)).click();
+                break;
+            case "add a guidance note":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)));
+                getDriver().findElement(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)).click();
+                break;
+            case "add a subsequent inspection":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_SUBSEQUENT_INSPECTION_LINK)));
+                getDriver().findElement(By.cssSelector(ADD_SUBSEQUENT_INSPECTION_LINK)).click();
+                break;
+            case "add a un number":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_UN_NUMBER_LINK)));
+                getDriver().findElement(By.cssSelector(ADD_UN_NUMBER_LINK)).click();
+                break;
+            default:  // should be unreachable!
+                throw new Exception(
+                        "Non existent link");
+        }
+    }
+
+    public void selectCustomDangerousGoodCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)));
+        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).isSelected())) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).click();
+        }
+    }
+
+    public void deselectCustomDangerousGoodCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)));
+        if (getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).isSelected()) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).click();
+        }
+    }
+
+    public void inputCustomDangerousGood(String arg0) {
+        getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).sendKeys(arg0);
+    }
+
+    public void inputCustomGuidanceNote(String arg0) {
+        getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).sendKeys(arg0);
+    }
+
+    public void selectCustomGuidanceNoteCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)));
+        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).isSelected())) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).click();
+        }
+    }
+
+    public void deselectCustomGuidanceNoteCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)));
+        if (getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).isSelected()) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).click();
+        }
+    }
+
+    public void inputUnNewNumber(String arg0) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(NEW_UN_NUMBER_INPUT)));
+        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT)).sendKeys(arg0);
+    }
+
+    public void inputForTheUnNumber(String unNumber, String ordinal) {
+        String option = ordinal.toLowerCase();
+        String selector = "";
+        switch (option) {
+            case "first":
+                selector = NEW_UN_NUMBER_INPUT;
+                break;
+            case "second":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "1";
+                break;
+            case "third":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "2";
+                break;
+            case "fourth":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "3";
+                break;
+            case "fifth":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "4";
+                break;
+            case "sixth":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "5";
+                break;
+            case "seventh":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "6";
+                break;
+            case "eighth":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "7";
+                break;
+            case "ninth":
+                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "8";
+                break;
+        }
+        getDriver().findElement(By.cssSelector(selector)).sendKeys(unNumber);
+    }
+
+    public void checkSubsequentInspectionFields() {
+        List<WebElement> inspectionTypes = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3Type]"));
+        assertThat(inspectionTypes.size(), greaterThan(0));
+        List<WebElement> certificateNumbers = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3PeriodicNumber]"));
+        assertThat(certificateNumbers.size(), greaterThan(0));
+        List<WebElement> expiryDates = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3PeriodicExpiryDate]"));
+        assertThat(expiryDates.size(), greaterThan(0));
     }
 }
