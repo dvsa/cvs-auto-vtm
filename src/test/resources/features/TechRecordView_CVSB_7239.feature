@@ -76,6 +76,7 @@ Feature: Search tech record
       | frontAxleTo5thWheelCouplingMax | 1900                 |
       | frontAxleTo5thWheelMin         | 1200                 |
       | frontAxleTo5thWheelMax         | 1500                 |
+      | ableToCarry                    | No                  |
       | notes                          | test note            |
       | testCode-0                     | Aav2                 |
       | testEndTimestamp-0             | 14/01/2019           |
@@ -122,78 +123,80 @@ Feature: Search tech record
     Then wait until I see "Technical record"
     When I open all sections
     Then hgv tech record fields should have values
-      | Field                          | Value         |
-      | status                         | Archived      |
-      | vin                            | P012301230001 |
-      | vrm                            | CT70001       |
-      | vrm-0                          | CT98000       |
-      | vehicleType                    | HGV           |
-      # ntaNumber and regnDate for the displayed tech record are "  " in Dynamo
-      | ntaNumber                      | -             |
-      | regnDate                       | -             |
-      | manufactureYear                | 2013          |
-      | noOfaxles                      | 1             |
-      # dtpNumber for the displayed tech record is "  " in Dynamo
-      | dtpNumber                      | -             |
-      | parkingBrakeMrkAxle-1          | Axle 1        |
-      | speedLimiterMrk                | NO            |
-      | tachoExemptMrk                 | NO            |
-      # euroStandard for the displayed tech record "  " in Dynamo
-      | euroStandard                   | -             |
-      | roadFriendly                   | NO            |
-      | drawbarCouplingFitted          | NO            |
-      # vehicleClass description, vehicleConfiguration, make and model for the displayed tech record are "  " in Dynamo
-      | vehicleClassDescription        | -             |
-      | vehicleConfiguration           | -             |
-      | make                           | -             |
-      | model                          | -             |
-      # bodyType description is null in Dynamo
-      | bodyTypeDescription            | -             |
-      # functionCode, conversionRefNo for the displayed tech record are "  " in Dynamo
-      | functionCode                   | -             |
-      | conversionRefNo                | -             |
-      | grossGbWeight                  | 1400          |
-      | grossDesignWeight              | 1900          |
-      | trainGbWeight                  | 1500          |
-      | trainDesignWeight              | 2000          |
-      | maxTrainGbWeight               | 1000          |
-      | minTrainGbWeight               | 500           |
-      | gbWeight-1                     | 1400          |
-      | designWeight-1                 | 1800          |
-      # tyreUseCode for the displayed tech record are for"  " in Dynamo
-      | tyreUseCode                    | -             |
-      | tyreCode-1                     | 1234          |
-      # tyreSize, plyRating, fitmentCode for the displayed tech record are "  " in Dynamo
-      | tyreSize-1                     | -             |
-      | plyRating-1                    | -             |
-      | fitmentCode-1                  | -             |
-      | dataTrAxles-1                  | 345           |
-      | length                         | 7500          |
-      | width                          | 2500          |
-      | frontAxleTo5thWheelCouplingMin | 1700          |
-      | frontAxleTo5thWheelCouplingMax | 1900          |
-      | frontAxleTo5thWheelMin         | 1200          |
-      | frontAxleTo5thWheelMax         | 1500          |
-      # notes for the displayed tech record is "  " in Dynamo
-      | notes                          | -             |
-      | testCode-0                     | Aav2          |
-      | testEndTimestamp-0             | 19/01/2019    |
-      | expiryDate-0                   | 14/04/2019    |
-      | certificateNumber-0            | 123000        |
-      | testResult-0                   | PRS           |
-      | statusCode-0                   | Archived      |
+      | Field                          | Value               |
+      | status                         | Archived            |
+      | vin                            | P012301230001       |
+      | vrm                            | CT70001             |
+      | vrm-0                          | CT98000             |
+      | vehicleType                    | HGV                 |
+      | ntaNumber                      | 123453              |
+      | regnDate                       | 23/06/2019          |
+      | manufactureYear                | 2011                |
+      | noOfaxles                      | 1                   |
+      | dtpNumber                      | 1241                |
+      # there are no axles that have "parkingBrakeFitted" set to "true" in dynamo
+      | parkingBrakeMrk                | -                   |
+      | speedLimiterMrk                | YES                 |
+      | tachoExemptMrk                 | YES                 |
+      | euroStandard                   | 4                   |
+      | roadFriendly                   | YES                 |
+      | drawbarCouplingFitted          | NO                  |
+      | vehicleClassDescription        | Heavy goods vehicle |
+      # vehicleConfiguration is "  " in Dynamo
+      | vehicleConfiguration           | -                   |
+      | make                           | Isuzu               |
+      | model                          | FM                  |
+      | bodyTypeDescription            | Other               |
+      | functionCode                   | A                   |
+      | conversionRefNo                | 7891234             |
+      # gross GB weight and Design weight are not set in Dynamo which is equivalent for them being null
+      | grossGbWeight                  | -                   |
+      | grossDesignWeight              | -                   |
+      | trainGbWeight                  | 1500                |
+      | trainDesignWeight              | 2000                |
+      | maxTrainGbWeight               | 1000                |
+      | minTrainGbWeight               | 500                 |
+      | gbWeight-1                     | 1400                |
+      | designWeight-1                 | 1800                |
+      | gbWeight-2                     | 1600                |
+      | designWeight-2                 | 1900                |
+      | tyreUseCode                    | 2B                  |
+      | tyreCode-1                     | 1234                |
+      | tyreSize-1                     | 295/80-22.5         |
+      | plyRating-1                    | AB                  |
+      | fitmentCode-1                  | single              |
+      | dataTrAxles-1                  | 345                 |
+      | tyreCode-2                     | 5678                |
+      | tyreSize-2                     | 295/80-22.5         |
+      | plyRating-2                    | AB                  |
+      | fitmentCode-2                  | single              |
+      | dataTrAxles-2                  | 345                 |
+      | length                         | 7500                |
+      | width                          | 2200                |
+      | frontAxleTo5thWheelCouplingMin | 1700                |
+      | frontAxleTo5thWheelCouplingMax | 1900                |
+      | frontAxleTo5thWheelMin         | 1200                |
+      | frontAxleTo5thWheelMax         | 1500                |
+      | ableToCarry                    | No                  |
+      | notes                          | test note           |
+      | testCode-0                     | Aav2                |
+      | testEndTimestamp-0             | 19/01/2019          |
+      | expiryDate-0                   | 14/04/2019          |
+      | certificateNumber-0            | 123000              |
+      | testResult-0                   | PRS                 |
+      | statusCode-2                   | Archived            |
       # reasonForCreation and createdByName for this tech record are "  " in Dynamo
-      | reasonForCreation-0            | -             |
-      | createdByName-0                | -             |
-      | createdAt-0                    | 23/06/2019    |
-      | statusCode-1                   | Archived      |
-      | reasonForCreation-1            | New Vehicle   |
-      | createdByName-1                | Dvsa3         |
-      | createdAt-1                    | 24/06/2019    |
-      | statusCode-2                   | Archived      |
-      | reasonForCreation-2            | New Vehicle   |
-      | createdByName-2                | Dvsa4         |
-      | createdAt-2                    | 25/06/2019    |
+      | reasonForCreation-2            | -                   |
+      | createdByName-2                | -                   |
+      | createdAt-2                    | 23/06/2019          |
+      | statusCode-1                   | Archived            |
+      | reasonForCreation-1            | New Vehicle         |
+      | createdByName-1                | Dvsa3               |
+      | createdAt-1                    | 24/06/2019          |
+      | statusCode-0                   | Archived            |
+      | reasonForCreation-0            | New Vehicle         |
+      | createdByName-0                | Dvsa4               |
+      | createdAt-0                    | 25/06/2019          |
 
 
   Scenario: Search using trailer id for TRL with a provisional and an archived tech record
@@ -266,6 +269,7 @@ Feature: Search tech record
       | couplingCenterToRearAxleMax | 900          |
       | couplingCenterToRearTrlMin  | 800          |
       | couplingCenterToRearTrlMax  | 700          |
+      | ableToCarry                 | No           |
       | notes                       | notes        |
       | testCode-0                  | Aav2         |
       | testEndTimestamp-0          | 17/01/2019   |
