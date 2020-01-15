@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
+import org.junit.ComparisonFailure;
 import step.TechRecordPageSteps;
 
 import java.util.List;
@@ -29,7 +30,12 @@ public class TechRecordPageStepDefinition {
     public void trlTechRecordFieldShouldHaveValue(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
-            Assert.assertEquals(techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")), list.get(i).get("Value"));
+            try {
+                Assert.assertEquals(techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")), list.get(i).get("Value"));
+            }
+            catch (ComparisonFailure e) {
+                throw new ComparisonFailure("Expected value for field " + list.get(i).get("Field") + " was not found", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
+            }
         }
     }
 
@@ -201,5 +207,10 @@ public class TechRecordPageStepDefinition {
     @And("^I should see the subsequent inspection fields$")
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPageSteps.iShouldSeeTheSubsequentInspectionFields();
+    }
+
+    @Then("^I should see \"([^\"]*)\" section heading$")
+    public void iShouldSeeSectionHeading(String arg0) throws Throwable {
+        techRecordPageSteps.iShouldSeeSectionHeading(arg0);
     }
 }

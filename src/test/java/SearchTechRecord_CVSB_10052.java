@@ -5,10 +5,10 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        features = "src/test/resources/features/DisplayAdrDetails_CVSB_8648.feature",
+        features = "src/test/resources/features/SearchTechRecord_CVSB_10052.feature",
         glue = {"stepDefinitions"},
         tags = {"not @skip"}
 )
-public class DisplayAdrDetails_CVSB_8648 {
+public class SearchTechRecord_CVSB_10052 {
 
 }
