@@ -181,4 +181,9 @@ public class TechRecordPageSteps {
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPage.checkSubsequentInspectionFields();
     }
+
+    @Step
+    public void iShouldSeeSectionHeading(String arg0) {
+        techRecordPage.iShouldSeeSectionHeading(arg0);
+    }
 }

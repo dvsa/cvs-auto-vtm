@@ -463,7 +463,7 @@ public class TechRecordPage extends GenericPage {
         String selector = "";
         switch (option) {
             case "first":
-                selector = NEW_UN_NUMBER_INPUT;
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.id("mat-expansion-panel-header-0")));
                 break;
             case "second":
                 selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "1";
@@ -500,5 +500,38 @@ public class TechRecordPage extends GenericPage {
         assertThat(certificateNumbers.size(), greaterThan(0));
         List<WebElement> expiryDates = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3PeriodicExpiryDate]"));
         assertThat(expiryDates.size(), greaterThan(0));
+    }
+
+    public void iShouldSeeSectionHeading(String arg0) {
+        String section = arg0.toLowerCase();
+        switch (section) {
+            case "vehicle summary":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), arg0));
+                break;
+            case "bpdy":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), arg0));
+                break;
+            case "weights":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-2")), arg0));
+                break;
+            case "tyres":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-3")), arg0));
+                break;
+            case "dimensions":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-4")), arg0));
+                break;
+            case "adr":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-5")), arg0));
+                break;
+            case "notes":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-6")), arg0));
+                break;
+            case "test history":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-7")), arg0));
+                break;
+            case "technical record history":
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), arg0));
+                break;
+        }
     }
 }

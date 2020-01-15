@@ -5,10 +5,10 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        features = "src/test/resources/features/AdrDetailsConditionalAppearanceFields_CVSB_9219.feature",
+        features = "src/test/resources/features/TechRecordView_CVSB_10089.feature",
         glue = {"stepDefinitions"},
         tags = {"not @skip"}
 )
-public class AdrDetailsConditionalAppearanceFields_CVSB_9219 {
+public class TechRecordView_CVSB_10089 {
 
 }
