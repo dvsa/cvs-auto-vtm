@@ -96,4 +96,13 @@ public class GenericPage extends PageObject{
             getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).click();
         }
     }
+
+    public void refreshPage() {
+        getDriver().navigate().refresh();
+    }
+
+    public void clearSessionStorage() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
+        jsExecutor.executeScript("window.sessionStorage.clear()");
+    }
 }

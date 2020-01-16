@@ -20,7 +20,7 @@ public class DriverSourceImpl implements DriverSource {
 
         switch (envType) {
             case CI_BROWSERSTACK:
-                String  webdriverBaseUrl = System.getenv("VTM_APP_URL");
+                String  webdriverBaseUrl = System.getProperty("baseUrl");
                 webDriver = setupWebDriver(new LoaderBrowserstackCIImpl());
                 webDriver.get(webdriverBaseUrl);
                 break;

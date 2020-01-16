@@ -12,22 +12,25 @@ Feature: Search tech record
   Scenario: Search using vin for HGV with current, provisional and archived tech records
   AC1 - After searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
   AC4 - HGV tech records are structured correctly
-  AC5 - User expand/collapses one heading
+  AC5 - User expands/collapses one heading
   AC6 - User clicks the call to action to "open all" headings
   AC7 - User clicks the call to action to "close all" headings
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space in DynamoDB
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "Technical record"
+    #user clicks the call to action to "open all" headings
     When I open all sections
     Then I should see "Vehicle type"
     Then hgv tech record fields should have values
     | Field                          | Value                |
+    #after searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
     | status                         | Current              |
     | vin                            | P012301230000        |
     | vrm                            | CT70000              |
     | vrm-0                          | CT96000              |
     | vrm-1                          | CT96001              |
     | vrm-2                          | CT96002              |
+    #HGV tech records are structured correctly
     | vehicleType                    | HGV                  |
     | ntaNumber                      | 123456               |
     | regnDate                       | 25/06/2019           |
@@ -108,8 +111,10 @@ Feature: Search tech record
     # createdByName for this tech record is null in Dynamo
     | createdByName-2                | -                    |
     | createdAt-2                    | 26/06/2019           |
+    #user clicks the call to action to "close all" headings
     When I close all sections
     Then I should not see "Vehicle type"
+    #user expands/collapses one heading
     When I open "Vehicle summary" section
     Then I should see "Vehicle type"
     When I close "Vehicle summary" section
@@ -184,19 +189,20 @@ Feature: Search tech record
     | expiryDate-0                   | 14/04/2019          |
     | certificateNumber-0            | 123000              |
     | testResult-0                   | PRS                 |
+    #after searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
+    | statusCode-0                   | Archived            |
+    | reasonForCreation-0            | New Vehicle         |
+    | createdByName-0                | Dvsa4               |
+    | createdAt-0                    | 25/06/2019          |
+    | statusCode-1                   | Archived            |
+    | reasonForCreation-1            | New Vehicle         |
+    | createdByName-1                | Dvsa3               |
+    | createdAt-1                    | 24/06/2019          |
     | statusCode-2                   | Archived            |
     # reasonForCreation and createdByName for this tech record are "  " in Dynamo
     | reasonForCreation-2            | -                   |
     | createdByName-2                | -                   |
     | createdAt-2                    | 23/06/2019          |
-    | statusCode-1                   | Archived            |
-    | reasonForCreation-1            | New Vehicle         |
-    | createdByName-1                | Dvsa3               |
-    | createdAt-1                    | 24/06/2019          |
-    | statusCode-0                   | Archived            |
-    | reasonForCreation-0            | New Vehicle         |
-    | createdByName-0                | Dvsa4               |
-    | createdAt-0                    | 25/06/2019          |
 
 
   Scenario: Search using trailer id for TRL with a provisional and an archived tech record
@@ -282,6 +288,7 @@ Feature: Search tech record
     | expiryDate-1                | 30/01/2019   |
     | certificateNumber-1         | 12343489     |
     | testResult-1                | FAIL         |
+    #after searching, technical record with status "provisional" is displayed, if this vehicle does not have a technical record with status "current" in DynamoDB
     | statusCode-0                | Provisional  |
     | reasonForCreation-0         | Registration |
     | createdByName-0             | Tester       |
