@@ -21,7 +21,7 @@ public class LoginPageSteps {
     }
 
     @Step
-    public void iLoginWithAdminEmailAndPassword() throws IOException {
+    public void iLoginWithAdminEmailAndPassword() {
         EnvironmentVariables variables = SystemEnvironmentVariables.createEnvironmentVariables();
         Properties properties = null;
         String username = "";
@@ -29,7 +29,11 @@ public class LoginPageSteps {
         if (variables.getProperty("webdriver.driver")!="provided") {
             String FILE_PATH = "conf/environment.properties";
             properties = new Properties();
-            properties.load(Objects.requireNonNull(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH)));
+            try {
+                properties.load(Objects.requireNonNull(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH)));
+            } catch (IOException e) {
+                System.out.println("Could not load properties from file");
+            }
             username = properties.getProperty("app.username");
             password = properties.getProperty("app.password");
             loginPage.open();
