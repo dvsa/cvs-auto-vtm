@@ -57,4 +57,24 @@ public class HomePageSteps {
     public void waitUntilISeeErrorMessage(String arg0) {
         homePage.waitUntilISeeErrorMessage(arg0);
     }
+
+    @Step
+    public void navigateAwayFromVtmAndGoBack() {
+        homePage.navigateAwayFromVtmAndGoBack();
+    }
+
+    @Step
+    public void logoutFromVtmApp() {
+        homePage.logoutFromVtmApp();
+    }
+
+    @Step
+    public void refreshPage() {
+        homePage.refreshPage();
+    }
+
+    @Step
+    public void clearSessionStorage() {
+        homePage.clearSessionStorage();
+    }
 }

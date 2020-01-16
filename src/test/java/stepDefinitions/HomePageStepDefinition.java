@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -62,5 +63,26 @@ public class HomePageStepDefinition {
     @Then("^wait until I see error message \"([^\"]*)\"$")
     public void waitUntilISeeErrorMessage(String arg0) throws Throwable {
         homePageSteps.waitUntilISeeErrorMessage(arg0);
+    }
+
+    @When("^I navigate away from vtm app and then go back to vtm")
+    public void iNavigateAwayFromVtmAndGoBack() throws Throwable {
+        homePageSteps.navigateAwayFromVtmAndGoBack();
+    }
+
+    @When("^I logout from vtm app$")
+    public void iLogoutFromVtmApp() {
+        homePageSteps.logoutFromVtmApp();
+
+    }
+
+    @When("^I clear session storage$")
+    public void iClearSessionStorage() {
+        homePageSteps.clearSessionStorage();
+    }
+
+    @When("^refresh the page$")
+    public void refreshThePage() {
+        homePageSteps.refreshPage();
     }
 }
