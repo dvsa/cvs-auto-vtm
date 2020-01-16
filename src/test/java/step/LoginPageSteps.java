@@ -7,6 +7,7 @@ import org.apache.commons.exec.environment.EnvironmentUtils;
 import pages.LoginPage;
 import util.TypeLoader;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -20,26 +21,23 @@ public class LoginPageSteps {
     }
 
     @Step
-    public void iLoginWithAdminEmailAndPassword() {
+    public void iLoginWithAdminEmailAndPassword() throws IOException {
         EnvironmentVariables variables = SystemEnvironmentVariables.createEnvironmentVariables();
         Properties properties = null;
         String username = "";
         String password = "";
         if (variables.getProperty("webdriver.driver")!="provided") {
             String FILE_PATH = "conf/environment.properties";
-
-            try {
-                properties = new Properties();
-                properties.load(Objects.requireNonNull(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH)));
-
-            } catch (Exception e) {
-            }
+            properties = new Properties();
+            properties.load(Objects.requireNonNull(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH)));
             username = properties.getProperty("app.username");
             password = properties.getProperty("app.password");
+            loginPage.open();
         }
         else {
             username = TypeLoader.getAppUsername();
             password = TypeLoader.getAppPassword();
+            loginPage.setDefaultBaseUrl(System.getProperty("baseUrl"));
         }
 
         loginPage.open();
