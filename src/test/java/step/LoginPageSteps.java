@@ -36,13 +36,14 @@ public class LoginPageSteps {
             }
             username = properties.getProperty("app.username");
             password = properties.getProperty("app.password");
-            loginPage.open();
         }
         else {
             username = TypeLoader.getAppUsername();
             password = TypeLoader.getAppPassword();
+            loginPage.setDefaultBaseUrl(System.getProperty("baseUrl"));
         }
 
+        loginPage.open();
         loginPage.inputEmail(username);
         loginPage.goToPasswordScreen();
         loginPage.inputPassword(password);
