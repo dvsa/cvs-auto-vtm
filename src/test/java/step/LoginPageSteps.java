@@ -26,7 +26,7 @@ public class LoginPageSteps {
         Properties properties = null;
         String username = "";
         String password = "";
-        if (variables.getProperty("webdriver.driver")!="provided") {
+        if (!variables.getProperty("webdriver.driver").equals("provided")) {
             String FILE_PATH = "conf/environment.properties";
             properties = new Properties();
             try {
@@ -41,10 +41,8 @@ public class LoginPageSteps {
         else {
             username = TypeLoader.getAppUsername();
             password = TypeLoader.getAppPassword();
-            loginPage.setDefaultBaseUrl(System.getProperty("baseUrl"));
         }
 
-        loginPage.open();
         loginPage.inputEmail(username);
         loginPage.goToPasswordScreen();
         loginPage.inputPassword(password);
