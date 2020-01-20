@@ -23,14 +23,11 @@ public class LoginPage extends GenericPage {
     @FindBy(css = "div[role='heading']")
     private WebElementFacade header;
 
-    @FindBy(css = "#idA_PWD_SwitchToCredPicker")
-    private WebElementFacade options;
-
     @FindBy(css = "#loginHeader")
     private WebElementFacade loginHeader;
 
     public void inputEmail(String arg0){
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(options, "Sign-in option"));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Sign in"));
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.type(arg0);
     }

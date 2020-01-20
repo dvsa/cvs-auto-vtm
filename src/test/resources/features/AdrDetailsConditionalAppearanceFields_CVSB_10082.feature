@@ -17,7 +17,7 @@ Feature: Search tech record
   AC5 - User selects Battery list applicable
   AC6 - User selects Manufacturer brake declaration
   AC7 - User selects Brake endurance
-    When I search for vehicle with identifier "ABCDEFGH777777"
+    When I search for vehicle with identifier "P012301230000"
     Then wait until I see "Technical record"
     When I open "ADR" section
     Then I should see "Change technical record"

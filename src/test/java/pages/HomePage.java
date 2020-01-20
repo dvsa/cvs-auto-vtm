@@ -24,9 +24,9 @@ public class HomePage extends GenericPage {
     public void searchVehicle() {
         findElementByCss(SEARCH_BUTTON).click();
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
+                visibilityOfElementLocated(By.cssSelector("h1.title")));
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-change-btn")), "Change technical record"));
+                textToBePresentInElement(getDriver().findElement(By.cssSelector("h1.title")), "Technical record"));
     }
 
     public void elementWithIdShouldBePresent(String id) {
@@ -52,7 +52,7 @@ public class HomePage extends GenericPage {
     }
 
     public void navigateAwayFromVtmAndGoBack() {
-        if (getDriver().getCurrentUrl().contains("localhost")) {
+        if (getDriver().getCurrentUrl().indexOf("localhost")!=-1) {
             homePageUrl = getDriver().getCurrentUrl();
         }
         else {
