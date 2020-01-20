@@ -9,12 +9,12 @@ Feature: Search tech record
     And element with id "searchIdentifier" should be present
 
 
-  Scenario: Search using vin for HGV with current, provisional and archived tech records
+  Scenario: User add specific adr details like UN number, subsequent inspection, guidance not or dangerous good
   AC1 - User clicks the call to action to "Add a UN number" (dynamo array = productListUnNo[])
   AC2 - User clicks the call to action to "Add a subsequent inspection" (dynamo array = tc3Details[])
   AC3 - User clicks the call to action to "Add a guidance note" (dynamo array = number[])
   AC4 - User clicks the call to action to "Add a dangerous good" (dynamo array = permittedDangerousGoods[])
-    When I search for vehicle with identifier "P012301230000"
+    When I search for vehicle with identifier "ABCDEFGH777777"
     Then wait until I see "Technical record"
     When I open "ADR" section
     Then I should see "Change technical record"

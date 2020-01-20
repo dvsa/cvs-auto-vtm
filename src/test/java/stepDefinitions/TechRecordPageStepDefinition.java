@@ -19,10 +19,14 @@ public class TechRecordPageStepDefinition {
     TechRecordPageSteps techRecordPageSteps;
 
     @Then("^hgv tech record fields should have values$")
-    public void hgvTechRecordFieldShouldHaveValue(DataTable dt) {
+    public void hgvTechRecordFieldShouldHaveValue(DataTable dt) throws Exception {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
-            Assert.assertEquals(list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
+            try {
+                Assert.assertEquals(list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
+            } catch (ComparisonFailure e) {
+                throw new ComparisonFailure("Value for field " + list.get(i).get("Field") + " is not the expected one", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
+            }
         }
     }
 
