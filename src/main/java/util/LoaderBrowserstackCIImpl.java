@@ -10,9 +10,9 @@ public class LoaderBrowserstackCIImpl implements Loader {
     private final static String username = System.getenv("BROWSERSTACK_USERNAME");
     private final static String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
     private final static String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
-    private final static String browserstackBrowser = System.getenv("BROWSERSTACK_BROWSER");
-    private final static String browserstackBrowserVersion = System.getenv("BROWSERSTACK_BROWSER_VERSION");
-    private final static String browserstackSeleniumVersion = System.getenv("BROWSERSTACK_SELENIUM_VERSION");
+    private final static String browserstackBrowser = System.getProperty("BROWSERSTACK_BROWSER");
+    private final static String browserstackBrowserVersion = System.getProperty("BROWSERSTACK_BROWSER_VERSION");
+    private final static String browserstackSeleniumVersion = System.getProperty("BROWSERSTACK_SELENIUM_VERSION");
 
 
     @Override

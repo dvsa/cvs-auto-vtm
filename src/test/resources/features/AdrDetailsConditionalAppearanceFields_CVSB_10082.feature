@@ -8,7 +8,7 @@ Feature: Search tech record
     Then I should see "Vehicle Testing Management"
     And element with id "searchIdentifier" should be present
 
-  @skip
+
   Scenario: Check adr fields appear under certain conditions
   AC1 - Selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "CompatilibityGroupJ" appear
   AC2 - User can only select statement OR product list
@@ -17,7 +17,7 @@ Feature: Search tech record
   AC5 - User selects Battery list applicable
   AC6 - User selects Manufacturer brake declaration
   AC7 - User selects Brake endurance
-    When I search for vehicle with identifier "P012301230000"
+    When I search for vehicle with identifier "ABCDEFGH777777"
     Then wait until I see "Technical record"
     When I open "ADR" section
     Then I should see "Change technical record"

@@ -55,10 +55,10 @@ public class TechRecordPage extends GenericPage {
     private static final String BRAKE_ENDURANCE_DECLARATION = "//input[@id='weight']/parent::div";
     private static final String ADD_DANGEROUS_GOOD_LINK = "a.add-dangerous-note";
     private static final String ADD_GUIDANCE_NOTE_LINK = "a.add-guidance-note";
-    private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-inspection-details + p > a";
+    private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-inspection-details+p>a";
     private static final String ADD_UN_NUMBER_LINK = "a.add-a-un-number";
-    private static final String CUSTOM_DANGEROUS_GOOD_INPUT = "a.add-dangerous-note + input";
-    private static final String GUIDANCE_NOTE_INPUT = "#addGuidanceNote";
+    private static final String CUSTOM_DANGEROUS_GOOD_INPUT = "a.add-dangerous-note+input";
+    private static final String GUIDANCE_NOTE_INPUT = "a.add-guidance-note+input";
     private static final String NEW_UN_NUMBER_INPUT = "#adrDetails\\.productListUnNo\\.0";
 
 
@@ -69,8 +69,7 @@ public class TechRecordPage extends GenericPage {
         Actions actions = new Actions(getDriver());
         actions.moveToElement(element);
         actions.perform();
-        String techRecordFieldValue = element.getText();
-        return techRecordFieldValue;
+        return element.getText();
     }
 
     public void openAllSections() {
@@ -432,10 +431,12 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void inputCustomDangerousGood(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)));
         getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).sendKeys(arg0);
     }
 
     public void inputCustomGuidanceNote(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_INPUT)));
         getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).sendKeys(arg0);
     }
 

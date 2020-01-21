@@ -16,7 +16,7 @@
         <serenity.cucumber.version>1.9.45</serenity.cucumber.version>
         <sl4j.version>1.7.28</sl4j.version>
         <encoding>UTF-8</encoding>
-        <parallel.tests>4</parallel.tests>
+        <parallel.tests>1</parallel.tests>
     </properties>
 
     <dependencies>
