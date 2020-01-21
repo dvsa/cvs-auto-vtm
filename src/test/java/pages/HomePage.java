@@ -22,6 +22,8 @@ public class HomePage extends GenericPage {
     }
 
     public void searchVehicle() {
+        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+                elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
         findElementByCss(SEARCH_BUTTON).click();
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
                 visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
