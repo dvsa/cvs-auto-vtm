@@ -9,7 +9,7 @@ Feature: Search tech record
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
 
-  @skip
+
   Scenario: Search using full vin
   AC2 - User Searches For Technical Records Using Full VIN
   AC4 - User Searches For Technical Records Using Partial VIN
@@ -40,7 +40,7 @@ Feature: Search tech record
     When I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
 
-  @skip
+
   Scenario: Search technical record negative scenarios
   AC8 - User Searches For Technical Records Using Something That Is Not A Valid VIN/Partial VIN/Primary VRM/Trailer ID
   AC9 - User Searches For Technical Records Without Entering Any Search Criteria

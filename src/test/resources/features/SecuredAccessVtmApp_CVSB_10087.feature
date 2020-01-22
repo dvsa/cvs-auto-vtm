@@ -3,7 +3,7 @@ Feature: Search tech record
   After I search for a tech record
   I should be able to add specific adr details
 
-  @skip
+
   Scenario: As the DVSA, we want VTM to be securely accessible so that it cannot be accessed by unauthorised users
   AC1 - User Is Not Authenticated Via AD, And Is Therefore Presented With The AD Authorisation Screen (VTM Login Screen)
   AC2 - User Enters AD Credentials, And Is Logged Into VTM
@@ -18,7 +18,7 @@ Feature: Search tech record
     #AC3
     When I navigate away from vtm app and then go back to vtm
     Then I should see "Search for a technical record"
-    #AC8
+    #AC8 - closing the browser is equivalent to clearing the session storage
     When I clear session storage
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "CT70000"
