@@ -8,7 +8,7 @@ Feature: Search tech record
     Then I should see "Vehicle Testing Management"
     And element with id "searchIdentifier" should be present
 
-  @bug @CVSB-11466
+  @bug @CVSB-11466 @skip
   Scenario: Check adr fields appear under certain conditions
   AC1 - Selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "CompatilibityGroupJ" appear
   AC2 - User can only select statement OR product list
