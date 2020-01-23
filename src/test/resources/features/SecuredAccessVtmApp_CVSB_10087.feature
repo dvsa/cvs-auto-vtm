@@ -3,7 +3,7 @@ Feature: Search tech record
   After I search for a tech record
   I should be able to add specific adr details
 
-  @skip
+
   Scenario: As the DVSA, we want VTM to be securely accessible so that it cannot be accessed by unauthorised users
   AC1 - User Is Not Authenticated Via AD, And Is Therefore Presented With The AD Authorisation Screen (VTM Login Screen)
   AC2 - User Enters AD Credentials, And Is Logged Into VTM
