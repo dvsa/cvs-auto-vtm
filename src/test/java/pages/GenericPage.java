@@ -2,8 +2,10 @@ package pages;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,6 +25,11 @@ public class GenericPage extends PageObject{
     public void checkTextIsPresentInPage(String text) {
         new WebDriverWait(getDriver(), 5).
                 until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
+    }
+
+    public void checkTextIsNotPresentInPage(String text) {
+        String bodyText = getDriver().findElement(By.tagName("body")).getText();
+        Assert.assertFalse("Text was found!", bodyText.contains(text));
     }
 
     public void waitForPageToLoad() {
@@ -49,5 +56,53 @@ public class GenericPage extends PageObject{
         jsExecutor.executeScript("localStorage.removeItem('adal.token.renew.status');");
         getDriver().get("https://login.microsoftonline.com/dvsagov.onmicrosoft.com/oauth2/logout");
         ThucydidesWebDriverSupport.clearSession();
+    }
+
+    protected WebElement findElementById(String id) {
+        System.out.println("Searching for element: " + id);
+        return getDriver().findElement(By.id(id));
+    }
+
+    protected WebElement findElementByClassName(String className) {
+        return getDriver().findElement(By.className(className));
+    }
+
+    protected WebElement findElementByXpath(String xpath) {
+        System.out.println("Finding element: " + xpath);
+        return getDriver().findElement(By.xpath(xpath));
+    }
+
+    protected WebElement findElementByCss(String css) {
+        System.out.println("Finding element: " + css);
+        return getDriver().findElement(By.cssSelector(css));
+    }
+
+    public void waitUntilISeeErrorMessage(String text) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span#name-error")));
+        new WebDriverWait(getDriver(), 10).
+                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("span#name-error"), text));
+    }
+
+    public void selectCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")));
+        if (!(getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).isSelected())) {
+            getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).click();
+        }
+    }
+
+    public void deselectCheckbox(String arg0) {
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")));
+        if (getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).isSelected()) {
+            getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).click();
+        }
+    }
+
+    public void refreshPage() {
+        getDriver().navigate().refresh();
+    }
+
+    public void clearSessionStorage() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
+        jsExecutor.executeScript("window.sessionStorage.clear()");
     }
 }

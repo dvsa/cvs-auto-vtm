@@ -16,7 +16,7 @@
         <serenity.cucumber.version>1.9.45</serenity.cucumber.version>
         <sl4j.version>1.7.28</sl4j.version>
         <encoding>UTF-8</encoding>
-        <parallel.tests>4</parallel.tests>
+        <parallel.tests>3</parallel.tests>
     </properties>
 
     <dependencies>
@@ -89,51 +89,25 @@
         <profile>
             <id>CI-Browserstack</id>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                    </resource>
+                </resources>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                </testResources>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M3</version>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>net.serenity-bdd.maven.plugins</groupId>
-                        <artifactId>serenity-maven-plugin</artifactId>
-                        <version>2.0.71</version>
-                        <executions>
-                            <execution>
-                                <id>serenity-reports</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>aggregate</goal>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>3.0.0-M3</version>
-                        <configuration>
-                            <includes>
-                                <include>**/*Test.java</include>
-                                <include>**/Test*.java</include>
-                                <include>**/*TestSuite.java</include>
-                            </includes>
-                            <forkCount>${parallel.tests}</forkCount>
-                            <testFailureIgnore>true</testFailureIgnore>
-                            <systemPropertyVariables>
-                                <environment>CI</environment>
-                            </systemPropertyVariables>
-                        </configuration>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
+                                    <goal>test-jar</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -144,6 +118,14 @@
                         <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M3</version>
+                        <configuration>
+                            <skip>true</skip>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -165,6 +147,46 @@
                                     </glue>
                                     <parallelScheme>FEATURE</parallelScheme>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>3.0.0-M3</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*Test.java</include>
+                                <include>**/Test*.java</include>
+                                <include>**/*TestSuite.java</include>
+                                <include>**/*CVSB*.java</include>
+                            </includes>
+                            <forkCount>${parallel.tests}</forkCount>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <systemPropertyVariables>
+                                <environment>CI</environment>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.serenity-bdd.maven.plugins</groupId>
+                        <artifactId>serenity-maven-plugin</artifactId>
+                        <version>${serenity.maven.version}</version>
+                        <executions>
+                            <execution>
+                                <id>serenity-reports</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>aggregate</goal>
+                                    <goal>check</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -245,6 +267,7 @@
                         <include>**/*Test.java</include>
                         <include>**/Test*.java</include>
                         <include>**/*TestSuite.java</include>
+                        <include>**/*CVSB*.java</include>
                     </includes>
                     <forkCount>${parallel.tests}</forkCount>
                     <testFailureIgnore>true</testFailureIgnore>

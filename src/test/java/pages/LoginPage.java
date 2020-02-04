@@ -2,6 +2,8 @@ package pages;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,12 +23,15 @@ public class LoginPage extends GenericPage {
     @FindBy(css = "div[role='heading']")
     private WebElementFacade header;
 
+    @FindBy(css = "#idA_PWD_SwitchToCredPicker")
+    private WebElementFacade options;
+
     @FindBy(css = "#loginHeader")
     private WebElementFacade loginHeader;
 
     public void inputEmail(String arg0){
-        waitForTextToAppear(header, "Sign in");
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(emailInput));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(options, "Sign-in option"));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.type(arg0);
     }
 
@@ -35,14 +40,9 @@ public class LoginPage extends GenericPage {
     }
 
     public void inputPassword(String arg0){
-        try {
-            waitForTextToAppear(loginHeader, "Enter password");
-        }
-        catch (org.openqa.selenium.StaleElementReferenceException ex) {
-            new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(passwordInput));
-            passwordInput.type(arg0);
-        }
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOf(passwordInput));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.visibilityOf(passwordInput));
         passwordInput.type(arg0);
     }
 
@@ -53,7 +53,7 @@ public class LoginPage extends GenericPage {
 
     public void additionalSignIn() {
         waitForTextToAppear(header, "Stay signed in?");
-        new WebDriverWait(getDriver(), 3).until(ExpectedConditions.elementToBeClickable(signIn));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(signIn));
         signIn.click();
     }
 }
