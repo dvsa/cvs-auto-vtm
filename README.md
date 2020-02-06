@@ -1,7 +1,7 @@
 # cvs-auto-vtm
 
 A. For running tests locally
-* Create a serenity.conf(do not add it to give versioning) file in src/test/resources containing the following
+* Create a serenity.conf(do not add it to git versioning) file in src/test/resources containing the following
 ````
 webdriver {
   driver = chrome
