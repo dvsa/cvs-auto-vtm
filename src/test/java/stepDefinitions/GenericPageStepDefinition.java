@@ -60,4 +60,9 @@ public class GenericPageStepDefinition {
     public void refreshThePage() {
         genericPageSteps.refreshPage();
     }
+
+    @Then("^wait until I see \"([^\"]*)\"$")
+    public void waitUntilISee(String arg0) {
+        genericPageSteps.waitForTextToAppear(arg0);
+    }
 }

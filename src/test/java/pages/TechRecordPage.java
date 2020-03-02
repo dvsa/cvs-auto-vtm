@@ -45,9 +45,9 @@ public class TechRecordPage extends GenericPage {
     private static final String EXPLOSIVES_2_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 2)')]/preceding-sibling::input";
     private static final String EXPLOSIVES_3_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 3)')]/preceding-sibling::input";
     private static final String STATEMENT_FIELDS = "//input[@id='isStatement']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
-    private static final String PRODUCT_LIST_FIELDS = "//input[@id='isProductListRefNo']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
-    private static final String STATEMENT = "#isStatement";
-    private static final String PRODUCT_LIST = "#isProductListRefNo";
+    private static final String PRODUCT_LIST_FIELDS = "//input[@value='isProductListRefNo']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
+    private static final String STATEMENT = "[value='isStatement']";
+    private static final String PRODUCT_LIST = "[value='isProductListRefNo']";
     private static final String VEHICLE_TYPE = "#adrDetails\\.type";
     private static final String BATTERY_LIST_APPLICABLE = "#applicable";
     private static final String BATTERY_LIST_NOT_APPLICABLE = "#notApplicable";
