@@ -5,8 +5,8 @@ Feature: Search tech record
 
   Background:
     Given I login with admin credentials
-    Then I should see "Vehicle Testing Management"
-    And element with id "searchIdentifier" should be present
+    Then I should see "Select activity"
+    And element with id "test-create-new-vehicle" should be present
 
 
   Scenario: User add specific adr details like UN number, subsequent inspection, guidance not or dangerous good
@@ -14,6 +14,8 @@ Feature: Search tech record
   AC2 - User clicks the call to action to "Add a subsequent inspection" (dynamo array = tc3Details[])
   AC3 - User clicks the call to action to "Add a guidance note" (dynamo array = number[])
   AC4 - User clicks the call to action to "Add a dangerous good" (dynamo array = permittedDangerousGoods[])
+    When I go to search tech record page
+    Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     When I search for vehicle with identifier "ABCDEFGH777777"
     Then wait until I see "Technical record"
     When I open "ADR" section

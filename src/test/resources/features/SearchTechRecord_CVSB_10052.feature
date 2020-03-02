@@ -7,7 +7,7 @@ Feature: Search tech record
     Then I should see "Vehicle Testing Management"
     And I should see "Search for a technical record"
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
-    And element with id "searchIdentifier" should be present
+    And element with id "test-create-new-vehicle" should be present
 
 
   Scenario: Search using full vin
@@ -48,13 +48,13 @@ Feature: Search tech record
   AC11 - VRM search returns multiple vehicles
     #search using string that is not a valid VIN/Partial VIN/Primary VRM/Trailer ID
     When I search for vehicle using wrong identifier "P111222333444"
-    Then wait until I see error message "Vehicle not found, check the vehicle registration mark, trailer ID or vehicle identification number"
+    Then wait until I see search error message "Vehicle not found, check the vehicle registration mark, trailer ID or vehicle identification number"
     #partial VIN search returns duplicated full VINs
     When I search for vehicle using wrong identifier "678413"
-    Then wait until I see error message "Multiple vehicles found, search using the full vehicle identification number"
+    Then wait until I see search error message "Multiple vehicles found, search using the full vehicle identification number"
     #search without entering any search criteria
     When I search for vehicle using wrong identifier ""
-    Then wait until I see error message "Enter a vehicle registration mark, trailer ID or vehicle identification number"
+    Then wait until I see search error message "Enter a vehicle registration mark, trailer ID or vehicle identification number"
     #VRM search returns multiple vehicles
     Given I search for vehicle using wrong identifier "CT70VRL"
-    Then wait until I see error message "Multiple vehicles found, search using the full vehicle identification number"
+    Then wait until I see search error message "Multiple vehicles found, search using the full vehicle identification number"

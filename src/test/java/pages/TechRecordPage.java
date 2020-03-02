@@ -1,7 +1,5 @@
 package pages;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,6 +9,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class TechRecordPage extends GenericPage {
 
@@ -100,6 +101,10 @@ public class TechRecordPage extends GenericPage {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS))));
         getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)).click();
         waitForTextToAppear("Open all");
+    }
+
+    public void goBackToSearchPage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
     }
 
     public void openSection(String arg0) throws Exception {

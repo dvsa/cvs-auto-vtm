@@ -2,6 +2,7 @@ package pages;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericPage extends PageObject{
+
+    String homePageUrl = null;
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -77,12 +80,6 @@ public class GenericPage extends PageObject{
         return getDriver().findElement(By.cssSelector(css));
     }
 
-    public void waitUntilISeeErrorMessage(String text) {
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span#name-error")));
-        new WebDriverWait(getDriver(), 10).
-                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("span#name-error"), text));
-    }
-
     public void selectCheckbox(String arg0) {
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")));
         if (!(getDriver().findElement(By.xpath("//label[contains(text(),'" + arg0 + "')]/preceding-sibling::input")).isSelected())) {
@@ -104,5 +101,27 @@ public class GenericPage extends PageObject{
     public void clearSessionStorage() {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
         jsExecutor.executeScript("window.sessionStorage.clear()");
+    }
+
+    public void elementWithIdShouldBePresent(String id) {
+        Assert.assertNotNull(findElementById(id));
+    }
+
+    public void navigateAwayFromVtmAndGoBack() {
+        if (getDriver().getCurrentUrl().contains("localhost")) {
+            homePageUrl = getDriver().getCurrentUrl();
+        }
+        else {
+            int pos = StringUtils.ordinalIndexOf(getDriver().getCurrentUrl(), "/", 4);
+            if (pos != -1) {
+                homePageUrl = getDriver().getCurrentUrl().substring(0, pos) + "/index.html";
+            }
+            else {
+                homePageUrl = getDriver().getCurrentUrl() + "/index.html";
+            }
+        }
+        getDriver().get("https://www.gov.uk/government/organisations/driver-and-vehicle-standards-agency");
+        waitForTextToAppear("Driver and Vehicle Standards Agency");
+        getDriver().get(homePageUrl);
     }
 }

@@ -6,7 +6,7 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Vehicle Testing Management"
-    And element with id "searchIdentifier" should be present
+    And element with id "test-create-new-vehicle" should be present
 
   @bug @CVSB-11466
   Scenario: Check adr fields appear under certain conditions

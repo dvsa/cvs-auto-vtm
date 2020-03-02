@@ -1,7 +1,6 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -41,11 +40,6 @@ public class TechRecordPageStepDefinition {
                 throw new ComparisonFailure("Expected value for field " + list.get(i).get("Field") + " was not found", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
             }
         }
-    }
-
-    @Then("^wait until I see \"([^\"]*)\"$")
-    public void waitUntilISee(String arg0) throws Throwable {
-        techRecordPageSteps.waitForTextToAppear(arg0);
     }
 
     @Then("^I open all sections$")
@@ -89,12 +83,12 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I select \"([^\"]*)\" from tank statement$")
-    public void iSelectFromTankStatement(String arg0) throws Throwable {
+    public void iSelectFromTankStatement(String arg0) {
         techRecordPageSteps.iSelectFromTankStatement(arg0);
     }
 
     @Then("^I should see \"([^\"]*)\" statement field$")
-    public void iShouldSeeStatementField(String arg0) throws Throwable {
+    public void iShouldSeeStatementField(String arg0) {
         techRecordPageSteps.iShouldSeeStatementField(arg0);
     }
 
@@ -104,7 +98,7 @@ public class TechRecordPageStepDefinition {
     }
 
     @Then("^I should see \"([^\"]*)\" product list field$")
-    public void iShouldSeeProductListField(String arg0) throws Throwable {
+    public void iShouldSeeProductListField(String arg0) {
         techRecordPageSteps.iShouldSeeProductListField(arg0);
     }
 
@@ -114,17 +108,17 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I select \"([^\"]*)\" vehicle type$")
-    public void iSelectVehicleType(String arg0) throws Throwable {
+    public void iSelectVehicleType(String arg0) {
         techRecordPageSteps.iSelectVehicleType(arg0);
     }
 
     @When("^I select \"([^\"]*)\" from battery list applicable$")
-    public void iSelectFromBatteryListApplicable(String arg0) throws Throwable {
+    public void iSelectFromBatteryListApplicable(String arg0) {
         techRecordPageSteps.iSelectFromBatteryListApplicable(arg0);
     }
 
     @Then("^I should see \"([^\"]*)\" battery list field$")
-    public void iShouldSeeBatteryListField(String arg0) throws Throwable {
+    public void iShouldSeeBatteryListField(String arg0) {
         techRecordPageSteps.iShouldSeeBatteryListField(arg0);
     }
 
@@ -134,32 +128,32 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I select \"([^\"]*)\" checkbox$")
-    public void iSelectCheckbox(String arg0) throws Throwable {
+    public void iSelectCheckbox(String arg0) {
         techRecordPageSteps.iSelectCheckbox(arg0);
     }
 
     @When("^I deselect \"([^\"]*)\" checkbox$")
-    public void iDeselectCheckbox(String arg0) throws Throwable {
+    public void iDeselectCheckbox(String arg0) {
         techRecordPageSteps.iDeselectCheckbox(arg0);
     }
 
     @Then("^I should see \"([^\"]*)\" manufacturer brake declaration field$")
-    public void iShouldSeeManufacturerBrakeDeclarationField(String arg0) throws Throwable {
+    public void iShouldSeeManufacturerBrakeDeclarationField(String arg0) {
         techRecordPageSteps.iShouldSeeManufacturerBrakeDeclarationField(arg0);
     }
 
     @Then("^I should not see \"([^\"]*)\" manufacturer brake declaration field$")
-    public void iShouldNotSeeManufacturerBrakeDeclarationField(String arg0) throws Throwable {
+    public void iShouldNotSeeManufacturerBrakeDeclarationField(String arg0) {
         techRecordPageSteps.iShouldNotSeeManufacturerBrakeDeclarationField(arg0);
     }
 
     @Then("^I should see \"([^\"]*)\" brake endurance field$")
-    public void iShouldSeeBrakeEnduranceField(String arg0) throws Throwable {
+    public void iShouldSeeBrakeEnduranceField(String arg0) {
         techRecordPageSteps.iShouldSeeBrakeEndurance(arg0);
     }
 
     @Then("^I should not see \"([^\"]*)\" brake endurance field$")
-    public void iShouldNotSeeBrakeEnduranceField(String arg0) throws Throwable {
+    public void iShouldNotSeeBrakeEnduranceField(String arg0) {
         techRecordPageSteps.iShouldNotSeeBrakeEndurance(arg0);
     }
 
@@ -169,42 +163,42 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I select \"([^\"]*)\" custom dangerous good$")
-    public void iSelectCustomDangerousGood(String arg0) throws Throwable {
+    public void iSelectCustomDangerousGood(String arg0) {
         techRecordPageSteps.iSelectCustomDangerousGoodCheckbox(arg0);
     }
 
     @When("^I deselect \"([^\"]*)\" custom dangerous good$")
-    public void iDeselectCustomDangerousGood(String arg0) throws Throwable {
+    public void iDeselectCustomDangerousGood(String arg0) {
         techRecordPageSteps.iDeselectCustomDangerousGoodCheckbox(arg0);
     }
 
     @When("^I input \"([^\"]*)\" custom dangerous good$")
-    public void iInputCustomDangerousGood(String arg0) throws Throwable {
+    public void iInputCustomDangerousGood(String arg0) {
         techRecordPageSteps.iInputCustomDangerousGood(arg0);
     }
 
     @When("^I input \"([^\"]*)\" custom guidance note$")
-    public void iInputCustomGuidanceNote(String arg0) throws Throwable {
+    public void iInputCustomGuidanceNote(String arg0) {
         techRecordPageSteps.iInputCustomGuidanceNote(arg0);
     }
 
     @When("^I select \"([^\"]*)\" custom guidance note$")
-    public void iSelectCustomGuidanceNote(String arg0) throws Throwable {
+    public void iSelectCustomGuidanceNote(String arg0) {
         techRecordPageSteps.iSelectCustomGuidanceNoteCheckbox(arg0);
     }
 
     @When("^I deselect \"([^\"]*)\" custom guidance note$")
-    public void iDeselectCustomGuidanceNote(String arg0) throws Throwable {
+    public void iDeselectCustomGuidanceNote(String arg0) {
         techRecordPageSteps.iDeselectCustomGuidanceNoteCheckbox(arg0);
     }
 
     @When("^I input \"([^\"]*)\" as new UN number$")
-    public void iInputNewUnNumber(String arg0) throws Throwable {
+    public void iInputNewUnNumber(String arg0) {
         techRecordPageSteps.iInputNewUnNumber(arg0);
     }
 
     @When("^I input \"([^\"]*)\" for the \"([^\"]*)\" UN number$")
-    public void iInputTheUnNumber(String unNumber, String ordinal) throws Throwable {
+    public void iInputTheUnNumber(String unNumber, String ordinal) {
         techRecordPageSteps.iInputForTheUnNumber(unNumber, ordinal);
     }
 
@@ -214,7 +208,7 @@ public class TechRecordPageStepDefinition {
     }
 
     @Then("^I should see \"([^\"]*)\" section heading$")
-    public void iShouldSeeSectionHeading(String arg0) throws Throwable {
+    public void iShouldSeeSectionHeading(String arg0) {
         techRecordPageSteps.iShouldSeeSectionHeading(arg0);
     }
 }

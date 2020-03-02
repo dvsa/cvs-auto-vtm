@@ -11,14 +11,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-public class LoginPageSteps {
+public class LoginPageSteps extends GenericPageSteps {
 
     LoginPage loginPage;
-
-    @Step
-    public void clearSession() {
-        loginPage.clearSession();
-    }
 
     @Step
     public void iLoginWithAdminEmailAndPassword() {
