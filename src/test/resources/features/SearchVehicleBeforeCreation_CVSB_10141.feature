@@ -19,18 +19,4 @@ Feature: Search for vehicle before creation
   AC6 - User cannot proceed without entering a VRM on a HGV/PSV (VRM is only mandatory on HGV/PSV)
   AC7 - User attempts to proceed without entering multiple mandatory fields (for example, both vehicle type and VIN)
     #AC1
-    Given I login with admin credentials
-    Then I should see "Select activity"
-    And I should see "Search for a technical record" hyperlink
-    And the "Search for a technical record" hyperlink description is correct
-    And I should see "Create a new technical record" hyperlink
-    And the "Create a new technical record" hyperlink description is correct
-    #AC2
-    When I go to search tech record page
-    And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
-    And element with id "searchIdentifier" should be present
-    When I go back to home page
-    #AC3
-    And I go to create tech record page
-    And I should see "Create new technical record"
-    And element with id "test-vin" should be present
+    
