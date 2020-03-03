@@ -23,13 +23,13 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void openSection(String arg0) throws Exception {
-        techRecordPage.openSection(arg0);
+    public void openSection(String section) throws Exception {
+        techRecordPage.openSection(section);
     }
 
     @Step
-    public void closeSection(String arg0) throws Exception {
-        techRecordPage.closeSection(arg0);
+    public void closeSection(String section) throws Exception {
+        techRecordPage.closeSection(section);
     }
 
     @Step
@@ -43,43 +43,43 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void selectDangerousGoodCheckbox(String arg0) throws Exception {
-        techRecordPage.selectDangerousGoodCheckbox(arg0);
+    public void selectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+        techRecordPage.selectDangerousGoodCheckbox(dangerousGood);
     }
 
     @Step
-    public void deselectDangerousGoodCheckbox(String arg0) throws Exception {
-        techRecordPage.deselectDangerousGoodCheckbox(arg0);
+    public void deselectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+        techRecordPage.deselectDangerousGoodCheckbox(dangerousGood);
     }
 
     @Step
-    public void iSelectFromTankStatement(String arg0) {
-        techRecordPage.selectFromTankStatement(arg0);
+    public void iSelectFromTankStatement(String option) {
+        techRecordPage.selectFromTankStatement(option);
     }
 
     @Step
-    public void iShouldSeeStatementField(String arg0) {
-        techRecordPage.checkStatementField(arg0);
+    public void iShouldSeeStatementField(String field) {
+        techRecordPage.checkStatementField(field);
     }
 
     @Step
-    public void iShouldSeeProductListField(String arg0) {
-        techRecordPage.checkProductListField(arg0);
+    public void iShouldSeeProductListField(String field) {
+        techRecordPage.checkProductListField(field);
     }
 
     @Step
-    public void iSelectVehicleType(String arg0) {
-        techRecordPage.selectVehicleType(arg0);
+    public void iSelectVehicleType(String vehicleType) {
+        techRecordPage.selectVehicleType(vehicleType);
     }
 
     @Step
-    public void iSelectFromBatteryListApplicable(String arg0) {
-        techRecordPage.selectFromBatteryListApplicable(arg0);
+    public void iSelectFromBatteryListApplicable(String option) {
+        techRecordPage.selectFromBatteryListApplicable(option);
     }
 
     @Step
-    public void iShouldSeeBatteryListField(String arg0) {
-        techRecordPage.checkBatteryListApplicableField(arg0);
+    public void iShouldSeeBatteryListField(String field) {
+        techRecordPage.checkBatteryListApplicableField(field);
     }
 
     @Step
@@ -88,33 +88,33 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iSelectCheckbox(String arg0) {
-        techRecordPage.selectCheckbox(arg0);
+    public void iSelectCheckbox(String checkbox) {
+        techRecordPage.selectCheckbox(checkbox);
     }
 
     @Step
-    public void iDeselectCheckbox(String arg0) {
-        techRecordPage.deselectCheckbox(arg0);
+    public void iDeselectCheckbox(String checkbox) {
+        techRecordPage.deselectCheckbox(checkbox);
     }
 
     @Step
-    public void iShouldSeeManufacturerBrakeDeclarationField(String arg0) {
-        techRecordPage.checkManufacturerBrakeDeclarationField(arg0);
+    public void iShouldSeeManufacturerBrakeDeclarationField(String field) {
+        techRecordPage.checkManufacturerBrakeDeclarationField(field);
     }
 
     @Step
-    public void iShouldNotSeeManufacturerBrakeDeclarationField(String arg0) {
-        techRecordPage.checkManufacturerBrakeDeclarationFieldNotPresent(arg0);
+    public void iShouldNotSeeManufacturerBrakeDeclarationField(String field) {
+        techRecordPage.checkManufacturerBrakeDeclarationFieldNotPresent(field);
     }
 
     @Step
-    public void iShouldSeeBrakeEndurance(String arg0) {
-        techRecordPage.checkBrakeEnduranceField(arg0);
+    public void iShouldSeeBrakeEndurance(String text) {
+        techRecordPage.checkBrakeEnduranceField(text);
     }
 
     @Step
-    public void iShouldNotSeeBrakeEndurance(String arg0) {
-        techRecordPage.checkBrakeEnduranceFieldNotPresent(arg0);
+    public void iShouldNotSeeBrakeEndurance(String text) {
+        techRecordPage.checkBrakeEnduranceFieldNotPresent(text);
     }
 
     @Step
@@ -128,43 +128,43 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iClickLink(String arg0) throws  Exception {
-        techRecordPage.clickLink(arg0);
+    public void iClickLink(String link) throws  Exception {
+        techRecordPage.clickLink(link);
     }
 
     @Step
-    public void iSelectCustomDangerousGoodCheckbox(String arg0) {
-        techRecordPage.selectCustomDangerousGoodCheckbox(arg0);
+    public void iSelectCustomDangerousGoodCheckbox(String customDangerousGood) {
+        techRecordPage.selectCustomDangerousGoodCheckbox(customDangerousGood);
     }
 
     @Step
-    public void iDeselectCustomDangerousGoodCheckbox(String arg0) {
-        techRecordPage.deselectCustomDangerousGoodCheckbox(arg0);
+    public void iDeselectCustomDangerousGoodCheckbox(String customDangerousGood) {
+        techRecordPage.deselectCustomDangerousGoodCheckbox(customDangerousGood);
     }
 
     @Step
-    public void iInputCustomDangerousGood(String arg0) {
-        techRecordPage.inputCustomDangerousGood(arg0);
+    public void iInputCustomDangerousGood(String customDangerousGood) {
+        techRecordPage.inputCustomDangerousGood(customDangerousGood);
     }
 
     @Step
-    public void iInputCustomGuidanceNote(String arg0) {
-        techRecordPage.inputCustomGuidanceNote(arg0);
+    public void iInputCustomGuidanceNote(String note) {
+        techRecordPage.inputCustomGuidanceNote(note);
     }
 
     @Step
-    public void iSelectCustomGuidanceNoteCheckbox(String arg0) {
-        techRecordPage.selectCustomGuidanceNoteCheckbox(arg0);
+    public void iSelectCustomGuidanceNoteCheckbox(String note) {
+        techRecordPage.selectCustomGuidanceNoteCheckbox(note);
     }
 
     @Step
-    public void iDeselectCustomGuidanceNoteCheckbox(String arg0) {
-        techRecordPage.deselectCustomGuidanceNoteCheckbox(arg0);
+    public void iDeselectCustomGuidanceNoteCheckbox(String note) {
+        techRecordPage.deselectCustomGuidanceNoteCheckbox(note);
     }
 
     @Step
-    public void iInputNewUnNumber(String arg0) {
-        techRecordPage.inputUnNewNumber(arg0);
+    public void iInputNewUnNumber(String unNumber) {
+        techRecordPage.inputUnNewNumber(unNumber);
     }
 
     @Step
@@ -178,7 +178,7 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iShouldSeeSectionHeading(String arg0) {
-        techRecordPage.iShouldSeeSectionHeading(arg0);
+    public void iShouldSeeSectionHeading(String heading) {
+        techRecordPage.iShouldSeeSectionHeading(heading);
     }
 }

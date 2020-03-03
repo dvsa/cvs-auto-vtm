@@ -3,6 +3,8 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
+
 public class HomePage extends GenericPage {
 
     private static final String SEARCH_FOR_TECHNICAL_RECORD_LINK = "#test-create-new-vehicle";
