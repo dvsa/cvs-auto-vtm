@@ -44,16 +44,16 @@ public class TechRecordPage extends GenericPage {
     private static final String HYDROGEN_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.Hydrogen']";
     private static final String EXPLOSIVES_2_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 2)')]/preceding-sibling::input";
     private static final String EXPLOSIVES_3_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 3)')]/preceding-sibling::input";
-    private static final String STATEMENT_FIELDS = "//input[@id='isStatement']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
+    private static final String STATEMENT_FIELDS = "//input[@value='isStatement']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
     private static final String PRODUCT_LIST_FIELDS = "//input[@value='isProductListRefNo']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
     private static final String STATEMENT = "[value='isStatement']";
     private static final String PRODUCT_LIST = "[value='isProductListRefNo']";
     private static final String VEHICLE_TYPE = "#adrDetails\\.type";
-    private static final String BATTERY_LIST_APPLICABLE = "#applicable";
-    private static final String BATTERY_LIST_NOT_APPLICABLE = "#notApplicable";
-    private static final String BATTERY_LIST_APPLICABLE_FIELDS = "//input[@id='batteryListNumber']/parent::div";
-    private static final String MANUFACTURER_BRAKE_DECLARATION = "//input[@id='brakeDeclarationIssuer']/parent::div";
-    private static final String BRAKE_ENDURANCE_DECLARATION = "//input[@id='weight']/parent::div";
+    private static final String BATTERY_LIST_APPLICABLE = "[value='applicable']";
+    private static final String BATTERY_LIST_NOT_APPLICABLE = "[value='notApplicable']";
+    private static final String BATTERY_LIST_APPLICABLE_FIELDS = "//input[@id='adrDetails.batteryListNumber']/parent::div";
+    private static final String MANUFACTURER_BRAKE_DECLARATION = "//input[@id='adrDetails.brakeDeclarationIssuer']/parent::div";
+    private static final String BRAKE_ENDURANCE_DECLARATION = "//input[@id='adrDetails.weight']/parent::div";
     private static final String ADD_DANGEROUS_GOOD_LINK = "a.add-dangerous-note";
     private static final String ADD_GUIDANCE_NOTE_LINK = "a.add-guidance-note";
     private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-inspection-details+p>a";
@@ -101,10 +101,6 @@ public class TechRecordPage extends GenericPage {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS))));
         getDriver().findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)).click();
         waitForTextToAppear("Open all");
-    }
-
-    public void goBackToSearchPage() {
-        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/index.html");
     }
 
     public void openSection(String arg0) throws Exception {

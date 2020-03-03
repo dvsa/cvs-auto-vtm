@@ -14,4 +14,9 @@ public class HeaderStepDefinition {
         headerSteps.logoutFromVtmApp();
 
     }
+
+    @When("^I go back to home page$")
+    public void iGoBackToHomehPage() {
+        headerSteps.goBackToHomePage();
+    }
 }

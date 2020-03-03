@@ -1,11 +1,16 @@
 package step;
 
 import net.thucydides.core.annotations.Step;
+import org.openqa.selenium.By;
 import pages.GenericPage;
+import pages.Header;
+import pages.HomePage;
 
 public class GenericPageSteps {
 
     GenericPage genericPage;
+    Header header;
+    HomePage homePage;
 
     @Step
     public void waitForPageToLoad() {
@@ -50,5 +55,22 @@ public class GenericPageSteps {
     @Step
     public void clearSessionStorage() {
         genericPage.clearSessionStorage();
+    }
+
+    @Step
+    public void checkTextIsPresentInHyperlink(String text) {
+        genericPage.checkTextIsPresentInHyperlink(text);
+    }
+
+    @Step
+    public void goBackToSearchPage() {
+        header.clickHeaderLink();
+        homePage.goToSearchTechRecordPage();
+    }
+
+    @Step
+    public void goBackToCreatePage() {
+        header.clickHeaderLink();
+        homePage.goToCreateTechRecordPage();
     }
 }

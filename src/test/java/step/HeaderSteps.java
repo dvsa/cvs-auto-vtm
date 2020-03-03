@@ -11,4 +11,9 @@ public class HeaderSteps extends GenericPageSteps {
     public void logoutFromVtmApp() {
         header.logoutFromVtmApp();
     }
+
+    @Step
+    public void goBackToHomePage() {
+        header.clickHeaderLink();
+    }
 }

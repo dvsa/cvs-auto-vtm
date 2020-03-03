@@ -18,4 +18,9 @@ public class HomePageStepDefinition {
     public void iGoToCreateTechRecordPage() {
         homePageSteps.goToCreateTechRecordPage();
     }
+
+    @Then("^the \"([^\"]*)\" hyperlink description is correct$")
+    public void hyperlinkDescriptionIsCorrect(String hyperlinkTitle) {
+        homePageSteps.hyperlinkDescriptionIsCorrect(hyperlinkTitle);
+    }
 }

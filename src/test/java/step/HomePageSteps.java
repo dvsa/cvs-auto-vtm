@@ -16,4 +16,9 @@ public class HomePageSteps extends GenericPageSteps {
     public void goToCreateTechRecordPage() {
         homePage.goToCreateTechRecordPage();
     }
+
+    @Step
+    public void hyperlinkDescriptionIsCorrect(String hyperlinkTitle) {
+        homePage.hyperlinkDescriptionIsCorrect(hyperlinkTitle);
+    }
 }

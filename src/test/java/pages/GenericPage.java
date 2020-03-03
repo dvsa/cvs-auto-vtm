@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -58,6 +59,14 @@ public class GenericPage extends PageObject{
         jsExecutor.executeScript("localStorage.removeItem('adal.token.keys');");
         jsExecutor.executeScript("localStorage.removeItem('adal.token.renew.status');");
         getDriver().get("https://login.microsoftonline.com/dvsagov.onmicrosoft.com/oauth2/logout");
+        try
+        {
+            getDriver().switchTo().alert().accept();
+        }   // try
+        catch (NoAlertPresentException Ex)
+        {
+            System.out.println("No alerts present");
+        }
         ThucydidesWebDriverSupport.clearSession();
     }
 
@@ -117,11 +126,29 @@ public class GenericPage extends PageObject{
                 homePageUrl = getDriver().getCurrentUrl().substring(0, pos) + "/index.html";
             }
             else {
-                homePageUrl = getDriver().getCurrentUrl() + "/index.html";
+                homePageUrl = getDriver().getCurrentUrl() + "index.html";
             }
         }
         getDriver().get("https://www.gov.uk/government/organisations/driver-and-vehicle-standards-agency");
         waitForTextToAppear("Driver and Vehicle Standards Agency");
         getDriver().get(homePageUrl);
+    }
+
+    public void checkTextIsPresentInHyperlink(String text) {
+        Assert.assertNotNull("Hyperlink with text was not found!", getDriver().findElement(By.xpath(
+                "//a[text() = '" + text + "']")));
+    }
+
+    public void goBackToHomePage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")));
+    }
+
+    public void goBackToSearchPage() {
+
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/search");
+    }
+
+    public void goBackToCreatePage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/create");
     }
 }

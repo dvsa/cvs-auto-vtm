@@ -20,6 +20,8 @@ Feature: Search tech record
     Then I should see "Search for a technical record"
     #AC8 - closing the browser is equivalent to clearing the session storage
     When I clear session storage
+    And I go to search tech record page
+    Then element with id "searchIdentifier" should be present
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "CT70000"
     #AC6

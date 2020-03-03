@@ -133,11 +133,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void goBackToSearchPage() {
-        techRecordPage.goBackToSearchPage();
-    }
-
-    @Step
     public void iSelectCustomDangerousGoodCheckbox(String arg0) {
         techRecordPage.selectCustomDangerousGoodCheckbox(arg0);
     }

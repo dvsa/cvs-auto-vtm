@@ -6,7 +6,10 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Vehicle Testing Management"
+    And I should see "Select activity"
     And element with id "test-create-new-vehicle" should be present
+    When I go to search tech record page
+    Then element with id "searchIdentifier" should be present
 
 
   Scenario: Search using vin for HGV with current, provisional and archived tech records
