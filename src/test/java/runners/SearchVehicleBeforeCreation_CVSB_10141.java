@@ -7,10 +7,10 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        features = "src/test/resources/features/VtmCoreLandingPage_CVSB_7943.feature",
+        features = "src/test/resources/features/SearchVehicleBeforeCreation_CVSB_10141.feature",
         glue = {"stepDefinitions"},
         tags = {"not @skip"}
 )
-public class VtmCoreLandingPage_CVSB_7943 {
+public class SearchVehicleBeforeCreation_CVSB_10141 {
 
 }
