@@ -19,4 +19,11 @@ Feature: Search for vehicle before creation
   AC6 - User cannot proceed without entering a VRM on a HGV/PSV (VRM is only mandatory on HGV/PSV)
   AC7 - User attempts to proceed without entering multiple mandatory fields (for example, both vehicle type and VIN)
     #AC1
-    
+    When I fill in vin "P012301000000"
+    And I fill in vrm "ABCDEFGH"
+    And I select vehicle type "hgv"
+    And I continue record creation process
+    Then the header error contains "There is a problem"
+    And the header error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record "
+    And the specific "vin" error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record "
+

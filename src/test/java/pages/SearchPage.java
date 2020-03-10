@@ -13,10 +13,10 @@ public class SearchPage extends GenericPage {
     private static final String HAMBURGER_MENU = "a.icon";
     private static String homePageUrl = null;
 
-    public void inputVehicleIdentifier(String arg0) {
+    public void inputVehicleIdentifier(String identifier) {
         (new WebDriverWait(getDriver(), 10)).until(ExpectedConditions.
                 presenceOfElementLocated(By.cssSelector(SEARCH_INPUT)));
-        findElementByCss(SEARCH_INPUT).sendKeys(arg0);
+        findElementByCss(SEARCH_INPUT).sendKeys(identifier);
     }
 
     public void searchVehicle() {
