@@ -5,10 +5,11 @@ Feature: Search tech record
 
   Background:
     Given I login with admin credentials
-    Then I should see "Vehicle Testing Management"
-    And element with id "searchIdentifier" should be present
+    Then I should see "Select activity"
+    And element with id "test-create-new-vehicle" should be present
+    When I go to search tech record page
+    Then element with id "searchIdentifier" should be present
 
-  @bug @CVSB-11466
   Scenario: Check adr fields appear under certain conditions
   AC1 - Selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "CompatilibityGroupJ" appear
   AC2 - User can only select statement OR product list

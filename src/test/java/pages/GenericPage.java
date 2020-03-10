@@ -2,14 +2,18 @@ package pages;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericPage extends PageObject{
+
+    String homePageUrl = null;
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -55,6 +59,14 @@ public class GenericPage extends PageObject{
         jsExecutor.executeScript("localStorage.removeItem('adal.token.keys');");
         jsExecutor.executeScript("localStorage.removeItem('adal.token.renew.status');");
         getDriver().get("https://login.microsoftonline.com/dvsagov.onmicrosoft.com/oauth2/logout");
+        try
+        {
+            getDriver().switchTo().alert().accept();
+        }   // try
+        catch (NoAlertPresentException Ex)
+        {
+            System.out.println("No alerts present");
+        }
         ThucydidesWebDriverSupport.clearSession();
     }
 
@@ -75,12 +87,6 @@ public class GenericPage extends PageObject{
     protected WebElement findElementByCss(String css) {
         System.out.println("Finding element: " + css);
         return getDriver().findElement(By.cssSelector(css));
-    }
-
-    public void waitUntilISeeErrorMessage(String text) {
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span#name-error")));
-        new WebDriverWait(getDriver(), 10).
-                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("span#name-error"), text));
     }
 
     public void selectCheckbox(String arg0) {
@@ -104,5 +110,45 @@ public class GenericPage extends PageObject{
     public void clearSessionStorage() {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
         jsExecutor.executeScript("window.sessionStorage.clear()");
+    }
+
+    public void elementWithIdShouldBePresent(String id) {
+        Assert.assertNotNull(findElementById(id));
+    }
+
+    public void navigateAwayFromVtmAndGoBack() {
+        if (getDriver().getCurrentUrl().contains("localhost")) {
+            homePageUrl = getDriver().getCurrentUrl();
+        }
+        else {
+            int pos = StringUtils.ordinalIndexOf(getDriver().getCurrentUrl(), "/", 4);
+            if (pos != -1) {
+                homePageUrl = getDriver().getCurrentUrl().substring(0, pos) + "/index.html";
+            }
+            else {
+                homePageUrl = getDriver().getCurrentUrl() + "index.html";
+            }
+        }
+        getDriver().get("https://www.gov.uk/government/organisations/driver-and-vehicle-standards-agency");
+        waitForTextToAppear("Driver and Vehicle Standards Agency");
+        getDriver().get(homePageUrl);
+    }
+
+    public void checkTextIsPresentInHyperlink(String text) {
+        Assert.assertNotNull("Hyperlink with text was not found!", getDriver().findElement(By.xpath(
+                "//a[text() = '" + text + "']")));
+    }
+
+    public void goBackToHomePage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")));
+    }
+
+    public void goBackToSearchPage() {
+
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/search");
+    }
+
+    public void goBackToCreatePage() {
+        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/create");
     }
 }

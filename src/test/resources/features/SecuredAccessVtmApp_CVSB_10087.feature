@@ -14,12 +14,14 @@ Feature: Search tech record
     Given I login with admin credentials
     Then I should see "Vehicle Testing Management"
     And I should see "Search for a technical record"
-    And element with id "searchIdentifier" should be present
+    And element with id "test-create-new-vehicle" should be present
     #AC3
     When I navigate away from vtm app and then go back to vtm
     Then I should see "Search for a technical record"
     #AC8 - closing the browser is equivalent to clearing the session storage
     When I clear session storage
+    And I go to search tech record page
+    Then element with id "searchIdentifier" should be present
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "CT70000"
     #AC6
