@@ -57,4 +57,14 @@ public class CreateTechRecordPageStepDefinition {
     public void iShouldNotSeeInInputField(String text, String input) throws Exception {
         createTechRecordPageSteps.checkNotInputFieldText(text, input);
     }
+
+    @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" field description$")
+    public void iShouldSeeLabel(String text, String field) throws Exception {
+        createTechRecordPageSteps.checkNotInputDescription(text, field);
+    }
+
+    @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" field description$")
+    public void iShouldNotSeeInFieldDescription(String text, String field) throws Throwable {
+        createTechRecordPageSteps.checkNotInputDescription(text, field);
+    }
 }
