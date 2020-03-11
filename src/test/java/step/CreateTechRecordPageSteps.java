@@ -1,6 +1,7 @@
 package step;
 
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Steps;
 import pages.CreateTechRecordPage;
 
 public class CreateTechRecordPageSteps extends GenericPageSteps {
@@ -50,5 +51,15 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     @Step
     public void checkNotInputFieldText(String text, String input) throws Exception {
         createTechRecordPage.checkNotInputFieldText(text, input);
+    }
+
+    @Step
+    public void checkInputDescription(String text, String field) throws Exception {
+        createTechRecordPage.checkInputDescription(text, field);
+    }
+
+    @Step
+    public void checkNotInputDescription(String text, String field) throws Exception{
+        createTechRecordPage.checkNotInputDescription(text, field);
     }
 }

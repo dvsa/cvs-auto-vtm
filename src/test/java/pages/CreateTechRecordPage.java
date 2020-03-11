@@ -10,7 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class CreateTechRecordPage extends GenericPage {
 
     private static final String VIN_INPUT = "#test-vin";
+    private static final String VIN_LABEL = "[for='test-vin']";
     private static final String VRM_INPUT = "#test-vrm";
+    private static final String VRM_LABEL = "[for='test-vrm']";
     private static final String HGV_VEHICLE_TYPE = "#test-radio-HGV";
     private static final String PSV_VEHICLE_TYPE = "#test-radio-PSV";
     private static final String TRAILER_VEHICLE_TYPE = "#test-radio-Trailer";
@@ -126,6 +128,36 @@ public class CreateTechRecordPage extends GenericPage {
             default:  // should be unreachable!
                 throw new Exception(
                         "Invalid input type");
+        }
+    }
+
+    public void checkNotInputDescription(String description, String inputField) throws Exception {
+        String option = inputField.toLowerCase();
+        switch (option) {
+            case "vin":
+                Assert.assertFalse(findElementByCss(VIN_LABEL).getText().contains(description));
+                break;
+            case "vrm":
+                Assert.assertFalse(findElementByCss(VRM_LABEL).getText().contains(description));
+                break;
+            default:  // should be unreachable!
+                throw new Exception(
+                        "Invalid input field type");
+        }
+    }
+
+    public void checkInputDescription(String description, String inputField) throws Exception {
+        String option = inputField.toLowerCase();
+        switch (option) {
+            case "vin":
+                Assert.assertTrue(findElementByCss(VIN_LABEL).getText().contains(description));
+                break;
+            case "vrm":
+                Assert.assertTrue(findElementByCss(VRM_LABEL).getText().contains(description));
+                break;
+            default:  // should be unreachable!
+                throw new Exception(
+                        "Invalid input field type");
         }
     }
 }
