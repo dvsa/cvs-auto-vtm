@@ -392,7 +392,7 @@ public class TechRecordPage extends GenericPage {
         Assert.assertEquals(0, elements.size());
     }
 
-    public void clickLink(String text) throws Exception {
+    public void iClickAdrDetailsLink(String text) throws Exception {
         String option = text.toLowerCase();
         switch (option) {
             case "add a dangerous good":

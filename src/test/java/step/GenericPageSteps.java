@@ -73,4 +73,19 @@ public class GenericPageSteps {
         header.clickHeaderLink();
         homePage.goToCreateTechRecordPage();
     }
+
+    @Step
+    public void checkTextIsPresentInButton(String text) {
+        genericPage.checkTextIsPresentInButton(text);
+    }
+
+    @Step
+    public void clickButton(String text) {
+        genericPage.clickButton(text);
+    }
+
+    @Step
+    public void clickLink(String text) {
+        genericPage.clickLink(text);
+    }
 }

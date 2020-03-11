@@ -157,9 +157,9 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iShouldNotSeeBrakeEndurance(field);
     }
 
-    @When("^I click \"([^\"]*)\" link$")
+    @When("^I click \"([^\"]*)\" adr details link$")
     public void iClickLink(String linkText) throws Throwable {
-        techRecordPageSteps.iClickLink(linkText);
+        techRecordPageSteps.iClickAdrDetailsLink(linkText);
     }
 
     @When("^I select \"([^\"]*)\" custom dangerous good$")

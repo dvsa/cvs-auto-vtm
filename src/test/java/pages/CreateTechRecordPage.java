@@ -16,7 +16,6 @@ public class CreateTechRecordPage extends GenericPage {
     private static final String HGV_VEHICLE_TYPE = "#test-radio-HGV";
     private static final String PSV_VEHICLE_TYPE = "#test-radio-PSV";
     private static final String TRAILER_VEHICLE_TYPE = "#test-radio-Trailer";
-    private static final String CONTINUE_BUTTON = "#test-continue-btn";
     private static final String HEADER_ERROR = "div.govuk-error-summary";
     private static final String VEHICLE_TYPE_ERROR = "#vType-error";
     private static final String VIN_ERROR = "#vin-error";
@@ -98,17 +97,6 @@ public class CreateTechRecordPage extends GenericPage {
         }
     }
 
-    public void clickContinueButton() {
-        findElementByCss(CONTINUE_BUTTON).click();
-        try {
-            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
-            waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
-        }
-        catch (TimeoutException e) {
-            System.out.println("Spinner did not appear");
-        }
-    }
-
     public void headerErrorNotContains(String text) {
         waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
         new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
@@ -158,6 +146,24 @@ public class CreateTechRecordPage extends GenericPage {
             default:  // should be unreachable!
                 throw new Exception(
                         "Invalid input field type");
+        }
+    }
+
+    public void checkNoSpecificErrorForField(String fieldType) throws Exception {
+        String option = fieldType.toLowerCase();
+        switch (option) {
+            case "vehicle type":
+                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR)).size());
+                break;
+            case "vin":
+                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VIN_ERROR)).size());
+                break;
+            case "vrm":
+                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VRM_ERROR)).size());
+                break;
+            default:  // should be unreachable!
+                throw new Exception(
+                        "Invalid field type");
         }
     }
 }

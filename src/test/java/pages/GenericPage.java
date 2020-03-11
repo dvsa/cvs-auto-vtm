@@ -4,16 +4,14 @@ import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericPage extends PageObject{
 
-    String homePageUrl = null;
+    private static final String SPINNER = "div.spinner-container";
+    private String homePageUrl = null;
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -113,7 +111,7 @@ public class GenericPage extends PageObject{
     }
 
     public void elementWithIdShouldBePresent(String id) {
-        Assert.assertNotNull(findElementById(id));
+        waitForRenderedElementsToBePresent(By.id(id));
     }
 
     public void navigateAwayFromVtmAndGoBack() {
@@ -136,7 +134,7 @@ public class GenericPage extends PageObject{
 
     public void checkTextIsPresentInHyperlink(String text) {
         Assert.assertNotNull("Hyperlink with text was not found!", getDriver().findElement(By.xpath(
-                "//a[text() = '" + text + "']")));
+                "//a[contains(text(),'" + text + "')]")));
     }
 
     public void goBackToHomePage() {
@@ -150,5 +148,36 @@ public class GenericPage extends PageObject{
 
     public void goBackToCreatePage() {
         getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/create");
+    }
+
+    public void checkTextIsPresentInButton(String text) {
+        Assert.assertNotNull("Button with text was not found!", getDriver().findElement(By.xpath(
+                "//button[contains(text(),'" + text + "')]")));
+    }
+
+    public void clickButton(String text) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//button[contains(text(),'" + text + "')]")));
+        findElementByXpath("//button[contains(text(),'" + text + "')]").click();
+        try {
+            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+    }
+
+    public void clickLink(String text) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//a[contains(text(),'" + text + "')]")));
+        findElementByXpath("//a[contains(text(),'" + text + "')]").click();
+        try {
+            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
     }
 }

@@ -1,8 +1,10 @@
 package step;
 
 import net.thucydides.core.annotations.Step;
-import net.thucydides.core.annotations.Steps;
+import org.apache.commons.lang3.RandomStringUtils;
 import pages.CreateTechRecordPage;
+
+import java.util.Random;
 
 public class CreateTechRecordPageSteps extends GenericPageSteps {
 
@@ -39,11 +41,6 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void clickContinueButton() {
-        createTechRecordPage.clickContinueButton();
-    }
-
-    @Step
     public void headerErrorNotContains(String text) {
         createTechRecordPage.headerErrorNotContains(text);
     }
@@ -61,5 +58,24 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     @Step
     public void checkNotInputDescription(String text, String field) throws Exception{
         createTechRecordPage.checkNotInputDescription(text, field);
+    }
+
+    @Step
+    public void checkNoSpecificErrorForField(String fieldType) throws Exception {
+        createTechRecordPage.checkNoSpecificErrorForField(fieldType);
+    }
+
+    @Step
+    public String fillInRandomVin() {
+        String randomVin = RandomStringUtils.randomAlphanumeric(new Random().nextInt(13) + 3).toUpperCase() + RandomStringUtils.randomNumeric(6);
+        createTechRecordPage.fillInVin(randomVin);
+        return randomVin;
+    }
+
+    @Step
+    public String fillInRandomVrm() {
+        String randomVrm = RandomStringUtils.randomAlphanumeric(new Random().nextInt(6) + 3).toUpperCase();
+        createTechRecordPage.fillInVrm(randomVrm);
+        return randomVrm;
     }
 }

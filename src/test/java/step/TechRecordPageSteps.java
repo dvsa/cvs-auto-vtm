@@ -128,8 +128,8 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iClickLink(String link) throws  Exception {
-        techRecordPage.clickLink(link);
+    public void iClickAdrDetailsLink(String link) throws  Exception {
+        techRecordPage.iClickAdrDetailsLink(link);
     }
 
     @Step

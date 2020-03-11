@@ -1,7 +1,5 @@
 package stepDefinitions;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -43,9 +41,9 @@ public class CreateTechRecordPageStepDefinition {
         createTechRecordPageSteps.checkInputFieldText(text, input);
     }
 
-    @When("^I click continue button$")
-    public void iClickContinueButton() {
-        createTechRecordPageSteps.clickContinueButton();
+    @When("^I click \"([^\"]*)\" button$")
+    public void iClickButton(String text) {
+        createTechRecordPageSteps.clickButton(text);
     }
 
     @Then("^the header error does not contain \"([^\"]*)\"$")
@@ -60,11 +58,26 @@ public class CreateTechRecordPageStepDefinition {
 
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" field description$")
     public void iShouldSeeLabel(String text, String field) throws Exception {
-        createTechRecordPageSteps.checkNotInputDescription(text, field);
+        createTechRecordPageSteps.checkInputDescription(text, field);
     }
 
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" field description$")
     public void iShouldNotSeeInFieldDescription(String text, String field) throws Throwable {
         createTechRecordPageSteps.checkNotInputDescription(text, field);
+    }
+
+    @Then("^there are no \"([^\"]*)\" related errors$")
+    public void noRelatedErrorsForField(String fieldType) throws Exception {
+        createTechRecordPageSteps.checkNoSpecificErrorForField(fieldType);
+    }
+
+    @When("^I fill in random vin$")
+    public String iFillInRandomVin() {
+        return createTechRecordPageSteps.fillInRandomVin();
+    }
+
+    @When("^I fill in random vrm$")
+    public String iFillInRandomVrm() {
+        return createTechRecordPageSteps.fillInRandomVrm();
     }
 }

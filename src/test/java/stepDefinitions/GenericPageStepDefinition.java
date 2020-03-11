@@ -77,4 +77,14 @@ public class GenericPageStepDefinition {
     public void iGoBackToSearchPage() {
         genericPageSteps.goBackToSearchPage();
     }
+
+    @Then("^I should see \"([^\"]*)\" button$")
+    public void iShouldSeeButton(String text) {
+        genericPageSteps.checkTextIsPresentInButton(text);
+    }
+
+    @When("^I click \"([^\"]*)\" link$")
+    public void iClickLink(String text) {
+        genericPageSteps.clickLink(text);
+    }
 }

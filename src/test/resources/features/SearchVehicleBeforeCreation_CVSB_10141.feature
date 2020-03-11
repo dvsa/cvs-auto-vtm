@@ -19,7 +19,7 @@ Feature: Search for vehicle before creation
   AC6 - User cannot proceed without entering a VRM on a HGV/PSV (VRM is only mandatory on HGV/PSV)
   AC7 - User attempts to proceed without entering multiple mandatory fields (for example, both vehicle type and VIN)
     # AC4 + AC5 + AC6 + AC7
-    When I click continue button
+    When I click "Continue" button
     Then the header error contains "There is a problem"
     And the header error contains "Enter a VIN"
     And the header error contains "Enter a VRM"
@@ -28,7 +28,7 @@ Feature: Search for vehicle before creation
     And the specific "vrm" error contains "Enter a VRM"
     And the specific "vehicle type" error contains "Select a vehicle type"
     When I select vehicle type "trailer"
-    And I click continue button
+    And I click "Continue" button
     Then the header error does not contain "Enter a VRM"
     Then the header error does not contain "Select a vehicle type"
     # AC3
@@ -42,7 +42,7 @@ Feature: Search for vehicle before creation
     When I fill in vin "P012301230000"
     And I fill in vrm "ABCDEFGH"
     And I select vehicle type "hgv"
-    And I click continue button
+    And I click "Continue" button
     Then the header error contains "There is a problem"
     And the header error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
     And the specific "vin" error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
@@ -50,7 +50,7 @@ Feature: Search for vehicle before creation
     When I fill in vin "P012301234567"
     And I fill in vrm "CT70000"
     And I select vehicle type "psv"
-    And I click continue button
+    And I click "Continue" button
     Then the header error contains "There is a problem"
     And the header error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
     And the specific "vrm" error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
