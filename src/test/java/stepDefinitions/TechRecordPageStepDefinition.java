@@ -202,7 +202,7 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iInputForTheUnNumber(unNumber, ordinal);
     }
 
-    @And("^I should see the subsequent inspection fields$")
+    @Then("^I should see the subsequent inspection fields$")
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPageSteps.iShouldSeeTheSubsequentInspectionFields();
     }

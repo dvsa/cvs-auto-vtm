@@ -68,7 +68,7 @@ public class GenericPageStepDefinition {
         genericPageSteps.waitForTextToAppear(text);
     }
 
-    @And("^I should see \"([^\"]*)\" hyperlink$")
+    @Then("^I should see \"([^\"]*)\" hyperlink$")
     public void iShouldSeeHyperlink(String text) {
         genericPageSteps.checkTextIsPresentInHyperlink(text);
     }

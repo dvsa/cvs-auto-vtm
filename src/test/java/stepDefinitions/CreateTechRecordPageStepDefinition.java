@@ -28,18 +28,33 @@ public class CreateTechRecordPageStepDefinition {
 
     }
 
-    @When("^I continue record creation process$")
-    public void iContinueRecordCreationProcess() {
-        createTechRecordPageSteps.continueRecordCreationProcess();
-    }
-
     @Then("^the header error contains \"([^\"]*)\"$")
-    public void headerErrorContains(String text) throws Throwable {
+    public void headerErrorContains(String text) {
         createTechRecordPageSteps.headerErrorContains(text);
     }
 
-    @And("^the specific \"([^\"]*)\" error contains \"([^\"]*)\"$")
+    @Then("^the specific \"([^\"]*)\" error contains \"([^\"]*)\"$")
     public void specificErrorContains(String errorType, String text) throws Exception {
         createTechRecordPageSteps.specificErrorContains(errorType, text);
+    }
+
+    @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" input field$")
+    public void iShouldSeeInInputField(String text, String input) throws Exception {
+        createTechRecordPageSteps.checkInputFieldText(text, input);
+    }
+
+    @When("^I click continue button$")
+    public void iClickContinueButton() {
+        createTechRecordPageSteps.clickContinueButton();
+    }
+
+    @Then("^the header error does not contain \"([^\"]*)\"$")
+    public void headerErrorDoesNotContain(String text) {
+        createTechRecordPageSteps.headerErrorNotContains(text);
+    }
+
+    @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" input field$")
+    public void iShouldNotSeeInInputField(String text, String input) throws Exception {
+        createTechRecordPageSteps.checkNotInputFieldText(text, input);
     }
 }

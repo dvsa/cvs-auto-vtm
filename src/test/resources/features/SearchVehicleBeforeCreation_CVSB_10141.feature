@@ -18,12 +18,39 @@ Feature: Search for vehicle before creation
   AC5 - User cannot proceed without selecting a vehicle type
   AC6 - User cannot proceed without entering a VRM on a HGV/PSV (VRM is only mandatory on HGV/PSV)
   AC7 - User attempts to proceed without entering multiple mandatory fields (for example, both vehicle type and VIN)
-    #AC1
-    When I fill in vin "P012301000000"
+    # AC4 + AC5 + AC6 + AC7
+    When I click continue button
+    Then the header error contains "There is a problem"
+    And the header error contains "Enter a VIN"
+    And the header error contains "Enter a VRM"
+    And the header error contains "Select a vehicle type"
+    And the specific "vin" error contains "Enter a VIN"
+    And the specific "vrm" error contains "Enter a VRM"
+    And the specific "vehicle type" error contains "Select a vehicle type"
+    When I select vehicle type "trailer"
+    And I click continue button
+    Then the header error does not contain "Enter a VRM"
+    Then the header error does not contain "Select a vehicle type"
+    # AC3
+    When I fill in vin "P12345678901234567890123"
+    Then I should not see "P12345678901234567890123" in "vin" input field
+    And I should see "P12345678901234567890" in "vin" input field
+    And I fill in vrm "CT1234567890"
+    And I should not see "CT1234567890" in "vrm" input field
+    And I should see "CT123456" in "vrm" input field
+    # AC1
+    When I fill in vin "P012301230000"
     And I fill in vrm "ABCDEFGH"
     And I select vehicle type "hgv"
-    And I continue record creation process
+    And I click continue button
     Then the header error contains "There is a problem"
-    And the header error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record "
-    And the specific "vin" error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record "
-
+    And the header error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
+    And the specific "vin" error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
+    # AC2
+    When I fill in vin "P012301234567"
+    And I fill in vrm "CT70000"
+    And I select vehicle type "psv"
+    And I click continue button
+    Then the header error contains "There is a problem"
+    And the header error contains "A technical record with this VRM already exists, check the VIN or change the existing technical record"
+    And the specific "vrm" error contains "A technical record with this VRM already exists, check the VIN or change the existing technical record"
