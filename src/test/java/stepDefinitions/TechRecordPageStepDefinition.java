@@ -1,7 +1,6 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -142,19 +141,19 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iShouldSeeManufacturerBrakeDeclarationField(field);
     }
 
-    @Then("^I should not see \"([^\"]*)\" manufacturer brake declaration field$")
-    public void iShouldNotSeeManufacturerBrakeDeclarationField(String field) {
-        techRecordPageSteps.iShouldNotSeeManufacturerBrakeDeclarationField(field);
+    @Then("^I should not see manufacturer brake declaration fields$")
+    public void iShouldNotSeeManufacturerBrakeDeclarationField() {
+        techRecordPageSteps.iShouldNotSeeManufacturerBrakeDeclarationFields();
     }
 
     @Then("^I should see \"([^\"]*)\" brake endurance field$")
     public void iShouldSeeBrakeEnduranceField(String field) {
-        techRecordPageSteps.iShouldSeeBrakeEndurance(field);
+        techRecordPageSteps.iShouldSeeBrakeEnduranceField(field);
     }
 
-    @Then("^I should not see \"([^\"]*)\" brake endurance field$")
-    public void iShouldNotSeeBrakeEnduranceField(String field) {
-        techRecordPageSteps.iShouldNotSeeBrakeEndurance(field);
+    @Then("^I should not see brake endurance fields$")
+    public void iShouldNotSeeBrakeEnduranceField() {
+        techRecordPageSteps.iShouldNotSeeBrakeEnduranceFields();
     }
 
     @When("^I click \"([^\"]*)\" adr details link$")

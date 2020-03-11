@@ -370,24 +370,24 @@ public class TechRecordPage extends GenericPage {
         Assert.assertEquals(0, elements.size());
     }
 
-    public void checkManufacturerBrakeDeclarationField(String text) {
+    public void checkManufacturerBrakeDeclarationField(String fieldName) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(MANUFACTURER_BRAKE_DECLARATION)));
         String elementText = getDriver().findElement(By.xpath(MANUFACTURER_BRAKE_DECLARATION)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(text));
+        Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
     }
 
-    public void checkManufacturerBrakeDeclarationFieldNotPresent(String field) {
+    public void checkManufacturerBrakeDeclarationFieldsNotPresent() {
         List<WebElement> elements = getDriver().findElements(By.xpath(MANUFACTURER_BRAKE_DECLARATION));
         Assert.assertEquals(0, elements.size());
     }
 
-    public void checkBrakeEnduranceField(String text) {
+    public void checkBrakeEnduranceField(String fieldName) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(BRAKE_ENDURANCE_DECLARATION)));
         String elementText = getDriver().findElement(By.xpath(BRAKE_ENDURANCE_DECLARATION)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(text));
+        Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
     }
 
-    public void checkBrakeEnduranceFieldNotPresent(String field) {
+    public void checkBrakeEnduranceFieldsNotPresent() {
         List<WebElement> elements = getDriver().findElements(By.xpath(BRAKE_ENDURANCE_DECLARATION));
         Assert.assertEquals(0, elements.size());
     }

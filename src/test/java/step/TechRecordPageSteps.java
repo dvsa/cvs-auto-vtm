@@ -103,18 +103,18 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iShouldNotSeeManufacturerBrakeDeclarationField(String field) {
-        techRecordPage.checkManufacturerBrakeDeclarationFieldNotPresent(field);
+    public void iShouldNotSeeManufacturerBrakeDeclarationFields() {
+        techRecordPage.checkManufacturerBrakeDeclarationFieldsNotPresent();
     }
 
     @Step
-    public void iShouldSeeBrakeEndurance(String text) {
+    public void iShouldSeeBrakeEnduranceField(String text) {
         techRecordPage.checkBrakeEnduranceField(text);
     }
 
     @Step
-    public void iShouldNotSeeBrakeEndurance(String text) {
-        techRecordPage.checkBrakeEnduranceFieldNotPresent(text);
+    public void iShouldNotSeeBrakeEnduranceFields() {
+        techRecordPage.checkBrakeEnduranceFieldsNotPresent();
     }
 
     @Step

@@ -51,10 +51,10 @@ Feature: Search tech record
     #selecting "manufacturer brake declaration" from "declaration seen" will display "Issuer" and "Brake endurance" fields
     When I select "Manufacturer brake declaration" checkbox
     Then I should see "Issuer" manufacturer brake declaration field
-    And I should not see "Weight (kg)" brake endurance field
+    And I should not see brake endurance fields
     When I select "Brake endurance" checkbox
     Then I should see "Weight (kg)" brake endurance field
     When I deselect "Brake endurance" checkbox
-    Then I should not see "Weight (kg)" brake endurance field
+    Then I should not see brake endurance fields
     When I deselect "Manufacturer brake declaration" checkbox
-    Then I should not see "Issuer" manufacturer brake declaration field
+    Then I should not see manufacturer brake declaration fields
