@@ -52,5 +52,5 @@ Feature: Search for vehicle before creation
     And I select vehicle type "psv"
     And I click continue button
     Then the header error contains "There is a problem"
-    And the header error contains "A technical record with this VRM already exists, check the VIN or change the existing technical record"
-    And the specific "vrm" error contains "A technical record with this VRM already exists, check the VIN or change the existing technical record"
+    And the header error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
+    And the specific "vrm" error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
