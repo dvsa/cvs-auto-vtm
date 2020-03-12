@@ -27,21 +27,21 @@ public class LoginPage extends GenericPage {
     @FindBy(css = "#loginHeader")
     private WebElementFacade loginHeader;
 
-    public void inputEmail(String arg0){
+    public void inputEmail(String emailAddress){
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(options, "Sign-in option"));
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
-        emailInput.type(arg0);
+        emailInput.type(emailAddress);
     }
 
     public void goToPasswordScreen(){
         nextScreen.click();
     }
 
-    public void inputPassword(String arg0){
+    public void inputPassword(String password){
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.visibilityOf(passwordInput));
-        passwordInput.type(arg0);
+        passwordInput.type(password);
     }
 
     public void signIn(){

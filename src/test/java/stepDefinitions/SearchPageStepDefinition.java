@@ -11,21 +11,21 @@ public class SearchPageStepDefinition {
     SearchPageSteps searchPageSteps;
 
     @When("^I search for vehicle with identifier \"([^\"]*)\"$")
-    public void iSearchForVehicleWithIdentifier(String arg0){
+    public void iSearchForVehicleWithIdentifier(String identifier){
         searchPageSteps.clearSearchInput();
-        searchPageSteps.inputVehicleIdentifier(arg0);
+        searchPageSteps.inputVehicleIdentifier(identifier);
         searchPageSteps.searchVehicle();
     }
 
     @When("^I search for vehicle using wrong identifier \"([^\"]*)\"$")
-    public void iSearchForVehicleUsingWrongIdentifier(String arg0) {
+    public void iSearchForVehicleUsingWrongIdentifier(String identifier) {
         searchPageSteps.clearSearchInput();
-        searchPageSteps.inputVehicleIdentifier(arg0);
+        searchPageSteps.inputVehicleIdentifier(identifier);
         searchPageSteps.searchVehicleIncorrectIdentifier();
     }
 
     @Then("^wait until I see search error message \"([^\"]*)\"$")
-    public void waitUntilISeeErrorMessage(String arg0) {
-        searchPageSteps.waitUntilISeeSearchErrorMessage(arg0);
+    public void waitUntilISeeErrorMessage(String message) {
+        searchPageSteps.waitUntilISeeSearchErrorMessage(message);
     }
 }

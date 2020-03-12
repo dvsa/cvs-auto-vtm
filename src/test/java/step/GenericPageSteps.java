@@ -18,13 +18,13 @@ public class GenericPageSteps {
     }
 
     @Step
-    public void checkTextIsPresentInPage(String arg0) {
-        genericPage.checkTextIsPresentInPage(arg0);
+    public void checkTextIsPresentInPage(String text) {
+        genericPage.checkTextIsPresentInPage(text);
     }
 
     @Step
-    public void checkTextIsNotPresentInPage(String arg0) {
-        genericPage.checkTextIsNotPresentInPage(arg0);
+    public void checkTextIsNotPresentInPage(String text) {
+        genericPage.checkTextIsNotPresentInPage(text);
     }
 
     @Step
@@ -43,8 +43,8 @@ public class GenericPageSteps {
     }
 
     @Step
-    public void waitForTextToAppear(String arg0) {
-        genericPage.waitForTextToAppear(arg0, 20);
+    public void waitForTextToAppear(String text) {
+        genericPage.waitForTextToAppear(text, 20);
     }
 
     @Step
@@ -72,5 +72,20 @@ public class GenericPageSteps {
     public void goBackToCreatePage() {
         header.clickHeaderLink();
         homePage.goToCreateTechRecordPage();
+    }
+
+    @Step
+    public void checkTextIsPresentInButton(String text) {
+        genericPage.checkTextIsPresentInButton(text);
+    }
+
+    @Step
+    public void clickButton(String text) {
+        genericPage.clickButton(text);
+    }
+
+    @Step
+    public void clickLink(String text) {
+        genericPage.clickLink(text);
     }
 }

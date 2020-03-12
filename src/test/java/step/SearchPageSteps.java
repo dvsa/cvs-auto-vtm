@@ -8,8 +8,8 @@ public class SearchPageSteps extends GenericPageSteps {
     SearchPage searchPage;
 
     @Step
-    public void inputVehicleIdentifier(String arg0) {
-        searchPage.inputVehicleIdentifier(arg0);
+    public void inputVehicleIdentifier(String identifier) {
+        searchPage.inputVehicleIdentifier(identifier);
     }
 
     @Step
@@ -28,13 +28,13 @@ public class SearchPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void checkTextIsPresentInPage(String arg0) {
-        searchPage.checkTextIsPresentInPage(arg0);
+    public void checkTextIsPresentInPage(String text) {
+        searchPage.checkTextIsPresentInPage(text);
     }
 
     @Step
-    public void checkTextIsNotPresentInPage(String arg0) {
-        searchPage.checkTextIsNotPresentInPage(arg0);
+    public void checkTextIsNotPresentInPage(String text) {
+        searchPage.checkTextIsNotPresentInPage(text);
     }
 
     @Step
@@ -48,8 +48,8 @@ public class SearchPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void waitUntilISeeSearchErrorMessage(String arg0) {
-        searchPage.waitUntilISeeSearchErrorMessage(arg0);
+    public void waitUntilISeeSearchErrorMessage(String message) {
+        searchPage.waitUntilISeeSearchErrorMessage(message);
     }
 
     @Step

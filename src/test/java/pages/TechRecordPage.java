@@ -103,8 +103,8 @@ public class TechRecordPage extends GenericPage {
         waitForTextToAppear("Open all");
     }
 
-    public void openSection(String arg0) throws Exception {
-        String option = arg0.toLowerCase();
+    public void openSection(String section) throws Exception {
+        String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
                 getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
@@ -139,8 +139,8 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void closeSection(String arg0) throws Exception {
-        String option = arg0.toLowerCase();
+    public void closeSection(String section) throws Exception {
+        String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
                 getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
@@ -183,8 +183,8 @@ public class TechRecordPage extends GenericPage {
         getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS));
     }
 
-    public void deselectDangerousGoodCheckbox(String arg0) throws Exception {
-        String option = arg0.toLowerCase();
+    public void deselectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+        String option = dangerousGood.toLowerCase();
         switch (option) {
             case "fp <61 (fl)":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
@@ -240,8 +240,8 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void selectDangerousGoodCheckbox(String arg0) throws Exception {
-        String option = arg0.toLowerCase();
+    public void selectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+        String option = dangerousGood.toLowerCase();
         switch (option) {
             case "fp <61 (fl)":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
@@ -297,8 +297,8 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void selectFromTankStatement(String arg0) {
-        String option = arg0.toLowerCase();
+    public void selectFromTankStatement(String statementType) {
+        String option = statementType.toLowerCase();
         switch (option) {
             case "statement":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(STATEMENT)));
@@ -311,10 +311,10 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void checkStatementField(String arg0) {
+    public void checkStatementField(String field) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(STATEMENT_FIELDS)));
         String elementText = getDriver().findElement(By.xpath(STATEMENT_FIELDS)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(arg0));
+        Assert.assertTrue("Text was not found!", elementText.contains(field));
     }
 
     public void checkStatementFieldsNotPresent() {
@@ -322,9 +322,9 @@ public class TechRecordPage extends GenericPage {
         Assert.assertEquals(0, elements.size());
     }
 
-    public void checkProductListField(String arg0) {
+    public void checkProductListField(String field) {
         String elementText = getDriver().findElement(By.xpath(PRODUCT_LIST_FIELDS)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(arg0));
+        Assert.assertTrue("Text was not found!", elementText.contains(field));
     }
 
     public void checkProductListFieldsNotPresent() {
@@ -332,11 +332,11 @@ public class TechRecordPage extends GenericPage {
         Assert.assertEquals(0, elements.size());
     }
 
-    public void selectVehicleType(String arg0) {
+    public void selectVehicleType(String type) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VEHICLE_TYPE)));
         Select vehicleType = new Select(getDriver().findElement(By.cssSelector(VEHICLE_TYPE)));
         try {
-            vehicleType.selectByVisibleText(arg0);
+            vehicleType.selectByVisibleText(type);
         }
         catch (Exception e)
         {
@@ -345,8 +345,8 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void selectFromBatteryListApplicable(String arg0) {
-        String option = arg0.toLowerCase();
+    public void selectFromBatteryListApplicable(String batteryListApplicableOption) {
+        String option = batteryListApplicableOption.toLowerCase();
         switch (option) {
             case "yes":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BATTERY_LIST_APPLICABLE)));
@@ -359,10 +359,10 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void checkBatteryListApplicableField(String arg0) {
+    public void checkBatteryListApplicableField(String text) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(BATTERY_LIST_APPLICABLE_FIELDS)));
         String elementText = getDriver().findElement(By.xpath(BATTERY_LIST_APPLICABLE_FIELDS)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(arg0));
+        Assert.assertTrue("Text was not found!", elementText.contains(text));
     }
 
     public void checkBatteryListApplicableFieldsNotPresent() {
@@ -370,30 +370,30 @@ public class TechRecordPage extends GenericPage {
         Assert.assertEquals(0, elements.size());
     }
 
-    public void checkManufacturerBrakeDeclarationField(String arg0) {
+    public void checkManufacturerBrakeDeclarationField(String fieldName) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(MANUFACTURER_BRAKE_DECLARATION)));
         String elementText = getDriver().findElement(By.xpath(MANUFACTURER_BRAKE_DECLARATION)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(arg0));
+        Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
     }
 
-    public void checkManufacturerBrakeDeclarationFieldNotPresent(String arg0) {
+    public void checkManufacturerBrakeDeclarationFieldsNotPresent() {
         List<WebElement> elements = getDriver().findElements(By.xpath(MANUFACTURER_BRAKE_DECLARATION));
         Assert.assertEquals(0, elements.size());
     }
 
-    public void checkBrakeEnduranceField(String arg0) {
+    public void checkBrakeEnduranceField(String fieldName) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(BRAKE_ENDURANCE_DECLARATION)));
         String elementText = getDriver().findElement(By.xpath(BRAKE_ENDURANCE_DECLARATION)).getText();
-        Assert.assertTrue("Text was not found!", elementText.contains(arg0));
+        Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
     }
 
-    public void checkBrakeEnduranceFieldNotPresent(String arg0) {
+    public void checkBrakeEnduranceFieldsNotPresent() {
         List<WebElement> elements = getDriver().findElements(By.xpath(BRAKE_ENDURANCE_DECLARATION));
         Assert.assertEquals(0, elements.size());
     }
 
-    public void clickLink(String arg0) throws Exception {
-        String option = arg0.toLowerCase();
+    public void iClickAdrDetailsLink(String text) throws Exception {
+        String option = text.toLowerCase();
         switch (option) {
             case "add a dangerous good":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)));
@@ -417,47 +417,47 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void selectCustomDangerousGoodCheckbox(String arg0) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)));
-        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).isSelected())) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).click();
+    public void selectCustomDangerousGoodCheckbox(String dangerousGood) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)));
+        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)).isSelected())) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)).click();
         }
     }
 
-    public void deselectCustomDangerousGoodCheckbox(String arg0) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)));
-        if (getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).isSelected()) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + arg0)).click();
+    public void deselectCustomDangerousGoodCheckbox(String dangerousGood) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)));
+        if (getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)).isSelected()) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)).click();
         }
     }
 
-    public void inputCustomDangerousGood(String arg0) {
+    public void inputCustomDangerousGood(String customDangerousGood) {
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)));
-        getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).sendKeys(arg0);
+        getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).sendKeys(customDangerousGood);
     }
 
-    public void inputCustomGuidanceNote(String arg0) {
+    public void inputCustomGuidanceNote(String note) {
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_INPUT)));
-        getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).sendKeys(arg0);
+        getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).sendKeys(note);
     }
 
-    public void selectCustomGuidanceNoteCheckbox(String arg0) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)));
-        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).isSelected())) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).click();
+    public void selectCustomGuidanceNoteCheckbox(String note) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)));
+        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).isSelected())) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).click();
         }
     }
 
-    public void deselectCustomGuidanceNoteCheckbox(String arg0) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)));
-        if (getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).isSelected()) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + arg0)).click();
+    public void deselectCustomGuidanceNoteCheckbox(String note) {
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)));
+        if (getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).isSelected()) {
+            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).click();
         }
     }
 
-    public void inputUnNewNumber(String arg0) {
+    public void inputUnNewNumber(String unNumber) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(NEW_UN_NUMBER_INPUT)));
-        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT)).sendKeys(arg0);
+        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT)).sendKeys(unNumber);
     }
 
     public void inputForTheUnNumber(String unNumber, String ordinal) {
@@ -504,35 +504,35 @@ public class TechRecordPage extends GenericPage {
         assertThat(expiryDates.size(), greaterThan(0));
     }
 
-    public void iShouldSeeSectionHeading(String arg0) {
-        String section = arg0.toLowerCase();
+    public void iShouldSeeSectionHeading(String heading) {
+        String section = heading.toLowerCase();
         switch (section) {
             case "vehicle summary":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), heading));
                 break;
             case "bpdy":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), heading));
                 break;
             case "weights":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-2")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-2")), heading));
                 break;
             case "tyres":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-3")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-3")), heading));
                 break;
             case "dimensions":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-4")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-4")), heading));
                 break;
             case "adr":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-5")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-5")), heading));
                 break;
             case "notes":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-6")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-6")), heading));
                 break;
             case "test history":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-7")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-7")), heading));
                 break;
             case "technical record history":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), arg0));
+                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), heading));
                 break;
         }
     }
