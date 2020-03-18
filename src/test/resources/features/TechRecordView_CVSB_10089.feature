@@ -82,13 +82,13 @@ Feature: Search tech record
     | frontAxleTo5thWheelCouplingMax | 1900                 |
     | frontAxleTo5thWheelMin         | 1200                 |
     | frontAxleTo5thWheelMax         | 1500                 |
-    | ableToCarry                    | No                  |
+    | ableToCarry                    | No                   |
     | notes                          | test note            |
     | testCode-0                     | Aav2                 |
-    | testEndTimestamp-0             | 14/01/2019           |
-    | expiryDate-0                   | 24/01/2020           |
-    | certificateNumber-0            | 123456789            |
-    | testResult-0                   | PASS                 |
+    | testEndTimestamp-0             | 16/10/2019           |
+    | expiryDate-0                   | 17/01/2019           |
+    | certificateNumber-0            | 123412345            |
+    | testResult-0                   | PRS                  |
     | testCode-1                     | Aav2                 |
     | testEndTimestamp-1             | 15/01/2019           |
     # expiryDate for this test is " " in Dynamo
@@ -97,10 +97,10 @@ Feature: Search tech record
     | certificateNumber-1            | -                    |
     | testResult-1                   | ABANDONED            |
     | testCode-2                     | Aav2                 |
-    | testEndTimestamp-2             | 16/10/2019           |
-    | expiryDate-2                   | 17/01/2019           |
-    | certificateNumber-2            | 123412345            |
-    | testResult-2                   | PRS                  |
+    | testEndTimestamp-2             | 14/01/2019           |
+    | expiryDate-2                   | 24/01/2020           |
+    | certificateNumber-2            | 123456789            |
+    | testResult-2                   | PASS                 |
     | statusCode-0                   | Current              |
     | reasonForCreation-0            | New Vehicle1         |
     | createdByName-0                | Dvsa                 |
@@ -220,7 +220,7 @@ Feature: Search tech record
     | Field                       | Value        |
     | status                      | Provisional  |
     | vin                         | T12111000    |
-    | vrm                         | 112233Z      |
+    | vrm                         | CT71000      |
     | secondaryVrms               | -            |
     | vehicleType                 | TRL          |
     | ntaNumber                   | 123459       |

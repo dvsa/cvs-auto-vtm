@@ -66,4 +66,24 @@ public class SearchPageSteps extends GenericPageSteps {
     public void clearSessionStorage() {
         searchPage.clearSessionStorage();
     }
+
+    @Step
+    public void optionShouldBeSelected(String searchCriteria) {
+        searchPage.optionShouldBeSelected(searchCriteria);
+    }
+
+    @Step
+    public void otherSearchCriteriaInclude(String searchCriteria) {
+        searchPage.otherSearchCriteriaInclude(searchCriteria);
+    }
+
+    @Step
+    public void selectSearchCriteria(String searchCriteria) {
+        searchPage.selectSearchCriteria(searchCriteria);
+    }
+
+    @Step
+    public void specificErrorContains(String text) {
+        searchPage.specificErrorContains(text);
+    }
 }

@@ -6,12 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericPage extends PageObject{
 
     private static final String SPINNER = "div.spinner-container";
-    private String homePageUrl = null;
+    private static final String HEADER_ERROR = "div.govuk-error-summary";
+    private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -115,6 +117,7 @@ public class GenericPage extends PageObject{
     }
 
     public void navigateAwayFromVtmAndGoBack() {
+        String homePageUrl = null;
         if (getDriver().getCurrentUrl().contains("localhost")) {
             homePageUrl = getDriver().getCurrentUrl();
         }
@@ -179,5 +182,27 @@ public class GenericPage extends PageObject{
         catch (TimeoutException e) {
             System.out.println("Spinner did not appear");
         }
+    }
+
+
+    void selectOptionFromDropdown(WebElement element, String searchCriteria) {
+        new Select(element).selectByValue(searchCriteria);
+    }
+
+    public void headerErrorContains(String text) {
+        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 15).
+                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(HEADER_ERROR), text));
+    }
+
+    public void headerErrorNotContains(String text) {
+        waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
+        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_SPECIFIC_ERRORS)));
+        Assert.assertFalse(findElementByCss(HEADER_SPECIFIC_ERRORS).getText().contains(text));
+    }
+
+    public void goBackToPreviousPage() {
+        getDriver().navigate().back();
     }
 }

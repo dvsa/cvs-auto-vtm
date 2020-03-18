@@ -5,10 +5,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -65,7 +68,10 @@ public class TechRecordPage extends GenericPage {
 
     public String getValueForTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
-        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(20))
+                .pollingEvery(Duration.ofMillis(300))
+                .ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("test-" + field)));
         Actions actions = new Actions(getDriver());
         actions.moveToElement(element);

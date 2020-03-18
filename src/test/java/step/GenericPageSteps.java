@@ -88,4 +88,19 @@ public class GenericPageSteps {
     public void clickLink(String text) {
         genericPage.clickLink(text);
     }
+
+    @Step
+    public void headerErrorContains(String text) {
+        genericPage.headerErrorContains(text);
+    }
+
+    @Step
+    public void headerErrorNotContains(String text) {
+        genericPage.headerErrorNotContains(text);
+    }
+
+    @Step
+    public void goBackToPreviousPage() {
+        genericPage.goBackToPreviousPage();
+    }
 }

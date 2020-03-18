@@ -1,7 +1,10 @@
 package pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchPage extends GenericPage {
@@ -9,9 +12,11 @@ public class SearchPage extends GenericPage {
     private static final String SEARCH_INPUT = "#searchIdentifier";
     private static final String SEARCH_BUTTON = "a.govuk-button";
     private static final String LOG_OUT_LINK = "#navigation>li:last-of-type>a";
+    private static final String SEARCH_OPTIONS_DROPDOWN = "#test-search-criteria";
     private static final String LOG_OUT_LINK_IN_HAMBURGER_MENU = "#menuLinks>a:last-of-type";
+    private static final String SPECIFIC_ERROR = "#name-error>div";
+
     private static final String HAMBURGER_MENU = "a.icon";
-    private static String homePageUrl = null;
 
     public void inputVehicleIdentifier(String identifier) {
         (new WebDriverWait(getDriver(), 10)).until(ExpectedConditions.
@@ -32,7 +37,7 @@ public class SearchPage extends GenericPage {
     public void searchVehicleIncorrectIdentifier() {
         findElementByCss(SEARCH_BUTTON).click();
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                visibilityOfElementLocated(By.cssSelector("span#name-error")));
+                visibilityOfElementLocated(By.cssSelector(SPECIFIC_ERROR)));
     }
 
     public void waitUntilISeeSearchErrorMessage(String text) {
@@ -57,6 +62,28 @@ public class SearchPage extends GenericPage {
             findElementByCss(HAMBURGER_MENU).click();
             new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(LOG_OUT_LINK_IN_HAMBURGER_MENU)));
             findElementByCss(LOG_OUT_LINK_IN_HAMBURGER_MENU).click();
+        }
+    }
+
+    public void optionShouldBeSelected(String searchCriteria) {
+        Select selectSearchCriteria = new Select(findElementByCss(SEARCH_OPTIONS_DROPDOWN));
+        Assert.assertEquals(selectSearchCriteria.getFirstSelectedOption().getAttribute("value"), searchCriteria);
+    }
+
+    public void otherSearchCriteriaInclude(String searchCriteria) {
+        Assert.assertNotNull(findElementByCss(SEARCH_OPTIONS_DROPDOWN + ">option[value='" + searchCriteria + "']"));
+    }
+
+    public void selectSearchCriteria(String searchCriteria) {
+        selectOptionFromDropdown(findElementByCss(SEARCH_OPTIONS_DROPDOWN), searchCriteria);
+    }
+
+    public void specificErrorContains(String text) {
+        if (text.contains("\\n")) {
+            Assert.assertTrue(findElementByCss(SPECIFIC_ERROR).getText().contains(text.replace("\\n","\n")));
+        }
+        else {
+            Assert.assertTrue(findElementByCss(SPECIFIC_ERROR).getText().contains(text));
         }
     }
 }

@@ -3,12 +3,10 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
-import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
-
 public class HomePage extends GenericPage {
 
-    private static final String SEARCH_FOR_TECHNICAL_RECORD_LINK = "#test-create-new-vehicle";
-    private static final String CREATE_TECHNICAL_RECORD_LINK = "#test-search-vehicle";
+    private static final String SEARCH_FOR_TECHNICAL_RECORD_LINK = "#test-search-vehicle";
+    private static final String CREATE_TECHNICAL_RECORD_LINK = "#test-create-new-vehicle";
     private static final String SEARCH_FOR_TECHNICAL_RECORD_LINK_TITLE = "Search for a technical record";
     private static final String SEARCH_FOR_TECHNICAL_RECORD_LINK_DESCRIPTION = "Manage technical records, test records " +
             "and issue certificates or documents";
