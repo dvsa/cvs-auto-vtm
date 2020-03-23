@@ -210,4 +210,9 @@ public class TechRecordPageStepDefinition {
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPageSteps.iShouldSeeSectionHeading(heading);
     }
+
+    @Then("^the \"([^\"]*)\" section should have \"([^\"]*)\" entries$")
+    public void theSectionShouldHaveEntries(String section, String numberOfEntries) throws Exception {
+        techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
 }

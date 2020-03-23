@@ -64,6 +64,16 @@ public class TechRecordPage extends GenericPage {
     private static final String CUSTOM_DANGEROUS_GOOD_INPUT = "a.add-dangerous-note+input";
     private static final String GUIDANCE_NOTE_INPUT = "a.add-guidance-note+input";
     private static final String NEW_UN_NUMBER_INPUT = "#adrDetails\\.productListUnNo\\.0";
+    private static final String VEHICLE_SUMMARY_SECTION = "vtm-vehicle-summary>table tr";
+    private static final String BODY_SECTION = "vtm-body>table tr";
+    private static final String WEIGHTS_SECTION = "vtm-weights>table tr";
+    private static final String TYRES_SECTION = "vtm-tyres>table tr";
+    private static final String DIMENSIONS_SECTION_ = "vtm-dimensions>table tr";
+    private static final String ADR_SECTION = "vtm-adr-details-view>table tr";
+    private static final String NOTES_SECTION = "vtm-notes>table tr";
+    private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
+    private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
+
 
 
     public String getValueForTechRecordField(String field) {
@@ -516,7 +526,7 @@ public class TechRecordPage extends GenericPage {
             case "vehicle summary":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), heading));
                 break;
-            case "bpdy":
+            case "body":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), heading));
                 break;
             case "weights":
@@ -540,6 +550,42 @@ public class TechRecordPage extends GenericPage {
             case "technical record history":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), heading));
                 break;
+        }
+    }
+
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+        String option = section.toLowerCase();
+        switch (option) {
+            case "vehicle summary":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(VEHICLE_SUMMARY_SECTION)).size());
+                break;
+            case "body":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(BODY_SECTION)).size());
+                break;
+            case "weights":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(WEIGHTS_SECTION)).size());
+                break;
+            case "tyres":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TYRES_SECTION)).size());
+                break;
+            case "dimensions":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(DIMENSIONS_SECTION_)).size());
+                break;
+            case "adr":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(ADR_SECTION)).size());
+                break;
+            case "notes":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(NOTES_SECTION)).size());
+                break;
+            case "test history":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TEST_HISTORY_SECTION)).size());
+                break;
+            case "technical record history":
+                Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size());
+                break;
+            default:  // should be unreachable!
+                throw new Exception(
+                        "Invalid section");
         }
     }
 }
