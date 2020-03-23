@@ -10,6 +10,8 @@ Feature: Search tech record
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
 
+  @skip
+  # because search is covered in tests for CVSB-11329
   Scenario: Search using full vin
   AC2 - User Searches For Technical Records Using Full VIN
   AC4 - User Searches For Technical Records Using Partial VIN
@@ -40,21 +42,25 @@ Feature: Search tech record
     When I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
 
-
+  @skip
+  # until CVSB-10597 is fixed
   Scenario: Search technical record negative scenarios
-  AC8 - User Searches For Technical Records Using Something That Is Not A Valid VIN/Partial VIN/Primary VRM/Trailer ID
   AC9 - User Searches For Technical Records Without Entering Any Search Criteria
   AC10 - Partial VIN search returns duplicated full VINs
   AC11 - VRM search returns multiple vehicles
-    #search using string that is not a valid VIN/Partial VIN/Primary VRM/Trailer ID
-    When I search for vehicle using wrong identifier "P111222333444"
-    Then wait until I see search error message "Vehicle not found, check the vehicle registration mark, trailer ID or vehicle identification number"
     #partial VIN search returns duplicated full VINs
     When I search for vehicle using wrong identifier "678413"
-    Then wait until I see search error message "Multiple vehicles found, search using the full vehicle identification number"
+    Then the header error contains "There is a problem"
+    And the header error contains "Multiple vehicles found, search using the full vehicle identification number"
+    And the specific error contains "Multiple vehicles found, search using the full vehicle identification number"
+    Then wait until I see search error message ""
     #search without entering any search criteria
     When I search for vehicle using wrong identifier ""
-    Then wait until I see search error message "Enter a vehicle registration mark, trailer ID or vehicle identification number"
+    Then the header error contains "There is a problem"
+    And the header error contains "Enter a vehicle registration mark, trailer ID or vehicle identification number"
+    And the specific error contains "Enter a vehicle registration mark, trailer ID or vehicle identification number"
     #VRM search returns multiple vehicles
     Given I search for vehicle using wrong identifier "CT70VRL"
-    Then wait until I see search error message "Multiple vehicles found, search using the full vehicle identification number"
+    Then the header error contains "There is a problem"
+    And the header error contains "Multiple vehicles found, search using the full vehicle identification number"
+    And the specific error contains "Multiple vehicles found, search using the full vehicle identification number"

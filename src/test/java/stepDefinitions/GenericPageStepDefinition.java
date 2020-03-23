@@ -87,4 +87,24 @@ public class GenericPageStepDefinition {
     public void iClickLink(String text) {
         genericPageSteps.clickLink(text);
     }
+
+    @Then("^the header error contains \"([^\"]*)\"$")
+    public void headerErrorContains(String text) {
+        genericPageSteps.headerErrorContains(text);
+    }
+
+    @Then("^the header error does not contain \"([^\"]*)\"$")
+    public void headerErrorDoesNotContain(String text) {
+        genericPageSteps.headerErrorNotContains(text);
+    }
+
+    @When("^I click \"([^\"]*)\" button$")
+    public void iClickButton(String text) {
+        genericPageSteps.clickButton(text);
+    }
+
+    @When("^I go back to previous page$")
+    public void iGoBackToPreviousPage() {
+        genericPageSteps.goBackToPreviousPage();
+    }
 }

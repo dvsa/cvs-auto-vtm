@@ -26,11 +26,6 @@ public class CreateTechRecordPageStepDefinition {
 
     }
 
-    @Then("^the header error contains \"([^\"]*)\"$")
-    public void headerErrorContains(String text) {
-        createTechRecordPageSteps.headerErrorContains(text);
-    }
-
     @Then("^the specific \"([^\"]*)\" error contains \"([^\"]*)\"$")
     public void specificErrorContains(String errorType, String text) throws Exception {
         createTechRecordPageSteps.specificErrorContains(errorType, text);
@@ -39,16 +34,6 @@ public class CreateTechRecordPageStepDefinition {
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" input field$")
     public void iShouldSeeInInputField(String text, String input) throws Exception {
         createTechRecordPageSteps.checkInputFieldText(text, input);
-    }
-
-    @When("^I click \"([^\"]*)\" button$")
-    public void iClickButton(String text) {
-        createTechRecordPageSteps.clickButton(text);
-    }
-
-    @Then("^the header error does not contain \"([^\"]*)\"$")
-    public void headerErrorDoesNotContain(String text) {
-        createTechRecordPageSteps.headerErrorNotContains(text);
     }
 
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" input field$")

@@ -10,6 +10,8 @@ Feature: Search tech record
     When I go to search tech record page
     Then element with id "searchIdentifier" should be present
 
+  @skip
+  # because of ADR refactoring
   Scenario: Check adr fields appear under certain conditions
   AC1 - Selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "CompatilibityGroupJ" appear
   AC2 - User can only select statement OR product list

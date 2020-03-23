@@ -26,11 +26,6 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void headerErrorContains(String text) {
-        createTechRecordPage.headerErrorContains(text);
-    }
-
-    @Step
     public void specificErrorContains(String errorType, String text) throws Exception {
         createTechRecordPage.specificErrorContains(errorType, text);
     }
@@ -38,11 +33,6 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     @Step
     public void checkInputFieldText(String text, String input) throws Exception {
         createTechRecordPage.checkInputFieldText(text, input);
-    }
-
-    @Step
-    public void headerErrorNotContains(String text) {
-        createTechRecordPage.headerErrorNotContains(text);
     }
 
     @Step

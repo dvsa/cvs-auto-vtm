@@ -16,12 +16,9 @@ public class CreateTechRecordPage extends GenericPage {
     private static final String HGV_VEHICLE_TYPE = "#test-radio-HGV";
     private static final String PSV_VEHICLE_TYPE = "#test-radio-PSV";
     private static final String TRAILER_VEHICLE_TYPE = "#test-radio-Trailer";
-    private static final String HEADER_ERROR = "div.govuk-error-summary";
     private static final String VEHICLE_TYPE_ERROR = "#vType-error";
     private static final String VIN_ERROR = "#vin-error";
     private static final String VRM_ERROR = "#vrm-error";
-    private static final String SPINNER = "div.spinner-container";
-    private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
 
     public void fillInVin(String vin) {
         findElementByCss(VIN_INPUT).clear();
@@ -49,13 +46,6 @@ public class CreateTechRecordPage extends GenericPage {
                 throw new Exception(
                         "Invalid vehicle type");
         }
-    }
-
-    public void headerErrorContains(String text) {
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
-        new WebDriverWait(getDriver(), 15).
-                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(HEADER_ERROR), text));
-        findElementByCss(VIN_INPUT).click();
     }
 
     public void specificErrorContains(String errorType, String text) throws Exception {
@@ -95,13 +85,6 @@ public class CreateTechRecordPage extends GenericPage {
                 throw new Exception(
                         "Invalid input type");
         }
-    }
-
-    public void headerErrorNotContains(String text) {
-        waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_SPECIFIC_ERRORS)));
-        Assert.assertFalse(findElementByCss(HEADER_SPECIFIC_ERRORS).getText().contains(text));
     }
 
     public void checkNotInputFieldText(String text, String input) throws Exception {
