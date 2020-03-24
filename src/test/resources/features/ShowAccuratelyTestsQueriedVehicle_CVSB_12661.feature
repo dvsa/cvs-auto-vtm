@@ -21,14 +21,14 @@ Feature: Show test accurately for queried vehicle
     # the test history section should have three entries, one headings row and two actual tests
     And the "test history" section should have "3" entries
     Then hgv tech record fields should have values
-      | Field               | Value      |
-      | testCode-0          | Aav2       |
-      | testEndTimestamp-0  | 15/01/2019 |
-      | expiryDate-0        | -          |
-      | certificateNumber-0 | -          |
-      | testResult-0        | FAIL       |
-      | testCode-1          | Pms        |
-      | testEndTimestamp-1  | 14/01/2019 |
-      | expiryDate-1        | 14/01/2020 |
-      | certificateNumber-1 | 12334      |
-      | testResult-1        | PASS       |
+      | Field                               | Value      |
+      | testCode-tRes-0-tType-0             | Aav2       |
+      | testTypeEndTimestamp-tRes-0-tType-0 | 15/01/2019 |
+      | expiryDate-tRes-0-tType-0           | -          |
+      | certificateNumber-tRes-0-tType-0    | -          |
+      | testResult-tRes-0-tType-0           | FAIL       |
+      | testCode-tRes-1-tType-0             | Pms        |
+      | testTypeEndTimestamp-tRes-1-tType-0 | 14/01/2019 |
+      | expiryDate-tRes-1-tType-0           | 14/01/2020 |
+      | certificateNumber-tRes-1-tType-0    | 12334      |
+      | testResult-tRes-1-tType-0           | PASS       |
