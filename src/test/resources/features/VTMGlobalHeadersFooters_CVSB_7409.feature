@@ -28,7 +28,7 @@ Feature: VTM headers and footers
     And the footer should contain copyright logo
     And the footer should contain ogl logo
 
-  
+
   Scenario: Check footer links
   AC3 - User clicks privacy notice in footer
   AC7 - User clicks crown copyright in the footer
