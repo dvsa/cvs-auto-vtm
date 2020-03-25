@@ -2,8 +2,11 @@ package pages;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage extends GenericPage {
     @FindBy(css = "input[type='email']")
@@ -27,7 +30,8 @@ public class LoginPage extends GenericPage {
     @FindBy(css = "#loginHeader")
     private WebElementFacade loginHeader;
 
-    public void inputEmail(String emailAddress){
+    public void inputEmail(String emailAddress) {
+        getDriver().manage().window().maximize();
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(options, "Sign-in option"));
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.type(emailAddress);
@@ -37,14 +41,20 @@ public class LoginPage extends GenericPage {
         nextScreen.click();
     }
 
-    public void inputPassword(String password){
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.visibilityOf(passwordInput));
+    public void inputPassword(String password) {
+        new WebDriverWait(getDriver(), 10)
+                .pollingEvery(Duration.ofMillis(250))
+                .until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
+        new WebDriverWait(getDriver(), 5)
+                .pollingEvery(Duration.ofMillis(250))
+                .until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
+        new WebDriverWait(getDriver(), 5)
+                .pollingEvery(Duration.ofMillis(250))
+                .until(ExpectedConditions.visibilityOf(passwordInput));
         passwordInput.type(password);
     }
 
-    public void signIn(){
+    public void signIn() {
         signIn.shouldBeEnabled();
         signIn.click();
     }

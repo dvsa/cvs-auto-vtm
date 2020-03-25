@@ -9,10 +9,9 @@ Feature: Search tech record
   AC2 - User Enters AD Credentials, And Is Logged Into VTM
   AC3 - User Is Already Authenticated Via AD, And Is Therefore Presented With The VTM Landing Page
   AC8 - User closes browser without logging out, reopens browser, still logged into VTM
-  AC6 - User logs out of VTM via the logout button
     #AC1 + AC2
     Given I login with admin credentials
-    Then I should see "Vehicle Testing Management"
+    Then I should see "Vehicle testing management"
     And I should see "Search for a technical record"
     And element with id "test-create-new-vehicle" should be present
     #AC3
@@ -24,6 +23,3 @@ Feature: Search tech record
     Then element with id "searchIdentifier" should be present
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "CT70000"
-    #AC6
-    When I logout from vtm app
-    Then I should see "Pick an account"

@@ -107,4 +107,14 @@ public class GenericPageStepDefinition {
     public void iGoBackToPreviousPage() {
         genericPageSteps.goBackToPreviousPage();
     }
+
+    @Then("^I am taken to \"([^\"]*)\"$")
+    public void iAmTakenTo(String url) {
+        genericPageSteps.checkPageUrl(url);
+    }
+
+    @Then("^I should no longer see the sign out confirmation screen$")
+    public void iShouldNoLongerSeeTheSignOutConfirmationScreen() {
+        genericPageSteps.checkSignOutScreenNotPresent();
+    }
 }
