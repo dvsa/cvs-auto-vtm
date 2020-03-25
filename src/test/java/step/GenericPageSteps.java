@@ -1,10 +1,13 @@
 package step;
 
 import net.thucydides.core.annotations.Step;
-import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.FluentWait;
 import pages.GenericPage;
 import pages.Header;
 import pages.HomePage;
+
+import java.time.Duration;
+import java.util.NoSuchElementException;
 
 public class GenericPageSteps {
 
@@ -44,7 +47,7 @@ public class GenericPageSteps {
 
     @Step
     public void waitForTextToAppear(String text) {
-        genericPage.waitForTextToAppear(text, 20);
+        genericPage.waitForTextToAppearInPage(text);
     }
 
     @Step
@@ -64,13 +67,13 @@ public class GenericPageSteps {
 
     @Step
     public void goBackToSearchPage() {
-        header.clickHeaderLink();
+        header.clickHeaderTitleLink();
         homePage.goToSearchTechRecordPage();
     }
 
     @Step
     public void goBackToCreatePage() {
-        header.clickHeaderLink();
+        header.clickHeaderTitleLink();
         homePage.goToCreateTechRecordPage();
     }
 
@@ -102,5 +105,15 @@ public class GenericPageSteps {
     @Step
     public void goBackToPreviousPage() {
         genericPage.goBackToPreviousPage();
+    }
+
+    @Step
+    public void checkPageUrl(String url) {
+        genericPage.checkPageUrl(url);
+    }
+
+    @Step
+    public void checkSignOutScreenNotPresent() {
+        genericPage.checkSignOutScreenNotPresent();
     }
 }

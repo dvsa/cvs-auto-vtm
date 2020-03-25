@@ -6,14 +6,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.NoSuchElementException;
 
 public class GenericPage extends PageObject{
 
     private static final String SPINNER = "div.spinner-container";
     private static final String HEADER_ERROR = "div.govuk-error-summary";
     private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
+    private static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -137,7 +142,7 @@ public class GenericPage extends PageObject{
 
     public void checkTextIsPresentInHyperlink(String text) {
         Assert.assertNotNull("Hyperlink with text was not found!", getDriver().findElement(By.xpath(
-                "//a[contains(text(),'" + text + "')]")));
+                "//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
     }
 
     public void goBackToHomePage() {
@@ -173,8 +178,8 @@ public class GenericPage extends PageObject{
 
     public void clickLink(String text) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions
-                .elementToBeClickable(By.xpath("//a[contains(text(),'" + text + "')]")));
-        findElementByXpath("//a[contains(text(),'" + text + "')]").click();
+                .elementToBeClickable(By.xpath("//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
+        findElementByXpath("//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]").click();
         try {
             new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
             waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
@@ -204,5 +209,21 @@ public class GenericPage extends PageObject{
 
     public void goBackToPreviousPage() {
         getDriver().navigate().back();
+    }
+
+    public void checkPageUrl(String url) {
+        Assert.assertEquals(url, getDriver().getCurrentUrl());
+    }
+
+    public void checkSignOutScreenNotPresent() {
+        Assert.assertEquals(0, getDriver().findElements(By.cssSelector(SIGNOUT_CONFIRMATION_SCREEN)).size());
+    }
+
+    public void waitForTextToAppearInPage(String text) {
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(250))
+                .ignoring(NoSuchElementException.class);
+        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss("body"), text));
     }
 }

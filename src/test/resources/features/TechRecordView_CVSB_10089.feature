@@ -5,7 +5,7 @@ Feature: Search tech record
 
   Background:
     Given I login with admin credentials
-    Then I should see "Vehicle Testing Management"
+    Then I should see "Vehicle testing management"
     And I should see "Select activity"
     And element with id "test-create-new-vehicle" should be present
     When I go to search tech record page

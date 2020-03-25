@@ -1,5 +1,6 @@
 package pages;
 
+import exceptions.AutomationException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -540,6 +541,9 @@ public class TechRecordPage extends GenericPage {
             case "technical record history":
                 new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), heading));
                 break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Non existent section");
         }
     }
 }

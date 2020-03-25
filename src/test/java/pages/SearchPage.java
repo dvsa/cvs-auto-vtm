@@ -54,17 +54,6 @@ public class SearchPage extends GenericPage {
         clearInput(SEARCH_INPUT);
     }
 
-    public void logoutFromVtmApp() {
-        if (findElementByCss(LOG_OUT_LINK).isDisplayed()) {
-            findElementByCss(LOG_OUT_LINK).click();
-        }
-        else {
-            findElementByCss(HAMBURGER_MENU).click();
-            new WebDriverWait(getDriver(), 3).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(LOG_OUT_LINK_IN_HAMBURGER_MENU)));
-            findElementByCss(LOG_OUT_LINK_IN_HAMBURGER_MENU).click();
-        }
-    }
-
     public void optionShouldBeSelected(String searchCriteria) {
         Select selectSearchCriteria = new Select(findElementByCss(SEARCH_OPTIONS_DROPDOWN));
         Assert.assertEquals(selectSearchCriteria.getFirstSelectedOption().getAttribute("value"), searchCriteria);
