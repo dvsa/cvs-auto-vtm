@@ -2,7 +2,7 @@ Feature: Search tech record
   As an admin user I can log in the VTM app
   And search for tech records using Vin, primary Vrm, partial Vin or trailerId
 
-  Background: Check content in tech record search page
+  Background:
     Given I login with admin credentials
     Then I should see "Select activity"
     And element with id "test-create-new-vehicle" should be present
@@ -42,25 +42,10 @@ Feature: Search tech record
     When I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
 
-  @skip
-  # until CVSB-10597 is fixed
   Scenario: Search technical record negative scenarios
   AC9 - User Searches For Technical Records Without Entering Any Search Criteria
-  AC10 - Partial VIN search returns duplicated full VINs
-  AC11 - VRM search returns multiple vehicles
-    #partial VIN search returns duplicated full VINs
-    When I search for vehicle using wrong identifier "678413"
-    Then the header error contains "There is a problem"
-    And the header error contains "Multiple vehicles found, search using the full vehicle identification number"
-    And the specific error contains "Multiple vehicles found, search using the full vehicle identification number"
-    Then wait until I see search error message ""
     #search without entering any search criteria
     When I search for vehicle using wrong identifier ""
     Then the header error contains "There is a problem"
     And the header error contains "Enter a vehicle registration mark, trailer ID or vehicle identification number"
     And the specific error contains "Enter a vehicle registration mark, trailer ID or vehicle identification number"
-    #VRM search returns multiple vehicles
-    Given I search for vehicle using wrong identifier "CT70VRL"
-    Then the header error contains "There is a problem"
-    And the header error contains "Multiple vehicles found, search using the full vehicle identification number"
-    And the specific error contains "Multiple vehicles found, search using the full vehicle identification number"

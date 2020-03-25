@@ -181,4 +181,9 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPage.iShouldSeeSectionHeading(heading);
     }
+
+    @Step
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+        techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
 }
