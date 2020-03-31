@@ -79,6 +79,37 @@ public class TypeLoader {
         return userName;
     }
 
+    public static String getMicrosoftOnlineUrl() {
+
+        EnvironmentType envType = getType();
+        String userName;
+        switch (envType) {
+            case CI_BROWSERSTACK:
+                userName = System.getProperty("MICROSOFT_URL");
+                break;
+            default:
+                userName = properties.getProperty("microsoftonline.url");
+                break;
+
+        }
+        return userName;
+    }
+
+    public static String getBasePathUrl() {
+        EnvironmentType envType = getType();
+        String basePathUrl;
+        switch (envType) {
+            case CI_BROWSERSTACK:
+                basePathUrl = System.getProperty("DEVELOP_BASE_PATH");
+                break;
+            default:
+                basePathUrl = properties.getProperty("base.path.url");
+                break;
+
+        }
+        return basePathUrl;
+    }
+
     public static String getAppPassword() {
         EnvironmentType envType = getType();
         String password;

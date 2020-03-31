@@ -1,4 +1,4 @@
-Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
+Feature: Search for vehicle in VTM when the full VIN is less than 9 characters - CVSB-11329
   This story will allow the DVSA to be able to search for a vehicle using:
   The last 6-characters of the VIN, in the scenario where these last 6 characters (can also be special characters) contain letters, not only numbers.
   The full VIN, in case that the VIN has 8 or less digits.
@@ -6,12 +6,12 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And search vehicle link should be present
     When I go to search tech record page
     Then I should see "Search for a technical record"
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
 
-    @skip
+
   Scenario: As the DVSA, we want to be able to search for a vehicle using all possible search criterion
   AC1 - The search criteria selectors are displayed on the search screen
   AC2 - User selects the search criteria
@@ -66,22 +66,22 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
     Then wait until I see "Vehicle summary"
     # search by entering correct partial VIN string
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I search for vehicle with identifier "230123"
     Then wait until I see "Vehicle summary"
     # search by entering correct primary VRM string
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
-    When I search for vehicle with identifier "CT70VRL"
+    Then search vehicle input field should be present
+    When I search for vehicle with identifier "AD35GHT"
     Then wait until I see "Vehicle summary"
     # search by entering correct trailer id string
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I search for vehicle with identifier "C000002"
     Then wait until I see "Vehicle summary"
     # search by entering correct VIN string that is under 8 characters
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I search for vehicle using wrong identifier "VIN1"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
@@ -90,11 +90,11 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
     # using primary vrm as search criteria
     When I select "Vehicle registration mark (VRM)" search criteria
     # search by entering correct primary VRM string
-    When I search for vehicle with identifier "CT70VRL"
+    When I search for vehicle with identifier "AD35GHT"
     Then wait until I see "Vehicle summary"
     # search by entering correct VIN string when search criteria is primary VRM
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I select "Vehicle registration mark (VRM)" search criteria
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"
@@ -108,9 +108,9 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
     Then wait until I see "Vehicle summary"
     # search by entering correct primary VRM string when search criteria is VIN
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I select "Full vehicle identification number (VIN)" search criteria
-    When I search for vehicle using wrong identifier "CT70VRL"
+    When I search for vehicle using wrong identifier "AD35GHT"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
     And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
@@ -122,7 +122,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
     Then wait until I see "Vehicle summary"
     # search by entering correct VIN string when search criteria is partial VIN
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I select "Partial VIN (last 6 characters)" search criteria
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"
@@ -136,7 +136,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
     Then wait until I see "Vehicle summary"
     # search by entering correct VIN string when search criteria is trailer id
     When I go back to previous page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
     When I select "Trailer ID" search criteria
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"

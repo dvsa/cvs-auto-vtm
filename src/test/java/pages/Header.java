@@ -2,8 +2,11 @@ package pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class Header extends GenericPage {
 
@@ -56,5 +59,16 @@ public class Header extends GenericPage {
 
     public void checkTextInHeader(String text) {
         Assert.assertTrue(findElementByCss(HEADER).getText().contains(text));
+    }
+
+    public void goBackToHomePage() {
+        String locator = "//vtm-header//a/span[contains(text(),'Vehicle testing management')]";
+        List<WebElement> homePageLinks = getDriver().findElements(By.xpath(locator));
+        for (WebElement homePageLink : homePageLinks) {
+            if (homePageLink.isDisplayed()) {
+                homePageLink.click();
+                break;
+            }
+        }
     }
 }

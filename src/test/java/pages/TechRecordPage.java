@@ -1,30 +1,27 @@
 package pages;
 
 import exceptions.AutomationException;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.*;
 
-import java.time.Duration;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class TechRecordPage extends GenericPage {
 
-    private static final String OPEN_CLOSE_ALL_SECTIONS = "a.govuk-link";
+    private static final String OPEN_CLOSE_ALL_SECTIONS = "div.open-close-all a";
     private static final String OPEN_VEHICLE_SUMMARY_SECTION = "#test-fa-plus-summary";
     private static final String OPEN_BODY_SECTION = "#test-fa-plus-body";
     private static final String OPEN_WEIGHTS_SECTION = "#test-fa-plus-weights";
     private static final String OPEN_TYRES_SECTION = "#test-fa-plus-tyres";
-    private static final String OPEN_DIMENSIONS_SECTION_ = "#test-fa-plus-dimensions";
+    private static final String OPEN_DIMENSIONS_SECTION = "#test-fa-plus-dimensions";
     private static final String OPEN_ADR_SECTION = "#test-fa-plus-adr";
     private static final String OPEN_NOTES_SECTION = "#test-fa-plus-notes";
     private static final String OPEN_TEST_HISTORY_SECTION = "#test-fa-plus-testHistory";
@@ -33,38 +30,48 @@ public class TechRecordPage extends GenericPage {
     private static final String CLOSE_BODY_SECTION = "#test-fa-minus-body";
     private static final String CLOSE_WEIGHTS_SECTION = "#test-fa-minus-weights";
     private static final String CLOSE_TYRES_SECTION = "#test-fa-minus-tyres";
-    private static final String CLOSE_DIMENSIONS_SECTION_ = "#test-fa-minus-dimensions";
+    private static final String CLOSE_DIMENSIONS_SECTION = "#test-fa-minus-dimensions";
     private static final String CLOSE_ADR_SECTION = "#test-fa-minus-adr";
     private static final String CLOSE_NOTES_SECTION = "#test-fa-minus-notes";
     private static final String CLOSE_TEST_HISTORY_SECTION = "#test-fa-minus-testHistory";
     private static final String CLOSE_TECHNICAL_RECORD_HISTORY_SECTION = "#test-fa-minus-techRecHistory";
     private static final String CHANGE_TECHNICAL_RECORD_DETAILS = "#test-change-btn";
     private static final String SAVE_TECHNICAL_RECORD_DETAILS = "#test-save-btn";
-    private static final String FP_61_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.FP']";
-    private static final String AT_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.AT']";
-    private static final String HYDROGEN_PEROXIDE_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.Class']";
-    private static final String MEMU_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.MEMU']";
-    private static final String CARBON_DISULPHIDE_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.Carbon']";
-    private static final String HYDROGEN_DANGEROUS_GOOD = "[id*='adrDetails.permittedDangerousGoods.Hydrogen']";
-    private static final String EXPLOSIVES_2_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 2)')]/preceding-sibling::input";
-    private static final String EXPLOSIVES_3_DANGEROUS_GOOD = "//label[contains(text(),'Explosives (type 3)')]/preceding-sibling::input";
-    private static final String STATEMENT_FIELDS = "//input[@value='isStatement']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
-    private static final String PRODUCT_LIST_FIELDS = "//input[@value='isProductListRefNo']/parent::div/following-sibling::*[1][@class='govuk-inset-text ng-star-inserted']";
-    private static final String STATEMENT = "[value='isStatement']";
-    private static final String PRODUCT_LIST = "[value='isProductListRefNo']";
-    private static final String VEHICLE_TYPE = "#adrDetails\\.type";
-    private static final String BATTERY_LIST_APPLICABLE = "[value='applicable']";
-    private static final String BATTERY_LIST_NOT_APPLICABLE = "[value='notApplicable']";
-    private static final String BATTERY_LIST_APPLICABLE_FIELDS = "//input[@id='adrDetails.batteryListNumber']/parent::div";
-    private static final String MANUFACTURER_BRAKE_DECLARATION = "//input[@id='adrDetails.brakeDeclarationIssuer']/parent::div";
-    private static final String BRAKE_ENDURANCE_DECLARATION = "//input[@id='adrDetails.weight']/parent::div";
-    private static final String ADD_DANGEROUS_GOOD_LINK = "a.add-dangerous-note";
-    private static final String ADD_GUIDANCE_NOTE_LINK = "a.add-guidance-note";
-    private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-inspection-details+p>a";
-    private static final String ADD_UN_NUMBER_LINK = "a.add-a-un-number";
+    private static final String FP_61_DANGEROUS_GOOD = "#permittedGood_0";
+    private static final String AT_DANGEROUS_GOOD = "#permittedGood_1";
+    private static final String HYDROGEN_PEROXIDE_DANGEROUS_GOOD = "#permittedGood_2";
+    private static final String MEMU_DANGEROUS_GOOD = "#permittedGood_3";
+    private static final String CARBON_DISULPHIDE_DANGEROUS_GOOD = "#permittedGood_4";
+    private static final String HYDROGEN_DANGEROUS_GOOD = "#permittedGood_5";
+    private static final String EXPLOSIVES_2_DANGEROUS_GOOD = "#permittedGood_6";
+    private static final String EXPLOSIVES_3_DANGEROUS_GOOD = "#permittedGood_7";
+    private static final String GUIDANCE_NOTE_1 = "#note_0";
+    private static final String GUIDANCE_NOTE_1A = "#note_1";
+    private static final String GUIDANCE_NOTE_2 = "#note_2";
+    private static final String GUIDANCE_NOTE_3 = "#note_3";
+    private static final String GUIDANCE_NOTE_V1B = "#note_4";
+    private static final String GUIDANCE_NOTE_T1B = "#note_5";
+    private static final String STATEMENT_FIELDS = "#conditional-selectStatement";
+    private static final String PRODUCT_LIST_FIELDS = "#conditional-select_productlist_N";
+    private static final String STATEMENT = "#select_statement_Y";
+    private static final String PRODUCT_LIST = "#select_productlist_N";
+    private static final String ADR_VEHICLE_TYPE = "#vehicleType";
+    private static final String BATTERY_LIST_APPLICABLE = "#listStatementApplicable-Yes";
+    private static final String BATTERY_LIST_NOT_APPLICABLE = "#listStatementApplicable-No";
+    private static final String BATTERY_LIST_APPLICABLE_FIELDS = "#conditional-battery-list-applicable";
+    private static final String BATTERY_LIST_REFERENCE_NUMBER = "#batteryListNumber";
+    private static final String MANUFACTURER_BRAKE_DECLARATION = "#conditional-brakeDeclarationsSeen";
+    private static final String MANUFACTURER_BRAKE_DECLARATION_ISSUER = "#brakeDeclarationIssuer";
+    private static final String BRAKE_ENDURANCE_DECLARATION = "#conditional-brakeEndurance";
+    private static final String BRAKE_ENDURANCE_WEIGHT= "#weight";
+//    private static final String ADD_DANGEROUS_GOOD_LINK = "a.add-dangerous-note";
+//    private static final String ADD_GUIDANCE_NOTE_LINK = "a.add-guidance-note";
+    private static final String ADD_SUBSEQUENT_INSPECTION_LINK = "vtm-tank-inspections-edit a";
+    private static final String ADD_UN_NUMBER_LINK = "#conditional-select_productlist_N div>a";
     private static final String CUSTOM_DANGEROUS_GOOD_INPUT = "a.add-dangerous-note+input";
     private static final String GUIDANCE_NOTE_INPUT = "a.add-guidance-note+input";
-    private static final String NEW_UN_NUMBER_INPUT = "#adrDetails\\.productListUnNo\\.0";
+    private static final String NEW_UN_NUMBER_INPUT = "#productListUnNumber_";
+    private static final String PRODUCT_LIST_ADDITIONAL_DETAILS = "#productList";
     private static final String VEHICLE_SUMMARY_SECTION = "vtm-vehicle-summary>table tr";
     private static final String BODY_SECTION = "vtm-body>table tr";
     private static final String WEIGHTS_SECTION = "vtm-weights>table tr";
@@ -74,15 +81,53 @@ public class TechRecordPage extends GenericPage {
     private static final String NOTES_SECTION = "vtm-notes>table tr";
     private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
     private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
+    private static final String CHANGES_REASON_TEXT_AREA = "#reasonForCreation";
+    private static final String CONFIRM_SAVE_CHANGES = "vtm-adr-reason-modal>button";
+    private static final String SUBSTANCES_PERMITTED_PERMITTED = "//label[contains(text(),'Substances permitted')]/preceding-sibling::input";
+    private static final String SUBSTANCES_PERMITTED_CLASS_NUMBER = "//label[contains(text(),'class UN number')]/preceding-sibling::input";
+    private static final String PRODUCT_LIST_REF_NUMBER = "#productListRefNumber";
+    private static final String INITIAL_INSPECTION_CERTIFICATE = "#tc2IntermediateApprovalNo";
+    private static final String INITIAL_INSPECTION_EXPIRY_DATE_DAY = "[id^=tc2IntermediateExpiryDate][id$='day']";
+    private static final String INITIAL_INSPECTION_EXPIRY_DATE_MONTH = "[id^=tc2IntermediateExpiryDate][id$='month']";
+    private static final String INITIAL_INSPECTION_EXPIRY_DATE_YEAR = "[id^=tc2IntermediateExpiryDate][id$='year']";
+    private static final String SUBSEQUENT_INSPECTION_TYPE = "[id^=tc3Type-]";
+    private static final String SUBSEQUENT_INSPECTION_CERTIFICATE = "[id^=tc3PeriodicNumber-]";
+    private static final String SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY = "[id^=tc3PeriodicExpiryDate][id$='day']";
+    private static final String SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH = "[id^=tc3PeriodicExpiryDate][id$='month']";
+    private static final String SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR = "[id^=tc3PeriodicExpiryDate][id$='year']";
+    private static final String HAS_ADR_DETAILS = "#hasADR-Yes";
+    private static final String HAS_NOT_ADR_DETAILS = "#hasADR-No";
+    private static final String APPLICANT_NAME = "#name";
+    private static final String APPLICANT_STREET = "#street";
+    private static final String APPLICANT_TOWN = "#town";
+    private static final String APPLICANT_CITY = "#city";
+    private static final String APPLICANT_POSTCODE = "#postcode";
+    private static final String DATE_PROCESSED_DAY = "[id^=approvalDate][id$='day']";
+    private static final String DATE_PROCESSED_MONTH = "[id^=approvalDate][id$='month']";
+    private static final String DATE_PROCESSED_YEAR = "[id^=approvalDate][id$='year']";
+    private static final String COMPATIBILITY_GROUP_J_YES = "#compatibilityGroupJ-Yes";
+    private static final String COMPATIBILITY_GROUP_J_NO = "#compatibilityGroupJ-No";
+    private static final String APPROVAL_TYPE_NO = "#adrTypeApprovalNo";
+    private static final String TANK_MANUFACTURER = "#tankManufacturer";
+    private static final String TANK_YEAR_OF_MANUFACTURE = "#yearOfManfacture";
+    private static final String TANK_MANUFACTURER_SERIAL_NO = "#tankManufacturerSerialNo";
+    private static final String TANK_TYPE_APPROVAL_NUMBER = "#tankTypeAppNo";
+    private static final String TANK_CODE = "#tankCode";
+    private static final String SPECIAL_PROVISIONS = "#specialProvisions";
+    private static final String MEMO_07_09_YES = "#memosApply-Yes";
+    private static final String MEMO_07_09_NO = "#memosApply-No";
+    private static final String CERTIFICATE_REQUIRED_YES = "#guidanceNotes-Yes";
+    private static final String CERTIFICATE_REQUIRED_NO = "#guidanceNotes-No";
+    private static final String ADDITIONAL_ADR_DETAILS = "#additionalExaminerNotes";
+    private static final String CANCEL_SAVE_DETAILS_MODAL = "vtm-adr-reason-modal a";
+
+    private static int noOfDocuments;
+    private static int noOfDocumentsOnEdit;
 
 
-
-    public String getValueForTechRecordField(String field) {
+    public String getValueInTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
-        FluentWait wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(20))
-                .pollingEvery(Duration.ofMillis(300))
-                .ignoring(NoSuchElementException.class);
+        FluentWait wait = globalFluentWait(20, 300);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("test-" + field)));
         Actions actions = new Actions(getDriver());
         actions.moveToElement(element);
@@ -93,7 +138,7 @@ public class TechRecordPage extends GenericPage {
     public void openAllSections() {
 
         WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
-        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        FluentWait wait = globalFluentWait(20, 200);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
         wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Open all"));
         Actions actions = new Actions(getDriver());
@@ -108,7 +153,7 @@ public class TechRecordPage extends GenericPage {
     public void closeAllSections() {
 
         WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
-        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        FluentWait wait = globalFluentWait(20, 200);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
         wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Close all"));
         Actions actions = new Actions(getDriver());
@@ -120,317 +165,468 @@ public class TechRecordPage extends GenericPage {
         waitForTextToAppear("Open all");
     }
 
-    public void openSection(String section) throws Exception {
+    public void openSection(String section) {
         String option = section.toLowerCase();
+        Actions actions = new Actions(getDriver());
+        FluentWait wait = globalFluentWait(5, 200);
         switch (option) {
             case "vehicle summary":
-                getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_VEHICLE_SUMMARY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
+                }
                 break;
             case "body":
-                getDriver().findElement(By.cssSelector(OPEN_BODY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_BODY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_BODY_SECTION)));
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_BODY_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_BODY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_BODY_SECTION)).click();
+                }
                 break;
             case "weights":
-                getDriver().findElement(By.cssSelector(OPEN_WEIGHTS_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_WEIGHTS_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_WEIGHTS_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_WEIGHTS_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_WEIGHTS_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_WEIGHTS_SECTION)).click();
+                }
                 break;
             case "tyres":
-                getDriver().findElement(By.cssSelector(OPEN_TYRES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TYRES_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_TYRES_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_TYRES_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_TYRES_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_TYRES_SECTION)).click();
+                }
                 break;
             case "dimensions":
-                getDriver().findElement(By.cssSelector(OPEN_DIMENSIONS_SECTION_)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_DIMENSIONS_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_DIMENSIONS_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_DIMENSIONS_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_DIMENSIONS_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_DIMENSIONS_SECTION)).click();
+                }
                 break;
             case "adr":
-                getDriver().findElement(By.cssSelector(OPEN_ADR_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_ADR_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_ADR_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_ADR_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_ADR_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_ADR_SECTION)).click();
+                }
+                noOfDocuments = getDriver().findElements(
+                        By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size();
+                noOfDocumentsOnEdit = getDriver().findElements(
+                        By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size();
                 break;
             case "notes":
-                getDriver().findElement(By.cssSelector(OPEN_NOTES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_NOTES_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_NOTES_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_NOTES_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_NOTES_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_NOTES_SECTION)).click();
+                }
                 break;
             case "test history":
-                getDriver().findElement(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_TEST_HISTORY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_TEST_HISTORY_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_TEST_HISTORY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).click();
+                }
                 break;
             case "technical record history":
-                getDriver().findElement(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)));
+                    actions.moveToElement(findElementByCss(OPEN_TECHNICAL_RECORD_HISTORY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                }
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid section");
+                throw new AutomationException(
+                        "Invalid section '" + option + "'");
         }
+        actions.perform();
     }
 
-    public void closeSection(String section) throws Exception {
+    public void closeSection(String section) {
         String option = section.toLowerCase();
+        Actions actions = new Actions(getDriver());
+        FluentWait wait = globalFluentWait(5, 200);
         switch (option) {
             case "vehicle summary":
-                getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_VEHICLE_SUMMARY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
+                }
                 break;
             case "body":
-                getDriver().findElement(By.cssSelector(CLOSE_BODY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_BODY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_BODY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_BODY_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_BODY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_BODY_SECTION)).click();
+                }
                 break;
             case "weights":
-                getDriver().findElement(By.cssSelector(CLOSE_WEIGHTS_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_WEIGHTS_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_WEIGHTS_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_WEIGHTS_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_WEIGHTS_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_WEIGHTS_SECTION)).click();
+                }
                 break;
             case "tyres":
-                getDriver().findElement(By.cssSelector(CLOSE_TYRES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TYRES_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_TYRES_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_TYRES_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_TYRES_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_TYRES_SECTION)).click();
+                }
                 break;
             case "dimensions":
-                getDriver().findElement(By.cssSelector(CLOSE_DIMENSIONS_SECTION_)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_DIMENSIONS_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_DIMENSIONS_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_DIMENSIONS_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_DIMENSIONS_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_DIMENSIONS_SECTION)).click();
+                }
                 break;
             case "adr":
-                getDriver().findElement(By.cssSelector(CLOSE_ADR_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_ADR_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_ADR_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_ADR_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_ADR_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_ADR_SECTION)).click();
+                }
                 break;
             case "notes":
-                getDriver().findElement(By.cssSelector(CLOSE_NOTES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_NOTES_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_NOTES_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_NOTES_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_NOTES_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_NOTES_SECTION)).click();
+                }
                 break;
             case "test history":
-                getDriver().findElement(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_TEST_HISTORY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).click();
+                }
                 break;
             case "technical record history":
-                getDriver().findElement(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).size() == 0) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)));
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)));
+                    actions.moveToElement(findElementByCss(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION));
+                    actions.perform();
+                    getDriver().findElement(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                }
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid section");
+                throw new AutomationException(
+                        "Invalid section '" + option + "'");
         }
     }
 
     public void editTechRecordDetails() {
+        FluentWait wait = globalFluentWait(20, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)));
         getDriver().findElement(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)).click();
     }
 
     public void saveTechRecordDetails() {
-        getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS));
+        FluentWait wait = globalFluentWait(20, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS)));
+        getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS)).click();
     }
 
-    public void deselectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+    public void deselectDangerousGoodCheckbox(String dangerousGood) {
+        FluentWait wait = globalFluentWait(5, 200);
         String option = dangerousGood.toLowerCase();
         switch (option) {
             case "fp <61 (fl)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(FP_61_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(FP_61_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "at":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AT_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AT_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(AT_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(AT_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "class 5.1 hydrogen peroxide (ox)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "memu":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMU_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMU_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(MEMU_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(MEMU_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "carbon disulphide":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "hydrogen":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)));
                 if (getDriver().findElement(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)).isSelected()) {
                     getDriver().findElement(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "explosives (type 2)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)));
-                if (getDriver().findElement(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)).isSelected()) {
-                    getDriver().findElement(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)));
+                if (getDriver().findElement(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "explosives (type 3)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)));
-                if (getDriver().findElement(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)).isSelected()) {
-                    getDriver().findElement(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)));
+                if (getDriver().findElement(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)).click();
                 }
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid dangerous good");
+                throw new AutomationException(
+                        "Invalid dangerous good '" + option + "'");
         }
     }
 
-    public void selectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+    public void selectDangerousGoodCheckbox(String dangerousGood) {
         String option = dangerousGood.toLowerCase();
+        FluentWait wait = globalFluentWait(5, 200);
         switch (option) {
             case "fp <61 (fl)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FP_61_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(FP_61_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(FP_61_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "at":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AT_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AT_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(AT_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(AT_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "class 5.1 hydrogen peroxide (ox)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(HYDROGEN_PEROXIDE_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "memu":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMU_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMU_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(MEMU_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(MEMU_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "carbon disulphide":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(CARBON_DISULPHIDE_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "hydrogen":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)));
                 if (!(getDriver().findElement(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)).isSelected())) {
                     getDriver().findElement(By.cssSelector(HYDROGEN_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "explosives (type 2)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)));
-                if (!(getDriver().findElement(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)).isSelected())) {
-                    getDriver().findElement(By.xpath(EXPLOSIVES_2_DANGEROUS_GOOD)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)));
+                if (!(getDriver().findElement(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)).isSelected())) {
+                    getDriver().findElement(By.cssSelector(EXPLOSIVES_2_DANGEROUS_GOOD)).click();
                 }
                 break;
             case "explosives (type 3)":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)));
-                if (!(getDriver().findElement(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)).isSelected())) {
-                    getDriver().findElement(By.xpath(EXPLOSIVES_3_DANGEROUS_GOOD)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)));
+                if (!(getDriver().findElement(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)).isSelected())) {
+                    getDriver().findElement(By.cssSelector(EXPLOSIVES_3_DANGEROUS_GOOD)).click();
                 }
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid dangerous good");
+                throw new AutomationException(
+                        "Invalid dangerous good '" + option + "'");
         }
     }
 
     public void selectFromTankStatement(String statementType) {
+        FluentWait wait = globalFluentWait(10, 200);
         String option = statementType.toLowerCase();
         switch (option) {
             case "statement":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(STATEMENT)));
-                getDriver().findElement(By.cssSelector(STATEMENT)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(STATEMENT)));
+                scrollToAndClickByCss(STATEMENT);
                 break;
             case "product list":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PRODUCT_LIST)));
-                getDriver().findElement(By.cssSelector(PRODUCT_LIST)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PRODUCT_LIST)));
+                scrollToAndClickByCss(PRODUCT_LIST);
                 break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid statement type");
         }
     }
 
     public void checkStatementField(String field) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(STATEMENT_FIELDS)));
-        String elementText = getDriver().findElement(By.xpath(STATEMENT_FIELDS)).getText();
+        String elementText = getDriver().findElement(By.cssSelector(STATEMENT_FIELDS)).getText();
         Assert.assertTrue("Text was not found!", elementText.contains(field));
+        Assert.assertTrue(getDriver().findElement(By.cssSelector(STATEMENT_FIELDS)).isDisplayed());
     }
 
     public void checkStatementFieldsNotPresent() {
-        List<WebElement> elements = getDriver().findElements(By.xpath(STATEMENT_FIELDS));
-        Assert.assertEquals(0, elements.size());
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(STATEMENT_FIELDS));
+        if (elements.size() > 0) {
+            Assert.assertFalse(getDriver().findElement(By.cssSelector(STATEMENT_FIELDS)).isDisplayed());
+        }
     }
 
     public void checkProductListField(String field) {
-        String elementText = getDriver().findElement(By.xpath(PRODUCT_LIST_FIELDS)).getText();
+        String elementText = getDriver().findElement(By.cssSelector(PRODUCT_LIST_FIELDS)).getText();
         Assert.assertTrue("Text was not found!", elementText.contains(field));
+        Assert.assertTrue(getDriver().findElement(By.cssSelector(PRODUCT_LIST_FIELDS)).isDisplayed());
     }
 
     public void checkProductListFieldsNotPresent() {
-        List<WebElement> elements = getDriver().findElements(By.xpath(PRODUCT_LIST_FIELDS));
-        Assert.assertEquals(0, elements.size());
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(PRODUCT_LIST_FIELDS));
+        if (elements.size() > 0) {
+            Assert.assertFalse(getDriver().findElement(By.cssSelector(PRODUCT_LIST_FIELDS)).isDisplayed());
+        }
     }
 
-    public void selectVehicleType(String type) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VEHICLE_TYPE)));
-        Select vehicleType = new Select(getDriver().findElement(By.cssSelector(VEHICLE_TYPE)));
+    public void selectAdrVehicleType(String type) {
+        FluentWait wait = globalFluentWait(5, 250);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADR_VEHICLE_TYPE)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(ADR_VEHICLE_TYPE)));
         try {
-            vehicleType.selectByVisibleText(type);
+            WebElement option = findElementByCss("option[value*='" + type.toLowerCase() + "']");
+            if (!option.isSelected()) {
+                option.click();
+            }
         }
         catch (Exception e)
         {
-            System.out.println("Invalid vehicle type");
-            throw e;
+            throw new AutomationException("Invalid adr vehicle type '" + type + "'");
         }
     }
 
-    public void selectFromBatteryListApplicable(String batteryListApplicableOption) {
+    public void setBatteryListApplicable(String batteryListApplicableOption) {
         String option = batteryListApplicableOption.toLowerCase();
+        FluentWait wait = globalFluentWait(5, 200);
         switch (option) {
             case "yes":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BATTERY_LIST_APPLICABLE)));
-                getDriver().findElement(By.cssSelector(BATTERY_LIST_APPLICABLE)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BATTERY_LIST_APPLICABLE)));
+                scrollToAndClickByCss(BATTERY_LIST_APPLICABLE);
                 break;
             case "no":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BATTERY_LIST_NOT_APPLICABLE)));
-                getDriver().findElement(By.cssSelector(BATTERY_LIST_NOT_APPLICABLE)).click();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BATTERY_LIST_NOT_APPLICABLE)));
+                scrollToAndClickByCss(BATTERY_LIST_NOT_APPLICABLE);
                 break;
         }
     }
 
     public void checkBatteryListApplicableField(String text) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(BATTERY_LIST_APPLICABLE_FIELDS)));
-        String elementText = getDriver().findElement(By.xpath(BATTERY_LIST_APPLICABLE_FIELDS)).getText();
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated
+                (By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS)));
+        String elementText = getDriver().findElement(By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS)).getText();
         Assert.assertTrue("Text was not found!", elementText.contains(text));
+        Assert.assertTrue(getDriver().findElement(By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS)).isDisplayed());
     }
 
     public void checkBatteryListApplicableFieldsNotPresent() {
-        List<WebElement> elements = getDriver().findElements(By.xpath(BATTERY_LIST_APPLICABLE_FIELDS));
-        Assert.assertEquals(0, elements.size());
+        FluentWait wait = globalFluentWait(3, 200);
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS));
+        if (elements.size() > 0) {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS)));
+            Assert.assertFalse(getDriver().findElement(By.cssSelector(BATTERY_LIST_APPLICABLE_FIELDS)).isDisplayed());
+        }
     }
 
     public void checkManufacturerBrakeDeclarationField(String fieldName) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(MANUFACTURER_BRAKE_DECLARATION)));
-        String elementText = getDriver().findElement(By.xpath(MANUFACTURER_BRAKE_DECLARATION)).getText();
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated
+                (By.cssSelector(MANUFACTURER_BRAKE_DECLARATION)));
+        String elementText = getDriver().findElement(By.cssSelector(MANUFACTURER_BRAKE_DECLARATION)).getText();
         Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
+        Assert.assertTrue(getDriver().findElement(By.cssSelector(MANUFACTURER_BRAKE_DECLARATION)).isDisplayed());
     }
 
     public void checkManufacturerBrakeDeclarationFieldsNotPresent() {
-        List<WebElement> elements = getDriver().findElements(By.xpath(MANUFACTURER_BRAKE_DECLARATION));
-        Assert.assertEquals(0, elements.size());
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(MANUFACTURER_BRAKE_DECLARATION));
+        if (elements.size() > 0) {
+            Assert.assertFalse(getDriver().findElement(By.cssSelector(MANUFACTURER_BRAKE_DECLARATION)).isDisplayed());
+        }
     }
 
     public void checkBrakeEnduranceField(String fieldName) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(BRAKE_ENDURANCE_DECLARATION)));
-        String elementText = getDriver().findElement(By.xpath(BRAKE_ENDURANCE_DECLARATION)).getText();
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated
+                (By.cssSelector(BRAKE_ENDURANCE_DECLARATION)));
+        String elementText = getDriver().findElement(By.cssSelector(BRAKE_ENDURANCE_DECLARATION)).getText();
         Assert.assertTrue("Text was not found!", elementText.contains(fieldName));
+        Assert.assertTrue(getDriver().findElement(By.cssSelector(BRAKE_ENDURANCE_DECLARATION)).isDisplayed());
     }
 
     public void checkBrakeEnduranceFieldsNotPresent() {
-        List<WebElement> elements = getDriver().findElements(By.xpath(BRAKE_ENDURANCE_DECLARATION));
-        Assert.assertEquals(0, elements.size());
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(BRAKE_ENDURANCE_DECLARATION));
+        if (elements.size() > 0) {
+            Assert.assertFalse(getDriver().findElement(By.cssSelector(BRAKE_ENDURANCE_DECLARATION)).isDisplayed());
+        }
     }
 
-    public void iClickAdrDetailsLink(String text) throws Exception {
+    public void iClickAdrDetailsLink(String text) {
+        FluentWait wait = globalFluentWait(3, 200);
         String option = text.toLowerCase();
         switch (option) {
-            case "add a dangerous good":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)));
-                getDriver().findElement(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)).click();
-                break;
-            case "add a guidance note":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)));
-                getDriver().findElement(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)).click();
-                break;
+//            case "add a dangerous good":
+//                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)));
+//                getDriver().findElement(By.cssSelector(ADD_DANGEROUS_GOOD_LINK)).click();
+//                break;
+//            case "add a guidance note":
+//                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)));
+//                getDriver().findElement(By.cssSelector(ADD_GUIDANCE_NOTE_LINK)).click();
+//                break;
             case "add a subsequent inspection":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_SUBSEQUENT_INSPECTION_LINK)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_SUBSEQUENT_INSPECTION_LINK)));
                 getDriver().findElement(By.cssSelector(ADD_SUBSEQUENT_INSPECTION_LINK)).click();
                 break;
             case "add a un number":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_UN_NUMBER_LINK)));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADD_UN_NUMBER_LINK)));
                 getDriver().findElement(By.cssSelector(ADD_UN_NUMBER_LINK)).click();
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Non existent link");
+                throw new AutomationException(
+                        "Non existent link '" + option + "'");
         }
     }
 
@@ -450,114 +646,167 @@ public class TechRecordPage extends GenericPage {
 
     public void inputCustomDangerousGood(String customDangerousGood) {
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)));
+        getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).clear();
         getDriver().findElement(By.cssSelector(CUSTOM_DANGEROUS_GOOD_INPUT)).sendKeys(customDangerousGood);
     }
 
     public void inputCustomGuidanceNote(String note) {
         new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_INPUT)));
+        getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).clear();
         getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_INPUT)).sendKeys(note);
     }
 
-    public void selectCustomGuidanceNoteCheckbox(String note) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)));
-        if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).isSelected())) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).click();
+    public void selectGuidanceNoteCheckbox(String note) {
+        String option = note.toLowerCase();
+        FluentWait wait = globalFluentWait(5, 200);
+        switch (option) {
+            case "1":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_1)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1)).click();
+                }
+                break;
+            case "1a":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_1A)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1A)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1A)).click();
+                }
+                break;
+            case "2":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_2)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_2)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_2)).click();
+                }
+                break;
+            case "3":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_3)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_3)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_3)).click();
+                }
+                break;
+            case "v1b":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_V1B)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_V1B)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_V1B)).click();
+                }
+                break;
+            case "t1b":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_T1B)));
+                if (!getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_T1B)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_T1B)).click();
+                }
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid guidance note '" + option + "'");
         }
     }
 
     public void deselectCustomGuidanceNoteCheckbox(String note) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)));
-        if (getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).isSelected()) {
-            getDriver().findElement(By.cssSelector("#adrDetails\\.additionalNotes\\." + note)).click();
+        String option = note.toLowerCase();
+        FluentWait wait = globalFluentWait(5, 200);
+        switch (option) {
+            case "1":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_1)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1)).click();
+                }
+                break;
+            case "1a":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_1A)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1A)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_1A)).click();
+                }
+                break;
+            case "2":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_2)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_2)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_2)).click();
+                }
+                break;
+            case "3":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_3)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_3)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_3)).click();
+                }
+                break;
+            case "v1b":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_V1B)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_V1B)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_V1B)).click();
+                }
+                break;
+            case "t1b":
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector(GUIDANCE_NOTE_T1B)));
+                if (getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_T1B)).isSelected()) {
+                    getDriver().findElement(By.cssSelector(GUIDANCE_NOTE_T1B)).click();
+                }
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid guidance note '" + option + "'");
         }
     }
 
     public void inputUnNewNumber(String unNumber) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(NEW_UN_NUMBER_INPUT)));
-        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT)).sendKeys(unNumber);
-    }
-
-    public void inputForTheUnNumber(String unNumber, String ordinal) {
-        String option = ordinal.toLowerCase();
-        String selector = "";
-        switch (option) {
-            case "first":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.id("mat-expansion-panel-header-0")));
-                break;
-            case "second":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "1";
-                break;
-            case "third":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "2";
-                break;
-            case "fourth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "3";
-                break;
-            case "fifth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "4";
-                break;
-            case "sixth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "5";
-                break;
-            case "seventh":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "6";
-                break;
-            case "eighth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "7";
-                break;
-            case "ninth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "8";
-                break;
-        }
-        getDriver().findElement(By.cssSelector(selector)).sendKeys(unNumber);
-    }
-
-    public void checkSubsequentInspectionFields() {
-        List<WebElement> inspectionTypes = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3Type]"));
-        assertThat(inspectionTypes.size(), greaterThan(0));
-        List<WebElement> certificateNumbers = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3PeriodicNumber]"));
-        assertThat(certificateNumbers.size(), greaterThan(0));
-        List<WebElement> expiryDates = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3PeriodicExpiryDate]"));
-        assertThat(expiryDates.size(), greaterThan(0));
+        int noUnNumberInputFields = getDriver().findElements(By.cssSelector("[id^='productListUnNumber_']")).size();
+        int lastIndex = noUnNumberInputFields - 1;
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.
+                presenceOfElementLocated(By.cssSelector(NEW_UN_NUMBER_INPUT + lastIndex)));
+        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT + lastIndex)).clear();
+        getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT + lastIndex)).sendKeys(unNumber);
     }
 
     public void iShouldSeeSectionHeading(String heading) {
         String section = heading.toLowerCase();
+        FluentWait wait = globalFluentWait(5, 200);
         switch (section) {
             case "vehicle summary":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-0")), heading));
                 break;
             case "body":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-1")), heading));
                 break;
             case "weights":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-2")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-2")), heading));
                 break;
             case "tyres":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-3")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-3")), heading));
                 break;
             case "dimensions":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-4")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-4")), heading));
                 break;
             case "adr":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-5")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-5")), heading));
                 break;
             case "notes":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-6")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-6")), heading));
                 break;
             case "test history":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-7")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-7")), heading));
                 break;
             case "technical record history":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), heading));
+                wait.until(ExpectedConditions.textToBePresentInElement(find(By.id("mat-expansion-panel-header-8")), heading));
                 break;
             default:  // should be unreachable!
                 throw new AutomationException(
-                        "Non existent section");
+                        "Non existent section '" + section + "'");
         }
     }
 
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
@@ -588,8 +837,591 @@ public class TechRecordPage extends GenericPage {
                 Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size());
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid section");
+                throw new AutomationException(
+                        "Invalid section '" + option + "'");
         }
+    }
+
+    public void checkAdrFieldDisplayed(String adrField) {
+        Assert.assertTrue(findElementByCss("#test-" + adrField).isDisplayed());
+    }
+
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        FluentWait wait = globalFluentWait(20, 300);
+        String option = subsection.toLowerCase();
+        switch (option) {
+            case "applicant details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-applicant-details")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-applicant-details")));
+                break;
+            case "adr details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-adr-details")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-adr-details")));
+                break;
+            case "tank details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-tank-details")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-tank-details")));
+                break;
+            case "tank inspections":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-tank-inpections")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-tank-inpections")));
+                break;
+            case "memo 07/09 (3 month extension)":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-memo")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-tank-inpections")));
+                break;
+            case "tank documents":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-tank-documents")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-tank-documents")));
+                break;
+            case "battery list":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-battery-list-applicable")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-battery-list-applicable")));
+                break;
+            case "declarations seen":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-declaration-seen")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-declaration-seen")));
+                break;
+            case "certificate":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-certificate")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-certificate")));
+                break;
+            case "additional adr details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("vtm-additional-adr-details")));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("vtm-additional-adr-details")));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid adr subsection '" + option + "'");
+        }
+    }
+
+    public void checkAdrSubsectionIsNotPresent(String subsection) {
+        FluentWait wait = globalFluentWait(20, 300);
+        String option = subsection.toLowerCase();
+        switch (option) {
+            case "applicant details":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-applicant-details")));
+                break;
+            case "adr details":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-adr-details")));
+                break;
+            case "tank details":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-tank-details")));
+                break;
+            case "tank inspections":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-tank-inpections")));
+                break;
+            case "memo 07/09 (3 month extension)":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-memo")));
+                break;
+            case "tank documents":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-tank-documents")));
+                break;
+            case "battery list":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-battery-list-applicable")));
+                break;
+            case "declarations seen":
+            case "declaration seen":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-declaration-seen")));
+                break;
+            case "certificate":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-certificate")));
+                break;
+            case "additional adr details":
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("vtm-additional-adr-details")));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid adr subsection '" + option + "'");
+        }
+    }
+
+    public void uploadAdrDocument() {
+        String workingDir = System.getProperty("user.dir");
+        WebElement addFile = findElementByXpath(".//input[@type='file']");
+        ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        addFile.sendKeys(workingDir + "/src/main/resources/loader/sample.pdf");
+        try {
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait wait = globalFluentWait(10, 300);
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(SPINNER)));
+            } catch (NoSuchElementException e) {
+                System.out.println("Spinner no longer in the page DOM");
+            }
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+        waitForAngularRequestsToFinish();
+        noOfDocumentsOnEdit++;
+    }
+
+    public void setReasonForChanges(String reason) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(findElementByCss(CHANGES_REASON_TEXT_AREA)));
+        findElementByCss(CHANGES_REASON_TEXT_AREA).clear();
+        String[] letters = reason. split("");
+        for (int i = 0; i < reason.length(); i++) {
+            try {
+                Thread.sleep(100);
+                findElementByCss(CHANGES_REASON_TEXT_AREA).sendKeys(letters[i]);
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+        wait.until(ExpectedConditions.attributeToBe(By.cssSelector(CHANGES_REASON_TEXT_AREA), "value", reason));
+    }
+
+    public void confirmSavingDetails() {
+        findElementByCss(CONFIRM_SAVE_CHANGES).click();
+        try {
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait wait = globalFluentWait(10, 300);
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(SPINNER)));
+            } catch (NoSuchElementException e) {
+                System.out.println("Spinner no longer in the page DOM");
+            }
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+        noOfDocuments = noOfDocumentsOnEdit;
+    }
+
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        checkAdrSubsectionIsPresent(subsection);
+        FluentWait wait = globalFluentWait(3, 200);
+        String option = subsection.toLowerCase();
+        switch (option) {
+            case "applicant details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-applicant-details h2+*"), text));
+                break;
+            case "adr details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-adr-new-details h2+*"), text));
+                break;
+            case "tank details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-tank-details h2+*"), text));
+                break;
+            case "tank inspections":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-tank-inpections h2+*"), text));
+                break;
+            case "memo 07/09 (3 month extension)":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-memo h2+*"), text));
+                break;
+            case "tank documents":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-tank-documents h2+*"), text));
+                break;
+            case "battery list":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-battery-list-applicable h2+*"), text));
+                break;
+            case "declarations seen":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-declaration-seen h2+*"), text));
+                break;
+            case "certificate":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-certificate h2+*"), text));
+                break;
+            case "vtm-additional-adr-details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.cssSelector("vtm-additional-adr-details h2+*"), text));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid adr subsection '" + option + "'");
+        }
+    }
+
+    public void checkNumberOfTankDocumentsOnEdit() {
+        Assert.assertEquals(noOfDocumentsOnEdit, getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]")).size());
+    }
+
+    public void checkNumberOfTankDocuments() {
+        Assert.assertEquals(noOfDocuments, getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size());
+    }
+
+    public void removeAllAdrDocuments() {
+        List<WebElement> documents = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]"));
+        for (WebElement document : documents) {
+            document.click();
+            noOfDocumentsOnEdit--;
+        }
+    }
+
+    public void checkValueInTechRecordField(String value, String field) {
+        try {
+            if (value.equals("TODAYS_DATE")) {
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = new Date();
+                value = dateFormat.format(date);
+            }
+            if (StringUtils.isNumeric(value)) {
+                Assert.assertTrue(getValueInTechRecordField(field).contentEquals(value));
+            }
+            Assert.assertTrue(getValueInTechRecordField(field).contains(value));
+        } catch (AssertionError e) {
+            throw new AssertionError("Expected value '" + value + "' for field '" +
+                    field + "' was not found, actual value was '" +
+                    getValueInTechRecordField(field) + "'");
+        }
+    }
+
+    public void downloadTankDocument(int index) {
+        List<WebElement> viewDocuments = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'View')]"));
+        FluentWait wait = globalFluentWait(3, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(viewDocuments.get(index-1)));
+        viewDocuments.get(index-1).click();
+    }
+
+    public void removeAdrDocuments(int index) {
+        List<WebElement> documents = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]"));
+        documents.get(index-1).click();
+    }
+
+    public void selectSubstancesPermittedOption(String substancesPermittedType) {
+        FluentWait wait = globalFluentWait(10, 200);
+        switch (substancesPermittedType) {
+            case "Substances permitted":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(SUBSTANCES_PERMITTED_PERMITTED)));
+                scrollToAndClickByXpath(SUBSTANCES_PERMITTED_PERMITTED);
+                break;
+            case "class UN number":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(SUBSTANCES_PERMITTED_CLASS_NUMBER)));
+                scrollToAndClickByXpath(SUBSTANCES_PERMITTED_CLASS_NUMBER);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid substances permitted option");
+        }
+    }
+
+    public void setProductListReferenceNumber(String refNo) {
+        findElementByCss(PRODUCT_LIST_REF_NUMBER).clear();
+        findElementByCss(PRODUCT_LIST_REF_NUMBER).sendKeys(refNo);
+    }
+
+    public void setBatteryListReferenceNumber(String refNo) {
+        findElementByCss(BATTERY_LIST_REFERENCE_NUMBER).clear();
+        findElementByCss(BATTERY_LIST_REFERENCE_NUMBER).sendKeys(refNo);
+    }
+
+    public void removeUnNumber(int index) {
+        int actualIndex = index -1;
+        WebElement removeUnNumber = getDriver().findElement(
+                By.cssSelector("#productListUnNumber_" + actualIndex + "+span>a"));
+        FluentWait wait = globalFluentWait(3, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(removeUnNumber));
+        removeUnNumber.click();
+    }
+
+    public void addInitialInspection(String certificateNo, String expiryDate) {
+        findElementByCss(INITIAL_INSPECTION_CERTIFICATE).clear();
+        findElementByCss(INITIAL_INSPECTION_CERTIFICATE).sendKeys(certificateNo);
+        String[] date = expiryDate.split("/");
+        if (date.length != 3) {
+            throw new AutomationException("The date is not in proper format dd/MM/YYYY");
+        }
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_DAY).clear();
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_DAY).sendKeys(date[0]);
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_MONTH).clear();
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_MONTH).sendKeys(date[1]);
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_YEAR).clear();
+        findElementByCss(INITIAL_INSPECTION_EXPIRY_DATE_YEAR).sendKeys(date[2]);
+    }
+
+    public void addSubsequentInspection(int index, String inspectionType, String certificateNo, String expiryDate) {
+        Select selectInspectionType = new Select(findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") "
+                + SUBSEQUENT_INSPECTION_TYPE));
+        switch(inspectionType.toLowerCase()) {
+            case "intermediate":
+                selectInspectionType.selectByIndex(0);
+                break;
+            case "periodic":
+                selectInspectionType.selectByIndex(1);
+                break;
+            case "exceptional":
+                selectInspectionType.selectByIndex(2);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid subsequent inspection type '" + inspectionType + "'");
+        }
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_CERTIFICATE).clear();
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_CERTIFICATE).sendKeys(certificateNo);
+        String[] date = expiryDate.split("/");
+        if (date.length != 3) {
+            throw new AutomationException("The date is not in proper format dd/MM/YYYY");
+        }
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).clear();
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).sendKeys(date[0]);
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).clear();
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).sendKeys(date[1]);
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).clear();
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).sendKeys(date[2]);
+
+    }
+
+    public void selectHasAdrDetails(String option) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(option.toLowerCase()) {
+            case "be":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HAS_ADR_DETAILS)));
+                scrollToAndClickByCss(HAS_ADR_DETAILS);
+                break;
+            case "not be":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HAS_NOT_ADR_DETAILS)));
+                scrollToAndClickByCss(HAS_NOT_ADR_DETAILS);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid option '" + option + "'");
+        }
+    }
+
+    public void addSubsequentInspection(String inspectionType, String certificateNo, String expiryDate) {
+        Select selectInspectionType = new Select(findElementByCss("div[formarrayname='tc3Details']>div:last-of-type "
+                + SUBSEQUENT_INSPECTION_TYPE));
+        switch(inspectionType.toLowerCase()) {
+            case "intermediate":
+                selectInspectionType.selectByIndex(0);
+                break;
+            case "periodic":
+                selectInspectionType.selectByIndex(1);
+                break;
+            case "exceptional":
+                selectInspectionType.selectByIndex(2);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid subsequent inspection type '" + inspectionType + "'");
+        }
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_CERTIFICATE).clear();
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_CERTIFICATE).sendKeys(certificateNo);
+        String[] date = expiryDate.split("/");
+        if (date.length != 3) {
+            throw new AutomationException("The date is not in proper format dd/MM/YYYY");
+        }
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).clear();
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).sendKeys(date[0]);
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).clear();
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).sendKeys(date[1]);
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).clear();
+        findElementByCss("div[formarrayname='tc3Details']>div:last-of-type " +
+                SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).sendKeys(date[2]);
+    }
+
+    public void fillInApplicantFieldWithValue(String applicantField, String value) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(applicantField.toLowerCase()) {
+            case "name":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPLICANT_NAME)));
+                findElementByCss(APPLICANT_NAME).clear();
+                findElementByCss(APPLICANT_NAME).sendKeys(value);
+                break;
+            case "street":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPLICANT_STREET)));
+                findElementByCss(APPLICANT_STREET).clear();
+                findElementByCss(APPLICANT_STREET).sendKeys(value);
+                break;
+            case "town":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPLICANT_TOWN)));
+                findElementByCss(APPLICANT_TOWN).clear();
+                findElementByCss(APPLICANT_TOWN).sendKeys(value);
+                break;
+            case "city":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPLICANT_CITY)));
+                findElementByCss(APPLICANT_CITY).clear();
+                findElementByCss(APPLICANT_CITY).sendKeys(value);
+                break;
+            case "postcode":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPLICANT_POSTCODE)));
+                findElementByCss(APPLICANT_POSTCODE).clear();
+                findElementByCss(APPLICANT_POSTCODE).sendKeys(value);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid applicant details field '" + applicantField + "'");
+        }
+    }
+
+    public void setProcessedDate(String processedDate) {
+        String[] date = processedDate.split("/");
+        if (date.length != 3) {
+            throw new AutomationException("The date is not in proper format dd/MM/YYYY");
+        }
+        findElementByCss(DATE_PROCESSED_DAY).clear();
+        findElementByCss(DATE_PROCESSED_DAY).sendKeys(date[0]);
+        findElementByCss(DATE_PROCESSED_MONTH).clear();
+        findElementByCss(DATE_PROCESSED_MONTH).sendKeys(date[1]);
+        findElementByCss(DATE_PROCESSED_YEAR).clear();
+        findElementByCss(DATE_PROCESSED_YEAR).sendKeys(date[2]);
+    }
+
+    public void setCompatibilityGroupJ(String option) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(option.toLowerCase()) {
+            case "yes":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(COMPATIBILITY_GROUP_J_YES)));
+                scrollToAndClickByCss(COMPATIBILITY_GROUP_J_YES);
+                break;
+            case "no":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(COMPATIBILITY_GROUP_J_NO)));
+                scrollToAndClickByCss(COMPATIBILITY_GROUP_J_NO);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid compatibility group J option '" + option + "'");
+        }
+    }
+
+    public void fillInAdrApprovalTypeNumberWithValue(String approvalNo) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(APPROVAL_TYPE_NO)));
+        findElementByCss(APPROVAL_TYPE_NO).clear();
+        findElementByCss(APPROVAL_TYPE_NO).sendKeys(approvalNo);
+    }
+
+    public void fillInTankFieldWithValue(String tankField, String value) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(tankField.toLowerCase()) {
+            case "make":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(TANK_MANUFACTURER)));
+                findElementByCss(TANK_MANUFACTURER).clear();
+                findElementByCss(TANK_MANUFACTURER).sendKeys(value);
+                break;
+            case "year of manufacture":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(TANK_YEAR_OF_MANUFACTURE)));
+                findElementByCss(TANK_YEAR_OF_MANUFACTURE).clear();
+                findElementByCss(TANK_YEAR_OF_MANUFACTURE).sendKeys(value);
+                break;
+            case "manufacturer serial number":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(TANK_MANUFACTURER_SERIAL_NO)));
+                findElementByCss(TANK_MANUFACTURER_SERIAL_NO).clear();
+                findElementByCss(TANK_MANUFACTURER_SERIAL_NO).sendKeys(value);
+                break;
+            case "manufacturer type approval number":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(TANK_TYPE_APPROVAL_NUMBER)));
+                findElementByCss(TANK_TYPE_APPROVAL_NUMBER).clear();
+                findElementByCss(TANK_TYPE_APPROVAL_NUMBER).sendKeys(value);
+                break;
+            case "code":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(TANK_CODE)));
+                findElementByCss(TANK_CODE).clear();
+                findElementByCss(TANK_CODE).sendKeys(value);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid tank details field '" + tankField + "'");
+        }
+    }
+
+    public void fillInSpecialProvisions(String provisions) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPECIAL_PROVISIONS)));
+        findElementByCss(SPECIAL_PROVISIONS).clear();
+        findElementByCss(SPECIAL_PROVISIONS).sendKeys(provisions);
+    }
+
+
+    public void setMemoTo(String option) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(option.toLowerCase()) {
+            case "yes":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMO_07_09_YES)));
+                scrollToAndClickByCss(MEMO_07_09_YES);
+                break;
+            case "no":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MEMO_07_09_NO)));
+                scrollToAndClickByCss(MEMO_07_09_NO);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid memo 07/09 option '" + option + "'");
+        }
+    }
+
+    public void setCertificateRequiredTo(String option) {
+        FluentWait wait = globalFluentWait(5, 200);
+        switch(option.toLowerCase()) {
+            case "yes":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CERTIFICATE_REQUIRED_YES)));
+                scrollToAndClickByCss(CERTIFICATE_REQUIRED_YES);
+                break;
+            case "no":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(CERTIFICATE_REQUIRED_NO)));
+                scrollToAndClickByCss(CERTIFICATE_REQUIRED_NO);
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid certificate required option '" + option + "'");
+        }
+    }
+
+    public void fillInAdditionalAdrDetailsWith(String details) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ADDITIONAL_ADR_DETAILS)));
+        findElementByCss(ADDITIONAL_ADR_DETAILS).clear();
+        findElementByCss(ADDITIONAL_ADR_DETAILS).sendKeys(details);
+    }
+
+    public void cancelSavingDetails() {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CANCEL_SAVE_DETAILS_MODAL)));
+        findElementByCss(CANCEL_SAVE_DETAILS_MODAL).click();
+    }
+
+    public void fillInAdditionalProductListDetailsWithValue(String details) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(PRODUCT_LIST_ADDITIONAL_DETAILS)));
+        findElementByCss(PRODUCT_LIST_ADDITIONAL_DETAILS).clear();
+        findElementByCss(PRODUCT_LIST_ADDITIONAL_DETAILS).sendKeys(details);
+    }
+
+    public void fillInIssuerWithValue(String issuer) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(MANUFACTURER_BRAKE_DECLARATION_ISSUER)));
+        findElementByCss(MANUFACTURER_BRAKE_DECLARATION_ISSUER).clear();
+        findElementByCss(MANUFACTURER_BRAKE_DECLARATION_ISSUER).sendKeys(issuer);
+    }
+
+    public void fillInBrakeWeightWithValue(String weight) {
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BRAKE_ENDURANCE_WEIGHT)));
+        findElementByCss(BRAKE_ENDURANCE_WEIGHT).clear();
+        findElementByCss(BRAKE_ENDURANCE_WEIGHT).sendKeys(weight);
     }
 }

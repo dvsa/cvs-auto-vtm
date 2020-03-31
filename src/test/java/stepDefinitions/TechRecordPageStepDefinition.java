@@ -1,11 +1,12 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
-import org.junit.Assert;
 import org.junit.ComparisonFailure;
+import step.GenericBackendRequestSteps;
 import step.TechRecordPageSteps;
 
 import java.util.List;
@@ -16,28 +17,14 @@ public class TechRecordPageStepDefinition {
     @Steps
     TechRecordPageSteps techRecordPageSteps;
 
-    @Then("^hgv tech record fields should have values$")
-    public void hgvTechRecordFieldShouldHaveValue(DataTable dt) throws ComparisonFailure {
-        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (Map<String, String> stringStringMap : list) {
-            try {
-                Assert.assertEquals(stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            } catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Value for field " + stringStringMap.get("Field") + " is not the expected one", stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            }
-        }
-    }
+    @Steps
+    GenericBackendRequestSteps genericBackendRequestSteps;
 
-    @Then("^trl tech record fields should have values$")
-    public void trlTechRecordFieldShouldHaveValue(DataTable dt) {
+    @Then("^tech record fields should have values$")
+    public void techRecordFieldShouldHaveValue(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (int i = 0; i < list.size(); i++) {
-            try {
-                Assert.assertEquals(techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")), list.get(i).get("Value"));
-            }
-            catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Expected value for field " + list.get(i).get("Field") + " was not found", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
-            }
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkValueInTechRecordField(stringMap.get("Value"), stringMap.get("Field"));
         }
     }
 
@@ -52,12 +39,12 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I open \"([^\"]*)\" section$")
-    public void iOpenSection(String section) throws Throwable {
+    public void iOpenSection(String section) {
         techRecordPageSteps.openSection(section);
     }
 
     @When("^I close \"([^\"]*)\" section$")
-    public void iCloseSection(String section) throws Throwable {
+    public void iCloseSection(String section) {
         techRecordPageSteps.closeSection(section);
     }
 
@@ -72,12 +59,12 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I select \"([^\"]*)\" dangerous good$")
-    public void iSelectDangerousGood(String dangerousGood) throws Throwable {
+    public void iSelectDangerousGood(String dangerousGood) {
         techRecordPageSteps.selectDangerousGoodCheckbox(dangerousGood);
     }
 
     @When("^I deselect \"([^\"]*)\" dangerous good$")
-    public void iDeselectDangerousGood(String dangerousGood) throws Throwable {
+    public void iDeselectDangerousGood(String dangerousGood) {
         techRecordPageSteps.deselectDangerousGoodCheckbox(dangerousGood);
     }
 
@@ -106,14 +93,14 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iShouldNotSeeProductListFields();
     }
 
-    @When("^I select \"([^\"]*)\" vehicle type$")
-    public void iSelectVehicleType(String vehicleType) {
-        techRecordPageSteps.iSelectVehicleType(vehicleType);
+    @When("^I select \"([^\"]*)\" adr vehicle type$")
+    public void iSelectAdrVehicleType(String vehicleType) {
+        techRecordPageSteps.iSelectAdrVehicleType(vehicleType);
     }
 
-    @When("^I select \"([^\"]*)\" from battery list applicable$")
-    public void iSelectFromBatteryListApplicable(String option) {
-        techRecordPageSteps.iSelectFromBatteryListApplicable(option);
+    @When("^I set battery list applicable to \"([^\"]*)\"$")
+    public void iSetBatteryListApplicable(String option) {
+        techRecordPageSteps.setBatteryListApplicable(option);
     }
 
     @Then("^I should see \"([^\"]*)\" battery list field$")
@@ -181,9 +168,9 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iInputCustomGuidanceNote(note);
     }
 
-    @When("^I select \"([^\"]*)\" custom guidance note$")
+    @When("^I select \"([^\"]*)\" guidance note$")
     public void iSelectCustomGuidanceNote(String note) {
-        techRecordPageSteps.iSelectCustomGuidanceNoteCheckbox(note);
+        techRecordPageSteps.iSelectGuidanceNoteCheckbox(note);
     }
 
     @When("^I deselect \"([^\"]*)\" custom guidance note$")
@@ -196,23 +183,218 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iInputNewUnNumber(unNumber);
     }
 
-    @When("^I input \"([^\"]*)\" for the \"([^\"]*)\" UN number$")
-    public void iInputTheUnNumber(String unNumber, String ordinal) {
-        techRecordPageSteps.iInputForTheUnNumber(unNumber, ordinal);
-    }
-
-    @Then("^I should see the subsequent inspection fields$")
-    public void iShouldSeeTheSubsequentInspectionFields() {
-        techRecordPageSteps.iShouldSeeTheSubsequentInspectionFields();
-    }
-
     @Then("^I should see \"([^\"]*)\" section heading$")
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPageSteps.iShouldSeeSectionHeading(heading);
     }
 
     @Then("^the \"([^\"]*)\" section should have \"([^\"]*)\" entries$")
-    public void theSectionShouldHaveEntries(String section, String numberOfEntries) throws Exception {
+    public void theSectionShouldHaveEntries(String section, String numberOfEntries) {
         techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Then("^I should see \"([^\"]*)\" adr field$")
+    public void iShouldSeeAdrField(String adrField) {
+        techRecordPageSteps.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Then("^I should see adr subsections$")
+    public void iShouldSeeAdrSubsections(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkAdrSubsectionIsPresent(stringMap.get("Subsection"));
+        }
+    }
+
+    @Then("^I should not see adr subsections$")
+    public void iShouldNotSeeAdrSubsections(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkAdrSubsectionIsNotPresent(stringMap.get("Subsection"));
+        }
+    }
+
+    @When("^I enter \"([^\"]*)\" as reason for changes$")
+    public void iEnterAsReasonForChanges(String reason) {
+        techRecordPageSteps.setReasonForChanges(reason);
+    }
+
+    @When("^I confirm saving the details$")
+    public void iConfirmSavingTheDetails() {
+        techRecordPageSteps.confirmSavingDetails();
+    }
+
+    @Then("^I should see \"([^\"]*)\" in the adr \"([^\"]*)\" subsection$")
+    public void iShouldSeeInTheAdrSubsection(String text, String subsection) {
+        techRecordPageSteps.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @When("^I upload adr document$")
+    public void iUploadAdrDocument() {
+        techRecordPageSteps.uploadAdrDocument();
+    }
+
+    @When("^I remove all adr documents$")
+    public void iRemoveAllAdrDocuments() {
+        techRecordPageSteps.removeAllAdrDocuments();
+    }
+
+    @When("^I remove adr documents with index$")
+    public void iRemoveAdrDocuments(int index) {
+        techRecordPageSteps.removeAdrDocuments(index);
+    }
+
+    @Then("^(?:I confirm adr document is uploaded|I confirm adr documents are uploaded)$")
+    public void iConfirmDocumentIsUploaded() {
+        techRecordPageSteps.checkNumberOfTankDocumentsOnEdit();
+    }
+
+    @Then("^(?:I confirm adr document is removed from the tank details|I confirm adr documents are removed from the tank details)$")
+    public void iConfirmDocumentIsRemovedFrom() {
+        techRecordPageSteps.checkNumberOfTankDocumentsOnEdit();
+    }
+
+    @Then("^(?:I confirm adr document is not added on the tank details|I confirm adr documents are not added on the tank details)$")
+    public void iConfirmDocumentIsNotAddedOnTankDetails() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @Then("^(?:I confirm adr document is added on the tank details|I confirm adr documents are added on the tank details)$")
+    public void iConfirmDocumentIsAddedOnTankDetails() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @Then("^(?:I confirm adr document is deleted from the tank details|I confirm adr documents are deleted from the tank details)$")
+    public void iConfirmDocumentIsRemovedFromTankDetails() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @Then("^(?:I confirm adr document is not deleted from the tank details|I confirm adr documents are not deleted from the tank details)$")
+    public void iConfirmDocumentIsNotRemovedFromTankDetails() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @When("^I download tank document with index (\\d+)$")
+    public void iDownloadTankDocumentWithIndex(int index) {
+        techRecordPageSteps.downloadTankDocument(index);
+    }
+
+    @When("^I select substances permitted \"([^\"]*)\" option$")
+    public void iSelectSubstancesPermittedOption(String substancesPermittedType) {
+        techRecordPageSteps.selectSubstancesPermittedOption(substancesPermittedType);
+    }
+
+    @When("^I input \"([^\"]*)\" as product list reference number$")
+    public void iInputAsProductListReferenceNumber(String refNo) {
+        techRecordPageSteps.setProductListReferenceNumber(refNo);
+    }
+
+    @When("^I input \"([^\"]*)\" as battery list reference number$")
+    public void iInputAsBatteryListReferenceNumber(String refNo) {
+        techRecordPageSteps.setBatteryListReferenceNumber(refNo);
+    }
+
+    @When("^I add UN number \"([^\"]*)\"$")
+    public void iAddUNNumber(String unNumber) {
+        techRecordPageSteps.iClickAdrDetailsLink("Add a UN number");
+        techRecordPageSteps.iInputNewUnNumber(unNumber);
+    }
+
+    @When("^I remove UN number with index (\\d+)$")
+    public void iRemoveUNNumberWithIndex(int index) {
+        techRecordPageSteps.removeUnNumber(index);
+    }
+
+    @Then("^I should see the ([^\"]*) of newly created vehicle$")
+    public void iShouldSeeTheVINOfNewlyCreatedVehicle(String attribute) {
+        techRecordPageSteps.checkValueInTechRecordField(genericBackendRequestSteps.
+                getNewVehicleAttribute(attribute), attribute);
+    }
+
+    @When("^I add initial inspection with certificate \"([^\"]*)\" and expiry date \"([^\"]*)\"$")
+    public void addInitialInspectionWithCertificateAndExpiryDate(String certificateNo, String expiryDate) {
+        techRecordPageSteps.addInitialInspection(certificateNo, expiryDate);
+    }
+
+    @When("^I add subsequent inspection with index (\\d+) of type \"([^\"]*)\" with certificate \"([^\"]*)\" and expiry date \"([^\"]*)\"$")
+    public void addSubsequentInspectionOfTypeWithCertificateAndExpiryDate
+            (int index, String inspectionType, String certificateNo, String expiryDate) {
+        techRecordPageSteps.addSubsequentInspection(index, inspectionType, certificateNo, expiryDate);
+    }
+
+    @When("^I add subsequent inspection of type \"([^\"]*)\" with certificate \"([^\"]*)\" and expiry date \"([^\"]*)\"$")
+    public void addSubsequentInspectionOfTypeWithCertificateAndExpiryDate
+            (String inspectionType, String certificateNo, String expiryDate) {
+        techRecordPageSteps.addSubsequentInspection(inspectionType, certificateNo, expiryDate);
+    }
+
+    @When("^I set the vehicle to ([^\"]*) able to carry dangerous goods$")
+    public void iSelectTheVehicleToBeAbleToCarryDangerousGoods(String option) {
+        techRecordPageSteps.selectHasAdrDetails(option);
+    }
+
+    @When("^I fill in applicant ([^\"]*) with \"([^\"]*)\"$")
+    public void iFillInApplicantFieldWithValue(String applicantField, String value) {
+        techRecordPageSteps.fillInApplicantFieldWithValue(applicantField, value);
+    }
+
+    @When("^I set processed date to \"([^\"]*)\"$")
+    public void iSetProcessedDateTo(String processedDate) {
+        techRecordPageSteps.setProcessedDate(processedDate);
+    }
+
+    @When("^I set compatibility group J to \"([^\"]*)\"$")
+    public void iSetCompatibilityGroupJTo(String option)  {
+        techRecordPageSteps.setCompatibilityGroupJ(option);
+    }
+
+    @When("^I fill in adr approval type number with \"([^\"]*)\"$")
+    public void iFillInAdrApprovalTypeNumberWithValue(String approvalNo) {
+        techRecordPageSteps.fillInAdrApprovalTypeNumberWithValue(approvalNo);
+    }
+
+    @When("^I fill in tank ([^\"]*) with \"([^\"]*)\"$")
+    public void iFillInTankMakeWith(String tankField, String value) {
+        techRecordPageSteps.fillInTankFieldWithValue(tankField, value);
+    }
+
+    @When("^I fill in special provisions with \"([^\"]*)\"$")
+    public void iFillInSpecialProvisionsWith(String provisions) {
+        techRecordPageSteps.fillInSpecialProvisions(provisions);
+    }
+
+    @When("^I set memo 07/09 to \"([^\"]*)\"$")
+    public void iSetMemoTo(String option) {
+        techRecordPageSteps.setMemoTo(option);
+    }
+
+    @And("^I set certificate required to \"([^\"]*)\"$")
+    public void iSetCertificateRequiredTo(String option) {
+        techRecordPageSteps.setCertificateRequiredTo(option);
+    }
+
+    @And("^I fill in additional adr details with \"([^\"]*)\"$")
+    public void iFillInAdditionalAdrDetailsWith(String details) {
+        techRecordPageSteps.fillInAdditionalAdrDetailsWith(details);
+    }
+
+    @When("^I cancel saving the details$")
+    public void iCancelSavingTheDetails() {
+        techRecordPageSteps.cancelSavingDetails();
+    }
+
+    @And("^I fill in additional product list details with \"([^\"]*)\"$")
+    public void iFillInAdditionalProductListDetailsWithValue(String details) {
+        techRecordPageSteps.fillInAdditionalProductListDetailsWithValue(details);
+    }
+
+    @When("^I fill in issuer with \"([^\"]*)\"$")
+    public void iFillInIssuerWithValue(String issuer) {
+        techRecordPageSteps.fillInIssuerWithValue(issuer);
+    }
+
+    @When("^I fill in brake weight with (\\d+)$")
+    public void iFillInBrakeWeightWithValue(String weight) {
+        techRecordPageSteps.fillInBrakeWeightWithValue(weight);
     }
 }

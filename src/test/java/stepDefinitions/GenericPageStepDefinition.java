@@ -1,8 +1,6 @@
 package stepDefinitions;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -65,7 +63,7 @@ public class GenericPageStepDefinition {
 
     @Then("^wait until I see \"([^\"]*)\"$")
     public void waitUntilISee(String text) {
-        genericPageSteps.waitForTextToAppear(text);
+        genericPageSteps.checkTextIsPresentInPage(text);
     }
 
     @Then("^I should see \"([^\"]*)\" hyperlink$")
