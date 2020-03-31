@@ -1,6 +1,8 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -16,28 +18,11 @@ public class TechRecordPageStepDefinition {
     @Steps
     TechRecordPageSteps techRecordPageSteps;
 
-    @Then("^hgv tech record fields should have values$")
-    public void hgvTechRecordFieldShouldHaveValue(DataTable dt) throws ComparisonFailure {
+    @Then("^tech record fields should have values$")
+    public void techRecordFieldShouldHaveValue(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (Map<String, String> stringStringMap : list) {
-            try {
-                Assert.assertEquals(stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            } catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Value for field " + stringStringMap.get("Field") + " is not the expected one", stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            }
-        }
-    }
-
-    @Then("^trl tech record fields should have values$")
-    public void trlTechRecordFieldShouldHaveValue(DataTable dt) {
-        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (int i = 0; i < list.size(); i++) {
-            try {
-                Assert.assertEquals(techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")), list.get(i).get("Value"));
-            }
-            catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Expected value for field " + list.get(i).get("Field") + " was not found", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
-            }
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkValueInTechRecordField(stringMap.get("Value"), stringMap.get("Field"));
         }
     }
 
@@ -196,11 +181,6 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iInputNewUnNumber(unNumber);
     }
 
-    @When("^I input \"([^\"]*)\" for the \"([^\"]*)\" UN number$")
-    public void iInputTheUnNumber(String unNumber, String ordinal) {
-        techRecordPageSteps.iInputForTheUnNumber(unNumber, ordinal);
-    }
-
     @Then("^I should see the subsequent inspection fields$")
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPageSteps.iShouldSeeTheSubsequentInspectionFields();
@@ -212,7 +192,60 @@ public class TechRecordPageStepDefinition {
     }
 
     @Then("^the \"([^\"]*)\" section should have \"([^\"]*)\" entries$")
-    public void theSectionShouldHaveEntries(String section, String numberOfEntries) throws Exception {
+    public void theSectionShouldHaveEntries(String section, String numberOfEntries) {
         techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Then("^I should see \"([^\"]*)\" adr field$")
+    public void iShouldSeeAdrField(String adrField) {
+        techRecordPageSteps.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Then("^I should see adr subsections$")
+    public void iShouldSeeAdrSubsections(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkAdrSubsectionIsPresent(stringMap.get("Subsection"));
+        }
+    }
+
+    @When("^I upload adr document$")
+    public void iUploadAdrDocument() {
+        techRecordPageSteps.uploadAdrDocument();
+    }
+
+    @When("^I enter \"([^\"]*)\" as reason for changes$")
+    public void iEnterAsReasonForChanges(String reason) {
+        techRecordPageSteps.setReasonForChanges(reason);
+    }
+
+    @When("^I confirm saving the details$")
+    public void iConfirmSavingTheDetails() {
+        techRecordPageSteps.confirmSavingDetails();
+    }
+
+    @Then("^I should see \"([^\"]*)\" in the adr \"([^\"]*)\" subsection$")
+    public void iShouldSeeInTheAdrSubsection(String text, String subsection) {
+        techRecordPageSteps.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Then("^I confirm adr document is uploaded$")
+    public void iConfirmDocumentIsUploaded() {
+        techRecordPageSteps.checkAdrDocumentIsUploaded();
+    }
+
+    @Then("^I confirm number of tank documents$")
+    public void iConfirmNumberOfTankDocuments() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @And("^I remove all adr documents$")
+    public void iRemoveAllAdrDocuments() {
+        techRecordPageSteps.removeAllAdrDocuments();
+    }
+
+    @When("^I download tank document with index (\\d+)$")
+    public void iDownloadTankDocumentWithIndex(int index) {
+        techRecordPageSteps.downloadTankDocument(index);
     }
 }

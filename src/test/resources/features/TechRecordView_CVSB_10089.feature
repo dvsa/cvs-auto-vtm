@@ -7,7 +7,7 @@ Feature: Search tech record
     Given I login with admin credentials
     Then I should see "Vehicle testing management"
     And I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     When I go to search tech record page
     Then element with id "searchIdentifier" should be present
 
@@ -24,7 +24,7 @@ Feature: Search tech record
     #user clicks the call to action to "open all" headings
     When I open all sections
     Then I should see "Vehicle type"
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value                |
       #after searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
       | status                              | Current              |
@@ -130,7 +130,7 @@ Feature: Search tech record
     When I search for vehicle with identifier "CT70001"
     Then wait until I see "Technical record"
     When I open all sections
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value               |
       | status                              | Archived            |
       | vin                                 | P012301230001       |
@@ -216,7 +216,7 @@ Feature: Search tech record
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then trl tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value        |
       | status                              | Provisional  |
       | vin                                 | T12111000    |
@@ -312,7 +312,7 @@ Feature: Search tech record
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then trl tech record fields should have values
+    Then tech record fields should have values
     | Field           | Value       |
     | status          | Current     |
     | vin             | T12111111   |

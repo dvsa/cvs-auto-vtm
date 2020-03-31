@@ -67,13 +67,13 @@ public class GenericPageSteps {
 
     @Step
     public void goBackToSearchPage() {
-        header.clickHeaderTitleLink();
+        header.clickLink("Vehicle testing management");
         homePage.goToSearchTechRecordPage();
     }
 
     @Step
     public void goBackToCreatePage() {
-        header.clickHeaderTitleLink();
+        header.clickLink("Vehicle testing management");
         homePage.goToCreateTechRecordPage();
     }
 

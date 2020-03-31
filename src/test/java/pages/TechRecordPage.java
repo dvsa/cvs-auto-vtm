@@ -2,9 +2,10 @@ package pages;
 
 import exceptions.AutomationException;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -12,7 +13,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -24,7 +24,7 @@ public class TechRecordPage extends GenericPage {
     private static final String OPEN_BODY_SECTION = "#test-fa-plus-body";
     private static final String OPEN_WEIGHTS_SECTION = "#test-fa-plus-weights";
     private static final String OPEN_TYRES_SECTION = "#test-fa-plus-tyres";
-    private static final String OPEN_DIMENSIONS_SECTION_ = "#test-fa-plus-dimensions";
+    private static final String OPEN_DIMENSIONS_SECTION = "#test-fa-plus-dimensions";
     private static final String OPEN_ADR_SECTION = "#test-fa-plus-adr";
     private static final String OPEN_NOTES_SECTION = "#test-fa-plus-notes";
     private static final String OPEN_TEST_HISTORY_SECTION = "#test-fa-plus-testHistory";
@@ -33,7 +33,7 @@ public class TechRecordPage extends GenericPage {
     private static final String CLOSE_BODY_SECTION = "#test-fa-minus-body";
     private static final String CLOSE_WEIGHTS_SECTION = "#test-fa-minus-weights";
     private static final String CLOSE_TYRES_SECTION = "#test-fa-minus-tyres";
-    private static final String CLOSE_DIMENSIONS_SECTION_ = "#test-fa-minus-dimensions";
+    private static final String CLOSE_DIMENSIONS_SECTION = "#test-fa-minus-dimensions";
     private static final String CLOSE_ADR_SECTION = "#test-fa-minus-adr";
     private static final String CLOSE_NOTES_SECTION = "#test-fa-minus-notes";
     private static final String CLOSE_TEST_HISTORY_SECTION = "#test-fa-minus-testHistory";
@@ -74,10 +74,12 @@ public class TechRecordPage extends GenericPage {
     private static final String NOTES_SECTION = "vtm-notes>table tr";
     private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
     private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
+    private static final String CHANGES_REASON_TEXT_AREA = "#reasonForCreation";
+    private static final String CONFIRM_SAVE_CHANGES = "vtm-adr-reason-modal>button";
+    private static int noOfDocuments;
 
 
-
-    public String getValueForTechRecordField(String field) {
+    public String getValueInTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
         FluentWait wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(20))
@@ -124,31 +126,51 @@ public class TechRecordPage extends GenericPage {
         String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
-                getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).click();
+                }
                 break;
             case "body":
-                getDriver().findElement(By.cssSelector(OPEN_BODY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_BODY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_BODY_SECTION)).click();
+                }
                 break;
             case "weights":
-                getDriver().findElement(By.cssSelector(OPEN_WEIGHTS_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_WEIGHTS_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_WEIGHTS_SECTION)).click();
+                }
                 break;
             case "tyres":
-                getDriver().findElement(By.cssSelector(OPEN_TYRES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TYRES_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_TYRES_SECTION)).click();
+                }
                 break;
             case "dimensions":
-                getDriver().findElement(By.cssSelector(OPEN_DIMENSIONS_SECTION_)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_DIMENSIONS_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_DIMENSIONS_SECTION)).click();
+                }
                 break;
             case "adr":
-                getDriver().findElement(By.cssSelector(OPEN_ADR_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_ADR_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_ADR_SECTION)).click();
+                }
+                noOfDocuments = getDriver().findElements(
+                        By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size();
                 break;
             case "notes":
-                getDriver().findElement(By.cssSelector(OPEN_NOTES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_NOTES_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_NOTES_SECTION)).click();
+                }
                 break;
             case "test history":
-                getDriver().findElement(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).click();
+                }
                 break;
             case "technical record history":
-                getDriver().findElement(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                }
                 break;
             default:  // should be unreachable!
                 throw new Exception(
@@ -160,31 +182,49 @@ public class TechRecordPage extends GenericPage {
         String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
-                getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_VEHICLE_SUMMARY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_VEHICLE_SUMMARY_SECTION)).click();
+                }
                 break;
             case "body":
-                getDriver().findElement(By.cssSelector(CLOSE_BODY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_BODY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_BODY_SECTION)).click();
+                }
                 break;
             case "weights":
-                getDriver().findElement(By.cssSelector(CLOSE_WEIGHTS_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_WEIGHTS_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_WEIGHTS_SECTION)).click();
+                }
                 break;
             case "tyres":
-                getDriver().findElement(By.cssSelector(CLOSE_TYRES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TYRES_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_TYRES_SECTION)).click();
+                }
                 break;
             case "dimensions":
-                getDriver().findElement(By.cssSelector(CLOSE_DIMENSIONS_SECTION_)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_DIMENSIONS_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_DIMENSIONS_SECTION)).click();
+                }
                 break;
             case "adr":
-                getDriver().findElement(By.cssSelector(CLOSE_ADR_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_ADR_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_ADR_SECTION)).click();
+                }
                 break;
             case "notes":
-                getDriver().findElement(By.cssSelector(CLOSE_NOTES_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_NOTES_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_NOTES_SECTION)).click();
+                }
                 break;
             case "test history":
-                getDriver().findElement(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TEST_HISTORY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_TEST_HISTORY_SECTION)).click();
+                }
                 break;
             case "technical record history":
-                getDriver().findElement(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                if (getDriver().findElements(By.cssSelector(OPEN_TECHNICAL_RECORD_HISTORY_SECTION)).size() == 0) {
+                    getDriver().findElement(By.cssSelector(CLOSE_TECHNICAL_RECORD_HISTORY_SECTION)).click();
+                }
                 break;
             default:  // should be unreachable!
                 throw new Exception(
@@ -197,7 +237,7 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void saveTechRecordDetails() {
-        getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS));
+        getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS)).click();
     }
 
     public void deselectDangerousGoodCheckbox(String dangerousGood) throws Exception {
@@ -477,41 +517,6 @@ public class TechRecordPage extends GenericPage {
         getDriver().findElement(By.cssSelector(NEW_UN_NUMBER_INPUT)).sendKeys(unNumber);
     }
 
-    public void inputForTheUnNumber(String unNumber, String ordinal) {
-        String option = ordinal.toLowerCase();
-        String selector = "";
-        switch (option) {
-            case "first":
-                new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.id("mat-expansion-panel-header-0")));
-                break;
-            case "second":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "1";
-                break;
-            case "third":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "2";
-                break;
-            case "fourth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "3";
-                break;
-            case "fifth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "4";
-                break;
-            case "sixth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "5";
-                break;
-            case "seventh":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "6";
-                break;
-            case "eighth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "7";
-                break;
-            case "ninth":
-                selector = NEW_UN_NUMBER_INPUT.substring(0, NEW_UN_NUMBER_INPUT.length()-1) + "8";
-                break;
-        }
-        getDriver().findElement(By.cssSelector(selector)).sendKeys(unNumber);
-    }
-
     public void checkSubsequentInspectionFields() {
         List<WebElement> inspectionTypes = getDriver().findElements(By.cssSelector("[id^=adrDetails\\.tc3Type]"));
         assertThat(inspectionTypes.size(), greaterThan(0));
@@ -557,7 +562,7 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
@@ -588,8 +593,197 @@ public class TechRecordPage extends GenericPage {
                 Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size());
                 break;
             default:  // should be unreachable!
-                throw new Exception(
+                throw new AutomationException(
                         "Invalid section");
         }
+    }
+
+    public void checkAdrFieldDisplayed(String adrField) {
+        Assert.assertTrue(findElementByCss("#test-" + adrField).isDisplayed());
+    }
+
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(20))
+                .pollingEvery(Duration.ofMillis(300))
+                .ignoring(NoSuchElementException.class);
+        String option = subsection.toLowerCase();
+        switch (option) {
+            case "applicant details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-applicant-details")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "adr details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-adr-new-details")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "tank details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-tank-details")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "tank inspections":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-tank-inpections")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "memo 07/09 (3 month extension)":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-memo")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "tank documents":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-tank-documents")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "battery list":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-battery-list-applicable")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "declarations seen":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-declaration-seen")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "certificate":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-certificate")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            case "additional adr details":
+                wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("//vtm-additional-adr-details")));
+                Assert.assertTrue(findElementByText(subsection).isDisplayed());
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid adr subsection '" + option + "'");
+        }
+    }
+
+    public void uploadAdrDocument() {
+        String workingDir = System.getProperty("user.dir");
+        WebElement addFile = findElementByXpath(".//input[@type='file']");
+        ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        addFile.sendKeys(workingDir + "/src/main/resources/loader/sample.pdf");
+        try {
+            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait wait = new FluentWait<>(getDriver())
+                    .withTimeout(Duration.ofSeconds(10))
+                    .pollingEvery(Duration.ofMillis(300))
+                    .ignoring(NoSuchElementException.class);
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(SPINNER)));
+            } catch (NoSuchElementException e) {
+                System.out.println("Spinner no longer in the page DOM");
+            }
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+        waitForAngularRequestsToFinish();
+    }
+
+    public void setReasonForChanges(String reason) {
+        findElementByCss(CHANGES_REASON_TEXT_AREA).sendKeys(reason);
+    }
+
+    public void confirmSavingDetails() {
+        noOfDocuments = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size();
+        findElementByCss(CONFIRM_SAVE_CHANGES).click();
+    }
+
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        checkAdrSubsectionIsPresent(subsection);
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(3))
+                .pollingEvery(Duration.ofMillis(200))
+                .ignoring(NoSuchElementException.class);
+        String option = subsection.toLowerCase();
+        switch (option) {
+            case "applicant details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-applicant-details"), text));
+                break;
+            case "adr details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-adr-new-details"), text));
+                break;
+            case "tank details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-tank-details"), text));
+                break;
+            case "tank inspections":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-tank-inpections"), text));
+                break;
+            case "memo 07/09 (3 month extension)":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-memo"), text));
+                break;
+            case "tank documents":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-tank-documents"), text));
+                break;
+            case "battery list":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-battery-list-applicable"), text));
+                break;
+            case "declarations seen":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-declaration-seen"), text));
+                break;
+            case "certificate":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-certificate"), text));
+                break;
+            case "vtm-additional-adr-details":
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//vtm-additional-adr-details"), text));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException(
+                        "Invalid adr subsection");
+        }
+    }
+
+    public void checkAdrDocumentIsUploaded() {
+        Assert.assertEquals(noOfDocuments + 1, getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]")).size());
+    }
+
+    public void checkNumberOfTankDocuments() {
+        Assert.assertEquals(noOfDocuments, getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'View')]")).size());
+    }
+
+    public void removeAllAdrDocuments() {
+        List<WebElement> documents = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]"));
+        for (WebElement document : documents) {
+            document.click();
+        }
+    }
+
+    public void checkValueInTechRecordField(String value, String field) {
+        try {
+                Assert.assertTrue(getValueInTechRecordField(field)
+                        .contains(value));
+            } catch (AssertionError e) {
+                throw new AssertionError("Expected value '" + value + "' for field '" +
+                        field + "' was not found, actual value was '" +
+                        getValueInTechRecordField(field) + "'");
+            }
+    }
+
+    public void downloadTankDocument(int index) {
+        List<WebElement> viewDocuments = getDriver().findElements(
+                By.xpath("//vtm-tank-documents//a[contains(text(),'View')]"));
+        viewDocuments.get(index-1).click();
     }
 }

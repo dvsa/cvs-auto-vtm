@@ -8,11 +8,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     TechRecordPage techRecordPage;
 
     @Step
-    public String getValueForTechRecordField(String field) {
-        return techRecordPage.getValueForTechRecordField(field);
-    }
-
-    @Step
     public void openAllSections() {
         techRecordPage.openAllSections();
     }
@@ -168,11 +163,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iInputForTheUnNumber(String unNumber, String ordinal) {
-        techRecordPage.inputForTheUnNumber(unNumber, ordinal);
-    }
-
-    @Step
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPage.checkSubsequentInspectionFields();
     }
@@ -183,7 +173,63 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Step
+    public void checkAdrFieldDisplayed(String adrField) {
+        techRecordPage.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Step
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        techRecordPage.checkAdrSubsectionIsPresent(subsection);
+    }
+
+    @Step
+    public void uploadAdrDocument() {
+        techRecordPage.uploadAdrDocument();
+    }
+
+    @Step
+    public void setReasonForChanges(String reason) {
+        techRecordPage.setReasonForChanges(reason);
+    }
+
+    @Step
+    public void confirmSavingDetails() {
+        techRecordPage.confirmSavingDetails();
+    }
+
+    @Step
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        techRecordPage.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Step
+    public void checkAdrDocumentIsUploaded() {
+        techRecordPage.checkAdrDocumentIsUploaded();
+    }
+
+    @Step
+    public void checkNumberOfTankDocuments() {
+        techRecordPage.checkNumberOfTankDocuments();
+    }
+
+
+    @Step
+    public void removeAllAdrDocuments() {
+        techRecordPage.removeAllAdrDocuments();
+    }
+
+    @Step
+    public void checkValueInTechRecordField(String value, String field) {
+        techRecordPage.checkValueInTechRecordField(value, field);
+    }
+
+    @Step
+    public void downloadTankDocument(int index) {
+        techRecordPage.downloadTankDocument(index);
     }
 }

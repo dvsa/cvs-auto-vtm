@@ -6,7 +6,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     When I go to search tech record page
     Then I should see "Search for a technical record"
     Then element with id "searchIdentifier" should be present

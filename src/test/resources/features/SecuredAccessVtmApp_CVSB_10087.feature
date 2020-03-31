@@ -13,7 +13,7 @@ Feature: Search tech record
     Given I login with admin credentials
     Then I should see "Vehicle testing management"
     And I should see "Search for a technical record"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     #AC3
     When I navigate away from vtm app and then go back to vtm
     Then I should see "Search for a technical record"
