@@ -5,7 +5,7 @@ Feature: Show test accurately for queried vehicle
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     When I go to search tech record page
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
@@ -20,7 +20,7 @@ Feature: Show test accurately for queried vehicle
     Then I should see "Test type"
     # the test history section should have three entries, one headings row and two actual tests
     And the "test history" section should have "3" entries
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value      |
       | testCode-tRes-0-tType-0             | Aav2       |
       | testTypeEndTimestamp-tRes-0-tType-0 | 15/01/2019 |

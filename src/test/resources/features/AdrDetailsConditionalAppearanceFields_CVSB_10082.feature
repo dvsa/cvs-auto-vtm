@@ -1,4 +1,4 @@
-Feature: Search tech record
+Feature: Adr details conditional appearance of fields
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see specific adr fields will appear only under certain conditions
@@ -6,7 +6,7 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     When I go to search tech record page
     Then element with id "searchIdentifier" should be present
 
