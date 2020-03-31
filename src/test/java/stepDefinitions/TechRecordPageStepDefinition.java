@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -16,27 +17,17 @@ public class TechRecordPageStepDefinition {
     @Steps
     TechRecordPageSteps techRecordPageSteps;
 
-    @Then("^hgv tech record fields should have values$")
-    public void hgvTechRecordFieldShouldHaveValue(DataTable dt) throws ComparisonFailure {
+    @Then("^tech record fields should have values$")
+    public void techRecordFieldShouldHaveValue(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (Map<String, String> stringStringMap : list) {
+        for (Map<String, String> stringMap : list) {
             try {
-                Assert.assertEquals(stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            } catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Value for field " + stringStringMap.get("Field") + " is not the expected one", stringStringMap.get("Value"), techRecordPageSteps.getValueForTechRecordField(stringStringMap.get("Field")));
-            }
-        }
-    }
-
-    @Then("^trl tech record fields should have values$")
-    public void trlTechRecordFieldShouldHaveValue(DataTable dt) {
-        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-        for (int i = 0; i < list.size(); i++) {
-            try {
-                Assert.assertEquals(techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")), list.get(i).get("Value"));
-            }
-            catch (ComparisonFailure e) {
-                throw new ComparisonFailure("Expected value for field " + list.get(i).get("Field") + " was not found", list.get(i).get("Value"), techRecordPageSteps.getValueForTechRecordField(list.get(i).get("Field")));
+                Assert.assertTrue(techRecordPageSteps.getValueForTechRecordField(stringMap.get("Field"))
+                        .contains(stringMap.get("Value")));
+            } catch (AssertionError e) {
+                throw new AssertionError("Expected value '" + stringMap.get("Value") + "' for field '" +
+                        stringMap.get("Field") + "' was not found, actual text was '" +
+                        techRecordPageSteps.getValueForTechRecordField(stringMap.get("Field")) + "'");
             }
         }
     }
@@ -212,7 +203,20 @@ public class TechRecordPageStepDefinition {
     }
 
     @Then("^the \"([^\"]*)\" section should have \"([^\"]*)\" entries$")
-    public void theSectionShouldHaveEntries(String section, String numberOfEntries) throws Exception {
+    public void theSectionShouldHaveEntries(String section, String numberOfEntries) {
         techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Then("^I should see \"([^\"]*)\" adr field$")
+    public void iShouldSeeAdrField(String adrField) {
+        techRecordPageSteps.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Then("^I should see adr subsections$")
+    public void iShouldSeeAdrSubsections(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkAdrSubsectionIsPresent(stringMap.get("Subsection"));
+        }
     }
 }

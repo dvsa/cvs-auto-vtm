@@ -89,6 +89,11 @@ public class GenericPage extends PageObject{
         return getDriver().findElement(By.xpath(xpath));
     }
 
+    protected WebElement findElementByText(String text) {
+        System.out.println("Finding element with text: " + text);
+        return getDriver().findElement(By.xpath("//*[contains(text(),'" + text + "')]"));
+    }
+
     protected WebElement findElementByCss(String css) {
         System.out.println("Finding element: " + css);
         return getDriver().findElement(By.cssSelector(css));

@@ -5,7 +5,7 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
     When I go to search tech record page
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present

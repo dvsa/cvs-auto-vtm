@@ -183,7 +183,17 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Step
+    public void checkAdrFieldDisplayed(String adrField) {
+        techRecordPage.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Step
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        techRecordPage.checkAdrSubsectionIsPresent(subsection);
     }
 }

@@ -557,7 +557,7 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         String option = section.toLowerCase();
         switch (option) {
             case "vehicle summary":
@@ -588,8 +588,23 @@ public class TechRecordPage extends GenericPage {
                 Assert.assertEquals(Integer.parseInt(numberOfEntries), getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size());
                 break;
             default:  // should be unreachable!
-                throw new Exception(
+                throw new AutomationException(
                         "Invalid section");
         }
+    }
+
+    public void checkAdrFieldDisplayed(String adrField) {
+        String field = adrField.toLowerCase();
+        Assert.assertTrue(findElementByCss("#test-" + adrField).isDisplayed());
+    }
+
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(20))
+                .pollingEvery(Duration.ofMillis(300))
+                .ignoring(NoSuchElementException.class);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                By.xpath("//*[contains(text(),'" + subsection + "')]"), 0));
+        Assert.assertTrue(findElementByText(subsection).isDisplayed());
     }
 }
