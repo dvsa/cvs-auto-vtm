@@ -1,4 +1,4 @@
-Feature: Search tech record
+Feature: Adr details array appending
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should be able to add specific adr details
@@ -6,7 +6,7 @@ Feature: Search tech record
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And element with id "test-search-vehicle" should be present
 
   @skip
   # because of ADR refactoring

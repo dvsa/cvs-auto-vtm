@@ -13,12 +13,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+import static java.time.Duration.ofMillis;
+
 public class GenericPage extends PageObject{
 
-    private static final String SPINNER = "div.spinner-container";
-    private static final String HEADER_ERROR = "div.govuk-error-summary";
-    private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
-    private static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
+    static final String SPINNER = "div.spinner-container";
+    static final String HEADER_ERROR = "div.govuk-error-summary";
+    static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
+    static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -37,8 +39,8 @@ public class GenericPage extends PageObject{
     }
 
     public void checkTextIsNotPresentInPage(String text) {
-        String bodyText = getDriver().findElement(By.tagName("body")).getText();
-        Assert.assertFalse("Text was found!", bodyText.contains(text));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.
+                textToBePresentInElementLocated(By.cssSelector("body"), text)));
     }
 
     public void waitForPageToLoad() {
@@ -87,6 +89,11 @@ public class GenericPage extends PageObject{
     protected WebElement findElementByXpath(String xpath) {
         System.out.println("Finding element: " + xpath);
         return getDriver().findElement(By.xpath(xpath));
+    }
+
+    protected WebElement findElementByText(String text) {
+        System.out.println("Finding element with text: " + text);
+        return getDriver().findElement(By.xpath("//*[contains(text(),'" + text + "')]"));
     }
 
     protected WebElement findElementByCss(String css) {
@@ -225,5 +232,14 @@ public class GenericPage extends PageObject{
                 .pollingEvery(Duration.ofMillis(250))
                 .ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss("body"), text));
+    }
+
+    FluentWait globalFluentWait(int timeOutSeconds, int pollingEveryMilliseconds) {
+        FluentWait wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(timeOutSeconds))
+                .pollingEvery(ofMillis(pollingEveryMilliseconds))
+                .ignoring(org.openqa.selenium.NoSuchElementException.class);
+
+        return wait;
     }
 }

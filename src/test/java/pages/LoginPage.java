@@ -48,7 +48,7 @@ public class LoginPage extends GenericPage {
         new WebDriverWait(getDriver(), 5)
                 .pollingEvery(Duration.ofMillis(250))
                 .until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
-        new WebDriverWait(getDriver(), 5)
+        new WebDriverWait(getDriver(), 10)
                 .pollingEvery(Duration.ofMillis(250))
                 .until(ExpectedConditions.visibilityOf(passwordInput));
         passwordInput.type(password);

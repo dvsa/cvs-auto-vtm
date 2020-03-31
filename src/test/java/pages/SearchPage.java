@@ -29,7 +29,7 @@ public class SearchPage extends GenericPage {
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
                 elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
         findElementByCss(SEARCH_BUTTON).click();
-        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+        new WebDriverWait(getDriver(), 20, 200).until(ExpectedConditions.
                 visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
                 textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-change-btn")), "Change technical record"));
