@@ -8,11 +8,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     TechRecordPage techRecordPage;
 
     @Step
-    public String getValueForTechRecordField(String field) {
-        return techRecordPage.getValueForTechRecordField(field);
-    }
-
-    @Step
     public void openAllSections() {
         techRecordPage.openAllSections();
     }
@@ -23,12 +18,12 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void openSection(String section) throws Exception {
+    public void openSection(String section) {
         techRecordPage.openSection(section);
     }
 
     @Step
-    public void closeSection(String section) throws Exception {
+    public void closeSection(String section) {
         techRecordPage.closeSection(section);
     }
 
@@ -37,18 +32,23 @@ public class TechRecordPageSteps extends GenericPageSteps {
         techRecordPage.editTechRecordDetails();
     }
 
+//    @Step
+//    public void clickBackButton() {
+//        techRecordPage.clickBackButton();
+//    }
+
     @Step
     public void saveTechRecordDetails() {
         techRecordPage.saveTechRecordDetails();
     }
 
     @Step
-    public void selectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+    public void selectDangerousGoodCheckbox(String dangerousGood) {
         techRecordPage.selectDangerousGoodCheckbox(dangerousGood);
     }
 
     @Step
-    public void deselectDangerousGoodCheckbox(String dangerousGood) throws Exception {
+    public void deselectDangerousGoodCheckbox(String dangerousGood) {
         techRecordPage.deselectDangerousGoodCheckbox(dangerousGood);
     }
 
@@ -68,13 +68,13 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iSelectVehicleType(String vehicleType) {
-        techRecordPage.selectVehicleType(vehicleType);
+    public void iSelectAdrVehicleType(String vehicleType) {
+        techRecordPage.selectAdrVehicleType(vehicleType);
     }
 
     @Step
-    public void iSelectFromBatteryListApplicable(String option) {
-        techRecordPage.selectFromBatteryListApplicable(option);
+    public void setBatteryListApplicable(String option) {
+        techRecordPage.setBatteryListApplicable(option);
     }
 
     @Step
@@ -128,7 +128,7 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iClickAdrDetailsLink(String link) throws  Exception {
+    public void iClickAdrDetailsLink(String link) {
         techRecordPage.iClickAdrDetailsLink(link);
     }
 
@@ -153,8 +153,8 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iSelectCustomGuidanceNoteCheckbox(String note) {
-        techRecordPage.selectCustomGuidanceNoteCheckbox(note);
+    public void iSelectGuidanceNoteCheckbox(String note) {
+        techRecordPage.selectGuidanceNoteCheckbox(note);
     }
 
     @Step
@@ -168,22 +168,213 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iInputForTheUnNumber(String unNumber, String ordinal) {
-        techRecordPage.inputForTheUnNumber(unNumber, ordinal);
-    }
-
-    @Step
-    public void iShouldSeeTheSubsequentInspectionFields() {
-        techRecordPage.checkSubsequentInspectionFields();
-    }
-
-    @Step
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPage.iShouldSeeSectionHeading(heading);
     }
 
     @Step
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Step
+    public void checkAdrFieldDisplayed(String adrField) {
+        techRecordPage.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Step
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        techRecordPage.checkAdrSubsectionIsPresent(subsection);
+    }
+
+    @Step
+    public void checkAdrSubsectionIsNotPresent(String subsection) {
+        techRecordPage.checkAdrSubsectionIsNotPresent(subsection);
+    }
+
+    @Step
+    public void uploadAdrDocument() {
+        techRecordPage.uploadAdrDocument();
+    }
+
+    @Step
+    public void setReasonForChanges(String reason) {
+        techRecordPage.setReasonForChanges(reason);
+    }
+
+    @Step
+    public void confirmSavingDetails() {
+        techRecordPage.confirmSavingDetails();
+    }
+
+    @Step
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        techRecordPage.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Step
+    public void checkNumberOfTankDocuments() {
+        techRecordPage.checkNumberOfTankDocuments();
+    }
+
+    @Step
+    public void checkNumberOfTankDocumentsOnEdit() {
+        techRecordPage.checkNumberOfTankDocumentsOnEdit();
+    }
+
+    @Step
+    public void removeAllAdrDocuments() {
+        techRecordPage.removeAllAdrDocuments();
+    }
+
+    @Step
+    public void checkValueInTechRecordField(String value, String field) {
+        techRecordPage.checkValueInTechRecordField(value, field);
+    }
+
+    @Step
+    public void downloadTankDocument(int index) {
+        techRecordPage.downloadTankDocument(index);
+    }
+
+    @Step
+    public void downloadTankDocument(String fileName) {
+        techRecordPage.downloadTankDocument(fileName);
+    }
+
+    @Step
+    public void removeAdrDocuments(int index) {
+        techRecordPage.removeAdrDocuments(index);
+    }
+
+    @Step
+    public void removeAdrDocuments(String fileName) {
+        techRecordPage.removeAdrDocuments(fileName);
+    }
+
+    @Step
+    public void selectSubstancesPermittedOption(String substancesPermittedType) {
+        techRecordPage.selectSubstancesPermittedOption(substancesPermittedType);
+    }
+
+    @Step
+    public void setProductListReferenceNumber(String refNo) {
+        techRecordPage.setProductListReferenceNumber(refNo);
+    }
+
+    @Step
+    public void setBatteryListReferenceNumber(String refNo) {
+        techRecordPage.setBatteryListReferenceNumber(refNo);
+    }
+
+    @Step
+    public void removeUnNumber(int index) {
+        techRecordPage.removeUnNumber(index);
+    }
+
+    @Step
+    public void addInitialInspection(String certificateNo, String expiryDate) {
+        techRecordPage.addInitialInspection(certificateNo, expiryDate);
+    }
+
+    @Step
+    public void addSubsequentInspection(int index, String inspectionType, String certificateNo, String expiryDate) {
+        techRecordPage.addSubsequentInspection(index, inspectionType, certificateNo, expiryDate);
+    }
+
+    @Step
+    public void selectHasAdrDetails(String option) {
+        techRecordPage.selectHasAdrDetails(option);
+    }
+
+    @Step
+    public void addSubsequentInspection(String inspectionType, String certificateNo, String expiryDate) {
+        techRecordPage.clickLink("Add a subsequent inspection");
+        techRecordPage.addSubsequentInspection(inspectionType, certificateNo, expiryDate);
+    }
+
+    @Step
+    public void fillInApplicantFieldWithValue(String applicantField, String value) {
+        techRecordPage.fillInApplicantFieldWithValue(applicantField, value);
+    }
+
+    @Step
+    public void setProcessedDate(String processedDate) {
+        techRecordPage.setProcessedDate(processedDate);
+    }
+
+    @Step
+    public void setCompatibilityGroupJ(String option) {
+        techRecordPage.setCompatibilityGroupJ(option);
+    }
+
+    @Step
+    public void fillInAdrApprovalTypeNumberWithValue(String approvalNo) {
+        techRecordPage.fillInAdrApprovalTypeNumberWithValue(approvalNo);
+    }
+
+    @Step
+    public void fillInTankFieldWithValue(String tankField, String value) {
+        techRecordPage.fillInTankFieldWithValue(tankField, value);
+    }
+
+    @Step
+    public void fillInSpecialProvisions(String provisions) {
+        techRecordPage.fillInSpecialProvisions(provisions);
+    }
+
+    @Step
+    public void setMemoTo(String option) {
+        techRecordPage.setMemoTo(option);
+    }
+
+    @Step
+    public void setCertificateRequiredTo(String option) {
+        techRecordPage.setCertificateRequiredTo(option);
+    }
+
+    @Step
+    public void fillInAdditionalAdrDetailsWith(String details) {
+        techRecordPage.fillInAdditionalAdrDetailsWith(details);
+    }
+
+    @Step
+    public void cancelSavingDetails() {
+        techRecordPage.cancelSavingDetails();
+    }
+
+    @Step
+    public void fillInAdditionalProductListDetailsWithValue(String details) {
+        techRecordPage.fillInAdditionalProductListDetailsWithValue(details);
+    }
+
+    @Step
+    public void fillInIssuerWithValue(String issuer) {
+        techRecordPage.fillInIssuerWithValue(issuer);
+    }
+
+    @Step
+    public void fillInBrakeWeightWithValue(String weight) {
+        techRecordPage.fillInBrakeWeightWithValue(weight);
+    }
+
+    @Step
+    public void uploadAdrDocument(String fileName) {
+        techRecordPage.uploadAdrDocument(fileName);
+    }
+
+    @Step
+    public void confirmAdrDocumentIsUploaded(String fileName) {
+        techRecordPage.confirmAdrDocumentIsUploaded(fileName);
+    }
+
+    @Step
+    public void checkAdrDocumentPresentInTankDetails(String fileName) {
+        techRecordPage.checkAdrDocumentPresentInTankDetails(fileName);
+    }
+
+    @Step
+    public void checkErrorMessageIsPresent(String message) {
+        techRecordPage.checkErrorMessageIsPresent(message);
     }
 }

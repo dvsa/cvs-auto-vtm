@@ -1,4 +1,4 @@
-Feature: VTM Core Landing Page
+Feature: VTM Core Landing Page - CVSN-7943
   As an admin user I can log in the VTM app
   And the VTM Core Landing Page is rendered correctly
 
@@ -16,9 +16,9 @@ Feature: VTM Core Landing Page
     #AC2
     When I go to search tech record page
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
-    And element with id "searchIdentifier" should be present
+    And search vehicle input field should be present
     When I go back to home page
     #AC3
     And I go to create tech record page
     And I should see "Create new technical record"
-    And element with id "test-vin" should be present
+    And vin input field should be present

@@ -4,11 +4,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import step.CreateTechRecordPageSteps;
+import step.GenericPageSteps;
 
 public class CreateTechRecordPageStepDefinition {
 
     @Steps
     CreateTechRecordPageSteps createTechRecordPageSteps;
+
+    @Steps
+    GenericPageSteps genericPageSteps;
 
     @When("^I fill in vin \"([^\"]*)\"$")
     public void iFillInVin(String vin) {
@@ -64,5 +68,10 @@ public class CreateTechRecordPageStepDefinition {
     @When("^I fill in random vrm$")
     public String iFillInRandomVrm() {
         return createTechRecordPageSteps.fillInRandomVrm();
+    }
+
+    @Then("^vin input field should be present$")
+    public void vinInputFieldShouldBePresent() {
+        genericPageSteps.elementWithIdShouldBePresent("test-vin");
     }
 }

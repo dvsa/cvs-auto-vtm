@@ -1,14 +1,14 @@
-Feature: Show test accurately for queried vehicle
+Feature: Show test accurately for queried vehicle -CVSB-12661
   As an admin user I can log in the VTM app
   And see all test results that have same system number as the queried vehicle
 
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And search vehicle link should be present
     When I go to search tech record page
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
-    And element with id "searchIdentifier" should be present
+    And search vehicle input field should be present
 
   Scenario: Search vehicle with multiple test results with same system number and different vins
   AC1 - User Searches For Vehicle With Multiple Test Results Having Same System Number And Different Vins
@@ -20,7 +20,7 @@ Feature: Show test accurately for queried vehicle
     Then I should see "Test type"
     # the test history section should have three entries, one headings row and two actual tests
     And the "test history" section should have "3" entries
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value      |
       | testCode-tRes-0-tType-0             | Aav2       |
       | testTypeEndTimestamp-tRes-0-tType-0 | 15/01/2019 |

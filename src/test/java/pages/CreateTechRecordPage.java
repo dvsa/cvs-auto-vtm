@@ -2,8 +2,6 @@ package pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -52,18 +50,18 @@ public class CreateTechRecordPage extends GenericPage {
         String option = errorType.toLowerCase();
         switch (option) {
             case "vehicle type":
-                new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VEHICLE_TYPE_ERROR)));
-                new WebDriverWait(getDriver(), 15).
+                new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VEHICLE_TYPE_ERROR)));
+                new WebDriverWait(getDriver(), 10).
                         until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VEHICLE_TYPE_ERROR), text));
                 break;
             case "vin":
-                new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VIN_ERROR)));
-                new WebDriverWait(getDriver(), 15).
+                new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VIN_ERROR)));
+                new WebDriverWait(getDriver(), 10).
                         until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VIN_ERROR), text));
                 break;
             case "vrm":
-                new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VRM_ERROR)));
-                new WebDriverWait(getDriver(), 15).
+                new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VRM_ERROR)));
+                new WebDriverWait(getDriver(), 10).
                         until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VRM_ERROR), text));
                 break;
             default:  // should be unreachable!
