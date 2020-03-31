@@ -1,14 +1,14 @@
-Feature: Search tech record
+Feature: Search tech record - CVSB-10052
   As an admin user I can log in the VTM app
   And search for tech records using Vin, primary Vrm, partial Vin or trailerId
 
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And search vehicle link should be present
     When I go to search tech record page
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
-    And element with id "searchIdentifier" should be present
+    And search vehicle input field should be present
 
   @skip
   # because search is covered in tests for CVSB-11329

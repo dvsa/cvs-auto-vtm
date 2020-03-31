@@ -1,10 +1,10 @@
 package stepDefinitions;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
+import step.GenericBackendRequestSteps;
+import step.GenericPageSteps;
 import step.SearchPageSteps;
 
 public class SearchPageStepDefinition {
@@ -12,10 +12,23 @@ public class SearchPageStepDefinition {
     @Steps
     SearchPageSteps searchPageSteps;
 
+    @Steps
+    GenericBackendRequestSteps genericBackendRequestSteps;
+
+    @Steps
+    GenericPageSteps genericPageSteps;
+
     @When("^I search for vehicle with identifier \"([^\"]*)\"$")
     public void iSearchForVehicleWithIdentifier(String identifier){
         searchPageSteps.clearSearchInput();
         searchPageSteps.inputVehicleIdentifier(identifier);
+        searchPageSteps.searchVehicle();
+    }
+
+    @When("^I search for previously created vehicle$")
+    public void searchForPreviouslyCreatedVehicle(){
+        searchPageSteps.clearSearchInput();
+        searchPageSteps.inputVehicleIdentifier(genericBackendRequestSteps.getNewVehicleAttribute("vin"));
         searchPageSteps.searchVehicle();
     }
 
@@ -50,5 +63,10 @@ public class SearchPageStepDefinition {
     @Then("^the specific error contains \"([^\"]*)\"$")
     public void theSpecificErrorContains(String text) {
         searchPageSteps.specificErrorContains(text);
+    }
+
+    @Then("^search vehicle input field should be present$")
+    public void searchVehicleInputFieldShouldBePresent() {
+        genericPageSteps.elementWithIdShouldBePresent("searchIdentifier");
     }
 }

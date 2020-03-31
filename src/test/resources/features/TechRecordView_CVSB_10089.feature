@@ -1,4 +1,4 @@
-Feature: Search tech record
+Feature: Search tech record - CVSB-10089
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see all required attributes displayed for the tech record
@@ -7,11 +7,11 @@ Feature: Search tech record
     Given I login with admin credentials
     Then I should see "Vehicle testing management"
     And I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And search vehicle link should be present
     When I go to search tech record page
-    Then element with id "searchIdentifier" should be present
+    Then search vehicle input field should be present
 
-  @skip
+  
   Scenario: Search using vin for HGV with current, provisional and archived tech records
   AC1 - After searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
   AC4 - HGV tech records are structured correctly
@@ -24,7 +24,7 @@ Feature: Search tech record
     #user clicks the call to action to "open all" headings
     When I open all sections
     Then I should see "Vehicle type"
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value                |
       #after searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
       | status                              | Current              |
@@ -42,11 +42,11 @@ Feature: Search tech record
       | dtpNumber                           | 1234                 |
       | parkingBrakeMrkAxle-1               | Axle 1               |
       | parkingBrakeMrkAxle-2               | Axle 2               |
-      | speedLimiterMrk                     | YES                  |
-      | tachoExemptMrk                      | YES                  |
+      | speedLimiterMrk                     | Yes                  |
+      | tachoExemptMrk                      | Yes                  |
       | euroStandard                        | 9                    |
-      | roadFriendly                        | YES                  |
-      | drawbarCouplingFitted               | YES                  |
+      | roadFriendly                        | Yes                  |
+      | drawbarCouplingFitted               | Yes                  |
       | vehicleClassDescription             | Heavy goods vehicle  |
       | vehicleConfiguration                | Semi-car transporter |
       | make                                | Isuzu                |
@@ -130,7 +130,7 @@ Feature: Search tech record
     When I search for vehicle with identifier "CT70001"
     Then wait until I see "Technical record"
     When I open all sections
-    Then hgv tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value               |
       | status                              | Archived            |
       | vin                                 | P012301230001       |
@@ -144,11 +144,11 @@ Feature: Search tech record
       | dtpNumber                           | 1241                |
       # there are no axles that have "parkingBrakeFitted" set to "true" in dynamo
       | parkingBrakeMrk                     | -                   |
-      | speedLimiterMrk                     | YES                 |
-      | tachoExemptMrk                      | YES                 |
+      | speedLimiterMrk                     | Yes                 |
+      | tachoExemptMrk                      | Yes                 |
       | euroStandard                        | 4                   |
-      | roadFriendly                        | YES                 |
-      | drawbarCouplingFitted               | NO                  |
+      | roadFriendly                        | Yes                 |
+      | drawbarCouplingFitted               | No                  |
       | vehicleClassDescription             | Heavy goods vehicle |
       # vehicleConfiguration is "  " in Dynamo
       | vehicleConfiguration                | -                   |
@@ -216,7 +216,7 @@ Feature: Search tech record
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then trl tech record fields should have values
+    Then tech record fields should have values
       | Field                               | Value        |
       | status                              | Provisional  |
       | vin                                 | T12111000    |
@@ -229,13 +229,13 @@ Feature: Search tech record
       | dtpNumber                           | 1237         |
       | parkingBrakeMrkAxle-2               | Axle 2       |
       | parkingBrakeMrkAxle-3               | Axle 3       |
-      | loadSensingValve                    | YES          |
-      | antilockBrakingSystem               | YES          |
+      | loadSensingValve                    | Yes          |
+      | antilockBrakingSystem               | Yes          |
       | brakeActuator                       | 113          |
       | leverLength                         | 125          |
-      | springBrakeParking                  | YES          |
+      | springBrakeParking                  | Yes          |
       | suspensionType                      | Y            |
-      | roadFriendly                        | YES          |
+      | roadFriendly                        | Yes          |
       | vehicleClassDescription             | Trailer      |
       | vehicleConfiguration                | Drawbar      |
       | couplingType                        | F            |
@@ -305,14 +305,14 @@ Feature: Search tech record
     And I should not see "Speed limiter exempt"
     And I should not see "Tacho exempt"
 
-  @skip
+
   Scenario: Search using partial vin for TRL with a current tech record and without primary or secondary vrms and without any axle that is fitted with a parking brake
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
     When I search for vehicle with identifier "111111"
     Then wait until I see "Technical record"
     When I open all sections
     Then wait until I see "Close all"
-    Then trl tech record fields should have values
+    Then tech record fields should have values
     | Field           | Value       |
     | status          | Current     |
     | vin             | T12111111   |

@@ -8,11 +8,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     TechRecordPage techRecordPage;
 
     @Step
-    public String getValueForTechRecordField(String field) {
-        return techRecordPage.getValueForTechRecordField(field);
-    }
-
-    @Step
     public void openAllSections() {
         techRecordPage.openAllSections();
     }
@@ -23,12 +18,12 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void openSection(String section) throws Exception {
+    public void openSection(String section) {
         techRecordPage.openSection(section);
     }
 
     @Step
-    public void closeSection(String section) throws Exception {
+    public void closeSection(String section) {
         techRecordPage.closeSection(section);
     }
 
@@ -68,8 +63,8 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iSelectVehicleType(String vehicleType) {
-        techRecordPage.selectVehicleType(vehicleType);
+    public void iSelectAdrVehicleType(String vehicleType) {
+        techRecordPage.selectAdrVehicleType(vehicleType);
     }
 
     @Step
@@ -128,7 +123,7 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iClickAdrDetailsLink(String link) throws  Exception {
+    public void iClickAdrDetailsLink(String link) {
         techRecordPage.iClickAdrDetailsLink(link);
     }
 
@@ -168,22 +163,97 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iInputForTheUnNumber(String unNumber, String ordinal) {
-        techRecordPage.inputForTheUnNumber(unNumber, ordinal);
-    }
-
-    @Step
-    public void iShouldSeeTheSubsequentInspectionFields() {
-        techRecordPage.checkSubsequentInspectionFields();
-    }
-
-    @Step
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPage.iShouldSeeSectionHeading(heading);
     }
 
     @Step
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
+    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    }
+
+    @Step
+    public void checkAdrFieldDisplayed(String adrField) {
+        techRecordPage.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Step
+    public void checkAdrSubsectionIsPresent(String subsection) {
+        techRecordPage.checkAdrSubsectionIsPresent(subsection);
+    }
+
+    @Step
+    public void uploadAdrDocument() {
+        techRecordPage.uploadAdrDocument();
+    }
+
+    @Step
+    public void setReasonForChanges(String reason) {
+        techRecordPage.setReasonForChanges(reason);
+    }
+
+    @Step
+    public void confirmSavingDetails() {
+        techRecordPage.confirmSavingDetails();
+    }
+
+    @Step
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        techRecordPage.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Step
+    public void checkNumberOfTankDocuments() {
+        techRecordPage.checkNumberOfTankDocuments();
+    }
+
+    @Step
+    public void checkNumberOfTankDocumentsOnEdit() {
+        techRecordPage.checkNumberOfTankDocumentsOnEdit();
+    }
+
+    @Step
+    public void removeAllAdrDocuments() {
+        techRecordPage.removeAllAdrDocuments();
+    }
+
+    @Step
+    public void checkValueInTechRecordField(String value, String field) {
+        techRecordPage.checkValueInTechRecordField(value, field);
+    }
+
+    @Step
+    public void downloadTankDocument(int index) {
+        techRecordPage.downloadTankDocument(index);
+    }
+
+    @Step
+    public void removeAdrDocuments(int index) {
+        techRecordPage.removeAdrDocuments(index);
+    }
+
+    @Step
+    public void selectSubstancesPermittedOption(String substancesPermittedType) {
+        techRecordPage.selectSubstancesPermittedOption(substancesPermittedType);
+    }
+
+    @Step
+    public void setReferenceNumber(String refNo) {
+        techRecordPage.setReferenceNumber(refNo);
+    }
+
+    @Step
+    public void removeUnNumber(int index) {
+        techRecordPage.removeUnNumber(index);
+    }
+
+    @Step
+    public void addInitialInspection(String certificateNo, String expiryDate) {
+        techRecordPage.addInitialInspection(certificateNo, expiryDate);
+    }
+
+    @Step
+    public void addSubsequentInspection(int index, String inspectionType, String certificateNo, String expiryDate) {
+        techRecordPage.addSubsequentInspection(index, inspectionType, certificateNo, expiryDate);
     }
 }

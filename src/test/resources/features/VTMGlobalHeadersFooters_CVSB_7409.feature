@@ -1,4 +1,4 @@
-Feature: VTM headers and footers
+Feature: VTM headers and footers - CVSB-7409
   As an admin user I can log in the VTM app
   And the VTM headers and footers are rendered correctly
 
@@ -54,7 +54,7 @@ Feature: VTM headers and footers
     And wait until I see "Vehicle testing management"
     And wait until I see "Vehicle registration mark, trailer ID or vehicle identification number"
     And wait until I see "All content is available under the Open Government Licence v3.0, except where otherwise stated"
-    And I click "Vehicle testing management" link
+    And I go back to home page
     Then I should see "Select activity"
     And I should see "Search for a technical record" hyperlink
     And I should see "Create a new technical record" hyperlink

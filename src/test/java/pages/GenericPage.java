@@ -5,20 +5,24 @@ import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-public class GenericPage extends PageObject{
+import static java.time.Duration.ofMillis;
 
-    private static final String SPINNER = "div.spinner-container";
-    private static final String HEADER_ERROR = "div.govuk-error-summary";
-    private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
-    private static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
+public class GenericPage extends PageObject {
+
+    static final String SPINNER = "div.spinner-container";
+    static final String HEADER_ERROR = "div.govuk-error-summary";
+    static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
+    static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -32,13 +36,14 @@ public class GenericPage extends PageObject{
     }
 
     public void checkTextIsPresentInPage(String text) {
-        new WebDriverWait(getDriver(), 5).
-                until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
+        FluentWait wait = globalFluentWait(10, 200);
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
     }
 
     public void checkTextIsNotPresentInPage(String text) {
-        String bodyText = getDriver().findElement(By.tagName("body")).getText();
-        Assert.assertFalse("Text was found!", bodyText.contains(text));
+        FluentWait wait = globalFluentWait(10, 200);
+        wait.until(ExpectedConditions.not(ExpectedConditions.
+                textToBePresentInElementLocated(By.cssSelector("body"), text)));
     }
 
     public void waitForPageToLoad() {
@@ -89,9 +94,32 @@ public class GenericPage extends PageObject{
         return getDriver().findElement(By.xpath(xpath));
     }
 
+    protected WebElement findElementByText(String text) {
+        System.out.println("Finding element with text: " + text);
+        FluentWait wait = globalFluentWait(10, 200);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'" + text + "')]")));
+        return getDriver().findElement(By.xpath("//*[contains(text(),'" + text + "')]"));
+    }
+
     protected WebElement findElementByCss(String css) {
         System.out.println("Finding element: " + css);
         return getDriver().findElement(By.cssSelector(css));
+    }
+
+    protected void scrollToAndClickByCss(String css) {
+        System.out.println("Finding element: " + css);
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(findElementByCss(css));
+        actions.perform();
+        getDriver().findElement(By.cssSelector(css)).click();
+    }
+
+    protected void scrollToAndClickByXpath(String xpath) {
+        System.out.println("Finding element: " + xpath);
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(findElementByXpath(xpath));
+        actions.perform();
+        getDriver().findElement(By.xpath(xpath)).click();
     }
 
     public void selectCheckbox(String text) {
@@ -145,43 +173,35 @@ public class GenericPage extends PageObject{
                 "//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
     }
 
-    public void goBackToHomePage() {
-        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")));
-    }
-
-    public void goBackToSearchPage() {
-
-        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/search");
-    }
-
-    public void goBackToCreatePage() {
-        getDriver().get(getDriver().getCurrentUrl().substring(0, getDriver().getCurrentUrl().lastIndexOf("/")) + "/create");
-    }
-
     public void checkTextIsPresentInButton(String text) {
         Assert.assertNotNull("Button with text was not found!", getDriver().findElement(By.xpath(
                 "//button[contains(text(),'" + text + "')]")));
     }
 
     public void clickButton(String text) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions
                 .elementToBeClickable(By.xpath("//button[contains(text(),'" + text + "')]")));
         findElementByXpath("//button[contains(text(),'" + text + "')]").click();
         try {
-            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
             waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
         }
         catch (TimeoutException e) {
             System.out.println("Spinner did not appear");
         }
+        waitForAngularRequestsToFinish();
     }
 
     public void clickLink(String text) {
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions
-                .elementToBeClickable(By.xpath("//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
-        findElementByXpath("//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]").click();
+        String locator = "//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]";
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
+        findElementByXpath(locator).click();
         try {
-            new WebDriverWait(getDriver(), 1).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
             waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
         }
         catch (TimeoutException e) {
@@ -219,11 +239,12 @@ public class GenericPage extends PageObject{
         Assert.assertEquals(0, getDriver().findElements(By.cssSelector(SIGNOUT_CONFIRMATION_SCREEN)).size());
     }
 
-    public void waitForTextToAppearInPage(String text) {
+    FluentWait globalFluentWait(int timeOutSeconds, int pollingEveryMilliseconds) {
         FluentWait wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(250))
-                .ignoring(NoSuchElementException.class);
-        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss("body"), text));
+                .withTimeout(Duration.ofSeconds(timeOutSeconds))
+                .pollingEvery(ofMillis(pollingEveryMilliseconds))
+                .ignoring(org.openqa.selenium.NoSuchElementException.class);
+
+        return wait;
     }
 }

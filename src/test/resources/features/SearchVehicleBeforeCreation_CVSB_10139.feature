@@ -1,14 +1,14 @@
-Feature: Search for vehicle before creation
+Feature: Search for vehicle before creation - CVSB-10139
   As an admin user I can search for a vehicle in the create vehicle page
   And make sure that the vehicle I wish to create does not already exist
 
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
-    And element with id "test-create-new-vehicle" should be present
+    And create new vehicle link should be present
     When I go to create tech record page
     Then I should see "Create new technical record"
-    Then element with id "test-vin" should be present
+    Then vin input field should be present
 
   Scenario: As the DVSA, we want to be able to search for a vehicle before creating it to ensure that it does not already exist
   AC1 - 'Create new technical record' page displays correct fields
@@ -19,10 +19,10 @@ Feature: Search for vehicle before creation
   AC6 - User clicks back button
     # AC7
     When I click "Back" link
-    Then element with id "test-create-new-vehicle" should be present
+    Then create new vehicle link should be present
     When I go to create tech record page
     Then I should see "Create new technical record"
-    Then element with id "test-vin" should be present
+    Then vin input field should be present
     # AC1
     Then I should see "Vehicle type"
     Then I should see "Vehicle identification number (VIN)" in "vin" field description
