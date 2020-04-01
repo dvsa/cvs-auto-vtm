@@ -23,7 +23,7 @@ Feature: Display Adr details
     Then wait until I see "Technical record"
     And I should see "ADR" section heading
     Then I should see "Change technical record"
-    # AC2
+    # AC2 + AC3
     When I open "ADR" section
     Then I should see adr subsections
       | Subsection                     |
@@ -169,18 +169,26 @@ Feature: Display Adr details
       # additionalExaminerNotes is null in DynamoDB
       | additionalExaminerNotes       | -                                  |
     When I go back to search page
-    And I search for vehicle with identifier "A00004801"
+    And I search for vehicle with identifier "A00128821"
     Then wait until I see "Technical record"
     And I should see "ADR" section heading
     Then I should see "Change technical record"
     When I open "ADR" section
     Then tech record fields should have values
       | Field                         | Value                              |
+      # Tank details subsection
+      # tankManufacturer is null in DynamoDB
+      | ADR-tankManufacturer          | ROAD TANKER NORTHERN               |
+      | ADR-yearOfManufacture         | 2007                               |
+      | ADR-tankManufacturerSerialNo  | 07-1534                            |
+      | ADR-tankTypeAppNo             | GB/FT/RSA/1134                     |
+      | ADR-tankCode                  | LGBF                               |
+      | ADR-substancesPermitted       | B                                  |
+      | ADR-statement                 | B                                  |
       # Declarations seen subsection
       # brakeDeclarationsSeen, brakeDeclarationIssuer, brakeEndurance, weight and declarationsSeen are not present in DynamoDB (same as being null)
-      | brakeDeclarationsSeen         | -                                  |
+      | brakeDeclarationsSeen         | YES                                |
       | brakeDeclarationIssuer        | -                                  |
-      | brakeEndurance                | -                                  |
-      | weight                        | -                                  |
-      | declarationsSeen              | -                                  |
-    #A00004801
+      | brakeEndurance                | YES                                |
+      | weight                        | 29500                              |
+      | declarationsSeen              | YES                                |
