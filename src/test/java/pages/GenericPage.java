@@ -15,10 +15,10 @@ import java.util.NoSuchElementException;
 
 public class GenericPage extends PageObject{
 
-    private static final String SPINNER = "div.spinner-container";
-    private static final String HEADER_ERROR = "div.govuk-error-summary";
-    private static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
-    private static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
+    static final String SPINNER = "div.spinner-container";
+    static final String HEADER_ERROR = "div.govuk-error-summary";
+    static final String HEADER_SPECIFIC_ERRORS = "div.govuk-error-summary>span.govuk-error-message";
+    static final String SIGNOUT_CONFIRMATION_SCREEN = "vtm-logout-modal";
 
     public void checkTextInElementWithCssSelector(String cssSelector, String text) {
         new WebDriverWait(getDriver(), 5).
@@ -37,8 +37,8 @@ public class GenericPage extends PageObject{
     }
 
     public void checkTextIsNotPresentInPage(String text) {
-        String bodyText = getDriver().findElement(By.tagName("body")).getText();
-        Assert.assertFalse("Text was found!", bodyText.contains(text));
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.
+                textToBePresentInElementLocated(By.cssSelector("body"), text)));
     }
 
     public void waitForPageToLoad() {

@@ -196,4 +196,40 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void checkAdrSubsectionIsPresent(String subsection) {
         techRecordPage.checkAdrSubsectionIsPresent(subsection);
     }
+
+    @Step
+    public void uploadAdrDocument() {
+        techRecordPage.uploadAdrDocument();
+    }
+
+    @Step
+    public void setReasonForChanges(String reason) {
+        techRecordPage.setReasonForChanges(reason);
+    }
+
+    @Step
+    public void confirmSavingDetails() {
+        techRecordPage.confirmSavingDetails();
+    }
+
+    @Step
+    public void checkTextInAdrSubsection(String text, String subsection) {
+        techRecordPage.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Step
+    public void checkAdrDocumentIsUploaded() {
+        techRecordPage.checkAdrDocumentIsUploaded();
+    }
+
+    @Step
+    public void checkNumberOfTankDocuments() {
+        techRecordPage.checkNumberOfTankDocuments();
+    }
+
+
+    @Step
+    public void removeAllAdrDocuments() {
+        techRecordPage.removeAllAdrDocuments();
+    }
 }

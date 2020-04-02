@@ -2,6 +2,7 @@ package stepDefinitions;
 
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -218,5 +219,40 @@ public class TechRecordPageStepDefinition {
         for (Map<String, String> stringMap : list) {
             techRecordPageSteps.checkAdrSubsectionIsPresent(stringMap.get("Subsection"));
         }
+    }
+
+    @When("^I upload adr document$")
+    public void iUploadAdrDocument() {
+        techRecordPageSteps.uploadAdrDocument();
+    }
+
+    @When("^I enter \"([^\"]*)\" as reason for changes$")
+    public void iEnterAsReasonForChanges(String reason) {
+        techRecordPageSteps.setReasonForChanges(reason);
+    }
+
+    @When("^I confirm saving the details$")
+    public void iConfirmSavingTheDetails() {
+        techRecordPageSteps.confirmSavingDetails();
+    }
+
+    @Then("^I should see \"([^\"]*)\" in the adr \"([^\"]*)\" subsection$")
+    public void iShouldSeeInTheAdrSubsection(String text, String subsection) {
+        techRecordPageSteps.checkTextInAdrSubsection(text, subsection);
+    }
+
+    @Then("^I confirm adr document is uploaded$")
+    public void iConfirmDocumentIsUploaded() {
+        techRecordPageSteps.checkAdrDocumentIsUploaded();
+    }
+
+    @Then("^I confirm number of tank documents$")
+    public void iConfirmNumberOfTankDocuments() {
+        techRecordPageSteps.checkNumberOfTankDocuments();
+    }
+
+    @And("^I remove all adr documents$")
+    public void iRemoveAllAdrDocuments() {
+        techRecordPageSteps.removeAllAdrDocuments();
     }
 }

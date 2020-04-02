@@ -11,7 +11,7 @@ Feature: Display Adr details
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And element with id "searchIdentifier" should be present
 
-
+  @skip
   Scenario: Displaying the Adr details
   AC1 - HGV/TRL tech records are structured correctly, ADR heading is now present
   AC2 - ADR heading contains the correct attributes
@@ -192,3 +192,35 @@ Feature: Display Adr details
       | brakeEndurance                | YES                                |
       | weight                        | 29500                              |
       | declarationsSeen              | YES                                |
+
+
+  Scenario: Displaying the Adr details
+  AC4 - User can see if an ADR record has documents attached
+  AC5 - User clicks the call to action 'view' a document
+    # AC4 + AC5
+    When I search for vehicle with identifier "ABCDEFGH654321"
+    Then wait until I see "Technical record"
+    And I should see "ADR" section heading
+    Then I should see "Change technical record"
+    When I click the change technical record button
+    Then I should see "Save technical record"
+    When I open "ADR" section
+    When I upload adr document
+    Then I confirm adr document is uploaded
+    When I click the save technical record button
+    Then I should see "Enter reason for changing technical record"
+    When I enter "cvsb-10083" as reason for changes
+    And I confirm saving the details
+    Then I should not see "Save technical record"
+    And I should not see "There is a problem"
+    When I confirm number of tank documents
+    And I click the change technical record button
+    Then I should see "Save technical record"
+    When I open "ADR" section
+    And I remove all adr documents
+    When I click the save technical record button
+    Then I should see "Enter reason for changing technical record"
+    When I enter "cvsb-10083" as reason for changes
+    And I confirm saving the details
+    And I should not see "Save technical record"
+    Then I should see "-" in the adr "Tank documents" subsection
