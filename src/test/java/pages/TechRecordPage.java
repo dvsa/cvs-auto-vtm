@@ -75,7 +75,6 @@ public class TechRecordPage extends GenericPage {
     private static final String NOTES_SECTION = "vtm-notes>table tr";
     private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
     private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
-    private static final String TECHNICAL_RECORD_HISTORY_LINK = "//a[contains(text(), 'Technical record history')]";
 
     public String getValueForTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
