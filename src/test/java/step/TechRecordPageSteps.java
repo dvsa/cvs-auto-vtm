@@ -38,6 +38,11 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void clickBackButton() {
+        techRecordPage.clickBackButton();
+    }
+
+    @Step
     public void saveTechRecordDetails() {
         techRecordPage.saveTechRecordDetails();
     }
@@ -171,7 +176,11 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void iInputForTheUnNumber(String unNumber, String ordinal) {
         techRecordPage.inputForTheUnNumber(unNumber, ordinal);
     }
+    @Step
+    public void iShouldSeeTheSearchedVin(){
+        techRecordPage.checkVinIsDisplayed();
 
+    }
     @Step
     public void iShouldSeeTheSubsequentInspectionFields() {
         techRecordPage.checkSubsequentInspectionFields();

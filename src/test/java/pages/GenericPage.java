@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
+import java.util.List;
 
 public class GenericPage extends PageObject{
 
@@ -87,6 +88,9 @@ public class GenericPage extends PageObject{
     protected WebElement findElementByXpath(String xpath) {
         System.out.println("Finding element: " + xpath);
         return getDriver().findElement(By.xpath(xpath));
+    }
+    protected List<WebElement> findElementsByXpath(String xpath) {
+        return getDriver().findElements(By.xpath(xpath));
     }
 
     protected WebElement findElementByCss(String css) {

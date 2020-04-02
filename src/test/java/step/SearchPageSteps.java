@@ -48,6 +48,11 @@ public class SearchPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void searchVehicleCorrectIdentifier() {
+        searchPage.searchVehicleCorrectIdentifier();
+    }
+
+    @Step
     public void waitUntilISeeSearchErrorMessage(String message) {
         searchPage.waitUntilISeeSearchErrorMessage(message);
     }

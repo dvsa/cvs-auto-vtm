@@ -19,6 +19,12 @@ public class SearchPageStepDefinition {
         searchPageSteps.searchVehicle();
     }
 
+    @Then("^I perform another search$")
+    public void iSearchAnotherVehicle() {
+        searchPageSteps.inputVehicleIdentifier("567123");
+        searchPageSteps.searchVehicleCorrectIdentifier();
+    }
+
     @When("^I search for vehicle using wrong identifier \"([^\"]*)\"$")
     public void iSearchForVehicleUsingWrongIdentifier(String identifier) {
         searchPageSteps.clearSearchInput();

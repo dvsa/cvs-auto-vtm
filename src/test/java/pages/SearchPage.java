@@ -37,6 +37,10 @@ public class SearchPage extends GenericPage {
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 
+    public void searchVehicleCorrectIdentifier() {
+        findElementByCss(SEARCH_BUTTON).click();
+    }
+
     public void searchVehicleIncorrectIdentifier() {
         findElementByCss(SEARCH_BUTTON).click();
         new WebDriverWait(getDriver(), 20).until(ExpectedConditions.

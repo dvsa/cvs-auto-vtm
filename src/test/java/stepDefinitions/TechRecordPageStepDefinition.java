@@ -41,6 +41,16 @@ public class TechRecordPageStepDefinition {
         }
     }
 
+    @Then("^I should see the searched Vin$")
+    public void iSeeVin(){
+        techRecordPageSteps.iShouldSeeTheSearchedVin();
+    }
+
+    @Then("^I go back to the Select technical record page$")
+    public void iGoBack(){
+        techRecordPageSteps.clickBackButton();
+    }
+
     @Then("^I open all sections$")
     public void iOpenAllSections() {
         techRecordPageSteps.openAllSections();

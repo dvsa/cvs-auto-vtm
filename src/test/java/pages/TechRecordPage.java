@@ -74,6 +74,9 @@ public class TechRecordPage extends GenericPage {
     private static final String NOTES_SECTION = "vtm-notes>table tr";
     private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
     private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
+    private static final String DISPLAYED_VIN = "//dd[@class='govuk-summary-list__value'][1]";
+    private static final String BACK_BUTTON = "//a[contains(.,'Back')]";
+
 
 
 
@@ -190,6 +193,10 @@ public class TechRecordPage extends GenericPage {
                 throw new Exception(
                         "Invalid section");
         }
+    }
+
+    public void clickBackButton() {
+        getDriver().findElement(By.xpath(BACK_BUTTON)).click();
     }
 
     public void editTechRecordDetails() {
@@ -555,6 +562,11 @@ public class TechRecordPage extends GenericPage {
                 throw new AutomationException(
                         "Non existent section");
         }
+    }
+
+    public void checkVinIsDisplayed(){
+        getDriver().findElement(By.xpath(DISPLAYED_VIN));
+
     }
 
     public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
