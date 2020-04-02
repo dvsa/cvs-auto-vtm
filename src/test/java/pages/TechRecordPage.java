@@ -445,18 +445,6 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void clickOnLink(String linkText) {
-        String xpath = "//a[contains(text(), '" + linkText + "')]";
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-        getDriver().findElement(By.xpath(xpath)).click();
-    }
-
-    public void checkLinkIsPresent(String linkText) {
-        String xpath = "//a[contains(text(), '" + linkText + "')]";
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-        Assert.assertTrue("Link <" + linkText + "> not found.", getDriver().findElement(By.xpath(xpath)).isDisplayed());
-    }
-
     public void selectCustomDangerousGoodCheckbox(String dangerousGood) {
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)));
         if (!(getDriver().findElement(By.cssSelector("#adrDetails\\.permittedDangerousGoods\\." + dangerousGood)).isSelected())) {

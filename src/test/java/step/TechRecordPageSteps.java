@@ -189,7 +189,7 @@ public class TechRecordPageSteps extends GenericPageSteps {
 
     @Step
     public void clickOnLink(String linkText) {
-        techRecordPage.clickOnLink(linkText);
+        techRecordPage.clickLink(linkText);
     }
 
     @Step
