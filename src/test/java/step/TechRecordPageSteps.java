@@ -186,4 +186,39 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void checkNumberOfEntriesInSection(String numberOfEntries, String section) throws Exception {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
     }
+
+    @Step
+    public void clickOnLink(String linkText) {
+        techRecordPage.clickOnLink(linkText);
+    }
+
+    @Step
+    public void currentRecordStatusShouldBe(String expectedStatus) {
+        techRecordPage.checkCurrentRecordStatusIs(expectedStatus);
+    }
+
+    @Step
+    public void checkLinkIsPresent(String linkText) {
+        techRecordPage.checkLinkIsPresent(linkText);
+    }
+
+    @Step
+    public void checkIsViewButtonShownForRecordOfStatus(String status) {
+        techRecordPage.checkViewButtonShownForRecordOfStatus(status);
+    }
+
+    @Step
+    public void checkIsViewButtonNotShownForRecordOfStatus(String status) {
+        techRecordPage.checkViewButtonNotShownForRecordOfStatus(status);
+    }
+
+    @Step
+    public void checkChangeTechnicalRecordButtonVisibilityIs(String shownOrHidden) throws Exception {
+        techRecordPage.checkChangeTechnicalRecordButtonVisibilityIs(shownOrHidden);
+    }
+
+    @Step
+    public void clickOnTheViewButtonForTechnicalRecordWithStatusOf(String status) {
+        techRecordPage.clickOnViewButtonForTechnicalRecordWithStatusOf(status);
+    }
 }
