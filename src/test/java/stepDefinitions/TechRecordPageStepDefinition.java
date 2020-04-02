@@ -215,4 +215,39 @@ public class TechRecordPageStepDefinition {
     public void theSectionShouldHaveEntries(String section, String numberOfEntries) throws Exception {
         techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
     }
+
+    @Then("^the current record status is \"([^\"]*)\"$")
+    public void the_current_record_status_is(String expectedStatus) {
+        techRecordPageSteps.currentRecordStatusShouldBe(expectedStatus);
+    }
+
+    @When("^I click on \"([^\"]*)\"$")
+    public void i_click_on(String linkText) {
+        techRecordPageSteps.clickOnLink(linkText);
+    }
+
+    @Then("^there is a 'Technical record history' call to action below the status$")
+    public void there_is_a_call_to_action_below_the_status() {
+        techRecordPageSteps.checkLinkIsPresent("Technical record history");
+    }
+
+    @Then("^the 'View' link is not shown for the record with status \"([^\"]*)\"$")
+    public void the_View_link_is_not_shown_for_the_record_with_status(String status) {
+        techRecordPageSteps.checkIsViewButtonNotShownForRecordOfStatus(status);
+    }
+
+    @Then("^the 'View' link is shown for the record with status \"([^\"]*)\"$")
+    public void the_View_link_is_shown_for_the_record_with_status(String status) {
+        techRecordPageSteps.checkIsViewButtonShownForRecordOfStatus(status);
+    }
+
+    @Then("^the 'Change technical record' button is \"([^\"]*)\"$")
+    public void the_Change_technical_record_button_is(String shownOrHidden) throws Exception {
+        techRecordPageSteps.checkChangeTechnicalRecordButtonVisibilityIs(shownOrHidden);
+    }
+
+    @When("^I click on the 'View' button for the technical record with status of \"([^\"]*)\"$")
+    public void i_click_on_the_View_button_for_the_technical_record_with_status_of(String status) {
+        techRecordPageSteps.clickOnTheViewButtonForTechnicalRecordWithStatusOf(status);
+    }
 }

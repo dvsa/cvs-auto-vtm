@@ -189,6 +189,11 @@ public class GenericPage extends PageObject{
         }
     }
 
+    public void checkLinkIsPresent(String linkText) {
+        String xpath = "//a[contains(text(), '" + linkText + "')]";
+        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        Assert.assertTrue("Link <" + linkText + "> not found.", getDriver().findElement(By.xpath(xpath)).isDisplayed());
+    }
 
     void selectOptionFromDropdown(WebElement element, String searchCriteria) {
         new Select(element).selectByValue(searchCriteria);

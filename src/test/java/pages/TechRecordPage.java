@@ -3,6 +3,7 @@ package pages;
 import exceptions.AutomationException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -74,8 +75,6 @@ public class TechRecordPage extends GenericPage {
     private static final String NOTES_SECTION = "vtm-notes>table tr";
     private static final String TEST_HISTORY_SECTION = "vtm-test-history>table tr";
     private static final String TECHNICAL_RECORD_HISTORY_SECTION = "vtm-tech-rec-history>table tr";
-
-
 
     public String getValueForTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
@@ -194,6 +193,18 @@ public class TechRecordPage extends GenericPage {
 
     public void editTechRecordDetails() {
         getDriver().findElement(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)).click();
+    }
+
+    public boolean isChangeTechnicalRecordButtonShown() {
+        boolean isButtonShown = false;
+        try {
+            if (getDriver().findElement(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)).isDisplayed()) {
+                isButtonShown = true;
+            }
+        } catch (Exception e) {
+            // Button is not shown onscreen.
+        }
+        return isButtonShown;
     }
 
     public void saveTechRecordDetails() {
@@ -590,6 +601,101 @@ public class TechRecordPage extends GenericPage {
             default:  // should be unreachable!
                 throw new Exception(
                         "Invalid section");
+        }
+    }
+
+    public boolean isViewButtonShownForTechRecordWithDetails(String status, String reasonForCreation, String createdBy, String createdAt) {
+
+        boolean isButtonShown = false;
+
+        String xpathStatusCode;
+        String xpathReasonForCreation;
+        String xpathCreatedBy;
+        String xpathCreatedAt;
+        String xpathViewLink;
+
+        // Search through the rows of the technical record history, and find the row that matches the requested status.
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+
+            xpathStatusCode = "//*[@id='test-statusCode-" + row + "']";
+            xpathReasonForCreation = "//*[@id='test-reasonForCreation-" + row + "']";
+            xpathCreatedBy = "//*[@id='test-createdByName-" + row + "']";
+            xpathCreatedAt = "//*[@id='test-createdAt-" + row + "']";
+            xpathViewLink = "//a[@id='tech-rec-" + row + "']";
+
+            if ((getDriver().findElement(By.xpath(xpathStatusCode)).getText().equalsIgnoreCase(status)) &&
+                (getDriver().findElement(By.xpath(xpathReasonForCreation)).getText().equalsIgnoreCase(reasonForCreation)) &&
+                (getDriver().findElement(By.xpath(xpathCreatedBy)).getText().equalsIgnoreCase(createdBy)) &&
+                (getDriver().findElement(By.xpath(xpathCreatedAt)).getText().equalsIgnoreCase(createdAt)))
+            {
+                // Found the matching row.
+                // Check if the <view> link is visible on this row.
+                if (getDriver().findElement(By.xpath(xpathViewLink)).isDisplayed()) {
+                    isButtonShown = true;
+                    break;
+                }
+            }
+        }
+        return isButtonShown;
+    }
+
+    public boolean isViewButtonShownForRecordOfStatus(String status) {
+        boolean isButtonShown = false;
+
+        // Search through the rows of the technical record history, and find the row that matches the requested status.
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+            String xpath = "//*[@id='test-statusCode-" + row + "']";
+            if (getDriver().findElement(By.xpath(xpath)).getText().equalsIgnoreCase(status)) {
+                // Found the matching row.
+                // Check if the <view> link is visible on this row.
+                if (getDriver().findElement(By.xpath("//a[@id='tech-rec-" + row + "']")).isDisplayed()) {
+                    isButtonShown = true;
+                    break;
+                }
+            }
+        }
+        return isButtonShown;
+    }
+
+    public void checkViewButtonShownForRecordOfStatus(String status) {
+        Assert.assertTrue("Button for record of status " + status + " is not shown (it should be).", isViewButtonShownForRecordOfStatus(status));
+    }
+
+    public void checkViewButtonNotShownForRecordOfStatus(String status) {
+        Assert.assertFalse("Button for record of status " + status + " is shown (it should not be).", isViewButtonShownForRecordOfStatus(status));
+    }
+
+    public String getCurrentRecordStatus() {
+        String status = "";
+        status = getDriver().findElements(By.xpath("//div[@class='govuk-grid-row tech-rec-status']//p")).get(1).getText();
+        return status;
+    }
+
+    public void checkCurrentRecordStatusIs(String expectedStatus) {
+        Assert.assertEquals(expectedStatus, getCurrentRecordStatus());
+    }
+
+    public void checkChangeTechnicalRecordButtonVisibilityIs(String shownOrHidden) throws Exception {
+        switch(shownOrHidden.toUpperCase()) {
+            case "SHOWN":
+                Assert.assertTrue("Button is not shown (but it should be).", isChangeTechnicalRecordButtonShown());
+                break;
+            case "HIDDEN":
+                Assert.assertFalse("Button is shown (but it should not be).", isChangeTechnicalRecordButtonShown());
+                break;
+            default:
+                throw new Exception("Unknown visibility option: " + shownOrHidden);
+        }
+    }
+
+    public void clickOnViewButtonForTechnicalRecordWithStatusOf(String status) {
+        // Search through the rows of the technical record history, and find the row that matches the requested status.
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+            String xpath = "//*[@id='test-statusCode-" + row + "']";
+            if (getDriver().findElement(By.xpath(xpath)).getText().equalsIgnoreCase(status)) {
+                // Found the matching row.
+                getDriver().findElement(By.xpath("//a[@id='tech-rec-" + row + "']")).click();
+            }
         }
     }
 }
