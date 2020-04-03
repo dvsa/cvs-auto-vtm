@@ -30,9 +30,9 @@ Feature: Select correct vehicle when multiple vehicles are returned following a 
     And I should see all attributes of the vehicle
     And I should see - for an attribute with null value
     And I should see Select technical record hyperlink against each tech record
-    #And I should see the provisional tech record
+    And I should see the provisional tech record
     And I should see the current tech record
-    #And I should see the latest archived tech record
+    And I should see the latest archived tech record
     And I should see make is alphabetically ordered
     And I should see technical record is numbered
     # AC5

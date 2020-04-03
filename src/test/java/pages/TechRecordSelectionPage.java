@@ -70,8 +70,8 @@ public class TechRecordSelectionPage extends GenericPage {
 
     public void validateArchivedTechRecord() {
         if (findElementByXpath(ARCHIVED_MAKE).isDisplayed() && findElementByXpath(ARCHIVED_MODEL).isDisplayed()) ;
-        Assert.assertTrue(findElementByXpath(ARCHIVED_MAKE).getText().contentEquals("VOLVO"));
-        Assert.assertTrue(findElementByXpath(ARCHIVED_MODEL).getText().contentEquals("V8"));
+        Assert.assertTrue(findElementByXpath(ARCHIVED_MAKE).getText().contentEquals("VW"));
+        Assert.assertTrue(findElementByXpath(ARCHIVED_MODEL).getText().contentEquals("VW2"));
     }
 
     public void validateEachTechRecordWithHyperlink() {
@@ -122,9 +122,14 @@ public class TechRecordSelectionPage extends GenericPage {
     public void validateMakeIsAlphabeticallyOrdered() {
 
         List<String> actualList = new ArrayList<>();
-        actualList.add(PROVISIONAL_MAKE);
-        actualList.add(CURRENT_MAKE);
-        actualList.add(ARCHIVED_MAKE);
+
+        String one = findElementByXpath(PROVISIONAL_MAKE).getText();
+        String two = findElementByXpath(CURRENT_MAKE).getText();
+        String three = findElementByXpath(ARCHIVED_MAKE).getText();
+
+        actualList.add(one);
+        actualList.add(two);
+        actualList.add(three);
 
         List<String> sortedList = new ArrayList<>(actualList);
         Collections.sort(sortedList);
