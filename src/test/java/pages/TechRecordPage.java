@@ -604,6 +604,41 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
+    public boolean isViewButtonShownForTechRecordWithDetails(String status, String reasonForCreation, String createdBy, String createdAt) {
+
+        boolean isButtonShown = false;
+
+        String xpathStatusCode;
+        String xpathReasonForCreation;
+        String xpathCreatedBy;
+        String xpathCreatedAt;
+        String xpathViewLink;
+
+        // Search through the rows of the technical record history, and find the row that matches the requested status.
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+
+            xpathStatusCode = "//*[@id='test-statusCode-" + row + "']";
+            xpathReasonForCreation = "//*[@id='test-reasonForCreation-" + row + "']";
+            xpathCreatedBy = "//*[@id='test-createdByName-" + row + "']";
+            xpathCreatedAt = "//*[@id='test-createdAt-" + row + "']";
+            xpathViewLink = "//a[@id='tech-rec-" + row + "']";
+
+            if ((getDriver().findElement(By.xpath(xpathStatusCode)).getText().equalsIgnoreCase(status)) &&
+                (getDriver().findElement(By.xpath(xpathReasonForCreation)).getText().equalsIgnoreCase(reasonForCreation)) &&
+                (getDriver().findElement(By.xpath(xpathCreatedBy)).getText().equalsIgnoreCase(createdBy)) &&
+                (getDriver().findElement(By.xpath(xpathCreatedAt)).getText().equalsIgnoreCase(createdAt)))
+            {
+                // Found the matching row.
+                // Check if the <view> link is visible on this row.
+                if (getDriver().findElement(By.xpath(xpathViewLink)).isDisplayed()) {
+                    isButtonShown = true;
+                    break;
+                }
+            }
+        }
+        return isButtonShown;
+    }
+
     public boolean isViewButtonShownForRecordOfStatus(String status) {
         boolean isButtonShown = false;
 

@@ -46,21 +46,37 @@ Feature: Select technical record from record history
     When I click on "Technical record history"
     Then the current record status is "Current"
     And the 'View' link is not shown for the record with status "Current"
+    # Verify selection of the "Provisional" record.
     When I click on the 'View' button for the technical record with status of "Provisional"
     Then the current record status is "Provisional"
     And the 'View' link is not shown for the record with status "Provisional"
     And the 'View' link is shown for the record with status "Current"
     And the 'View' link is shown for the record with status "Archived"
+    ## And verify that the correct record details are shown.
+    When I open "Vehicle summary" section
+    Then hgv tech record fields should have values
+      | Field                     | Value     |
+      | manufactureYear           | 2017      |
+    # Verify selection of the "Archived" record.
     When I click on the 'View' button for the technical record with status of "Archived"
     Then the current record status is "Archived"
     And the 'View' link is shown for the record with status "Provisional"
     And the 'View' link is shown for the record with status "Current"
     And the 'View' link is not shown for the record with status "Archived"
+    ## And verify that the correct record details are shown.
+    Then hgv tech record fields should have values
+      | Field                     | Value     |
+      | manufactureYear           | 2016      |
+    # Verify selection of the "Current" record.
     When I click on the 'View' button for the technical record with status of "Current"
     Then the current record status is "Current"
     And the 'View' link is shown for the record with status "Provisional"
     And the 'View' link is not shown for the record with status "Current"
     And the 'View' link is shown for the record with status "Archived"
+    ## And verify that the correct record details are shown.
+    Then hgv tech record fields should have values
+      | Field                     | Value     |
+      | manufactureYear           | 2018      |
 
   Scenario: The ability to change the record is based on record status
     When I click on "Technical record history"
