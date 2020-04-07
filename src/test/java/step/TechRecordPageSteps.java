@@ -208,6 +208,11 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void isViewButtonShownForTechRecordWithDetails(String status, String reasonForCreation, String createdBy, String createdAt) {
+        techRecordPage.isViewButtonShownForTechRecordWithDetails(status, reasonForCreation, createdBy, createdAt);
+    }
+
+    @Step
     public void checkIsViewButtonNotShownForRecordOfStatus(String status) {
         techRecordPage.checkViewButtonNotShownForRecordOfStatus(status);
     }
