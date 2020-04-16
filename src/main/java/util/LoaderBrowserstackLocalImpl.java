@@ -6,6 +6,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Properties;
 
 public class LoaderBrowserstackLocalImpl implements Loader {
@@ -17,7 +18,7 @@ public class LoaderBrowserstackLocalImpl implements Loader {
         try {
 
             properties = new Properties();
-            properties.load(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH));
+            properties.load(Objects.requireNonNull(EnvironmentUtils.class.getClassLoader().getResourceAsStream(FILE_PATH)));
         } catch (Exception e) {
             e.printStackTrace();
             throw new AutomationException("Could not load environment setup");
@@ -37,6 +38,7 @@ public class LoaderBrowserstackLocalImpl implements Loader {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("os", properties.getProperty("browserstack.os"));
         caps.setCapability("os_version", properties.getProperty("browserstack.os.version"));
+        caps.setCapability("resolution", "1920x1080");
         caps.setCapability("browser", properties.getProperty("browserstack.browser"));
         caps.setCapability("browser_version", properties.getProperty("browserstack.browser.version"));
         caps.setCapability("browserstack.local", properties.getProperty("browserstack.local"));
