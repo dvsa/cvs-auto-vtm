@@ -25,6 +25,13 @@ public class SearchPageStepDefinition {
         searchPageSteps.searchVehicle();
     }
 
+    @When("^I search for vehicle with shared identifier \"([^\"]*)\"$")
+    public void iSearchForVehicleWithSharedIdentifier(String identifier){
+        searchPageSteps.clearSearchInput();
+        searchPageSteps.inputVehicleIdentifier(identifier);
+        searchPageSteps.searchVehicles();
+    }
+
     @When("^I search for previously created vehicle$")
     public void searchForPreviouslyCreatedVehicle(){
         searchPageSteps.clearSearchInput();

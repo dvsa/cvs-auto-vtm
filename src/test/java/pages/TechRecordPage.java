@@ -127,7 +127,7 @@ public class TechRecordPage extends GenericPage {
 
     public String getValueInTechRecordField(String field) {
         WebElement element = getDriver().findElement(By.id("test-" + field));
-        FluentWait wait = globalFluentWait(20, 300);
+        FluentWait wait = globalFluentWait(10, 300);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("test-" + field)));
         Actions actions = new Actions(getDriver());
         actions.moveToElement(element);
@@ -138,7 +138,7 @@ public class TechRecordPage extends GenericPage {
     public void openAllSections() {
 
         WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
-        FluentWait wait = globalFluentWait(20, 200);
+        FluentWait wait = globalFluentWait(10, 200);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
         wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Open all"));
         Actions actions = new Actions(getDriver());
@@ -153,7 +153,7 @@ public class TechRecordPage extends GenericPage {
     public void closeAllSections() {
 
         WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
-        FluentWait wait = globalFluentWait(20, 200);
+        FluentWait wait = globalFluentWait(10, 200);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
         wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Close all"));
         Actions actions = new Actions(getDriver());
@@ -355,13 +355,13 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void editTechRecordDetails() {
-        FluentWait wait = globalFluentWait(20, 200);
+        FluentWait wait = globalFluentWait(10, 200);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)));
         getDriver().findElement(By.cssSelector(CHANGE_TECHNICAL_RECORD_DETAILS)).click();
     }
 
     public void saveTechRecordDetails() {
-        FluentWait wait = globalFluentWait(20, 200);
+        FluentWait wait = globalFluentWait(10, 200);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS)));
         getDriver().findElement(By.cssSelector(SAVE_TECHNICAL_RECORD_DETAILS)).click();
     }
@@ -847,7 +847,7 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void checkAdrSubsectionIsPresent(String subsection) {
-        FluentWait wait = globalFluentWait(20, 300);
+        FluentWait wait = globalFluentWait(10, 300);
         String option = subsection.toLowerCase();
         switch (option) {
             case "applicant details":
@@ -897,7 +897,7 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void checkAdrSubsectionIsNotPresent(String subsection) {
-        FluentWait wait = globalFluentWait(20, 300);
+        FluentWait wait = globalFluentWait(10, 300);
         String option = subsection.toLowerCase();
         switch (option) {
             case "applicant details":
@@ -935,6 +935,27 @@ public class TechRecordPage extends GenericPage {
                 throw new AutomationException(
                         "Invalid adr subsection '" + option + "'");
         }
+    }
+
+    public void uploadAdrDocument(String fileName) {
+        String workingDir = System.getProperty("user.dir");
+        WebElement addFile = findElementByXpath(".//input[@type='file']");
+        ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        addFile.sendKeys(workingDir + "/src/main/resources/loader/" + fileName);
+        try {
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            FluentWait wait = globalFluentWait(10, 300);
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(SPINNER)));
+            } catch (NoSuchElementException e) {
+                System.out.println("Spinner no longer in the page DOM");
+            }
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+        waitForAngularRequestsToFinish();
     }
 
     public void uploadAdrDocument() {
@@ -1091,10 +1112,26 @@ public class TechRecordPage extends GenericPage {
         viewDocuments.get(index-1).click();
     }
 
+    public void downloadTankDocument(String fileName) {
+        WebElement viewDocument = getDriver().findElement(
+                By.xpath("//vtm-tank-documents//td[contains(text(),'" + fileName + "')]//following-sibling::td[1]/a"));
+        FluentWait wait = globalFluentWait(3, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(viewDocument));
+        viewDocument.click();
+    }
+
     public void removeAdrDocuments(int index) {
         List<WebElement> documents = getDriver().findElements(
                 By.xpath("//vtm-tank-documents//a[contains(text(),'Remove')]"));
         documents.get(index-1).click();
+    }
+
+    public void removeAdrDocuments(String fileName) {
+        WebElement removeDocument = getDriver().findElement(
+                By.xpath("//vtm-tank-documents//td[contains(text(),'" + fileName + "')]//following-sibling::td[2]/a"));
+        FluentWait wait = globalFluentWait(3, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(removeDocument));
+        removeDocument.click();
     }
 
     public void selectSubstancesPermittedOption(String substancesPermittedType) {
@@ -1423,5 +1460,28 @@ public class TechRecordPage extends GenericPage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(BRAKE_ENDURANCE_WEIGHT)));
         findElementByCss(BRAKE_ENDURANCE_WEIGHT).clear();
         findElementByCss(BRAKE_ENDURANCE_WEIGHT).sendKeys(weight);
+    }
+
+    public void confirmAdrDocumentIsUploaded(String fileName) {
+        int numberOfExistingDocuments = getDriver().findElements(By.cssSelector
+                ("vtm-tank-documents tr>td:nth-of-type(2)")).size();
+        int actualIndex = numberOfExistingDocuments - 1;
+        Assert.assertEquals(fileName, findElementByCss("#test-document-name-" + actualIndex).getText());
+        Assert.assertEquals("View", findElementByCss("#test-document-view-" + actualIndex).getText());
+        Assert.assertEquals("Remove", findElementByCss("#test-document-remove-" + actualIndex).getText());
+    }
+
+    public void checkAdrDocumentPresentInTankDetails(String fileName) {
+        List<WebElement> files = getDriver().findElements(By.cssSelector("[id^='test-document-name-']"));
+        int i = 0;
+        for (WebElement file : files) {
+            if (fileName.contentEquals(file.getText())) {
+                break;
+            }
+            else {
+                i++;
+            }
+        }
+        Assert.assertNotEquals(files.size(), i);
     }
 }

@@ -18,7 +18,7 @@ public class LoaderBrowserstackCIImpl implements Loader {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("os", "Windows");
         caps.setCapability("os_version", "10");
-        caps.setCapability("resolution", "1920x1080");
+        caps.setCapability("resolution", "2048x1536");
         caps.setCapability("browser", browserstackBrowser);
         caps.setCapability("browser_version", browserstackBrowserVersion);
         caps.setCapability("browserstack.local", browserstackLocal);

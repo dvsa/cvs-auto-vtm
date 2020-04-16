@@ -32,6 +32,11 @@ public class TechRecordPageSteps extends GenericPageSteps {
         techRecordPage.editTechRecordDetails();
     }
 
+//    @Step
+//    public void clickBackButton() {
+//        techRecordPage.clickBackButton();
+//    }
+
     @Step
     public void saveTechRecordDetails() {
         techRecordPage.saveTechRecordDetails();
@@ -166,7 +171,11 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void iShouldSeeSectionHeading(String heading) {
         techRecordPage.iShouldSeeSectionHeading(heading);
     }
-
+//    @Step
+//    public void iShouldSeeTheSearchedVin(){
+//        techRecordPage.checkVinIsDisplayed();
+//
+//    }
     @Step
     public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
         techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
@@ -233,8 +242,18 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void downloadTankDocument(String fileName) {
+        techRecordPage.downloadTankDocument(fileName);
+    }
+
+    @Step
     public void removeAdrDocuments(int index) {
         techRecordPage.removeAdrDocuments(index);
+    }
+
+    @Step
+    public void removeAdrDocuments(String fileName) {
+        techRecordPage.removeAdrDocuments(fileName);
     }
 
     @Step
@@ -341,5 +360,20 @@ public class TechRecordPageSteps extends GenericPageSteps {
     @Step
     public void fillInBrakeWeightWithValue(String weight) {
         techRecordPage.fillInBrakeWeightWithValue(weight);
+    }
+
+    @Step
+    public void uploadAdrDocument(String fileName) {
+        techRecordPage.uploadAdrDocument(fileName);
+    }
+
+    @Step
+    public void confirmAdrDocumentIsUploaded(String fileName) {
+        techRecordPage.confirmAdrDocumentIsUploaded(fileName);
+    }
+
+    @Step
+    public void checkAdrDocumentPresentInTankDetails(String fileName) {
+        techRecordPage.checkAdrDocumentPresentInTankDetails(fileName);
     }
 }

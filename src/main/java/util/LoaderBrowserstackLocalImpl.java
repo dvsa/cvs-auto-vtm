@@ -38,7 +38,7 @@ public class LoaderBrowserstackLocalImpl implements Loader {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("os", properties.getProperty("browserstack.os"));
         caps.setCapability("os_version", properties.getProperty("browserstack.os.version"));
-        caps.setCapability("resolution", "1920x1080");
+        caps.setCapability("resolution", "2048x1536");
         caps.setCapability("browser", properties.getProperty("browserstack.browser"));
         caps.setCapability("browser_version", properties.getProperty("browserstack.browser.version"));
         caps.setCapability("browserstack.local", properties.getProperty("browserstack.local"));

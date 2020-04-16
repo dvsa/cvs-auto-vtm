@@ -28,6 +28,11 @@ public class TechRecordPageStepDefinition {
         }
     }
 
+//    @Then("^I go back to the Select technical record page$")
+//    public void iGoBack(){
+//        techRecordPageSteps.clickBackButton();
+//    }
+
     @Then("^I open all sections$")
     public void iOpenAllSections() {
         techRecordPageSteps.openAllSections();
@@ -396,5 +401,25 @@ public class TechRecordPageStepDefinition {
     @When("^I fill in brake weight with (\\d+)$")
     public void iFillInBrakeWeightWithValue(String weight) {
         techRecordPageSteps.fillInBrakeWeightWithValue(weight);
+    }
+
+    @And("^I upload adr document \"([^\"]*)\"$")
+    public void iUploadAdrDocument(String fileName) {
+        techRecordPageSteps.uploadAdrDocument(fileName);
+    }
+
+    @Then("^I confirm adr document \"([^\"]*)\" is uploaded$")
+    public void iConfirmAdrDocumentIsUploaded(String fileName) {
+        techRecordPageSteps.confirmAdrDocumentIsUploaded(fileName);
+    }
+
+    @And("^I confirm adr document \"([^\"]*)\" is added on the tank details$")
+    public void iConfirmAdrDocumentIsAddedOnTheTankDetails(String fileName) {
+        techRecordPageSteps.checkAdrDocumentPresentInTankDetails(fileName);
+    }
+
+    @When("^I download tank document \"([^\"]*)\"$")
+    public void iDownloadTankDocument(String fileName) {
+        techRecordPageSteps.downloadTankDocument(fileName);
     }
 }

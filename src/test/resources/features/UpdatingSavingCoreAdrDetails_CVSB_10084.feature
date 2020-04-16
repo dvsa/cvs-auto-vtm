@@ -3,7 +3,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
   After I search for a tech record
   I should be able to update and save adr details
 
-  @skip
+
   Scenario: User adds adr details on a vehicle without ADR details
   AC1 - User clicks the call to action to change the technical record
   AC2 - User clicks the call to action to cancel the change
@@ -71,7 +71,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     And I fill in applicant postcode with "SW1A 2AA"
     And I select "Rigid tank" adr vehicle type
     Then I should not see "Battery list applicable"
-    When I set processed date to "20/04/1986"
+    When I set processed date to "20/05/1996"
     And I select "Hydrogen" dangerous good
     And I select "Explosives (type 2)" dangerous good
     Then I should see "Compatibility group J"
@@ -123,7 +123,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | applicantDetails-postcode     | SW1A 2AA                           |
       # ADR details subsection
       | ADR-type                      | Rigid Tank                         |
-      | ADR-approvalDate              | 20/04/1986                         |
+      | ADR-approvalDate              | 20/05/1996                         |
       | ADR-permittedDangerousGoods-0 | Hydrogen                           |
       | ADR-permittedDangerousGoods-1 | Explosives (type 2)                |
       | ADR-compatibilityGroupJ       | Yes                                |
@@ -176,6 +176,9 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | reasonForCreation-1           | Something                          |
       | createdByName-1               | Sean                               |
       | createdAt-1                   | TODAYS_DATE                        |
+    When  I click the change technical record button
+    Then I should see "Save technical record"
+    Then I should see "Cancel" hyperlink
     Then I should see adr subsections
       | Subsection                     |
       | Applicant details              |
@@ -190,6 +193,17 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should not see adr subsections
       | Subsection                     |
       | Battery list                   |
+    # AC6
+    When I set processed date to "13/13/20200"
+    When I click the save technical record button
+    Then I should see "Enter reason for changing technical record"
+    When I enter "cvsb-10084" as reason for changes
+    And I confirm saving the details
+    And I should see "Save technical record"
+    And I should see "There is a problem"
+    When I set the vehicle to not be able to carry dangerous goods
+    Then I should not see "ADR details"
+    When I click "Cancel" link
     # AC9
     Then I should see "Change technical record"
     And I should see "ADR details"
@@ -217,22 +231,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | Declarations seen              |
       | Certificate                    |
       | Additional ADR details         |
-    Then I should not see adr subsections
-      | Subsection                     |
       | Battery list                   |
-    # AC6
-    When  I click the change technical record button
-    Then I should see "Save technical record"
-    Then I should see "Cancel" hyperlink
-    When I set processed date to "13/13/20200"
-    When I click the save technical record button
-    Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10084" as reason for changes
-    And I confirm saving the details
-    And I should see "Save technical record"
-    And I should see "There is a problem"
-#    When I set the vehicle to not be able to carry dangerous goods
-#    Then I should not see "ADR details"
 
 
   Scenario: User updates adr details on a vehicle with ADR details

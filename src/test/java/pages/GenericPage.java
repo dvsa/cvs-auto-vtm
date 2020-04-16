@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.List;
 
 import static java.time.Duration.ofMillis;
 
@@ -47,7 +48,7 @@ public class GenericPage extends PageObject {
     }
 
     public void waitForPageToLoad() {
-        new WebDriverWait(getDriver(), 15).until(
+        new WebDriverWait(getDriver(), 10).until(
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
 
     }
@@ -92,6 +93,9 @@ public class GenericPage extends PageObject {
     protected WebElement findElementByXpath(String xpath) {
         System.out.println("Finding element: " + xpath);
         return getDriver().findElement(By.xpath(xpath));
+    }
+    protected List<WebElement> findElementsByXpath(String xpath) {
+        return getDriver().findElements(By.xpath(xpath));
     }
 
     protected WebElement findElementByText(String text) {
@@ -215,15 +219,15 @@ public class GenericPage extends PageObject {
     }
 
     public void headerErrorContains(String text) {
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
-        new WebDriverWait(getDriver(), 15).
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 10).
                 until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(HEADER_ERROR), text));
     }
 
     public void headerErrorNotContains(String text) {
         waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
-        new WebDriverWait(getDriver(), 15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_SPECIFIC_ERRORS)));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_SPECIFIC_ERRORS)));
         Assert.assertFalse(findElementByCss(HEADER_SPECIFIC_ERRORS).getText().contains(text));
     }
 
