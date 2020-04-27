@@ -1,67 +1,53 @@
 package pages;
 
-import net.serenitybdd.core.annotations.findby.FindBy;
-import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.FluentWait;
 
-import java.time.Duration;
 
 public class LoginPage extends GenericPage {
-    @FindBy(css = "input[type='email']")
-    private WebElementFacade emailInput;
 
-    @FindBy(css = "input[type='submit']")
-    private WebElementFacade nextScreen;
-
-    @FindBy(css = "input[type='password']")
-    private WebElementFacade passwordInput;
-
-    @FindBy(css = "input[type='submit']")
-    private WebElementFacade signIn;
-
-    @FindBy(css = "div[role='heading']")
-    private WebElementFacade header;
-
-    @FindBy(css = "#idA_PWD_SwitchToCredPicker")
-    private WebElementFacade options;
-
-    @FindBy(css = "#loginHeader")
-    private WebElementFacade loginHeader;
+    private static final String EMAIL_INPUT = "input[type='email']";
+    private static final String NEXT_SCREEN = "input[type='submit']";
+    private static final String PASSWORD_INPUT = "input[type='password']";
+    private static final String SIGN_IN = "input[type='submit']";
+    private static final String HEADER = "div[role='heading']";
+    private static final String OPTIONS = "#idA_PWD_SwitchToCredPicker";
 
     public void inputEmail(String emailAddress) {
         getDriver().manage().window().maximize();
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.textToBePresentInElement(options, "Sign-in option"));
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOf(emailInput));
-        emailInput.type(emailAddress);
+        FluentWait wait = globalFluentWait(10, 250);
+        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss(OPTIONS), "Sign-in option"));
+        wait.until(ExpectedConditions.visibilityOf(findElementByCss(EMAIL_INPUT)));
+        findElementByCss(EMAIL_INPUT).sendKeys(emailAddress);
     }
 
     public void goToPasswordScreen(){
-        nextScreen.click();
+        findElementByCss(NEXT_SCREEN).click();
     }
 
     public void inputPassword(String password) {
-        new WebDriverWait(getDriver(), 10)
-                .pollingEvery(Duration.ofMillis(250))
-                .until(ExpectedConditions.textToBePresentInElement(header, "Enter password"));
-        new WebDriverWait(getDriver(), 5)
-                .pollingEvery(Duration.ofMillis(250))
-                .until(ExpectedConditions.not(ExpectedConditions.stalenessOf(passwordInput)));
-        new WebDriverWait(getDriver(), 5)
-                .pollingEvery(Duration.ofMillis(250))
-                .until(ExpectedConditions.visibilityOf(passwordInput));
-        passwordInput.type(password);
+        FluentWait wait = globalFluentWait(10, 250);
+//        wait.until(ExpectedConditions.not(ExpectedConditions.stalenessOf(findElementByCss(HEADER))));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector(HEADER), "Enter password"));
+        wait.until(ExpectedConditions.not(ExpectedConditions.stalenessOf(findElementByCss(PASSWORD_INPUT))));
+        wait.until(ExpectedConditions.visibilityOf(findElementByCss(PASSWORD_INPUT)));
+        findElementByCss(PASSWORD_INPUT).sendKeys(password);
     }
 
     public void signIn() {
-        signIn.shouldBeEnabled();
-        signIn.click();
+        FluentWait wait = globalFluentWait(10, 250);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SIGN_IN)));
+        findElementByCss(SIGN_IN).click();
     }
 
     public void additionalSignIn() {
-        waitForTextToAppear(header, "Stay signed in?");
-        new WebDriverWait(getDriver(), 5).until(ExpectedConditions.elementToBeClickable(signIn));
-        signIn.click();
+        FluentWait wait = globalFluentWait(10, 250);
+        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss(HEADER), "Stay signed in?"));
+        wait.until(ExpectedConditions.elementToBeClickable(findElementByCss(SIGN_IN)));
+        findElementByCss(SIGN_IN).click();
     }
 }

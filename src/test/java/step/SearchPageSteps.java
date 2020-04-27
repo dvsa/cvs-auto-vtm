@@ -23,6 +23,11 @@ public class SearchPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void searchVehicles() {
+        searchPage.searchVehicles();
+    }
+
+    @Step
     public void waitForPageToLoad() {
         searchPage.waitForPageToLoad();
     }
@@ -45,6 +50,11 @@ public class SearchPageSteps extends GenericPageSteps {
     @Step
     public void searchVehicleIncorrectIdentifier() {
         searchPage.searchVehicleIncorrectIdentifier();
+    }
+
+    @Step
+    public void searchVehicleCorrectIdentifier() {
+        searchPage.searchVehicleCorrectIdentifier();
     }
 
     @Step

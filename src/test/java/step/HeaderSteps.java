@@ -14,7 +14,7 @@ public class HeaderSteps extends GenericPageSteps {
 
     @Step
     public void goBackToHomePage() {
-        header.clickHeaderTitleLink();
+        header.goBackToHomePage();
     }
 
     @Step

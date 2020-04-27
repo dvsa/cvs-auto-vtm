@@ -3,8 +3,8 @@ package pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,20 +26,30 @@ public class SearchPage extends GenericPage {
     }
 
     public void searchVehicle() {
-        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
+        FluentWait wait = globalFluentWait(20, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
         findElementByCss(SEARCH_BUTTON).click();
-        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
-        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
-                textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-change-btn")), "Change technical record"));
-        new WebDriverWait(getDriver(), 5).until(
-                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
+        wait.until(ExpectedConditions.textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-change-btn")), "Change technical record"));
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        waitForAngularRequestsToFinish();
+    }
+
+    public void searchVehicles() {
+        FluentWait wait = globalFluentWait(10, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
+        findElementByCss(SEARCH_BUTTON).click();
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        waitForAngularRequestsToFinish();
+    }
+
+    public void searchVehicleCorrectIdentifier() {
+        findElementByCss(SEARCH_BUTTON).click();
     }
 
     public void searchVehicleIncorrectIdentifier() {
         findElementByCss(SEARCH_BUTTON).click();
-        new WebDriverWait(getDriver(), 20).until(ExpectedConditions.
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.
                 visibilityOfElementLocated(By.cssSelector(SPECIFIC_ERROR)));
     }
 

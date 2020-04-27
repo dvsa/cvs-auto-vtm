@@ -15,7 +15,7 @@ public class FooterStepDefinition {
         footerSteps.checkTextInFooter(text);
     }
 
-    @And("^the footer should contain ([^\"]*) logo$")
+    @Then("^the footer should contain ([^\"]*) logo$")
     public void theFooterShouldContainLogo(String logoType) {
         footerSteps.checkFooterLogo(logoType);
     }
