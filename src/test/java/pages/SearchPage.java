@@ -15,7 +15,7 @@ public class SearchPage extends GenericPage {
     private static final String LOG_OUT_LINK = "#navigation>li:last-of-type>a";
     private static final String SEARCH_OPTIONS_DROPDOWN = "#test-search-criteria";
     private static final String LOG_OUT_LINK_IN_HAMBURGER_MENU = "#menuLinks>a:last-of-type";
-    private static final String SPECIFIC_ERROR = "#name-error>div";
+    private static final String SPECIFIC_ERROR = "#name-error>p";
 
     private static final String HAMBURGER_MENU = "a.icon";
 
@@ -69,11 +69,14 @@ public class SearchPage extends GenericPage {
 
     public void optionShouldBeSelected(String searchCriteria) {
         Select selectSearchCriteria = new Select(findElementByCss(SEARCH_OPTIONS_DROPDOWN));
-        Assert.assertEquals(selectSearchCriteria.getFirstSelectedOption().getAttribute("value"), searchCriteria);
+        Assert.assertEquals("Selected option is '" + selectSearchCriteria.getFirstSelectedOption().getAttribute("value")
+                        + "' but should have been '" + searchCriteria + "'",
+                selectSearchCriteria.getFirstSelectedOption().getAttribute("value"), searchCriteria);
     }
 
     public void otherSearchCriteriaInclude(String searchCriteria) {
-        Assert.assertNotNull(findElementByCss(SEARCH_OPTIONS_DROPDOWN + ">option[value='" + searchCriteria + "']"));
+        Assert.assertNotNull("Other search criteria does not include '" + searchCriteria + "'",
+                findElementByCss(SEARCH_OPTIONS_DROPDOWN + ">option[value='" + searchCriteria + "']"));
     }
 
     public void selectSearchCriteria(String searchCriteria) {
@@ -82,10 +85,14 @@ public class SearchPage extends GenericPage {
 
     public void specificErrorContains(String text) {
         if (text.contains("\\n")) {
-            Assert.assertTrue(findElementByCss(SPECIFIC_ERROR).getText().contains(text.replace("\\n","\n")));
+            Assert.assertTrue("Error message is '" + findElementByCss(SPECIFIC_ERROR).getText()
+                    + "' and does not contain '" + text.replace("\\n","\n") + "'",
+                    findElementByCss(SPECIFIC_ERROR).getText().contains(text.replace("\\n","\n")));
         }
         else {
-            Assert.assertTrue(findElementByCss(SPECIFIC_ERROR).getText().contains(text));
+            Assert.assertTrue("Error message is '" + findElementByCss(SPECIFIC_ERROR).getText()
+                    + "' and does not contain '" + text + "'",
+                    findElementByCss(SPECIFIC_ERROR).getText().contains(text));
         }
     }
 }

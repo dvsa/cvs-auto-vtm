@@ -50,7 +50,7 @@
           },
           "weights": {
             "designWeight": 8000,
-            "gbWeight": 8000,
+            "gbWeight": 7000,
             "kerbWeight": 9999,
             "ladenWeight": 4000
           }
@@ -67,10 +67,10 @@
             "tyreSize": "380/65-22.5"
           },
           "weights": {
-            "designWeight": 7000,
+            "designWeight": 6000,
             "gbWeight": 7000,
-            "kerbWeight": 7000,
-            "ladenWeight": 7000
+            "kerbWeight": 8000,
+            "ladenWeight": 9000
           }
         }
       ],

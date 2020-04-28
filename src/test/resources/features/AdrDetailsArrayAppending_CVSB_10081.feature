@@ -21,13 +21,13 @@ Feature: Adr details array appending - CVSB-10081
     When I search for previously created vehicle
     Then I should see "Technical record"
     And I should see "ADR" section heading
-    And I should see the vin of newly created vehicle
-    And I should see the vrm of newly created vehicle
+    And I should see the "vin" of newly created vehicle
+    And I should see the "vrm" of newly created vehicle
     And tech record fields should have values
       | Field  | Value       |
       | status | Provisional |
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I click the change technical record button
     Then I should see "Save technical record"
     #user adds a UN number using the "Add a UN number" link from "Product List" sub-section under "Substances permitted" section
@@ -50,8 +50,8 @@ Feature: Adr details array appending - CVSB-10081
     And I should see "Inspection type"
     When I add subsequent inspection with index 1 of type "Intermediate" with certificate "456789" and expiry date "20/10/2020"
     And I click the save technical record button
-    And I enter "cvsb-10081" as reason for changes
-    And I confirm saving the details
+    And I enter "cvsb-10081" as reason for tech record changes
+    And I confirm saving the tech record changes
     Then I should not see "Save technical record"
     And I should not see "There is a problem"
     And I should not see "UN2345"

@@ -1,0 +1,98 @@
+{
+  "msUserDetails": {
+    "msUser": "catalin",
+    "msOid": "123243424-234234245"
+  },
+  "vin": "T72741234",
+  "partialVin": "741234",
+  "trailerId": "C100001",
+  "primaryVrm": "B2C1C11",
+  "systemNumber": "10000026",
+  "techRecord": [
+    {
+      "vehicleType": "trl",
+      "manufactureYear": 2018,
+      "noOfAxles": 2,
+      "brakes": {
+        "dtpNumber": "3798A",
+        "antilockBrakingSystem": true
+      },
+      "roadFriendly": true,
+      "vehicleClass": {
+        "description": "trailer"
+      },
+      "vehicleConfiguration": "centre axle drawbar",
+      "euVehicleCategory": "o1",
+      "departmentalVehicleMarker": false,
+      "approvalType": "NTA",
+      "make": "Isuzu",
+      "model": "F06",
+      "bodyType": {
+        "description": "petrol/oil tanker"
+      },
+      "grossGbWeight": 38000,
+      "grossDesignWeight": 38000,
+      "axles": [
+        {
+          "tyres": {
+            "tyreSize": "9.23648E+11",
+            "plyRating": "AB",
+            "fitmentCode": "single",
+            "dataTrAxles": 345,
+            "tyreCode": 1234
+          },
+          "weights": {
+            "designWeight": 7500,
+            "gbWeight": 7100
+          }
+        },
+        {
+          "tyres": {
+            "tyreSize": "9.23648E+11",
+            "plyRating": "AB",
+            "fitmentCode": "single",
+            "dataTrAxles": 345,
+            "tyreCode": 5678
+          },
+          "weights": {
+            "designWeight": 7500,
+            "gbWeight": 7100
+          }
+        }
+      ],
+      "dimensions": {
+        "length": 7500,
+        "width": 2200,
+        "axleSpacing": [
+        ]
+      },
+      "frontAxleToRearAxle": 1700,
+      "rearAxleToRearTrl": 400,
+      "couplingCenterToRearAxleMin": 1000,
+      "couplingCenterToRearAxleMax": 900,
+      "couplingCenterToRearTrlMin": 800,
+      "couplingCenterToRearTrlMax": 700,
+      "centreOfRearmostAxleToRearOfTrl": 1000,
+      "applicantDetails": {
+        "address1": "applicant address 1",
+        "address2": "applicant address 2",
+        "name": "applicant name",
+        "postTown": "PO16 7GZ"
+      },
+      "purchaserDetails": {
+        "address1": "purchaser address 1",
+        "address2": "purchaser address 2",
+        "name": "purchaser name",
+        "postTown": "PO16 7GA"
+      },
+      "manufacturerDetails": {
+        "address1": "manufacturer address 1",
+        "address2": "manufacturer address 2",
+        "name": "manufacturer name",
+        "postTown": "PO16 7GB"
+      },
+      "reasonForCreation": "new record",
+      "recordCompleteness": "testable"
+    }
+  ]
+}
