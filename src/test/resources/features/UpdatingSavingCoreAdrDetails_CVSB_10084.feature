@@ -22,10 +22,10 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should see "Technical record"
     And I should see "Change technical record"
     And I should see "ADR" section heading
-    And I should see the vin of newly created vehicle
-    And I should see the vrm of newly created vehicle
-    When I open "Technical record history" section
-    When I open "ADR" section
+    And I should see the "vin" of newly created vehicle
+    And I should see the "vrm" of newly created vehicle
+    When I open tech record "Technical record history" section
+    When I open tech record "ADR" section
     And tech record fields should have values
       | Field                         | Value                              |
       | status                        | Provisional                        |
@@ -54,7 +54,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     When I set the vehicle to be able to carry dangerous goods
     Then I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -96,13 +96,13 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     And I fill in additional adr details with "examiner note"
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10084" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10084" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should not see "Save technical record"
     And I should not see "There is a problem"
     And I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -115,12 +115,12 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then tech record fields should have values
       | Field                         | Value                              |
       | ableToCarry                   | Yes                                |
-      # Applicant details subsection
-      | applicantDetails-name         | Bruce Lee                          |
-      | applicantDetails-street       | 10 Downing Street                  |
-      | applicantDetails-town         | Luton                              |
-      | applicantDetails-city         | London                             |
-      | applicantDetails-postcode     | SW1A 2AA                           |
+      # Owner/operator details subsection
+      | ownerDetails-name             | Bruce Lee                          |
+      | ownerDetails-street           | 10 Downing Street                  |
+      | ownerDetails-town             | Luton                              |
+      | ownerDetails-city             | London                             |
+      | ownerDetails-postcode         | SW1A 2AA                           |
       # ADR details subsection
       | ADR-type                      | Rigid Tank                         |
       | ADR-approvalDate              | 20/05/1996                         |
@@ -170,7 +170,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       # Tech record history subsection
       | statusCode-0                  | Provisional                        |
       | reasonForCreation-0           | Cvsb-10084                         |
-      | createdByName-0               | Vtm-admin1@dvsagov.onmicrosoft.com |
+      | createdByName-0               | VTM_USER_EMAIL                     |
       | createdAt-0                   | TODAYS_DATE                        |
       | statusCode-1                  | Archived                           |
       | reasonForCreation-1           | Something                          |
@@ -181,7 +181,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should see "Cancel" hyperlink
     Then I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -197,8 +197,8 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     When I set processed date to "13/13/20200"
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10084" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10084" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should see "Save technical record"
     And I should see "There is a problem"
     When I set the vehicle to not be able to carry dangerous goods
@@ -214,15 +214,15 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should not see "ADR details"
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10084" as reason for changes
-    And I cancel saving the details
+    When I enter "cvsb-10084" as reason for tech record changes
+    And I cancel saving the tech record details
     Then I should not see "Enter reason for changing technical record"
     And I should not see "There is a problem"
     When I click "Cancel" link
     Then I should see "Change technical record"
     And I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -251,9 +251,9 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     When I search for previously created vehicle
     Then I should see "Technical record"
     And I should see "ADR" section heading
-    And I should see the vin of newly created vehicle
-    And I should see the vrm of newly created vehicle
-    When I open "Technical record history" section
+    And I should see the "vin" of newly created vehicle
+    And I should see the "vrm" of newly created vehicle
+    When I open tech record "Technical record history" section
     And tech record fields should have values
       | Field                         | Value                              |
       | status                        | Provisional                        |
@@ -263,16 +263,16 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | createdByName-0               | Sean                               |
       | createdAt-0                   | TODAYS_DATE                        |
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I should see "-" in the adr "Tank documents" subsection
     And tech record fields should have values
       | Field                         | Value                              |
-      # Applicant details subsection
-      | applicantDetails-name         | string                             |
-      | applicantDetails-street       | string                             |
-      | applicantDetails-town         | string                             |
-      | applicantDetails-city         | string                             |
-      | applicantDetails-postcode     | string                             |
+      # Owner/operator details subsection
+      | ownerDetails-name             | string                             |
+      | ownerDetails-street           | string                             |
+      | ownerDetails-town             | string                             |
+      | ownerDetails-city             | string                             |
+      | ownerDetails-postcode         | string                             |
       # ADR details subsection
       | ADR-type                      | Centre Axle Battery                |
       | ADR-approvalDate              | 15/10/2019                         |
@@ -288,10 +288,10 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | ADR-tankTypeAppNo             | string                             |
       | ADR-tankCode                  | string                             |
       | ADR-substancesPermitted       | Substances permitted under the tank code and any special provisions specified in 9 may be carried |
-      | ADR-statement                 | string                             |
+      | ADR-statement                 | statement                          |
       | ADR-productListRefNo          | -                                  |
       | ADR-productListUnNo           | -                                  |
-      | ADR-productList               | string                             |
+      | ADR-productList               | product list                       |
       | ADR-specialProvisions         | string                             |
       # Tank inspections subsection
       | tc2Type                       | Initial                            |
@@ -316,7 +316,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should see "Save technical record"
     And I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -345,12 +345,12 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then I should not see "Save technical record"
     And tech record fields should have values
       | Field                         | Value                              |
-      # Applicant details subsection
-      | applicantDetails-name         | string                             |
-      | applicantDetails-street       | string                             |
-      | applicantDetails-town         | string                             |
-      | applicantDetails-city         | string                             |
-      | applicantDetails-postcode     | string                             |
+      # Owner/operator details subsection
+      | ownerDetails-name             | string                             |
+      | ownerDetails-street           | string                             |
+      | ownerDetails-town             | string                             |
+      | ownerDetails-city             | string                             |
+      | ownerDetails-postcode         | string                             |
       # ADR details subsection
       | ADR-type                      | Centre Axle Battery                |
       | ADR-approvalDate              | 15/10/2019                         |
@@ -405,13 +405,13 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     # AC7 + AC8
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10084" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10084" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should not see "Save technical record"
     And I should not see "There is a problem"
     And I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -424,12 +424,12 @@ Feature: Updating and saving core adrDetails - CVSB-10084
     Then tech record fields should have values
       | Field                         | Value                              |
       | ableToCarry                   | Yes                                |
-      # Applicant details subsection
-      | applicantDetails-name         | Bruce Lee                          |
-      | applicantDetails-street       | 10 Downing Street                  |
-      | applicantDetails-town         | Luton                              |
-      | applicantDetails-city         | London                             |
-      | applicantDetails-postcode     | SW1A 2AA                           |
+      # Owner/operator details subsection
+      | ownerDetails-name             | Bruce Lee                          |
+      | ownerDetails-street           | 10 Downing Street                  |
+      | ownerDetails-town             | Luton                              |
+      | ownerDetails-city             | London                             |
+      | ownerDetails-postcode         | SW1A 2AA                           |
       # ADR details subsection
       | ADR-type                      | Centre Axle Battery                |
       | ADR-approvalDate              | 20/05/1996                         |
@@ -483,13 +483,9 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       # Tech record history subsection
       | statusCode-0                  | Provisional                        |
       | reasonForCreation-0           | Cvsb-10084                         |
-      | createdByName-0               | Vtm-admin1@dvsagov.onmicrosoft.com |
+      | createdByName-0               | VTM_USER_EMAIL                     |
       | createdAt-0                   | TODAYS_DATE                        |
       | statusCode-1                  | Archived                           |
       | reasonForCreation-1           | Something                          |
       | createdByName-1               | Sean                               |
       | createdAt-1                   | TODAYS_DATE                        |
-
-
-
-

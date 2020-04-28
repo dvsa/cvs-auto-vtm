@@ -8,13 +8,35 @@ public class GenericBackendRequestSteps {
     GenericBackendRequestPage genericBackendRequestPage;
 
     @Step
-    public void createVehicle(String vehicleType, String withOrWithout) {
+    public void createTechRecord(String vehicleType, String withWithoutAdr) {
         genericBackendRequestPage.goToAuthTokenUrl();
-        genericBackendRequestPage.createVehicle(vehicleType, withOrWithout);
+        genericBackendRequestPage.createTechRecord(vehicleType, withWithoutAdr);
+    }
+
+    @Step
+    public void createTestRecord(String testStatus, String testResult, String testCode, boolean withWithoutDefects) {
+        genericBackendRequestPage.createTestRecord(testStatus, testResult, testCode, withWithoutDefects);
+    }
+
+    @Step
+    public void create(String vehicleType, String withOrWithoutAdrDetails) {
+        genericBackendRequestPage.goToAuthTokenUrl();
+        genericBackendRequestPage.createTechRecord(vehicleType, withOrWithoutAdrDetails);
     }
 
     @Step
     public String getNewVehicleAttribute(String attribute) {
         return genericBackendRequestPage.getNewVehicleAttribute(attribute);
+    }
+
+    @Step
+    public String getNewTestAttribute(String attribute) {
+        return genericBackendRequestPage.getNewTestTypeAttribute(attribute);
+    }
+
+    @Step
+    public void createTechRecord(String vehicleType) {
+        genericBackendRequestPage.goToAuthTokenUrl();
+        genericBackendRequestPage.createTechRecord(vehicleType);
     }
 }

@@ -29,23 +29,23 @@ public class TechRecordPageStepDefinition {
         }
     }
 
-    @Then("^I open all sections$")
-    public void iOpenAllSections() {
+    @Then("^I open all tech record sections$")
+    public void iOpenAllTechRecordSections() {
         techRecordPageSteps.openAllSections();
     }
 
-    @Then("^I close all sections$")
-    public void iCloAllSections() {
+    @Then("^I close all tech record sections$")
+    public void iCloseAllTechRecordSections() {
         techRecordPageSteps.closeAllSections();
     }
 
-    @When("^I open \"([^\"]*)\" section$")
-    public void iOpenSection(String section) {
+    @When("^I open tech record \"([^\"]*)\" section$")
+    public void iOpenTechRecordSection(String section) {
         techRecordPageSteps.openSection(section);
     }
 
-    @When("^I close \"([^\"]*)\" section$")
-    public void iCloseSection(String section) {
+    @When("^I close tech record \"([^\"]*)\" section$")
+    public void iCloseTechRecordSection(String section) {
         techRecordPageSteps.closeSection(section);
     }
 
@@ -145,7 +145,7 @@ public class TechRecordPageStepDefinition {
     }
 
     @When("^I click \"([^\"]*)\" adr details link$")
-    public void iClickLink(String linkText) throws Throwable {
+    public void iClickLink(String linkText) {
         techRecordPageSteps.iClickAdrDetailsLink(linkText);
     }
 
@@ -189,14 +189,18 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.iShouldSeeSectionHeading(heading);
     }
 
-    @Then("^the \"([^\"]*)\" section should have \"([^\"]*)\" entries$")
-    public void theSectionShouldHaveEntries(String section, String numberOfEntries) {
-        techRecordPageSteps.checkNumberOfEntriesInSection(numberOfEntries, section);
-    }
-
     @Then("^I should see \"([^\"]*)\" adr field$")
     public void iShouldSeeAdrField(String adrField) {
         techRecordPageSteps.checkAdrFieldDisplayed(adrField);
+    }
+
+    @Then("^tech record fields of newly created tech record should have expected values$")
+    public void techRecordFieldForNewlyCreatedVehicleShouldHaveValues(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkValueInTechRecordField(
+                    genericBackendRequestSteps.getNewVehicleAttribute(stringMap.get("Field")), stringMap.get("Field"));
+        }
     }
 
     @Then("^I should see adr subsections$")
@@ -215,14 +219,14 @@ public class TechRecordPageStepDefinition {
         }
     }
 
-    @When("^I enter \"([^\"]*)\" as reason for changes$")
-    public void iEnterAsReasonForChanges(String reason) {
+    @When("^I enter \"([^\"]*)\" as reason for tech record changes$")
+    public void iEnterAsReasonForTechRecordChanges(String reason) {
         techRecordPageSteps.setReasonForChanges(reason);
     }
 
-    @When("^I confirm saving the details$")
-    public void iConfirmSavingTheDetails() {
-        techRecordPageSteps.confirmSavingDetails();
+    @When("^I confirm saving the tech record changes$")
+    public void iConfirmSavingTheTechRecordChanges() {
+        techRecordPageSteps.confirmSavingChanges();
     }
 
     @Then("^I should see \"([^\"]*)\" in the adr \"([^\"]*)\" subsection$")
@@ -306,10 +310,10 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.removeUnNumber(index);
     }
 
-    @Then("^I should see the ([^\"]*) of newly created vehicle$")
-    public void iShouldSeeTheVINOfNewlyCreatedVehicle(String attribute) {
-        techRecordPageSteps.checkValueInTechRecordField(genericBackendRequestSteps.
-                getNewVehicleAttribute(attribute), attribute);
+    @Then("^I should see the \"([^\"]*)\" of newly created vehicle$")
+    public void iShouldSeeAttributeOfNewlyCreatedVehicle(String attribute) {
+        techRecordPageSteps.checkValueInTechRecordField(genericBackendRequestSteps.getNewVehicleAttribute(attribute),
+                attribute);
     }
 
     @When("^I add initial inspection with certificate \"([^\"]*)\" and expiry date \"([^\"]*)\"$")
@@ -379,7 +383,7 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.fillInAdditionalAdrDetailsWith(details);
     }
 
-    @When("^I cancel saving the details$")
+    @When("^I cancel saving the tech record details$")
     public void iCancelSavingTheDetails() {
         techRecordPageSteps.cancelSavingDetails();
     }
@@ -422,5 +426,49 @@ public class TechRecordPageStepDefinition {
     @Then("^I should see error message \"(.*)\"$")
     public void iShouldSeeErrorMessage(String message) {
         techRecordPageSteps.checkErrorMessageIsPresent(message);
+    }
+
+    @When("^I go to view test record with index (\\d+)$")
+    public void iClickViewOnTestRecordWithIndex(int testIndex) {
+        techRecordPageSteps.clickViewForTestRecordWithIndex(testIndex);
+    }
+
+    @Then("^the \"([^\"]*)\" tech record section should be empty$")
+    public void thenTheSectionShouldBeEmpty(String section) {
+        techRecordPageSteps.checkSectionEmpty(section);
+    }
+
+    @Then("^the \"([^\"]*)\" tech record section should have (\\d+) entry$")
+    public void techRecordSectionShouldHaveEntry(String section, int numberOfEntries) {
+        techRecordPageSteps.checkNumberOfEntriesInSection(section, numberOfEntries);
+    }
+
+    @Then("^the \"([^\"]*)\" tech record section should have (\\d+) entries$")
+    public void techRecordSectionShouldHaveEntries(String section, int numberOfEntries) {
+        techRecordPageSteps.checkNumberOfEntriesInSection(section, numberOfEntries);
+    }
+
+    @Then("^all tech record sections should be expanded$")
+    public void checkAllSectionsAreExpanded() {
+        techRecordPageSteps.checkAllSectionsAreExpanded();
+    }
+
+    @Then("^test record fields of newly created test should have correct values$")
+    public void testRecordFieldForNewlyCreatedTestShouldHaveValues(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkValueInTechRecordField(
+                    genericBackendRequestSteps.getNewTestAttribute(stringMap.get("Field")), stringMap.get("Field"));
+        }
+    }
+
+    @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" tech record section$")
+    public void iShouldSeeInTestRecordSection(String text, String section) {
+        techRecordPageSteps.checkTextIsPresentInSection(text, section);
+    }
+
+    @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" tech record section$")
+    public void iShouldNotSeeInTestRecordSection(String text, String section) {
+        techRecordPageSteps.checkTextIsNotPresentInSection(text, section);
     }
 }

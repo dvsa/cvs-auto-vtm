@@ -37,7 +37,7 @@ public class GenericPage extends PageObject {
     }
 
     public void checkTextIsPresentInPage(String text) {
-        FluentWait wait = globalFluentWait(10, 200);
+        FluentWait wait = globalFluentWait(25, 200);
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
     }
 
@@ -173,12 +173,12 @@ public class GenericPage extends PageObject {
     }
 
     public void checkTextIsPresentInHyperlink(String text) {
-        Assert.assertNotNull("Hyperlink with text was not found!", getDriver().findElement(By.xpath(
+        Assert.assertNotNull("Hyperlink with text '" + text + "' was not found!", getDriver().findElement(By.xpath(
                 "//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
     }
 
     public void checkTextIsPresentInButton(String text) {
-        Assert.assertNotNull("Button with text was not found!", getDriver().findElement(By.xpath(
+        Assert.assertNotNull("Button with text '" + text + "' was not found!", getDriver().findElement(By.xpath(
                 "//button[contains(text(),'" + text + "')]")));
     }
 
@@ -219,16 +219,20 @@ public class GenericPage extends PageObject {
     }
 
     public void headerErrorContains(String text) {
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector(HEADER_ERROR)));
         new WebDriverWait(getDriver(), 10).
                 until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(HEADER_ERROR), text));
     }
 
     public void headerErrorNotContains(String text) {
         waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_ERROR)));
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(HEADER_SPECIFIC_ERRORS)));
-        Assert.assertFalse(findElementByCss(HEADER_SPECIFIC_ERRORS).getText().contains(text));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated
+                (By.cssSelector(HEADER_ERROR)));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated
+                (By.cssSelector(HEADER_SPECIFIC_ERRORS)));
+        Assert.assertFalse("Text '" + text + "' was not found in '" + findElementByCss(HEADER_SPECIFIC_ERRORS).getText() + "'",
+                findElementByCss(HEADER_SPECIFIC_ERRORS).getText().contains(text));
     }
 
     public void goBackToPreviousPage() {
@@ -236,11 +240,12 @@ public class GenericPage extends PageObject {
     }
 
     public void checkPageUrl(String url) {
-        Assert.assertEquals(url, getDriver().getCurrentUrl());
+        Assert.assertEquals("Page url '" + getDriver().getCurrentUrl() + "' is not the expected one '" + url + "'",
+                url, getDriver().getCurrentUrl());
     }
 
     public void checkSignOutScreenNotPresent() {
-        Assert.assertEquals(0, getDriver().findElements(By.cssSelector(SIGNOUT_CONFIRMATION_SCREEN)).size());
+        Assert.assertEquals("Sign out screen still present!", 0, getDriver().findElements(By.cssSelector(SIGNOUT_CONFIRMATION_SCREEN)).size());
     }
 
     void inputText(WebElement field, String text) {
@@ -262,5 +267,11 @@ public class GenericPage extends PageObject {
                 .ignoring(org.openqa.selenium.NoSuchElementException.class);
 
         return wait;
+    }
+
+    public void checkTextIsPresentInElementWithCssSelector(String cssSelector, String text) {
+        WebElement element = findElementByCss(cssSelector);
+        Assert.assertTrue("Element with css selector '" + cssSelector + "' has text '" + element.getText().contains(text)
+                + "' which does not contain expected text '" + text + "'", element.getText().contains(text));
     }
 }

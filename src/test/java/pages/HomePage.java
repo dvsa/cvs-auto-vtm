@@ -23,12 +23,12 @@ public class HomePage extends GenericPage {
 
     public void hyperlinkDescriptionIsCorrect(String hyperlinkTitle) {
         if (hyperlinkTitle.equals(SEARCH_FOR_TECHNICAL_RECORD_LINK_TITLE)) {
-            Assert.assertNotNull("Hyperlink description is incorrect!",
+            Assert.assertNotNull("Hyperlink description '" + hyperlinkTitle + "' is incorrect!",
                     getDriver().findElement(By.xpath("//a[text() = '" + hyperlinkTitle + "']/../../" +
                             "p[text() = '" + SEARCH_FOR_TECHNICAL_RECORD_LINK_DESCRIPTION + "']")));
         }
         else if (hyperlinkTitle.equals(CREATE_TECHNICAL_RECORD_LINK_TITLE)) {
-            Assert.assertNotNull("Hyperlink description is incorrect!",
+            Assert.assertNotNull("Hyperlink description '" + hyperlinkTitle + "' is incorrect!",
                     getDriver().findElement(By.xpath("//a[text() = '" + hyperlinkTitle + "']/../../" +
                             "p[text() = '" + CREATE_TECHNICAL_RECORD_LINK_DESCRIPTION + "']")));
         }

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.TypeLoader;
 
 import java.util.List;
 
@@ -35,30 +36,36 @@ public class Header extends GenericPage {
 
     public void validateHeaderTitle(String title) {
         if (findElementByCss(HEADER_TITLE).isDisplayed()) {
-            Assert.assertTrue(findElementByCss(HEADER_TITLE).getText().contentEquals(title));
+            Assert.assertTrue("Header title is '" + findElementByCss(HEADER_TITLE).getText() + "' instead of '" + title + "'",
+                    findElementByCss(HEADER_TITLE).getText().contentEquals(title));
         }
         else {
             getDriver().manage().window().maximize();
             if (findElementByCss(HEADER_TITLE).isDisplayed()) {
-                Assert.assertTrue(findElementByCss(HEADER_TITLE).getText().contentEquals(title));
+                Assert.assertTrue("Header title is '" + findElementByCss(HEADER_TITLE).getText() + "' instead of '" + title + "'",
+                        findElementByCss(HEADER_TITLE).getText().contentEquals(title));
             }
         }
     }
 
-    public void checkUserNameInHeader(String name) {
+    public void checkAdminUserNameInHeader() {
+        String adminUser = TypeLoader.getAppUsername();
         if (findElementByCss(HEADER_USER_NAME).isDisplayed()) {
-            Assert.assertTrue(findElementByCss(HEADER_USER_NAME).getText().contentEquals(name));
+            Assert.assertTrue("Admin user name is not '" + adminUser.substring(0, adminUser.indexOf("@")) + "'",
+                    findElementByCss(HEADER_USER_NAME).getText().contentEquals(adminUser.substring(0, adminUser.indexOf("@"))));
         }
         else {
             getDriver().manage().window().maximize();
             if (findElementByCss(HEADER_USER_NAME).isDisplayed()) {
-                Assert.assertTrue(findElementByCss(HEADER_USER_NAME).getText().contentEquals(name));
+                Assert.assertTrue("Admin user name is not '" + adminUser.substring(0, adminUser.indexOf("@")) + "'",
+                        findElementByCss(HEADER_USER_NAME).getText().contentEquals(adminUser.substring(0, adminUser.indexOf("@"))));
             }
         }
     }
 
     public void checkTextInHeader(String text) {
-        Assert.assertTrue(findElementByCss(HEADER).getText().contains(text));
+        Assert.assertTrue("Header text is '" + findElementByCss(HEADER_TITLE).getText() + "' and does not contain '" + text + "'",
+                findElementByCss(HEADER).getText().contains(text));
     }
 
     public void goBackToHomePage() {

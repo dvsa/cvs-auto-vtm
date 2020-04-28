@@ -1,0 +1,28 @@
+[
+  {
+    "imNumber": 1000,
+    "imDescription": "im description",
+    "additionalInformation": {
+      "location": {
+        "vertical": "upper",
+        "horizontal": "inner",
+        "lateral": "nearside",
+        "longitudinal": "front",
+        "rowNumber": 19,
+        "seatNumber": 6,
+        "axleNumber": 2
+      },
+      "notes": "defect notes"
+    },
+    "itemNumber": 1500,
+    "itemDescription": "item description",
+    "deficiencyRef": "deficiency reference",
+    "deficiencyId": "a",
+    "deficiencySubId": "m",
+    "deficiencyCategory": "advisory",
+    "deficiencyText": "deficiency text",
+    "stdForProhibition": true,
+    "prs": true,
+    "prohibitionIssued": true
+  }
+]

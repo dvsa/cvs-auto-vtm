@@ -53,8 +53,8 @@
           },
           "tankStatement": {
             "substancesPermitted": "Substances permitted under the tank code and any special provisions specified in 9 may be carried",
-            "statement": "string",
-            "productList": "string"
+            "statement": "statement",
+            "productList": "product list"
           }
         },
         "brakeDeclarationIssuer": "dvsa",
