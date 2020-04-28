@@ -2,9 +2,9 @@ package util.backend;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -149,7 +149,7 @@ public class GenericData {
         return JsonPath.read(jsonString, jsonPath);
     }
 
-    public static JsonArray extractJsonArrayValueFromJsonString(String jsonString, String jsonPath) {
+    public static JSONArray extractJsonArrayValueFromJsonString(String jsonString, String jsonPath) {
         return JsonPath.read(jsonString, jsonPath);
     }
 

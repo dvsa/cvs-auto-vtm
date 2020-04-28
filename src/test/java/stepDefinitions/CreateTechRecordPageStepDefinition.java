@@ -25,38 +25,38 @@ public class CreateTechRecordPageStepDefinition {
     }
 
     @When("^I select vehicle type \"([^\"]*)\"$")
-    public void iSelectVehicleType(String vehicleType) throws Exception {
+    public void iSelectVehicleType(String vehicleType) {
         createTechRecordPageSteps.selectVehicleType(vehicleType);
 
     }
 
     @Then("^the specific \"([^\"]*)\" error contains \"([^\"]*)\"$")
-    public void specificErrorContains(String errorType, String text) throws Exception {
+    public void specificErrorContains(String errorType, String text) {
         createTechRecordPageSteps.specificErrorContains(errorType, text);
     }
 
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" input field$")
-    public void iShouldSeeInInputField(String text, String input) throws Exception {
+    public void iShouldSeeInInputField(String text, String input) {
         createTechRecordPageSteps.checkInputFieldText(text, input);
     }
 
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" input field$")
-    public void iShouldNotSeeInInputField(String text, String input) throws Exception {
+    public void iShouldNotSeeInInputField(String text, String input) {
         createTechRecordPageSteps.checkNotInputFieldText(text, input);
     }
 
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" field description$")
-    public void iShouldSeeLabel(String text, String field) throws Exception {
+    public void iShouldSeeLabel(String text, String field) {
         createTechRecordPageSteps.checkInputDescription(text, field);
     }
 
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" field description$")
-    public void iShouldNotSeeInFieldDescription(String text, String field) throws Throwable {
+    public void iShouldNotSeeInFieldDescription(String text, String field) {
         createTechRecordPageSteps.checkNotInputDescription(text, field);
     }
 
     @Then("^there are no \"([^\"]*)\" related errors$")
-    public void noRelatedErrorsForField(String fieldType) throws Exception {
+    public void noRelatedErrorsForField(String fieldType) {
         createTechRecordPageSteps.checkNoSpecificErrorForField(fieldType);
     }
 
