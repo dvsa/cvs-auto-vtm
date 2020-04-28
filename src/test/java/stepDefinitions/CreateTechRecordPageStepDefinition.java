@@ -4,6 +4,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import step.CreateTechRecordPageSteps;
+import step.GenericBackendRequestSteps;
 import step.GenericPageSteps;
 
 public class CreateTechRecordPageStepDefinition {
@@ -14,9 +15,21 @@ public class CreateTechRecordPageStepDefinition {
     @Steps
     GenericPageSteps genericPageSteps;
 
+    @Steps
+    GenericBackendRequestSteps genericBackendRequestSteps;
+
     @When("^I fill in vin \"([^\"]*)\"$")
     public void iFillInVin(String vin) {
         createTechRecordPageSteps.fillInVin(vin);
+    }
+
+    @When("^I fill in \"([^\"]*)\" with previously created vehicle$")
+    public void iFillInWithPreviouslyCreatedVehicle(String vehicleAttribute) {
+        if(vehicleAttribute.equals("vrm")) {
+            createTechRecordPageSteps.fillInVrm(genericBackendRequestSteps.getNewVehicleAttribute(vehicleAttribute));
+        } else if (vehicleAttribute.equals("vin")) {
+            createTechRecordPageSteps.fillInVin(genericBackendRequestSteps.getNewVehicleAttribute(vehicleAttribute));
+        }
     }
 
     @When("^I fill in vrm \"([^\"]*)\"$")
@@ -38,6 +51,11 @@ public class CreateTechRecordPageStepDefinition {
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" input field$")
     public void iShouldSeeInInputField(String text, String input) {
         createTechRecordPageSteps.checkInputFieldText(text, input);
+    }
+
+    @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" edit input field$")
+    public void iShouldSeeInEDITInputField(String text, String input) {
+        createTechRecordPageSteps.checkEditInputFieldText(text, input);
     }
 
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" input field$")
