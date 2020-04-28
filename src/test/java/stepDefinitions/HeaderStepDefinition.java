@@ -26,9 +26,9 @@ public class HeaderStepDefinition {
         headerSteps.validateHeaderTitle(title);
     }
 
-    @Then("^the header should contain user name \"([^\"]*)\"$")
-    public void theHeaderShouldContainUserName(String name) {
-        headerSteps.checkUserNameInHeader(name);
+    @Then("^the header should contain the admin user name$")
+    public void theHeaderShouldContainAdminUserName() {
+        headerSteps.checkAdminUserNameInHeader();
 
     }
 

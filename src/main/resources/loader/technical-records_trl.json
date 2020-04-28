@@ -13,15 +13,87 @@
   "systemNumber": "10000026",
   "techRecord": [
     {
+      "adrDetails": {
+        "vehicleDetails": {
+          "type": "Centre axle battery",
+          "approvalDate": "2019-10-15"
+        },
+        "listStatementApplicable": true,
+        "batteryListNumber": "12345",
+        "declarationsSeen": true,
+        "brakeDeclarationsSeen": true,
+        "brakeDeclarationIssuer": "brake declaration issuer",
+        "brakeEndurance": true,
+        "weight": "1.5",
+        "compatibilityGroupJ": false,
+        "permittedDangerousGoods": [
+          "FP <61 (FL)",
+          "Explosives (type 3)"
+        ],
+        "additionalExaminerNotes": "additional examiner notes",
+        "applicantDetails": {
+          "name": "name",
+          "street": "street",
+          "town": "town",
+          "city": "city",
+          "postcode": "postcode"
+        },
+        "memosApply": [
+          "07/09 3mth leak ext"
+        ],
+        "additionalNotes": {
+          "number": [
+            "1",
+            "2"
+          ],
+          "guidanceNotes": [
+            "New certificate requested",
+            "Additional guidance note"
+          ]
+        },
+        "adrTypeApprovalNo": "1234",
+        "tank": {
+          "tankDetails": {
+            "tankManufacturer": "tank manufacturer",
+            "yearOfManufacture": 0,
+            "tankCode": "tank code",
+            "tc2Details": {
+              "tc2Type": "initial",
+              "tc2IntermediateApprovalNo": "456789",
+              "tc2IntermediateExpiryDate": "2020-12-01"
+            },
+            "tc3Details": [
+              {
+                "tc3Type": "intermediate",
+                "tc3PeriodicNumber": "567890",
+                "tc3PeriodicExpiryDate": "2020-06-01"
+              }
+            ],
+            "specialProvisions": "special provisions",
+            "tankManufacturerSerialNo": "123456",
+            "tankTypeAppNo": "123"
+          },
+          "tankStatement": {
+            "substancesPermitted": "Substances permitted under the tank code and any special provisions specified in 9 may be carried",
+            "statement": "statement_1234",
+            "productList": "additional product list details",
+            "productListRefNo": "productList_1234",
+            "productListUnNo": [
+              "123456",
+              "654321"
+            ]
+          }
+        }
+      },
       "vehicleType": "trl",
-      "regnDate": "2019-06-25",
-      "firstUseDate": "2019-06-25",
+      "regnDate": "2019-06-07",
+      "firstUseDate": "2019-06-08",
       "manufactureYear": 2019,
-      "noOfAxles": 1,
+      "noOfAxles": 2,
       "brakes": {
         "dtpNumber": "3798B",
         "loadSensingValve": false,
-        "antilockBrakingSystem": false
+        "antilockBrakingSystem": true
       },
       "suspensionType": "F",
       "roadFriendly": false,
@@ -47,7 +119,7 @@
         "letterDateRequested": "2019-06-24",
         "letterContents": "letter contents"
       },
-      "approvalType": "NTA",
+      "approvalType": "ECTA",
       "approvalTypeNumber": "123",
       "ntaNumber": "1234",
       "variantNumber": "123456",
@@ -84,6 +156,27 @@
             "eecWeight": 11000,
             "gbWeight": 12000
           }
+        },
+        {
+          "parkingBrakeMrk": true,
+          "axleNumber": 2,
+          "brakes": {
+            "brakeActuator": 140,
+            "leverLength": 141,
+            "springBrakeParking": true
+          },
+          "tyres": {
+            "dataTrAxles": 2,
+            "fitmentCode": "single",
+            "plyRating": "AB",
+            "tyreCode": 462,
+            "tyreSize": "10-20.5"
+          },
+          "weights": {
+            "designWeight": 20000,
+            "eecWeight": 21000,
+            "gbWeight": 22000
+          }
         }
       ],
       "dimensions": {
@@ -91,7 +184,7 @@
         "width": 3000,
         "axleSpacing": [
           {
-            "axles": "2-1",
+            "axles": "1-2",
             "value": 11000
           }
         ]
@@ -138,7 +231,7 @@
         "manufacturerNotes": "manufacturer notes"
       },
       "microfilm": {
-        "microfilmDocumentType": "PSV Miscellaneous",
+        "microfilmDocumentType": "Trailer COC + Int Plate",
         "microfilmRollNumber": "55555",
         "microfilmSerialNumber": "4444"
       },
@@ -148,9 +241,15 @@
           "plateIssueDate": "2020-02-02",
           "plateReasonForIssue": "Original",
           "plateIssuer": "Mr Jones"
+        },
+        {
+          "plateSerialNumber": "22222222",
+          "plateIssueDate": "2020-01-01",
+          "plateReasonForIssue": "Replacement",
+          "plateIssuer": "Mr Johnson"
         }
       ],
-      "notes": "some note",
+      "notes": "tech record note",
       "reasonForCreation": "new record",
       "recordCompleteness": "complete"
     }

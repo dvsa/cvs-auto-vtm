@@ -28,7 +28,7 @@ Feature: Attaching documents to the ADR record + Upload + Download Attachments -
     Then I should see "Change technical record"
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then I should see "Upload document"
     # AC2
     And I upload adr document
@@ -39,13 +39,13 @@ Feature: Attaching documents to the ADR record + Upload + Download Attachments -
     # AC4
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I upload adr document
     Then I confirm adr document is uploaded
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10086" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10086" as reason for tech record changes
+    And I confirm saving the tech record changes
     Then I should not see "Save technical record"
     And I should not see "There is a problem"
     And I confirm adr document is added on the tank details
@@ -55,24 +55,24 @@ Feature: Attaching documents to the ADR record + Upload + Download Attachments -
     # AC5
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I remove all adr documents
     Then I confirm adr documents are removed from the tank details
     Then I should see "-" in the adr "Tank documents" subsection
     # AC6
     When I click "Cancel" link
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then I confirm adr documents are not deleted from the tank details
     # AC7
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I remove all adr documents
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10086" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10086" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should not see "Save technical record"
     And I should not see "There is a problem"
     And I confirm adr documents are deleted from the tank details
