@@ -19,7 +19,7 @@
         <jackson.version>2.9.8</jackson.version>
         <jsonpath.version>2.4.0</jsonpath.version>
         <encoding>UTF-8</encoding>
-        <parallel.tests>1</parallel.tests>
+        <PARALLEL_TEST>1</PARALLEL_TEST>
     </properties>
 
     <dependencies>
@@ -193,7 +193,7 @@
                                 <include>**/*TestSuite.java</include>
                                 <include>**/*CVSB*.java</include>
                             </includes>
-                            <forkCount>${parallel.tests}</forkCount>
+                            <forkCount>${PARALLEL_TEST}</forkCount>
                             <testFailureIgnore>true</testFailureIgnore>
                             <systemPropertyVariables>
                                 <environment>CI</environment>
@@ -302,7 +302,7 @@
                         <include>**/*TestSuite.java</include>
                         <include>**/*CVSB*.java</include>
                     </includes>
-                    <forkCount>${parallel.tests}</forkCount>
+                    <forkCount>${PARALLEL_TEST}</forkCount>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
                 <executions>

@@ -24,8 +24,8 @@
           },
           "weights": {
             "designWeight": 7500,
-            "eecWeight": 7500,
-            "gbWeight": 7100
+            "eecWeight": 7600,
+            "gbWeight": 7700
           }
         },
         {
@@ -58,7 +58,7 @@
         "axleSpacing": [
           {
             "axles": "1-2",
-            "value": 10000
+            "value": 11000
           }
         ]
       },
@@ -66,14 +66,14 @@
       "euroStandard": "2",
       "fuelPropulsionSystem": "Electric",
       "frontAxleToRearAxle": 1000,
-      "frontAxleTo5thWheelMax": 1000,
-      "frontAxleTo5thWheelMin": 1000,
-      "frontAxleTo5thWheelCouplingMax": 1000,
-      "frontAxleTo5thWheelCouplingMin": 1000,
+      "frontAxleTo5thWheelMax": 1100,
+      "frontAxleTo5thWheelMin": 1200,
+      "frontAxleTo5thWheelCouplingMax": 1300,
+      "frontAxleTo5thWheelCouplingMin": 1400,
       "functionCode": "A",
       "grossDesignWeight": 33500,
       "grossGbWeight": 25000,
-      "grossEecWeight": 25000,
+      "grossEecWeight": 26000,
       "make": "VOLVO",
       "manufactureYear": 1984,
       "maxTrainDesignWeight": 2800,
@@ -103,14 +103,14 @@
       "variantNumber": "324324",
       "variantVersionNumber": "345",
       "applicantDetails": {
-        "address1": "*****",
-        "address2": "*****",
-        "address3": "*****",
-        "name": "************",
-        "postCode": "*****",
-        "postTown": "*",
-        "telephoneNumber": "**************",
-        "emailAddress": "*************"
+        "address1": "applicant address 1",
+        "address2": "applicant address 2",
+        "address3": "applicant address 3",
+        "name": "applicant name",
+        "postCode": "PO16 7GZ",
+        "postTown": "applicant post town",
+        "telephoneNumber": "123456",
+        "emailAddress": "test@test.com"
       },
       "microfilm": {
         "microfilmDocumentType": "HGV COC + Int Plate",

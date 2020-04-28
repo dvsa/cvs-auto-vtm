@@ -1,0 +1,40 @@
+{
+  "msUserDetails": {
+    "msUser": "catalin",
+    "msOid": "123243424-234234245"
+  },
+  "vin": "DP76UMK4DQLTOT400004",
+  "partialVin": "400004",
+  "primaryVrm": "SJG1004",
+  "secondaryVrms": [
+    "AS432TY"
+  ],
+  "techRecord": [
+    {
+      "vehicleType": "car",
+      "regnDate": "2018-12-07",
+      "manufactureYear": 1999,
+      "noOfAxles": 2,
+      "euVehicleCategory": "l7e",
+      "applicantDetails": {
+        "address1": "applicant address 1",
+        "address2": "applicant address 2",
+        "address3": "applicant address 3",
+        "name": "applicant name",
+        "postCode": "PO16 7GZ",
+        "postTown": "applicant post town",
+        "telephoneNumber": "123456",
+        "emailAddress": "applicant@applicant.com"
+      },
+      "remarks": "remarks",
+      "reasonForCreation": "test",
+      "recordCompleteness": "complete",
+      "vehicleClass": {
+        "description": "motorbikes up to 200cc"
+      },
+      "vehicleSubclass": [
+        "m"
+      ]
+    }
+  ]
+}

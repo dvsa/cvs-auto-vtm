@@ -21,7 +21,9 @@ public class TechRecordSelectionPage extends GenericPage {
 
     public void validateTechRecScreen(String title) {
         findElementByCss(SELECT_TECHNICAL_RECORD_SCREEN).isDisplayed();
-        Assert.assertTrue(findElementByCss(SELECT_TECHNICAL_RECORD_SCREEN).getText().contentEquals(title));
+        Assert.assertTrue("Text in element with css selector '" + SELECT_TECHNICAL_RECORD_SCREEN + "' is "
+                        + findElementByCss(SELECT_TECHNICAL_RECORD_SCREEN).getText() + "and it does not contain " + title,
+                findElementByCss(SELECT_TECHNICAL_RECORD_SCREEN).getText().contentEquals(title));
     }
 
     public void techRecordsAlphabeticallyOrderedByMake() {
@@ -49,7 +51,8 @@ public class TechRecordSelectionPage extends GenericPage {
         List<WebElement> headings = getDriver().findElements(By.cssSelector("body h3.govuk-heading-m"));
         for (int i = 0; i< headings.size(); i++) {
             int actualIndex = i + 1;
-            Assert.assertEquals("Technical record " + actualIndex, headings.get(i).getText());
+            Assert.assertEquals("Actual heading text '" + headings.get(i).getText() + "' differs from expected value 'Technical record " + actualIndex + "'",
+                    "Technical record " + actualIndex, headings.get(i).getText());
         }
     }
 }
