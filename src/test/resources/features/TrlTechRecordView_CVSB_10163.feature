@@ -269,3 +269,4 @@ Feature: Show technical record accurately for queried trailer - CVSB-10163
       | plateIssueDate-1                 | 01/01/2020                                    |
     And I should not see "Speed category symbol"
     And I should not see "Max train"
+    And I should see "Type approval"
