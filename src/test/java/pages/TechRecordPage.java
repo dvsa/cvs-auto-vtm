@@ -1660,22 +1660,6 @@ public class TechRecordPage extends GenericPage {
         }
     }
 
-    public void setInputTechRecordField(String field, String country) {
-        WebElement element = getDriver().findElement(By.id("test-" + field));
-        element.clear();
-        element.sendKeys(country);
-    }
-
-    public void setRadioButtonTechRecordField(String field, String value) {
-        WebElement element = getDriver().findElement(By.id("test-" + field + "-" + value));
-        element.click();
-    }
-
-    public void setSelectTechRecordField(String field, String value) {
-        Select selectElement = new Select(getDriver().findElement(By.id("test-" + field)));
-        selectElement.selectByValue(value);
-    }
-
     public void checkSectionIsExpanded(String section) {
         String option = section.toLowerCase();
         switch (option) {

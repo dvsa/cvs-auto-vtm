@@ -325,8 +325,8 @@ Feature: Search tech record - CVSB-10089
       | frontAxleToRearAxle              | 1700             |
       | rearAxleToRearTrl                | 400              |
       | centreOfRearmostAxleToRearOfTrl  | -                |
-      | axleSpacing-axles-0              | Axle 1 to 2 (mm) |
-      | axleSpacing-value-0              | 1200             |
+      | axleSpacing-axles-1              | Axle 1 to 2 (mm) |
+      | axleSpacing-value-1              | 1200             |
       | couplingCenterToRearAxleMin      | 1000             |
       | couplingCenterToRearAxleMax      | 900              |
       | couplingCenterToRearTrlMin       | 800              |

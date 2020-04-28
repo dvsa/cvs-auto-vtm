@@ -143,8 +143,8 @@ Feature: Show technical record accurately for queried trailer - CVSB-10163
       | frontAxleToRearAxle              | 1700                                          |
       | rearAxleToRearTrl                | 400                                           |
       | centreOfRearmostAxleToRearOfTrl  | 600                                           |
-      | axleSpacing-axles-0              | Axle 1 to 2 (mm)                              |
-      | axleSpacing-value-0              | 11000                                         |
+      | axleSpacing-axles-1              | Axle 1 to 2 (mm)                              |
+      | axleSpacing-value-1              | 11000                                         |
       | couplingCenterToRearAxleMin      | 1000                                          |
       | couplingCenterToRearAxleMax      | 900                                           |
       | couplingCenterToRearTrlMin       | 800                                           |
