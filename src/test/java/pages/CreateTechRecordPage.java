@@ -5,9 +5,12 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 
 public class CreateTechRecordPage extends GenericPage {
 
@@ -66,6 +69,27 @@ public class CreateTechRecordPage extends GenericPage {
                 new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VRM_ERROR)));
                 new WebDriverWait(getDriver(), 10).
                         until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VRM_ERROR), text));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException("Invalid error type " + errorType);
+        }
+    }
+
+    public void specificErrorNotContains(String errorType, String text) {
+        FluentWait wait = globalFluentWait(3, 200);
+        String option = errorType.toLowerCase();
+        switch (option) {
+            case "vehicle type":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VEHICLE_TYPE_ERROR)));
+                wait.until(not(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VEHICLE_TYPE_ERROR), text)));
+                break;
+            case "vin":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VIN_ERROR)));
+                wait.until(not(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VIN_ERROR), text)));
+                break;
+            case "vrm":
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(VRM_ERROR)));
+                wait.until(not(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VRM_ERROR), text)));
                 break;
             default:  // should be unreachable!
                 throw new AutomationException("Invalid error type " + errorType);

@@ -35,6 +35,11 @@ public class GenericBackendRequestSteps {
     }
 
     @Step
+    public void updateTestRecord() {
+        genericBackendRequestPage.updateTestRecord();
+    }
+
+    @Step
     public void createTestRecordWithStatusAndResultAndTestTypeForNewVehicle(String status, String result, String testType,
                                                                             String vehicleType) {
         genericBackendRequestPage.goToAuthTokenUrl();

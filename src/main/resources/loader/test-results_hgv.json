@@ -38,7 +38,18 @@
         {
           "imNumber": 1000,
           "imDescription": "im description 1",
-          "additionalInformation": null,
+          "additionalInformation": {
+            "location": {
+              "vertical": null,
+              "horizontal": "inner",
+              "lateral": null,
+              "longitudinal": "rear",
+              "rowNumber": 3,
+              "seatNumber": 4,
+              "axleNumber": 1
+            },
+            "notes": "seatbelt broken"
+          },
           "itemNumber": 1500,
           "itemDescription": "item description 1",
           "deficiencyRef": "deficiency reference (1)*",
