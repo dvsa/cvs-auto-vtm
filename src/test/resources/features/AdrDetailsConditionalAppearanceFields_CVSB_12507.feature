@@ -24,13 +24,13 @@ Feature: Adr details conditional appearance of fields - CVSB-12507
     When I search for previously created vehicle
     Then I should see "Technical record"
     And I should see "ADR" section heading
-    And I should see the vin of newly created vehicle
-    And I should see the vrm of newly created vehicle
+    And I should see the "vin" of newly created vehicle
+    And I should see the "vrm" of newly created vehicle
     And tech record fields should have values
       | Field  | Value       |
       | status | Provisional |
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     When I click the change technical record button
     Then I should see "Save technical record"
     #selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "Compatilibity Group J" appear

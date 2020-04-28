@@ -11,17 +11,19 @@ public class Footer extends GenericPage {
 
 
     public void checkTextInFooter(String text) {
-        Assert.assertTrue(findElementByCss(FOOTER).getText().contains(text));
+        Assert.assertTrue("Footer text '" + findElementByCss(FOOTER).getText() + "' does not contain " + text,
+                findElementByCss(FOOTER).getText().contains(text));
     }
 
     public void checkFooterLogo(String logoType) {
         String logo = logoType.toLowerCase();
         switch (logo) {
             case "copyright":
-                Assert.assertNotNull(findElementByCss(COPYWRIGHT_LOGO));
+                Assert.assertNotNull("Copyright logo '" + COPYWRIGHT_LOGO + "' not present in page",
+                        findElementByCss(COPYWRIGHT_LOGO));
                 break;
             case "ogl":
-                Assert.assertNotNull(findElementByCss(OGL_LOGO));
+                Assert.assertNotNull("OGL logo element '" + OGL_LOGO + "' not present in page",findElementByCss(OGL_LOGO));
                 break;
             default:  // should be unreachable!
                 throw new AutomationException(

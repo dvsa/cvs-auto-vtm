@@ -23,8 +23,8 @@ public class HeaderSteps extends GenericPageSteps {
     }
 
     @Step
-    public void checkUserNameInHeader(String name) {
-        header.checkUserNameInHeader(name);
+    public void checkAdminUserNameInHeader() {
+        header.checkAdminUserNameInHeader();
     }
 
     @Step

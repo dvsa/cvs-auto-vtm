@@ -32,11 +32,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
         techRecordPage.editTechRecordDetails();
     }
 
-//    @Step
-//    public void clickBackButton() {
-//        techRecordPage.clickBackButton();
-//    }
-
     @Step
     public void saveTechRecordDetails() {
         techRecordPage.saveTechRecordDetails();
@@ -168,13 +163,13 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void iShouldSeeSectionHeading(String heading) {
-        techRecordPage.iShouldSeeSectionHeading(heading);
+    public void checkSectionIsPresent(String heading) {
+        techRecordPage.checkSectionIsPresent(heading);
     }
 
     @Step
-    public void checkNumberOfEntriesInSection(String numberOfEntries, String section) {
-        techRecordPage.checkNumberOfEntriesInSection(numberOfEntries, section);
+    public void checkNumberOfEntriesInSection(String section, int numberOfEntries) {
+        techRecordPage.checkNumberOfEntriesInSection(section, numberOfEntries);
     }
 
     @Step
@@ -203,8 +198,8 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void confirmSavingDetails() {
-        techRecordPage.confirmSavingDetails();
+    public void confirmSavingChanges() {
+        techRecordPage.confirmSavingChanges();
     }
 
     @Step
@@ -295,7 +290,7 @@ public class TechRecordPageSteps extends GenericPageSteps {
 
     @Step
     public void fillInApplicantFieldWithValue(String applicantField, String value) {
-        techRecordPage.fillInApplicantFieldWithValue(applicantField, value);
+        techRecordPage.fillInOwnerFieldWithValue(applicantField, value);
     }
 
     @Step
@@ -376,5 +371,50 @@ public class TechRecordPageSteps extends GenericPageSteps {
     @Step
     public void checkErrorMessageIsPresent(String message) {
         techRecordPage.checkErrorMessageIsPresent(message);
+    }
+
+    @Step
+    public void clickViewForTestRecordWithIndex(int testIndex) {
+        techRecordPage.clickViewForTestRecordWithIndex(testIndex);
+    }
+
+    @Step
+    public void checkSectionEmpty(String section) {
+        techRecordPage.checkSectionEmpty(section);
+    }
+
+    @Step
+    public void setInputTestRecordField(String field, String country) {
+        techRecordPage.setInputTechRecordField(field, country);
+    }
+
+    @Step
+    public void setRadioButtonTestRecordField(String field, String value) {
+        techRecordPage.setRadioButtonTechRecordField(field, value);
+    }
+
+    @Step
+    public void setSelectTestRecordField(String field, String value) {
+        techRecordPage.setSelectTechRecordField(field, value);
+    }
+
+    @Step
+    public void checkAllSectionsAreExpanded() {
+        techRecordPage.checkAllSectionsAreExpanded();
+    }
+
+    @Step
+    public void checkTextIsPresentInSection(String text, String section) {
+        techRecordPage.checkTextIsPresentInSection(text, section);
+    }
+
+    @Step
+    public void checkTextIsNotPresentInSection(String text, String section) {
+        techRecordPage.checkTextIsNotPresentInSection(text, section);
+    }
+
+    @Step
+    public void checkSectionIsNotPresent(String section) {
+        techRecordPage.checkSectionIsNotPresent(section);
     }
 }

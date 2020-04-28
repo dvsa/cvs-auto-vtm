@@ -19,7 +19,7 @@ Feature: VTM headers and footers - CVSB-7409
   AC9 - User clicks 'Vehicle testing management' in the header
     # AC1
     Then the header title should be "Vehicle testing management"
-    And the header should contain user name "VTM Admin1"
+    And the header should contain the admin user name
     And the header should contain "Sign out"
     # AC2
     Then the footer should contain "Privacy notice"
