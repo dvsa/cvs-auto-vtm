@@ -1,4 +1,4 @@
-Feature: Search tech record - CVSB-10052
+Feature: Search tech record - CVSB-7414
   As an admin user I can log in the VTM app
   And search for tech records using Vin, primary Vrm, partial Vin or trailerId
 
@@ -10,8 +10,7 @@ Feature: Search tech record - CVSB-10052
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
 
-  @skip
-  # because search is covered in tests for CVSB-11329
+
   Scenario: Search using full vin
   AC2 - User Searches For Technical Records Using Full VIN
   AC4 - User Searches For Technical Records Using Partial VIN
@@ -21,26 +20,45 @@ Feature: Search tech record - CVSB-10052
     #search using full VIN
     When I search for vehicle with identifier "P012301230000"
     Then wait until I see "CT70000"
-    When I go back to search page
+    When I click "Back" link
     Then I should see "Search for a technical record"
     #search using partial VIN
     When I search for vehicle with identifier "230000"
     Then wait until I see "CT70000"
-    When I go back to search page
+    When I click "Back" link
     Then I should see "Search for a technical record"
     #search using primary VRM
     When I search for vehicle with identifier "CT70001"
     Then wait until I see "P012301230001"
-    When I go back to search page
-    Then I should see "Search for a technical record"
-    #search using primary VRM in Z number format
-    When I search for vehicle with identifier "112233Z"
-    Then wait until I see "P1234567890123"
-    When I go back to search page
+    When I click "Back" link
     Then I should see "Search for a technical record"
     #search using trailer id
     When I search for vehicle with identifier "C123456"
     Then wait until I see "T12111000"
+    #search using primary VRM
+    When I click "Back" link
+    And I select "Vehicle registration mark (VRM)" search criteria
+    And I search for vehicle with identifier "CT70001"
+    Then wait until I see "P012301230001"
+    When I click "Back" link
+    Then I should see "Search for a technical record"
+    #search using full VIN
+    And I select "Full vehicle identification number (VIN)" search criteria
+    And I search for vehicle with identifier "P012301230000"
+    Then wait until I see "CT70000"
+    When I click "Back" link
+    Then I should see "Search for a technical record"
+    #search using partial VIN
+    And I select "Partial VIN (last 6 characters)" search criteria
+    And I search for vehicle with identifier "230000"
+    Then wait until I see "CT70000"
+    When I click "Back" link
+    Then I should see "Search for a technical record"
+    #search using trailer id
+    And I select "Trailer ID" search criteria
+    And I search for vehicle with identifier "C123456"
+    Then wait until I see "T12111000"
+
 
   Scenario: Search technical record negative scenarios
   AC9 - User Searches For Technical Records Without Entering Any Search Criteria

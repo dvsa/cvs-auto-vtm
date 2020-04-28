@@ -11,7 +11,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     Then I should see "Search for a technical record"
     Then search vehicle input field should be present
 
-
+  
   Scenario: As the DVSA, we want to be able to search for a vehicle using all possible search criterion
   AC1 - The search criteria selectors are displayed on the search screen
   AC2 - User selects the search criteria
@@ -26,35 +26,35 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "random"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
     When I select "Vehicle registration mark (VRM)" search criteria
     Then "Vehicle registration mark (VRM)" search option should be selected
     # search by entering random string using just VRM as search criteria
     When I search for vehicle using wrong identifier "random"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
     When I select "Full vehicle identification number (VIN)" search criteria
     Then "Full vehicle identification number (VIN)" search option should be selected
     # search by entering random string using just VIN as search criteria
     When I search for vehicle using wrong identifier "random"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
     When I select "Partial VIN (last 6 characters)" search criteria
     Then "Partial VIN (last 6 characters)" search option should be selected
     # search by entering random string using just partial VIN as search criteria
     When I search for vehicle using wrong identifier "random"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
     When I select "Trailer ID" search criteria
     Then "Trailer ID" search option should be selected
     # search by entering random string using just Trailer ID as search criteria
     When I search for vehicle using wrong identifier "random"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
 
 
   Scenario: As the DVSA, we want to be able to search for a vehicle using all possible search criterion
@@ -85,7 +85,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "VIN1"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
 
     # using primary vrm as search criteria
     When I select "Vehicle registration mark (VRM)" search criteria
@@ -99,7 +99,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
 
     # using VIN as search criteria
     When I select "Full vehicle identification number (VIN)" search criteria
@@ -113,7 +113,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "AD35GHT"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
 
     # using partial VIN as search criteria
     When I select "Partial VIN (last 6 characters)" search criteria
@@ -127,7 +127,7 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
 
     # using trailer id as search criteria
     When I select "Trailer ID" search criteria
@@ -141,4 +141,4 @@ Feature: Search for vehicle in VTM when the full VIN is less than 9 characters -
     When I search for vehicle using wrong identifier "P012301230123"
     Then the header error contains "There is a problem"
     And the header error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"
-    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change\nthe search criteria to find a vehicle"
+    And the specific error contains "Vehicle not found, check the vehicle registration mark, trailer ID, vehicle identification number or change the search criteria to find a vehicle"

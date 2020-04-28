@@ -39,26 +39,11 @@ drivers {
 # This section defines environment-specific configuration for different environments.
 # You can define normal Serenity properties, such as webdriver.base.url, or custom ones
 # You can find more details about this feature at https://johnfergusonsmart.com/environment-specific-configuration-in-serenity-bdd/
-#
+# The webdriver.base.url needs to be changed depending on what branch we want to run our tests
 
 environments {
   default {
     webdriver.base.url = "http://localhost:4200"
-  }
-  local {
-    webdriver.base.url = "http://localhost:4200"  # the environment we use to run test on the local test environment
-  }
-  feature {
-    webdriver.base.url = <feature_branch_test_env_url>
-  }
-  devops {
-    webdriver.base.url = <devops_test_env_url>
-  }
-  develop {
-    webdriver.base.url = <develop_test_env_url>
-  }
-  prod {
-    webdriver.base.url = ""
   }
 }
 ````
@@ -74,10 +59,12 @@ environments {
 ````
 webdriver.driver=provided
 webdriver.provided.type=mydriver
-webdriver.provided.mydriver=util.DriverSourceImp
+webdriver.provided.mydriver=util.DriverSourceImpl
+thucydides.driver.capabilities = mydriver
 ````
 
 B. For running tests from local machine on browserstack
+* Make sure the four lines listed above are not commented out in serenity.properties
 * Create a file in ````src/main/resources/conf```` called ````enviroment.properties```` containing the following lines:
 ````
 #localBrowserstack
@@ -87,12 +74,16 @@ browserstack.password=<password>
 browserstack.hostname=hub-cloud.browserstack.com
 browserstack.os=Windows
 browserstack.os.version=10
-#accepted values for browser: Chrome, Firefox, Edge, IE
+#accepted values for browser: Chrome, Firefox, Edge
 browserstack.browser=Chrome
-browserstack.browser.version=77.0
+# check for browserstack supported versions per browser depending on OS(Windows) and OS version(10) on 
+# https://www.browserstack.com/automate/capabilities
+browserstack.browser.version=<browser.version>
 browserstack.local=false
-browserstack.selenium.version=3.10.0
+browserstack.selenium.version=3.141.0
 local.name=<name> #everyone should put their own name so the test run on browserstack is easier to identify
 app.username=<username> #username used for the microsoft login
 app.password=<password> #password used for the microsoft login
+microsoftonline.url=<url> # url for retrieving auth token needed for performing BE requests
+base.path.url=<api_url> # base url for performing BE requests in order to create test data
 ````

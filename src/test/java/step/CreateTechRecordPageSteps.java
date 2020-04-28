@@ -21,37 +21,37 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void selectVehicleType(String vehicleType) throws Exception {
+    public void selectVehicleType(String vehicleType) {
         createTechRecordPage.selectVehicleType(vehicleType);
     }
 
     @Step
-    public void specificErrorContains(String errorType, String text) throws Exception {
+    public void specificErrorContains(String errorType, String text) {
         createTechRecordPage.specificErrorContains(errorType, text);
     }
 
     @Step
-    public void checkInputFieldText(String text, String input) throws Exception {
+    public void checkInputFieldText(String text, String input) {
         createTechRecordPage.checkInputFieldText(text, input);
     }
 
     @Step
-    public void checkNotInputFieldText(String text, String input) throws Exception {
+    public void checkNotInputFieldText(String text, String input) {
         createTechRecordPage.checkNotInputFieldText(text, input);
     }
 
     @Step
-    public void checkInputDescription(String text, String field) throws Exception {
+    public void checkInputDescription(String text, String field) {
         createTechRecordPage.checkInputDescription(text, field);
     }
 
     @Step
-    public void checkNotInputDescription(String text, String field) throws Exception{
+    public void checkNotInputDescription(String text, String field) {
         createTechRecordPage.checkNotInputDescription(text, field);
     }
 
     @Step
-    public void checkNoSpecificErrorForField(String fieldType) throws Exception {
+    public void checkNoSpecificErrorForField(String fieldType) {
         createTechRecordPage.checkNoSpecificErrorForField(fieldType);
     }
 

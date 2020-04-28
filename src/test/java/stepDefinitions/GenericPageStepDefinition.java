@@ -35,7 +35,7 @@ public class GenericPageStepDefinition {
     @Then("^I wait (\\d+) seconds$")
     public void iWaitSeconds(int seconds) {
         try {
-            Thread.sleep(seconds*1000);
+            Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

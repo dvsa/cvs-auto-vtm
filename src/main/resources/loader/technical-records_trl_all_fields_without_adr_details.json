@@ -37,31 +37,31 @@
       "departmentalVehicleMarker": true,
       "authIntoService": {
         "cocIssueDate": "2019-06-25",
-        "dateReceived": "2019-06-25",
-        "datePending": "2019-06-25",
-        "dateAuthorised": "2019-06-25",
-        "dateRejected": "2019-06-25"
+        "dateReceived": "2019-06-09",
+        "datePending": "2019-06-26",
+        "dateAuthorised": "2019-06-27",
+        "dateRejected": "2019-06-28"
       },
       "lettersOfAuth": {
         "letterType": "Trailer rejection",
-        "letterDateRequested": "2019-06-25",
-        "letterContents": "other"
+        "letterDateRequested": "2019-06-24",
+        "letterContents": "letter contents"
       },
-      "approvalType": "ECTA",
-      "approvalTypeNumber": "12345",
-      "ntaNumber": "12345",
-      "variantNumber": "12345",
-      "variantVersionNumber": "12345",
+      "approvalType": "NTA",
+      "approvalTypeNumber": "123",
+      "ntaNumber": "1234",
+      "variantNumber": "123456",
+      "variantVersionNumber": "1234567",
       "make": "Volvo",
       "model": "X6",
       "bodyType": {
         "description": "tipper"
       },
       "functionCode": "R",
-      "conversionRefNo": "123456",
+      "conversionRefNo": "12345678",
       "grossGbWeight": 40000,
-      "grossEecWeight": 40000,
-      "grossDesignWeight": 40000,
+      "grossEecWeight": 41000,
+      "grossDesignWeight": 42000,
       "tyreUseCode": "2C",
       "axles": [
         {
@@ -69,7 +69,7 @@
           "axleNumber": 1,
           "brakes": {
             "brakeActuator": 150,
-            "leverLength": 150,
+            "leverLength": 151,
             "springBrakeParking": false
           },
           "tyres": {
@@ -81,8 +81,8 @@
           },
           "weights": {
             "designWeight": 10000,
-            "eecWeight": 10000,
-            "gbWeight": 10000
+            "eecWeight": 11000,
+            "gbWeight": 12000
           }
         }
       ],
@@ -102,40 +102,40 @@
       "couplingCenterToRearAxleMax": 900,
       "couplingCenterToRearTrlMin": 800,
       "couplingCenterToRearTrlMax": 700,
-      "centreOfRearmostAxleToRearOfTrl": 1000,
+      "centreOfRearmostAxleToRearOfTrl": 600,
       "applicantDetails": {
-        "address1": "*****",
-        "address2": "*****",
-        "address3": "*****",
-        "name": "************",
-        "postCode": "*****",
-        "postTown": "*",
-        "telephoneNumber": "**************",
-        "emailAddress": "*************"
+        "address1": "applicant address 1",
+        "address2": "applicant address 2",
+        "address3": "applicant address 3",
+        "name": "applicant name",
+        "postCode": "PO16 7GZ",
+        "postTown": "applicant post town",
+        "telephoneNumber": "123456",
+        "emailAddress": "test@test.com"
       },
       "purchaserDetails": {
-        "address1": "*****",
-        "address2": "*****",
-        "address3": "*****",
-        "name": "************",
-        "postCode": "*****",
-        "postTown": "*",
-        "telephoneNumber": "**************",
-        "emailAddress": "*************",
-        "faxNumber": "************",
-        "purchaserNotes": "**************"
+        "address1": "purchaser address 1",
+        "address2": "purchaser address 2",
+        "address3": "purchaser address 3",
+        "name": "purchaser name",
+        "postCode": "PO16 7GA",
+        "postTown": "purchaser post town",
+        "telephoneNumber": "12345678",
+        "emailAddress": "test1@test1.com",
+        "faxNumber": "87654321",
+        "purchaserNotes": "purchaser notes"
       },
       "manufacturerDetails": {
-        "address1": "*****",
-        "address2": "*****",
-        "address3": "*****",
-        "name": "************",
-        "postCode": "*****",
-        "postTown": "*",
-        "telephoneNumber": "**************",
-        "emailAddress": "*************",
-        "faxNumber": "************",
-        "manufacturerNotes": "**************"
+        "address1": "manufacturer address 1",
+        "address2": "manufacturer address 2",
+        "address3": "manufacturer address 3",
+        "name": "manufacturer name",
+        "postCode": "PO16 7GB",
+        "postTown": "manufacturer post town",
+        "telephoneNumber": "1234567890",
+        "emailAddress": "test2@test2.com",
+        "faxNumber": "0987654321",
+        "manufacturerNotes": "manufacturer notes"
       },
       "microfilm": {
         "microfilmDocumentType": "PSV Miscellaneous",
