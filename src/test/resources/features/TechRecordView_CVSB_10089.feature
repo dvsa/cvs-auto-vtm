@@ -86,7 +86,7 @@ Feature: Search tech record - CVSB-10089
        | notes                               | test note            |
        | testCode-tRes-0-tType-0             | Aav2                 |
        | testTypeEndTimestamp-tRes-0-tType-0 | 14/01/2019           |
-       | expiryDate-tRes-0-tType-0           | 17/01/2019           |
+       | expiryDate-tRes-0-tType-0           | 09/01/2019           |
        | certificateNumber-tRes-0-tType-0    | 123412345            |
        | testResult-tRes-0-tType-0           | PRS                  |
        | testCode-tRes-1-tType-0             | Aav2                 |
@@ -284,7 +284,7 @@ Feature: Search tech record - CVSB-10089
       | testTypeEndTimestamp-tRes-0-tType-0 | 14/01/2019   |
       # expiryDate and certificateNumber for this test are both null in Dynamo
       | expiryDate-tRes-0-tType-0           | 30/01/2019   |
-      | certificateNumber-tRes-0-tType-0    | 12343489             |
+      | certificateNumber-tRes-0-tType-0    | 12343489     |
       | testResult-tRes-0-tType-0           | FAIL         |
       | testCode-tRes-1-tType-0             | Aav2         |
       | testTypeEndTimestamp-tRes-1-tType-0 | 14/01/2019   |
