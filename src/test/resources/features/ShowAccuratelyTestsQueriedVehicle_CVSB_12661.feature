@@ -10,6 +10,7 @@ Feature: Show test accurately for queried vehicle -CVSB-12661
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
 
+  @bug @cvsb-14913
   Scenario: Search vehicle with multiple test results with same system number and different vins
   AC1 - User Searches For Vehicle With Multiple Test Results Having Same System Number And Different Vins
     # search using VIN

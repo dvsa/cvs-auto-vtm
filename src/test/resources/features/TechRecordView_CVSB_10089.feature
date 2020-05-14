@@ -11,7 +11,7 @@ Feature: Search tech record - CVSB-10089
     When I go to search tech record page
     Then search vehicle input field should be present
 
-
+   @bug @cvsb-14913
    Scenario: Search using vin for HGV with current, provisional and archived tech records
    AC1 - After searching, technical record with status "current" is displayed if it exists for this vehicle in DynamoDB
    AC4 - HGV tech records are structured correctly
@@ -123,7 +123,7 @@ Feature: Search tech record - CVSB-10089
      When I close "Vehicle summary" section
      Then I should not see "Vehicle type"
 
-
+   @bug @cvsb-14913
    Scenario: Search using primary vrm for HGV with only archived tech records
    AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle only has technical records with status "archived" in DynamoDB
    AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
@@ -207,7 +207,7 @@ Feature: Search tech record - CVSB-10089
        | createdByName-2                     | -                   |
        | createdAt-2                         | 23/06/2019          |
 
-
+  @bug @cvsb-14913
   Scenario: Search using trailer id for TRL with a provisional and an archived tech record
   AC2 - After searching, technical record with status "provisional" is displayed, if this vehicle does not have a technical record with status "current" in DynamoDB
   AC4 - TRL tech records are structured correctly
