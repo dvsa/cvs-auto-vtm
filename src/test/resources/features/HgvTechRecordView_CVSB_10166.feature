@@ -1,6 +1,6 @@
 Feature: Show technical record accurately for queried hgv - CVSB-10166
   As an admin user I can log in the VTM app
-  And view the details of the technical records belonging to the queried trailer
+  And view the details of the technical records belonging to the queried psv
 
   Background:
     Given I login with admin credentials
@@ -240,3 +240,4 @@ Feature: Show technical record accurately for queried hgv - CVSB-10166
       | plateIssuer-1                    | Mr Johnson                                    |
       | plateIssueDate-1                 | 01/01/2020                                    |
     And I should not see "Speed category symbol"
+    And I should see "Type approval"

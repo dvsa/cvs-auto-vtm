@@ -749,6 +749,7 @@ public class GenericBackendRequestPage extends PageObject {
 
         // read post request body from file
         String postRequestBody = GenericData.readJsonValueFromFile("test-results_psv.json","$");
+
         String testResultId = UUID.randomUUID().toString();
         // create alteration to change testStatus
         JsonPathAlteration alterationTestStatus =
@@ -765,18 +766,23 @@ public class GenericBackendRequestPage extends PageObject {
         String expiryDate = currentDate.plusYears(1).format(formatter);
         // create alteration to change testStartTimestamp
         JsonPathAlteration alterationTestStartTimestamp =
-                new JsonPathAlteration("$.testTypes[0].testStartTimestamp", currentDate.format(formatter),"","REPLACE");
+                new JsonPathAlteration("$.testStartTimestamp", currentDate.format(formatter),"","REPLACE");
         // create alteration to change testEndTimestamp
         JsonPathAlteration alterationTestEndTimestamp =
-                new JsonPathAlteration("$.testTypes[0].testEndTimestamp", endDate,"","REPLACE");
+                new JsonPathAlteration("$.testEndTimestamp", endDate,"","REPLACE");
         JsonPathAlteration alterationTestTypeStartTimestamp =
                 new JsonPathAlteration("$.testTypes[0].testTypeStartTimestamp", currentDate.format(formatter),"","REPLACE");
         // create alteration to change testTypeEndTimestamp
         JsonPathAlteration alterationTestTypeEndTimestamp =
                 new JsonPathAlteration("$.testTypes[0].testTypeEndTimestamp", endDate,"","REPLACE");
-        // create alteration to change testTypeEndTimestamp
+        // create alteration to change testExpiryDate
         JsonPathAlteration alterationTestExpiryDate =
                 new JsonPathAlteration("$.testTypes[0].testExpiryDate", expiryDate,"","REPLACE");
+        if (!(testResult.toLowerCase().contentEquals("pass"))) {
+            alterationTestExpiryDate = new JsonPathAlteration("$.testTypes[0].testExpiryDate",
+                    "","","DELETE");
+        }
+
 
         // create alteration to change systemNumber
         JsonPathAlteration alterationSystemNumber =
@@ -785,12 +791,13 @@ public class GenericBackendRequestPage extends PageObject {
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", vin,"","REPLACE");
         // create alteration to change vrm
         JsonPathAlteration alterationVrm = new JsonPathAlteration("$.vrm", vrm,"","REPLACE");
+
         // create alteration to change noOfaxles
         JsonPathAlteration alterationNoOfAxles =
                 new JsonPathAlteration("$.noOfAxles", noOfAxles,"","REPLACE");
         // create alteration to change vehicleClass.code
         JsonPathAlteration alterationVehicleClassCode =
-                new JsonPathAlteration("$.vehicleClass.code", vehicleClassDescription,"","REPLACE");
+                new JsonPathAlteration("$.vehicleClass.code", vehicleClassCode,"","REPLACE");
         // create alteration to change vehicleClass.description
         JsonPathAlteration alterationVehicleClassDescription =
                 new JsonPathAlteration("$.vehicleClass.description", vehicleClassDescription,"","REPLACE");
@@ -809,19 +816,21 @@ public class GenericBackendRequestPage extends PageObject {
         // create alteration to change regnDate
         JsonPathAlteration alterationRegnDate = new JsonPathAlteration("$.regnDate", regnDate,"","REPLACE");
 
-
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationTestStatus, alterationTestResultId,
                 alterationTestResult, alterationSystemNumber, alterationVin, alterationVrm, alterationNoOfAxles,
-                alterationVehicleClassCode, alterationVehicleClassDescription, alterationVehicleType, alterationVehicleConfiguration,
-                alterationEuVehicleCategory, alterationNumberOfWheelsDriven, alterationRegnDate, alterationTestExpiryDate));
+                alterationVehicleClassCode, alterationVehicleClassDescription, alterationVehicleType,
+                alterationVehicleConfiguration, alterationEuVehicleCategory, alterationNumberOfWheelsDriven, alterationRegnDate,
+                alterationTestExpiryDate, alterationTestStartTimestamp, alterationTestEndTimestamp, alterationTestTypeStartTimestamp,
+                alterationTestTypeEndTimestamp));
+
         if (testResult.toLowerCase().contentEquals("abandoned")) {
             // create alteration to change reasonForAbandoning
             JsonPathAlteration alterationReasonForAbandoning = new JsonPathAlteration("$.testTypes[0].reasonForAbandoning",
-                    "reason fo abandoning","","REPLACE");
+                    "reason for abandoning","","REPLACE");
             // create alteration to change additionalCommentsForAbandon
             JsonPathAlteration alterationAdditionalCommentsForAbandon = new JsonPathAlteration("$.testTypes[0].additionalCommentsForAbandon",
-                    "additional comment for abandon","","REPLACE");
+                    "additional comments for abandon","","REPLACE");
             alterations.add(alterationReasonForAbandoning);
             alterations.add(alterationAdditionalCommentsForAbandon);
         }
@@ -867,6 +876,7 @@ public class GenericBackendRequestPage extends PageObject {
             }
         }
 
+
         String alteredBody = GenericData.applyJsonAlterations(postRequestBody, alterations);
 
 
@@ -877,6 +887,7 @@ public class GenericBackendRequestPage extends PageObject {
                 .body(alteredBody)
                 .log().method().log().uri().log().body()
                 .post(TypeLoader.getBasePathUrl() + "/test-results");
+        response.prettyPrint();
         if (response.getStatusCode() == 401 || response.getStatusCode() == 403) {
             response = given()
                     .headers(
@@ -886,8 +897,8 @@ public class GenericBackendRequestPage extends PageObject {
                     .body(alteredBody)
                     .log().method().log().uri().log().body()
                     .post(TypeLoader.getBasePathUrl() + "/test-results");
+            response.prettyPrint();
         }
-        response.prettyPrint();
         Assert.assertEquals(response.statusCode(), 201);
 
         Response getRequestResponse = given().headers(
@@ -915,8 +926,6 @@ public class GenericBackendRequestPage extends PageObject {
                 (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testCode");
         testTypeName = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testTypeName");
-        testTypeName = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testTypeName");
         testStartTimestamp = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].testStartTimestamp");
         testEndTimestamp = GenericData.extractStringValueFromJsonString
@@ -925,10 +934,29 @@ public class GenericBackendRequestPage extends PageObject {
                 (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testTypeStartTimestamp");
         testTypeEndTimestamp = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testTypeEndTimestamp");
-        testExpiryDate = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testExpiryDate");
-        testAnniversaryDate = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testAnniversaryDate");
+        try {
+            testExpiryDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testExpiryDate");
+        } catch (PathNotFoundException pathNotFoundException) {
+            System.out.println("'testExpiryDate' field is not present because it is not applicable");
+            testExpiryDate = "-";
+        }
+        try {
+            testExpiryDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testExpiryDate");
+        } catch (PathNotFoundException pathNotFoundException) {
+            System.out.println("'testExpiryDate' field is not present because it is not applicable");
+            testExpiryDate = "-";
+        }
+        try {
+            testAnniversaryDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].testTypes[0].testAnniversaryDate");
+        } catch (PathNotFoundException pathNotFoundException) {
+            System.out.println("'testAnniversaryDate' field is not present because it is not applicable");
+            testAnniversaryDate = "-";
+        }
+        certificateNumber = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].testTypes[0].certificateNumber");
     }
 
     public String getNewVehicleAttribute(String attribute) {
