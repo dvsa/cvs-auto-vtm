@@ -170,7 +170,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       # Tech record history subsection
       | statusCode-0                  | Provisional                        |
       | reasonForCreation-0           | Cvsb-10084                         |
-      | createdByName-0               | Vtm-admin1@dvsagov.onmicrosoft.com |
+      | createdByName-0               | VTM_USER_EMAIL                     |
       | createdAt-0                   | TODAYS_DATE                        |
       | statusCode-1                  | Archived                           |
       | reasonForCreation-1           | Something                          |
@@ -483,13 +483,9 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       # Tech record history subsection
       | statusCode-0                  | Provisional                        |
       | reasonForCreation-0           | Cvsb-10084                         |
-      | createdByName-0               | Vtm-admin1@dvsagov.onmicrosoft.com |
+      | createdByName-0               | VTM_USER_EMAIL                     |
       | createdAt-0                   | TODAYS_DATE                        |
       | statusCode-1                  | Archived                           |
       | reasonForCreation-1           | Something                          |
       | createdByName-1               | Sean                               |
       | createdAt-1                   | TODAYS_DATE                        |
-
-
-
-
