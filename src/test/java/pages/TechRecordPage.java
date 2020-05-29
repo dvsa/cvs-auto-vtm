@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.*;
+import util.TypeLoader;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1093,6 +1094,9 @@ public class TechRecordPage extends GenericPage {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 value = dateFormat.format(date);
+            }
+            if (value.equals("VTM_USER_EMAIL")) {
+                value = TypeLoader.getAppUsername().substring(0, 1).toUpperCase() + TypeLoader.getAppUsername().substring(1);
             }
             if (StringUtils.isNumeric(value)) {
                 Assert.assertTrue(getValueInTechRecordField(field).contentEquals(value));
