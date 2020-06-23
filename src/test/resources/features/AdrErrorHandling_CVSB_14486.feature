@@ -24,7 +24,7 @@ Feature: ADR error handling for initial release - CVSB-14486
     Then I should see "Change technical record"
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     # AC2
     And I fill in applicant name with ""
     # AC1
@@ -33,8 +33,8 @@ Feature: ADR error handling for initial release - CVSB-14486
     # And I fill in tank year of manufacture with "201O"
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-14486" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-14486" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should see "Save technical record"
     And I should see "There is a problem"
     And I should see error message ""adrDetails.applicantDetails.name" is not allowed to be empty"

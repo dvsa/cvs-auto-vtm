@@ -59,7 +59,7 @@ Feature: Select correct vehicle when multiple vehicles are returned following a 
     # AC4 + AC5
     When I click link to select technical record with index 1
     Then I should see "Change technical record"
-    When I open all sections
+    When I open all tech record sections
     Then tech record fields should have values
       | Field               | Value        |
       | status              | Provisional  |
@@ -82,7 +82,7 @@ Feature: Select correct vehicle when multiple vehicles are returned following a 
     Then I should see "Multiple technical records found matching this search"
     When I click link to select technical record with index 2
     Then I should see "Change technical record"
-    When I open all sections
+    When I open all tech record sections
     Then tech record fields should have values
       | Field               | Value        |
       | status              | Current      |
@@ -105,7 +105,7 @@ Feature: Select correct vehicle when multiple vehicles are returned following a 
     Then I should see "Multiple technical records found matching this search"
     When I click link to select technical record with index 3
     Then I should see "Change technical record"
-    When I open all sections
+    When I open all tech record sections
     Then tech record fields should have values
       | Field               | Value        |
       | status              | Archived     |

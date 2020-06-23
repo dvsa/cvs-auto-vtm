@@ -1,4 +1,4 @@
-Feature: Adr details array appending - CVSB-11030
+Feature: Supported file types upload/download - CVSB-11030
   As an admin user I can download any file type
   After I previously upload them
 
@@ -21,7 +21,7 @@ Feature: Adr details array appending - CVSB-11030
     Then I should see "Change technical record"
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then I should see "Upload document"
     And I upload adr document "sample.pdf"
     Then I confirm adr document "sample.pdf" is uploaded
@@ -51,8 +51,8 @@ Feature: Adr details array appending - CVSB-11030
     Then I confirm adr document "example.zip" is uploaded
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-11030" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-11030" as reason for tech record changes
+    And I confirm saving the tech record changes
     Then I should not see "Save technical record"
     And I should not see "There is a problem"
     And I confirm adr document "sample.pdf" is added on the tank details

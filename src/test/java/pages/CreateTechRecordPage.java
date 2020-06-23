@@ -1,9 +1,13 @@
 package pages;
 
+import exceptions.AutomationException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class CreateTechRecordPage extends GenericPage {
 
@@ -28,7 +32,7 @@ public class CreateTechRecordPage extends GenericPage {
         findElementByCss(VRM_INPUT).sendKeys(vrm);
     }
 
-    public void selectVehicleType(String vehicleType) throws Exception {
+    public void selectVehicleType(String vehicleType) {
         String option = vehicleType.toLowerCase();
         switch (option) {
             case "hgv":
@@ -41,12 +45,11 @@ public class CreateTechRecordPage extends GenericPage {
                 findElementByCss(TRAILER_VEHICLE_TYPE).click();
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid vehicle type");
+                throw new AutomationException("Invalid vehicle type " + vehicleType);
         }
     }
 
-    public void specificErrorContains(String errorType, String text) throws Exception {
+    public void specificErrorContains(String errorType, String text) {
         String option = errorType.toLowerCase();
         switch (option) {
             case "vehicle type":
@@ -65,86 +68,115 @@ public class CreateTechRecordPage extends GenericPage {
                         until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(VRM_ERROR), text));
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid error type");
+                throw new AutomationException("Invalid error type " + errorType);
         }
     }
 
-    public void checkInputFieldText(String text, String input) throws Exception {
+    public void checkInputFieldText(String text, String input) {
         String option = input.toLowerCase();
         switch (option) {
             case "vin":
-                Assert.assertTrue(findElementByCss(VIN_INPUT).getAttribute("value").contains(text));
+                Assert.assertTrue("Value for field vin is '" + findElementByCss(VIN_INPUT).getAttribute("value")
+                        + "' and does not contain '" + text + "'", findElementByCss(VIN_INPUT).getAttribute("value").contains(text));
                 break;
             case "vrm":
-                Assert.assertTrue(findElementByCss(VRM_INPUT).getAttribute("value").contains(text));
+                Assert.assertTrue("Value for field vrm is '" + findElementByCss(VRM_INPUT).getAttribute("value")
+                        + "' and does not contain '" + text + "'", findElementByCss(VRM_INPUT).getAttribute("value").contains(text));
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid input type");
+                throw new AutomationException("Invalid input type " + input);
         }
     }
 
-    public void checkNotInputFieldText(String text, String input) throws Exception {
+    public void checkNotInputFieldText(String text, String input) {
         String option = input.toLowerCase();
         switch (option) {
             case "vin":
-                Assert.assertFalse(findElementByCss(VIN_INPUT).getAttribute("value").contains(text));
+                Assert.assertFalse("Value for field vin is '" + findElementByCss(VIN_INPUT).getAttribute("value")
+                        + "' and it contains '" + text + "'", findElementByCss(VIN_INPUT).getAttribute("value").contains(text));
                 break;
             case "vrm":
-                Assert.assertFalse(findElementByCss(VRM_INPUT).getAttribute("value").contains(text));
+                Assert.assertFalse("Value for field vrm is '" + findElementByCss(VRM_INPUT).getAttribute("value")
+                        + "' and it contains '" + text + "'", findElementByCss(VRM_INPUT).getAttribute("value").contains(text));
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid input type");
+                throw new AutomationException("Invalid input type " + input);
         }
     }
 
-    public void checkNotInputDescription(String description, String inputField) throws Exception {
+    public void checkNotInputDescription(String description, String inputField) {
         String option = inputField.toLowerCase();
         switch (option) {
             case "vin":
-                Assert.assertFalse(findElementByCss(VIN_LABEL).getText().contains(description));
+                Assert.assertFalse("Description for field vin is '" + findElementByCss(VIN_LABEL).getText()
+                        + "' and it contains '" + description + "'", findElementByCss(VIN_LABEL).getText().contains(description));
                 break;
             case "vrm":
-                Assert.assertFalse(findElementByCss(VRM_LABEL).getText().contains(description));
+                Assert.assertFalse("Description for field vrm is '" + findElementByCss(VRM_LABEL).getText()
+                        + "' and it contains '" + description + "'", findElementByCss(VRM_LABEL).getText().contains(description));
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid input field type");
+                throw new AutomationException("Invalid input field type " + inputField);
         }
     }
 
-    public void checkInputDescription(String description, String inputField) throws Exception {
+    public void checkInputDescription(String description, String inputField) {
         String option = inputField.toLowerCase();
         switch (option) {
             case "vin":
-                Assert.assertTrue(findElementByCss(VIN_LABEL).getText().contains(description));
+                Assert.assertTrue("Description for field vin is '" + findElementByCss(VIN_LABEL).getText()
+                        + "' and does not contain '" + description + "'", findElementByCss(VIN_LABEL).getText().contains(description));
                 break;
             case "vrm":
-                Assert.assertTrue(findElementByCss(VRM_LABEL).getText().contains(description));
+                Assert.assertTrue("Description for field vrm is '" + findElementByCss(VRM_LABEL).getText()
+                        + "' and does not contain '" + description + "'", findElementByCss(VRM_LABEL).getText().contains(description));
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid input field type");
+                throw new AutomationException("Invalid input field type " + inputField);
         }
     }
 
-    public void checkNoSpecificErrorForField(String fieldType) throws Exception {
+    public void checkNoSpecificErrorForField(String fieldType) {
         String option = fieldType.toLowerCase();
         switch (option) {
             case "vehicle type":
-                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR)).size());
+                try {
+                    Assert.assertEquals("Errors regarding vehicle type found", 0, getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR)).size());
+                } catch (AssertionError e) {
+                    List<WebElement> errors = getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR));
+                    for (WebElement error : errors) {
+                        if (error.isDisplayed()) {
+                            throw new AutomationException("Errors regarding vehicle type found");
+                        }
+                    }
+                }
                 break;
             case "vin":
-                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VIN_ERROR)).size());
+                try {
+                    Assert.assertEquals("Errors regarding vin found", 0, getDriver().findElements(By.cssSelector(VIN_ERROR)).size());
+                } catch (AssertionError e) {
+                    List<WebElement> errors = getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR));
+                    for (WebElement error : errors) {
+                        if (error.isDisplayed()) {
+                            throw new AutomationException("Errors regarding vin found");
+                        }
+                    }
+                }
                 break;
             case "vrm":
-                Assert.assertEquals(0, getDriver().findElements(By.cssSelector(VRM_ERROR)).size());
+                try {
+                    Assert.assertEquals("Errors regarding vrm found", 0, getDriver().findElements(By.cssSelector(VRM_ERROR)).size());
+                } catch (AssertionError e) {
+                    List<WebElement> errors = getDriver().findElements(By.cssSelector(VEHICLE_TYPE_ERROR));
+                    for (WebElement error : errors) {
+                        if (error.isDisplayed()) {
+                            throw new AutomationException("Errors regarding vrm found");
+                        }
+                    }
+                }
                 break;
             default:  // should be unreachable!
-                throw new Exception(
-                        "Invalid field type");
+                throw new AutomationException("Invalid field type " + fieldType);
         }
     }
 }

@@ -22,10 +22,10 @@ Feature: Display Adr details - CVSB-10083
     And I should see "ADR" section heading
     Then I should see "Change technical record"
     # AC2 + AC3
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then I should see adr subsections
       | Subsection                     |
-      | Applicant details              |
+      | Owner/operator details         |
       | ADR details                    |
       | Tank details                   |
       | Tank inspections               |
@@ -38,13 +38,13 @@ Feature: Display Adr details - CVSB-10083
     Then tech record fields should have values
       | Field                         | Value                              |
       | ableToCarry                   | Yes                                |
-      # Applicant details subsection
+      # Owner/operator details subsection
       # name and town have multiple empty spaces as value in DynamoDB, while postcode is null in DynamoDb
-      | applicantDetails-name         | -                                  |
-      | applicantDetails-street       | string                             |
-      | applicantDetails-town         | -                                  |
-      | applicantDetails-city         | string                             |
-      | applicantDetails-postcode     | -                                  |
+      | ownerDetails-name             | -                                  |
+      | ownerDetails-street           | string                             |
+      | ownerDetails-town             | -                                  |
+      | ownerDetails-city             | string                             |
+      | ownerDetails-postcode         | -                                  |
       # ADR details subsection
       | ADR-type                      | Centre Axle Tank                   |
       | ADR-approvalDate              | 10/10/2019                         |
@@ -96,17 +96,17 @@ Feature: Display Adr details - CVSB-10083
     Then wait until I see "Technical record"
     And I should see "ADR" section heading
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then tech record fields should have values
       | Field                         | Value                              |
       | ableToCarry                   | Yes                                |
-      # Applicant details subsection
+      # Owner/operator details subsection
       # name and town have multiple empty spaces as value in DynamoDB, while postcode is null in DynamoDb
-      | applicantDetails-name         | Mr A N                             |
-      | applicantDetails-street       | Fox Road                           |
-      | applicantDetails-town         | London                             |
-      | applicantDetails-city         | London                             |
-      | applicantDetails-postcode     | W5 5YZ                             |
+      | ownerDetails-name             | Mr A N                             |
+      | ownerDetails-street           | Fox Road                           |
+      | ownerDetails-town             | London                             |
+      | ownerDetails-city             | London                             |
+      | ownerDetails-postcode         | W5 5YZ                             |
       # ADR details subsection
       | ADR-type                      | Semi Trailer Battery               |
       # approvalDate is null in Dynamo DB
@@ -171,7 +171,7 @@ Feature: Display Adr details - CVSB-10083
     Then wait until I see "Technical record"
     And I should see "ADR" section heading
     Then I should see "Change technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     Then tech record fields should have values
       | Field                         | Value                              |
       # Tank details subsection
@@ -202,13 +202,13 @@ Feature: Display Adr details - CVSB-10083
     Then I should see "Change technical record"
     When I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     When I upload adr document
     Then I confirm adr document is uploaded
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10083" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10083" as reason for tech record changes
+    And I confirm saving the tech record changes
     Then I should not see "Save technical record"
     And I should not see "There is a problem"
     Then I confirm adr document is added on the tank details
@@ -217,12 +217,12 @@ Feature: Display Adr details - CVSB-10083
     Then I should not see "There is a problem"
     And I click the change technical record button
     Then I should see "Save technical record"
-    When I open "ADR" section
+    When I open tech record "ADR" section
     And I remove all adr documents
     When I click the save technical record button
     Then I should see "Enter reason for changing technical record"
-    When I enter "cvsb-10083" as reason for changes
-    And I confirm saving the details
+    When I enter "cvsb-10083" as reason for tech record changes
+    And I confirm saving the tech record changes
     And I should not see "Save technical record"
     Then I confirm adr documents are deleted from the tank details
     Then I should see "-" in the adr "Tank documents" subsection
