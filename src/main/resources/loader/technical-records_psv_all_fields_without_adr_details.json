@@ -32,7 +32,7 @@
       "bodyModel": "X40",
       "modelLiteral": "123",
       "chassisMake": "Isuzu",
-      "chassisModel": "X40",
+      "chassisModel": "X30",
       "functionCode": "R",
       "conversionRefNo": "12346",
       "speedRestriction": 10,
@@ -50,7 +50,7 @@
           },
           "weights": {
             "designWeight": 8000,
-            "gbWeight": 8000,
+            "gbWeight": 7000,
             "kerbWeight": 9999,
             "ladenWeight": 4000
           }
@@ -67,10 +67,10 @@
             "tyreSize": "380/65-22.5"
           },
           "weights": {
-            "designWeight": 7000,
-            "gbWeight": 7000,
-            "kerbWeight": 7000,
-            "ladenWeight": 7000
+            "designWeight": 6000,
+            "gbWeight": 6500,
+            "kerbWeight": 7500,
+            "ladenWeight": 9000
           }
         }
       ],
@@ -89,26 +89,26 @@
           "secondaryBrakeForceB": 6,
           "serviceBrakeForceB": 7
         },
-        "brakeCode": "code",
+        "brakeCode": "brCode",
         "dataTrBrakeOne": "312677",
         "dataTrBrakeTwo": "98765",
-        "dataTrBrakeThree": "98765",
+        "dataTrBrakeThree": "9876543",
         "retarderBrakeOne": "electric",
         "retarderBrakeTwo": "exhaust"
       },
       "dda": {
         "certificateIssued": true,
         "wheelchairCapacity": 20,
-        "wheelchairFittings": "test",
-        "wheelchairLiftPresent": true,
-        "wheelchairLiftInformation": "test",
-        "wheelchairRampPresent": true,
-        "wheelchairRampInformation": "test",
+        "wheelchairFittings": "wheelchair fittings",
+        "wheelchairLiftPresent": false,
+        "wheelchairLiftInformation": "wheelchair lift info",
+        "wheelchairRampPresent": false,
+        "wheelchairRampInformation": "wheelchair ramp info",
         "minEmergencyExits": 1,
-        "outswing": "test",
-        "ddaSchedules": "test",
+        "outswing": "100 cm",
+        "ddaSchedules": "schedule",
         "seatbeltsFitted": 2,
-        "ddaNotes": "test"
+        "ddaNotes": "dda notes"
       },
       "departmentalVehicleMarker": false,
       "alterationMarker": true,
@@ -130,7 +130,7 @@
         "microfilmRollNumber": "55555",
         "microfilmSerialNumber": "4444"
       },
-      "numberOfWheelsDriven": 10,
+      "numberOfWheelsDriven": 4,
       "numberOfSeatbelts": "56",
       "plates": [
         {
@@ -157,8 +157,8 @@
       "seatsLowerDeck": 30,
       "seatsUpperDeck": 26,
       "standingCapacity": 10,
-      "trainDesignWeight": 14000,
-      "unladenWeight": 38000,
+      "trainDesignWeight": 13000,
+      "unladenWeight": 37000,
       "vehicleSize": "large",
       "vehicleClass": {
         "description": "large psv(ie: greater than 23 seats)"

@@ -31,6 +31,11 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void specificErrorNotContains(String errorType, String text) {
+        createTechRecordPage.specificErrorNotContains(errorType, text);
+    }
+
+    @Step
     public void checkInputFieldText(String text, String input) {
         createTechRecordPage.checkInputFieldText(text, input);
     }

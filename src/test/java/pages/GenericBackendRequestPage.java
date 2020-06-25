@@ -7,11 +7,13 @@ import exceptions.AutomationException;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.serenitybdd.core.pages.PageObject;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import util.TypeLoader;
+import util.backend.GenericBackendClient;
 import util.backend.GenericData;
 import util.backend.JsonPathAlteration;
 import util.model.TestTypes;
@@ -26,6 +28,7 @@ import static io.restassured.RestAssured.given;
 
 public class GenericBackendRequestPage extends PageObject {
 
+    private static GenericBackendClient genericBackendClient = new GenericBackendClient();
     private static String token;
     public static String vin;
     public static String vrm;
@@ -53,6 +56,9 @@ public class GenericBackendRequestPage extends PageObject {
     public static String testExpiryDate;
     public static String testAnniversaryDate;
     public static String certificateNumber;
+    public static String testResultId;
+    public static String getTestResults;
+    public static String testerName;
 
     public void createTechRecord(String typeOfVehicle, String withWithoutAdr) {
 
@@ -293,7 +299,7 @@ public class GenericBackendRequestPage extends PageObject {
 
         // read post request body from file
         String postRequestBody = GenericData.readJsonValueFromFile("test-results_" + vehicleType + ".json","$");
-        String testResultId = UUID.randomUUID().toString();
+        testResultId = UUID.randomUUID().toString();
         // create alteration to change testStatus
         JsonPathAlteration alterationTestStatus =
                 new JsonPathAlteration("$.testStatus", testStatus,"","REPLACE");
@@ -422,26 +428,6 @@ public class GenericBackendRequestPage extends PageObject {
             }
         }
 
-//        if (!(GenericData.getTestTypeClassificationByTestCode(testCode).contentEquals("Annual With Certificate"))) {
-//            // create alteration to delete certificateNumber
-//            JsonPathAlteration alterationCertificateNumber = new JsonPathAlteration("$.testTypes[0].certificateNumber",
-//                    null,"","REPLACE");
-//            alterations.add(alterationCertificateNumber);
-//        }
-
-//        if (testCode.contentEquals("qal")) {
-//            // create alteration to delete certificateNumber
-//            JsonPathAlteration alterationCertificateNumber = new JsonPathAlteration("$.testTypes[0].numberOfSeatbeltsFitted",
-//                    null,"","DELETE");
-//            alterations.add(alterationCertificateNumber);
-//            JsonPathAlteration alterationCertificateNumber1 = new JsonPathAlteration("$.testTypes[0].seatbeltInstallationCheckDate",
-//                    null,"","DELETE");
-//            alterations.add(alterationCertificateNumber1);
-//            JsonPathAlteration alterationCertificateNumber2 = new JsonPathAlteration("$.testTypes[0].lastSeatbeltInstallationCheckDate",
-//                    null,"","DELETE");
-//            alterations.add(alterationCertificateNumber2);
-//        }
-
         if (testResult.toLowerCase().contentEquals("abandoned")) {
             // create alteration to change reasonForAbandoning
             JsonPathAlteration alterationReasonForAbandoning = new JsonPathAlteration("$.testTypes[0].reasonForAbandoning",
@@ -560,6 +546,7 @@ public class GenericBackendRequestPage extends PageObject {
             else break;
         }
         getRequestResponse.prettyPrint();
+        getTestResults = getRequestResponse.asString();
         Assert.assertEquals(200, getRequestResponse.statusCode());
 
         testNumber = GenericData.extractStringValueFromJsonString
@@ -597,6 +584,8 @@ public class GenericBackendRequestPage extends PageObject {
         }
         certificateNumber = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].testTypes[0].certificateNumber");
+        testerName = GenericData.extractStringValueFromJsonString
+                (getTestResults, "$[0].testerName");
     }
 
     public String getNewVehicleAttribute(String attribute) {
@@ -624,6 +613,8 @@ public class GenericBackendRequestPage extends PageObject {
         switch (attribute) {
             case "certificateNumber":
                 return certificateNumber;
+            case "testerName":
+                return testerName;
             case "testNumber":
                 return testNumber;
             case "testTypeName":
@@ -682,6 +673,9 @@ public class GenericBackendRequestPage extends PageObject {
                 }
                 else if (attribute.contains("certificateNumber")) {
                     return certificateNumber;
+                }
+                else if (attribute.contains("testerName")) {
+                    return testerName;
                 }
                 else {
                     throw new AutomationException("Invalid test record attribute '" + attribute + "'");
@@ -842,5 +836,31 @@ public class GenericBackendRequestPage extends PageObject {
         }
 
         createTestRecord(status, result, testCode, true);
+    }
+
+    public void updateTestRecord() {
+        String putTestResultPayload = GenericData.readJsonValueFromFile
+                ("test-results_put_" + vehicleType + ".json", "$");
+
+        String testResultObject = GenericData.getJsonObjectInPath(getTestResults, "$[0]");
+        // create alteration to replace the testResult object in the put request payload
+        JsonPathAlteration alterationTestResultObject = new JsonPathAlteration("$.testResult", testResultObject,
+                "","REPLACE");
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationTestResultObject));
+        // add json path alteration for adding the testResultId to the payload for the put request
+        JsonPathAlteration alterationAddTestResultId = new JsonPathAlteration("$.testResult", testResultId, "testResultId",
+                "ADD_FIELD");
+        String  newTesterName = RandomStringUtils.randomAlphabetic(10);
+        // add json path alteration for changing and attribute that triggers the changing of the testCode attribute
+        JsonPathAlteration alterationChangeTesterName = new JsonPathAlteration("$.testResult.testerName",
+                newTesterName, "", "REPLACE");
+        // add json path alteration for changing and attribute that triggers the changing of the testCode attribute
+        JsonPathAlteration alterationChangeAdditionalNotes = new JsonPathAlteration("$.testResult.testTypes[0].additionalNotesRecorded",
+                "new notes", "", "REPLACE");
+        alterations.add(alterationAddTestResultId);
+        alterations.add(alterationChangeTesterName);
+        alterations.add(alterationChangeAdditionalNotes);
+        genericBackendClient.putTestResultsWithAlterationsNo400(token, systemNumber, putTestResultPayload, alterations);
+        testerName = newTesterName;
     }
 }

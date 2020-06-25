@@ -10,8 +10,7 @@ Feature: Search for vehicle before creation - CVSB-10141
     Then I should see "Create new technical record"
     Then vin input field should be present
 
-  @skip
-  # CVSB-10141 is not yet merged in develop
+
   Scenario: As the DVSA, we want to be able to search for a vehicle before creating it to ensure that it does not already exist
   AC1 - User does not successfully proceed (since the VIN already exists on a vehicle stored in CVS)
   AC2 - User does not successfully proceed (since the VRM already exists on a vehicle stored in CVS)
@@ -48,6 +47,7 @@ Feature: Search for vehicle before creation - CVSB-10141
     Then the header error contains "There is a problem"
     And the header error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
     And the specific "vin" error contains "A technical record with this VIN already exists, check the VIN or change the existing technical record"
+    And the specific "vrm" error does not contain "A technical record with this VIN already exists, check the VIN or change the existing technical record"
     # AC2
     When I fill in vin "P012301234567"
     And I fill in vrm "CT70000"
@@ -56,3 +56,4 @@ Feature: Search for vehicle before creation - CVSB-10141
     Then the header error contains "There is a problem"
     And the header error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
     And the specific "vrm" error contains "A technical record with this VRM already exists, check the VRM or change the existing technical record"
+    And the specific "vin" error does not contain "A technical record with this VRM already exists, check the VRM or change the existing technical record"

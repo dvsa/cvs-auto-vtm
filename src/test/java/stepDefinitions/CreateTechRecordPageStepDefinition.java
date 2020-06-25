@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
@@ -33,6 +35,11 @@ public class CreateTechRecordPageStepDefinition {
     @Then("^the specific \"([^\"]*)\" error contains \"([^\"]*)\"$")
     public void specificErrorContains(String errorType, String text) {
         createTechRecordPageSteps.specificErrorContains(errorType, text);
+    }
+
+    @Then("^the specific \"([^\"]*)\" error does not contain \"([^\"]*)\"$")
+    public void specificErrorNotContains(String errorType, String text) {
+        createTechRecordPageSteps.specificErrorNotContains(errorType, text);
     }
 
     @Then("^I should see \"([^\"]*)\" in \"([^\"]*)\" input field$")

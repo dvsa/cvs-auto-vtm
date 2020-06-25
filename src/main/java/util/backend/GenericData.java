@@ -182,6 +182,10 @@ public class GenericData {
         return RandomStringUtils.randomAlphanumeric(new Random().nextInt(6) + 3).toUpperCase();
     }
 
+    public static String generateRandomTrailerId() {
+        return RandomStringUtils.randomAlphabetic(1).toUpperCase() + RandomStringUtils.randomNumeric(6);
+    }
+
     public static String generateRandomVrmForEmailValidations() {
         return "AUT" + RandomStringUtils.randomAlphanumeric(5).toUpperCase();
     }

@@ -278,10 +278,10 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | imNumber-imDescription-0     | 1000. im description 1                  |
       | itemNumber-itemDescription-0 | 1500. item description 1                |
       | deficiencyId-0               | (b) (d) -                               |
-      | location-0                   | -                                       |
+      | location-0                   | Inner/Rear/3/4/1                        |
       | defect-prs-0                 | Yes                                     |
       | prohibition-0                | Yes                                     |
-      | additionalInfo-0             | -                                       |
+      | additionalInfo-0             | Seatbelt broken                         |
       | deficiencyRef-1              | 2000.2500 (a) (m)                       |
       | deficiencyRef-1+span         | MINOR                                   |
       | imNumber-imDescription-1     | 2000. im description 2                  |
@@ -457,10 +457,10 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | imNumber-imDescription-0     | 1000. im description 1                  |
       | itemNumber-itemDescription-0 | 1500. item description 1                |
       | deficiencyId-0               | (b) (d) -                               |
-      | location-0                   | -                                       |
+      | location-0                   | Inner/Rear/3/4/1                        |
       | defect-prs-0                 | Yes                                     |
       | prohibition-0                | Yes                                     |
-      | additionalInfo-0             | -                                       |
+      | additionalInfo-0             | Seatbelt broken                         |
       | deficiencyRef-1              | 2000.2500 (a) (m)                       |
       | deficiencyRef-1+span         | MINOR                                   |
       | imNumber-imDescription-1     | 2000. im description 2                  |

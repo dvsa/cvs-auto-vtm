@@ -37,7 +37,7 @@ public class GenericPage extends PageObject {
     }
 
     public void checkTextIsPresentInPage(String text) {
-        FluentWait wait = globalFluentWait(20, 200);
+        FluentWait wait = globalFluentWait(25, 200);
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
     }
 

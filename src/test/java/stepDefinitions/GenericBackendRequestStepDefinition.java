@@ -34,6 +34,10 @@ public class GenericBackendRequestStepDefinition {
         genericBackendRequestSteps.createTestRecord(testStatus, testResult, testCode, false);
     }
 
+    @When("^I update previously created test record$")
+    public void iUpdatePreviouslyCreatedTestRecord() {
+        genericBackendRequestSteps.updateTestRecord();
+    }
 
     @When("^I create test record with status \"([^\"]*)\" and result \"([^\"]*)\" and test type \"([^\"]*)\" for new \"([^\"]*)\" vehicle$")
     public void iCreateTestRecordWithStatusAndResultAndTestTypeForNewVehicle(String status, String result, String testType,
