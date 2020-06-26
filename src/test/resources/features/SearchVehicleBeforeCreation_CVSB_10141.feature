@@ -10,7 +10,7 @@ Feature: Search for vehicle before creation - CVSB-10141
     Then I should see "Create new technical record"
     Then vin input field should be present
 
-
+  @ci_bug @CVSB-16611
   Scenario: As the DVSA, we want to be able to search for a vehicle before creating it to ensure that it does not already exist
   AC1 - User does not successfully proceed (since the VIN already exists on a vehicle stored in CVS)
   AC2 - User does not successfully proceed (since the VRM already exists on a vehicle stored in CVS)
