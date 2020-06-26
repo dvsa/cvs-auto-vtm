@@ -45,9 +45,15 @@ public class LoginPage extends GenericPage {
     }
 
     public void additionalSignIn() {
-        FluentWait wait = globalFluentWait(10, 250);
-        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss(HEADER), "Stay signed in?"));
-        wait.until(ExpectedConditions.elementToBeClickable(findElementByCss(SIGN_IN)));
-        findElementByCss(SIGN_IN).click();
+        FluentWait wait = globalFluentWait(10, 200);
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        if (getDriver().findElements(By.cssSelector(HEADER)).size() > 0) {
+            wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss(HEADER), "Stay signed in?"));
+            wait.until(ExpectedConditions.elementToBeClickable(findElementByCss(SIGN_IN)));
+            findElementByCss(SIGN_IN).click();
+        }
+        else {
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("p.govuk-heading-xl"), "Select activity"));
+        }
     }
 }
