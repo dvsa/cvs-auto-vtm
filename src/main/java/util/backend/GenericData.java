@@ -174,6 +174,10 @@ public class GenericData {
         return RandomStringUtils.randomAlphanumeric(new Random().nextInt(13) + 3).toUpperCase() + RandomStringUtils.randomNumeric(6);
     }
 
+    public static String generateRandomVinForVehicleType(String vehicleType) {
+        return vehicleType.toUpperCase() + "_" + RandomStringUtils.randomAlphanumeric(new Random().nextInt(5) + 6).toUpperCase();
+    }
+
     public static String generateRandomVrm() {
         return RandomStringUtils.randomAlphanumeric(new Random().nextInt(6) + 3).toUpperCase();
     }
@@ -379,6 +383,16 @@ public class GenericData {
                                     actualRestrictions.put("numberOfWheelsDriven", jsonObject.get(key));
                                 }
                                 break;
+                        }
+                    }
+                    else {
+                        if ((key.contentEquals("forVehicleConfiguration")) &&
+                                (jsonObject.get("forVehicleType").getClass().getName().contentEquals("java.lang.String")) &&
+                                (jsonObject.get("forVehicleType").toString().contentEquals("psv"))) {
+                            String[] configurations = {"rigid", "articulated"};
+                            Random r = new Random();
+                            int randomNumber = r.nextInt(configurations.length);
+                            actualRestrictions.put("vehicleConfiguration", configurations[randomNumber]);
                         }
                     }
                 } catch (JSONException e) {

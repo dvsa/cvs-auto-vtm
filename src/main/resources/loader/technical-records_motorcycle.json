@@ -32,9 +32,7 @@
       "vehicleClass": {
         "description": "motorbikes up to 200cc"
       },
-      "vehicleSubclass": [
-        "m"
-      ]
+      "numberOfWheelsDriven": 2
     }
   ]
 }

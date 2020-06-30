@@ -525,26 +525,7 @@ public class GenericBackendRequestPage extends PageObject {
         response.prettyPrint();
         Assert.assertEquals(201, response.statusCode());
 
-        Response getRequestResponse = given().headers(
-                "Authorization",
-                "Bearer " + token)
-                .contentType(ContentType.JSON)
-                .pathParam("searchIdentifier", systemNumber)
-//                .log().method().log().uri().log().body()
-                .get(TypeLoader.getBasePathUrl() + "/test-results/{searchIdentifier}");
-        for (int i = 0; i < 4; i++) {
-            if (getRequestResponse.getStatusCode() == 401 || getRequestResponse.getStatusCode() == 403 ||
-                    getRequestResponse.getStatusCode() == 404) {
-                getRequestResponse = given().headers(
-                        "Authorization",
-                        "Bearer " + token)
-                        .contentType(ContentType.JSON)
-                        .pathParam("searchIdentifier", systemNumber)
-//                        .log().method().log().uri().log().body()
-                        .get(TypeLoader.getBasePathUrl() + "/test-results/{searchIdentifier}");
-            }
-            else break;
-        }
+        Response getRequestResponse = genericBackendClient.getTestResultsNo404(token, systemNumber);
         getRequestResponse.prettyPrint();
         getTestResults = getRequestResponse.asString();
         Assert.assertEquals(200, getRequestResponse.statusCode());
@@ -694,7 +675,7 @@ public class GenericBackendRequestPage extends PageObject {
                                                                             String typeOfVehicle) {
         // TEST SETUP
         //generate random Vin
-        String randomVin = GenericData.generateRandomVin();
+        String randomVin = GenericData.generateRandomVinForVehicleType(typeOfVehicle);
         //generate random Vrm
         String randomVrm = GenericData.generateRandomVrm();
         if (!(typeOfVehicle.contentEquals("hgv") || typeOfVehicle.contentEquals("psv") ||

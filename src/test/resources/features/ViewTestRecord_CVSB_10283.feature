@@ -1,4 +1,4 @@
-Feature: Show test accurately for queried vehicle - CVSB-10283
+Feature: CVSB-10283 - Show test accurately for queried vehicle
   As an admin user I can log in the VTM app
   And view the details of the tests on the test results belonging to the queried vehicle
 
@@ -82,7 +82,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Lev                                     |
+      | testCode                     | lev                                     |
       | testResult                   | Pass                                    |
       # reasonForAbandoning is null in DynamoDB
       | reasonForAbandoning          | -                                       |
@@ -186,7 +186,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ldv                                     |
+      | testCode                     | ldv                                     |
       | testResult                   | Fail                                    |
       # reasonForAbandoning is null in DynamoDB
       | reasonForAbandoning          | -                                       |
@@ -269,7 +269,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Abandoned                               |
       | reasonForAbandoning          | Reason for abandoning                   |
       | additionalCommentsForAbandon | Additional comments for abandon         |
@@ -368,7 +368,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Pass                                    |
       | reasonForAbandoning          | -                                       |
       | additionalCommentsForAbandon | -                                       |
@@ -448,7 +448,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Prs                                     |
       | reasonForAbandoning          | -                                       |
       | additionalCommentsForAbandon | -                                       |
@@ -547,7 +547,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
       | testResult                   | Fail                              |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
       | deficiencyRef-0              | 3000.3500 (c)                     |
@@ -644,7 +644,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | countryOfRegistration        | Country Not Known                 |
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | testResult                   | Pass                              |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
@@ -725,7 +725,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
       | testResult                   | Prs                               |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
       | deficiencyRef-0              | 3000.3500 (c)                     |

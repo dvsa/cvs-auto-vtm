@@ -1,4 +1,4 @@
-Feature: Show technical record accurately for queried psv - CVSB-10175
+Feature: CVSB-10175 - Show technical record accurately for queried psv
   As an admin user I can log in the VTM app
   And view the details of the technical records belonging to the queried psv
 

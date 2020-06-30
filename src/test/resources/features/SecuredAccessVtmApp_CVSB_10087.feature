@@ -1,4 +1,4 @@
-Feature: Search tech record - CVSB-10087
+Feature: CVSB-10087 - Search tech record
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should be able to add specific adr details

@@ -1,4 +1,4 @@
-Feature: Updating and saving core adrDetails - CVSB-10084
+Feature: CVSB-10084 - Updating and saving core adrDetails
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should be able to update and save adr details
@@ -176,6 +176,8 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | reasonForCreation-1           | Something                          |
       | createdByName-1               | Sean                               |
       | createdAt-1                   | TODAYS_DATE                        |
+      | lastUpdatedByName-1           | VTM_USER_EMAIL                     |
+      | lastUpdatedAt-1               | TODAYS_DATE                        |
     When  I click the change technical record button
     Then I should see "Save technical record"
     Then I should see "Cancel" hyperlink
