@@ -59,6 +59,7 @@ public class GenericBackendRequestSteps {
                 vehicleType);
     }
 
+    @Step
     public void updateTechRecord() {
         genericBackendRequestPage.updateTechRecord();
     }

@@ -450,7 +450,7 @@ public class TestRecordPageStepDefinition {
         }
         else {
             String[] parts = genericBackendRequestSteps.getNewTestAttribute("testAnniversaryDate").split("/");
-//            testRecordPageSteps.checkValueForField("testAnniversaryDate-day", parts[0]);
+            testRecordPageSteps.checkValueForField("testAnniversaryDate-day", parts[0]);
             testRecordPageSteps.checkValueForField("testAnniversaryDate-month", parts[1]);
             testRecordPageSteps.checkValueForField("testAnniversaryDate-year", parts[2]);
         }
@@ -458,35 +458,55 @@ public class TestRecordPageStepDefinition {
 
     @Then("^I should see correct start time$")
     public void iShouldSeeCorrectStartTime() {
-        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeStartTimestamp").split("[: .]");
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeStartTime").split("[: .]");
         if (parts[2].contentEquals("PM")) {
-            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            if (parts[0].contentEquals("12")) {
+                testRecordPageSteps.checkValueForField("testTypeStartTime-hour", Integer.toString(Integer.parseInt(parts[0])));
+            }
+            else {
+                testRecordPageSteps.checkValueForField("testTypeStartTime-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            }
         }
         else {
-            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-hour", parts[0]);
+            if (parts[0].contentEquals("00")) {
+                testRecordPageSteps.checkValueForField("testTypeStartTime-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            }
+            else {
+                testRecordPageSteps.checkValueForField("testTypeStartTime-hour", Integer.toString(Integer.parseInt(parts[0])));
+            }
         }
         if (parts[1].substring(0,1).contentEquals("0")) {
-            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-minute", parts[1].substring(1,2));
+            testRecordPageSteps.checkValueForField("testTypeStartTime-minute", parts[1].substring(1,2));
         }
         else {
-            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-minute", parts[1]);
+            testRecordPageSteps.checkValueForField("testTypeStartTime-minute", parts[1]);
         }
     }
 
     @Then("^I should see correct end time$")
     public void iShouldSeeCorrectEndTime() {
-        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeEndTimestamp").split("[: .]");
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeEndTime").split("[: .]");
         if (parts[2].contentEquals("PM")) {
-            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            if (parts[0].contentEquals("12")) {
+                testRecordPageSteps.checkValueForField("testTypeEndTime-hour", Integer.toString(Integer.parseInt(parts[0])));
+            }
+            else {
+                testRecordPageSteps.checkValueForField("testTypeEndTime-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            }
         }
         else {
-            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-hour", parts[0]);
+            if (parts[0].contentEquals("00")) {
+                testRecordPageSteps.checkValueForField("testTypeEndTime-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+            }
+            else {
+                testRecordPageSteps.checkValueForField("testTypeEndTime-hour", Integer.toString(Integer.parseInt(parts[0])));
+            }
         }
         if (parts[1].substring(0,1).contentEquals("0")) {
-            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-minute", parts[1].substring(1,2));
+            testRecordPageSteps.checkValueForField("testTypeEndTime-minute", parts[1].substring(1,2));
         }
         else {
-            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-minute", parts[1]);
+            testRecordPageSteps.checkValueForField("testTypeEndTime-minute", parts[1]);
         }
     }
 
@@ -519,15 +539,15 @@ public class TestRecordPageStepDefinition {
     @When("^I set start time to \"([^\"]*)\"$")
     public void iSetStartTimeTo(String startTime) {
         String[] parts = startTime.split(":");
-        testRecordPageSteps.setValueForField("testTypeStartTimestamp-hour", parts[0]);
-        testRecordPageSteps.setValueForField("testTypeStartTimestamp-minute", parts[1]);
+        testRecordPageSteps.setValueForField("testTypeStartTime-hour", parts[0]);
+        testRecordPageSteps.setValueForField("testTypeStartTime-minute", parts[1]);
     }
 
     @When("^I set end time to \"([^\"]*)\"$")
     public void iSetEndTimeTo(String endTime) {
         String[] parts = endTime.split(":");
-        testRecordPageSteps.setValueForField("testTypeEndTimestamp-hour", parts[0]);
-        testRecordPageSteps.setValueForField("testTypeEndTimestamp-minute", parts[1]);
+        testRecordPageSteps.setValueForField("testTypeEndTime-hour", parts[0]);
+        testRecordPageSteps.setValueForField("testTypeEndTime-minute", parts[1]);
     }
 
     @Then("^I should see \"([^\"]*)\" as most recent installation check date$")
@@ -549,5 +569,10 @@ public class TestRecordPageStepDefinition {
     @When("^I set prohibition issued to \"([^\"]*)\"$")
     public void iSetProhibitionIssuedTo(String value) {
         testRecordPageSteps.setValueForField("prohibitionIssued", value);
+    }
+
+    @And("^I should see prohibition issued set to \"([^\"]*)\"$")
+    public void iShouldSeeProhibitionIssuedSetTo(String value) {
+        testRecordPageSteps.checkValueForField("prohibitionIssued", value);
     }
 }

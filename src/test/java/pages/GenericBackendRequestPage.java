@@ -859,25 +859,25 @@ public class GenericBackendRequestPage extends PageObject {
                 return testNumber;
             case "testTypeName":
                 return testTypeName;
-            case "testStartTimestamp":
+            case "testTypeStartDate":
                 try {
-                    return dateFormatterDate.format(LocalDateTime.parse(testStartTimestamp, initialDateFormatter));
+                    return dateFormatterDate.format(LocalDateTime.parse(testTypeStartTimestamp, initialDateFormatter));
                 } catch (DateTimeParseException e) {
                     return "-";
                 }
-            case "testEndTimestamp":
+            case "testTypeEndDate":
                 try {
-                    return dateFormatterDate.format(LocalDateTime.parse(testEndTimestamp, initialDateFormatter));
+                    return dateFormatterDate.format(LocalDateTime.parse(testTypeEndTimestamp, initialDateFormatter));
                 } catch (DateTimeParseException e) {
                     return "-";
                 }
-            case "testTypeStartTimestamp":
+            case "testTypeStartTime":
                 try {
                     return dateFormatterTime.format(LocalDateTime.parse(testTypeStartTimestamp, initialDateFormatter));
                 } catch (DateTimeParseException e) {
                     return "-";
                 }
-            case "testTypeEndTimestamp":
+            case "testTypeEndTime":
                 try {
                     return dateFormatterTime.format(LocalDateTime.parse(testTypeEndTimestamp, initialDateFormatter));
                 }
@@ -903,7 +903,7 @@ public class GenericBackendRequestPage extends PageObject {
                     } catch (DateTimeParseException e) {
                         return "-";
                     }
-                } else if (attribute.contains("EndTimestamp")) {
+                } else if (attribute.contains("EndDate")) {
                     try {
                         return dateFormatterDate.format(LocalDateTime.parse(testTypeEndTimestamp, initialDateFormatter));
                     }

@@ -124,6 +124,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -224,33 +236,42 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should not see "Particulate trap fitted"
     And I should not see "Particulate trap serial number"
     And test record fields should have values
-      | Field                             | Value                             |
-      | countryOfRegistration             | Romania - RO                      |
-      | euVehicleCategory                 | N3                                |
-      | odometerReading                   | 10,000 miles                      |
-      | preparer                          | Glasshouse Group Limited - MB8527 |
-      | emissionStandard                  | Euro 4                            |
-      | smokeTestKLimitApplied            | 30                                |
-      | fuelType                          | Full electric                     |
-      | modType                           | G - Gas engine                    |
-      | modificationTypeUsed              | Alteration                        |
-      | testStationName                   | Mraz-Hermann - 46-1741156         |
-      | testStationType                   | ATF                               |
-      | testerName                        | Test1 Test1                       |
-      | testerEmailAddress                | test1@test-station1.com           |
-      | additionalNotesRecorded           | new notes                         |
-      | testVersion-curr                  | Current                           |
-      | reasonForCreation-curr            | cvsb-10278                        |
-      | createdByName-curr                | VTM_USER                          |
-      | createdAt-curr                    | TODAYS_DATE                       |
-      | lastUpdatedByName-curr            | -                                 |
-      | lastUpdatedAt-curr                | -                                 |
-      | testVersion-arch-0                | Archived                          |
-      | reasonForCreation-arch-0          | Test conducted                    |
-      | createdByName-arch-0              | Test Test                         |
-      | createdAt-arch-0                  | TODAYS_DATE                       |
-      | lastUpdatedByName-arch-0          | vtm-full-access                   |
-      | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+      | Field                    | Value                             |
+      | countryOfRegistration    | Romania - RO                      |
+      | euVehicleCategory        | N3                                |
+      | odometerReading          | 10,000 miles                      |
+      | preparer                 | Glasshouse Group Limited - MB8527 |
+      | emissionStandard         | Euro 4                            |
+      | smokeTestKLimitApplied   | 30                                |
+      | fuelType                 | Full electric                     |
+      | modType                  | G - Gas engine                    |
+      | modificationTypeUsed     | Alteration                        |
+      | testStationName          | Mraz-Hermann - 46-1741156         |
+      | testStationType          | ATF                               |
+      | testerName               | Test1 Test1                       |
+      | testerEmailAddress       | test1@test-station1.com           |
+      | additionalNotesRecorded  | new notes                         |
+      | testVersion-curr         | Current                           |
+      | reasonForCreation-curr   | cvsb-10278                        |
+      | createdByName-curr       | VTM_USER                          |
+      | createdAt-curr           | TODAYS_DATE                       |
+      | lastUpdatedByName-curr   | -                                 |
+      | lastUpdatedAt-curr       | -                                 |
+      | testVersion-arch-0       | Archived                          |
+      | reasonForCreation-arch-0 | Test conducted                    |
+      | createdByName-arch-0     | Test Test                         |
+      | createdAt-arch-0         | TODAYS_DATE                       |
+      | lastUpdatedByName-arch-0 | vtm-full-access                   |
+      | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     When I click "Change test record" button
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
@@ -266,8 +287,8 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Change test record"
     And I should not see "Cancel"
     And test record fields should have values
-      | Field                             | Value                             |
-      | additionalNotesRecorded           | old notes                         |
+      | Field                   | Value     |
+      | additionalNotesRecorded | old notes |
 
 
   Scenario: Edit fields for Annual test (group 1)
@@ -307,6 +328,19 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
     And test record sections are displayed
       | Section                     |
       | Vehicle                     |
@@ -421,6 +455,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0                  | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0          | vtm-full-access                   |
       | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
 
 
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certificate) test (group 2)
@@ -457,6 +501,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
       | Section                     |
       | Vehicle                     |
@@ -571,6 +625,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0                  | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0          | vtm-full-access                   |
       | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Voluntary brake test test (group 3)
@@ -606,13 +670,23 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
-      | Section                     |
-      | Vehicle                     |
-      | Test                        |
-      | Visit                       |
-      | Notes                       |
-      | Test record history         |
+      | Section             |
+      | Vehicle             |
+      | Test                |
+      | Visit               |
+      | Notes               |
+      | Test record history |
     And test record sections are not displayed
       | Section                     |
       | Defects                     |
@@ -688,28 +762,35 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     # AC19
     And the "test record history" test record section should have 2 entries
     And test record fields should have values
-      | Field                             | Value                             |
-      | countryOfRegistration             | Austria - A                       |
-      | euVehicleCategory                 | M3                                |
-      | odometerReading                   | 11,000 miles                      |
-      | preparer                          | Glasshouse Group Limited - MB8527 |
-      | testStationName                   | Abshire-Kub - 09-4129632          |
-      | testStationType                   | GVTS                              |
-      | testerName                        | Test1 Test1                       |
-      | testerEmailAddress                | test1@test-station1.com           |
-      | additionalNotesRecorded           | new notes                         |
-      | testVersion-curr                  | Current                           |
-      | reasonForCreation-curr            | cvsb-10278                        |
-      | createdByName-curr                | VTM_USER                          |
-      | createdAt-curr                    | TODAYS_DATE                       |
-      | lastUpdatedByName-curr            | -                                 |
-      | lastUpdatedAt-curr                | -                                 |
-      | testVersion-arch-0                | Archived                          |
-      | reasonForCreation-arch-0          | Test conducted                    |
-      | createdByName-arch-0              | Test Test                         |
-      | createdAt-arch-0                  | TODAYS_DATE                       |
-      | lastUpdatedByName-arch-0          | vtm-full-access                   |
-      | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+      | Field                    | Value                             |
+      | countryOfRegistration    | Austria - A                       |
+      | euVehicleCategory        | M3                                |
+      | odometerReading          | 11,000 miles                      |
+      | preparer                 | Glasshouse Group Limited - MB8527 |
+      | testStationName          | Abshire-Kub - 09-4129632          |
+      | testStationType          | GVTS                              |
+      | testerName               | Test1 Test1                       |
+      | testerEmailAddress       | test1@test-station1.com           |
+      | additionalNotesRecorded  | new notes                         |
+      | testVersion-curr         | Current                           |
+      | reasonForCreation-curr   | cvsb-10278                        |
+      | createdByName-curr       | VTM_USER                          |
+      | createdAt-curr           | TODAYS_DATE                       |
+      | lastUpdatedByName-curr   | -                                 |
+      | lastUpdatedAt-curr       | -                                 |
+      | testVersion-arch-0       | Archived                          |
+      | reasonForCreation-arch-0 | Test conducted                    |
+      | createdByName-arch-0     | Test Test                         |
+      | createdAt-arch-0         | TODAYS_DATE                       |
+      | lastUpdatedByName-arch-0 | vtm-full-access                   |
+      | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Voluntary multi-check test (group 4)
@@ -748,6 +829,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -851,6 +942,13 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Paid TIR retest (group 5)
@@ -889,6 +987,17 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -992,6 +1101,14 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
 
 
   Scenario: Edit fields for Paid roadworthiness retest (group 6)
@@ -1027,6 +1144,17 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1130,6 +1258,14 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | certificateNumber |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Paid ADR retest (group 7)
@@ -1165,6 +1301,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1268,6 +1416,15 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
 
 
   Scenario: Edit fields for Voluntary brake test (group 8)
@@ -1306,6 +1463,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1409,6 +1576,13 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Paid prohibition clearance (retest with certification) (group 9)
@@ -1447,6 +1621,19 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1550,6 +1737,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
 
 
   Scenario: Edit fields for First Test (group 10)
@@ -1589,6 +1786,32 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then test record fields should have values
       | Field | Value |
       | vrm   | -     |
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1691,6 +1914,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field               |
+      | testNumber          |
+      | testTypeEndDate     |
+      | testTypeStartTime   |
+      | testTypeEndTime     |
+      | testTypeName        |
+      | testExpiryDate      |
+      | testAnniversaryDate |
+      | certificateNumber   |
 
 
   Scenario: Edit fields for Voluntary roadworthiness test (group 11)
@@ -1730,6 +1963,17 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then test record fields should have values
       | Field | Value |
       | vrm   | -     |
+    And I should see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1832,6 +2076,14 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
 
 
   Scenario: Edit fields for Part paid prohibition clearance (retest without certification) (group 12)
@@ -1874,6 +2126,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And test record fields should have values
       | Field | Value |
       | vrm   | -     |
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -1976,6 +2238,13 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Free TIR retest (group 13)
@@ -2018,6 +2287,17 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And test record fields should have values
       | Field | Value |
       | vrm   | -     |
+    And I should see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -2120,6 +2400,14 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
 
 
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certification) (group 14)
@@ -2155,6 +2443,16 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should not see "Certificate number"
+    And I should not see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
     And test record sections are displayed
       | Section             |
       | Vehicle             |
@@ -2258,6 +2556,13 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | createdAt-arch-0         | TODAYS_DATE                       |
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
 
 
   Scenario: Edit fields for Low Emissions Certificate (LEC) with annual test (group 15)
@@ -2298,14 +2603,26 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Vehicle identification number (VIN)"
     And I should see the "vin" attribute of newly created vehicle
     And I should see the "vrm" attribute of newly created vehicle
+    And I should see "Certificate number"
+    And I should see "Expiry date"
+    And I should not see "Anniversary date"
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     And test record sections are displayed
-      | Section                     |
-      | Vehicle                     |
-      | Test                        |
-      | Emission details            |
-      | Visit                       |
-      | Notes                       |
-      | Test record history         |
+      | Section             |
+      | Vehicle             |
+      | Test                |
+      | Emission details    |
+      | Visit               |
+      | Notes               |
+      | Test record history |
     And test record sections are not displayed
       | Section                     |
       | Defects                     |
@@ -2323,12 +2640,12 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
     And test record sections are displayed
-      | Section                     |
-      | Vehicle                     |
-      | Test                        |
-      | Emission details            |
-      | Visit                       |
-      | Notes                       |
+      | Section          |
+      | Vehicle          |
+      | Test             |
+      | Emission details |
+      | Visit            |
+      | Notes            |
     And test record sections are not displayed
       | Section                     |
       | Defects                     |
@@ -2396,31 +2713,40 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And the "test record history" test record section should have 2 entries
     And I should not see "Modification type used"
     Then test record fields should have values
-      | Field                             | Value                             |
-      | countryOfRegistration             | Austria - A                       |
-      | euVehicleCategory                 | M3                                |
-      | odometerReading                   | 11,000 miles                      |
-      | preparer                          | Glasshouse Group Limited - MB8527 |
-      | emissionStandard                  | Euro 6                            |
-      | smokeTestKLimitApplied            | 30                                |
-      | fuelType                          | Full electric                     |
-      | modType                           | P - Particulate trap              |
-      | particulateTrapFitted             | New improved particulate trap     |
-      | particulateTrapSerialNumber       | 124816                            |
-      | testStationName                   | Abshire-Kub - 09-4129632          |
-      | testStationType                   | GVTS                              |
-      | testerName                        | Test1 Test1                       |
-      | testerEmailAddress                | test1@test-station1.com           |
-      | additionalNotesRecorded           | new notes                         |
-      | testVersion-curr                  | Current                           |
-      | reasonForCreation-curr            | cvsb-10278                        |
-      | createdByName-curr                | VTM_USER                          |
-      | createdAt-curr                    | TODAYS_DATE                       |
-      | lastUpdatedByName-curr            | -                                 |
-      | lastUpdatedAt-curr                | -                                 |
-      | testVersion-arch-0                | Archived                          |
-      | reasonForCreation-arch-0          | Test conducted                    |
-      | createdByName-arch-0              | Test Test                         |
-      | createdAt-arch-0                  | TODAYS_DATE                       |
-      | lastUpdatedByName-arch-0          | vtm-full-access                   |
-      | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+      | Field                       | Value                             |
+      | countryOfRegistration       | Austria - A                       |
+      | euVehicleCategory           | M3                                |
+      | odometerReading             | 11,000 miles                      |
+      | preparer                    | Glasshouse Group Limited - MB8527 |
+      | emissionStandard            | Euro 6                            |
+      | smokeTestKLimitApplied      | 30                                |
+      | fuelType                    | Full electric                     |
+      | modType                     | P - Particulate trap              |
+      | particulateTrapFitted       | New improved particulate trap     |
+      | particulateTrapSerialNumber | 124816                            |
+      | testStationName             | Abshire-Kub - 09-4129632          |
+      | testStationType             | GVTS                              |
+      | testerName                  | Test1 Test1                       |
+      | testerEmailAddress          | test1@test-station1.com           |
+      | additionalNotesRecorded     | new notes                         |
+      | testVersion-curr            | Current                           |
+      | reasonForCreation-curr      | cvsb-10278                        |
+      | createdByName-curr          | VTM_USER                          |
+      | createdAt-curr              | TODAYS_DATE                       |
+      | lastUpdatedByName-curr      | -                                 |
+      | lastUpdatedAt-curr          | -                                 |
+      | testVersion-arch-0          | Archived                          |
+      | reasonForCreation-arch-0    | Test conducted                    |
+      | createdByName-arch-0        | Test Test                         |
+      | createdAt-arch-0            | TODAYS_DATE                       |
+      | lastUpdatedByName-arch-0    | vtm-full-access                   |
+      | lastUpdatedAt-arch-0        | TODAYS_DATE                       |
+    And test record fields of newly created test should have expected values
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |

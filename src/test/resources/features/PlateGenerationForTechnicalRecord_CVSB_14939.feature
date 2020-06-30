@@ -15,10 +15,10 @@ Feature: Generate plates for technical records, so that we can supply plates wit
     And wait until I see "Technical record"
     And I should see the "vin" attribute of newly created vehicle
     And tech record fields should have values
-      | Field               | Value                       |
-      | status              | Provisional                 |
+      | Field  | Value       |
+      | status | Provisional |
     Then I should not see "Send ministry plates"
-      Examples:
+    Examples:
       | vehicle |
       | hgv     |
       | trl     |
@@ -31,14 +31,14 @@ Feature: Generate plates for technical records, so that we can supply plates wit
     When I search for vehicle with identifier "<vehicle_identifier>"
     When I open all tech record sections
     And tech record fields should have values
-      | Field               | Value                       |
-      | status              | Archived                    |
-      | vehicleType         | <vehicle_type>              |
+      | Field       | Value          |
+      | status      | Archived       |
+      | vehicleType | <vehicle_type> |
     Then I should not see "Send ministry plates"
-      Examples:
-        | vehicle_identifier | vehicle_type |
-        | P012301230001      | HGV          |
-        | T13541234          | TRL          |
+    Examples:
+      | vehicle_identifier | vehicle_type |
+      | P012301230001      | HGV          |
+      | T13541234          | TRL          |
 
   Scenario Outline: The appearance of the 'call to action', the confirmation modal, the partial population of a new object within the Plates[] array, using attributes sent from the FE
   AC2: The call to action to 'Send ministry plates', is present if the technical record has a status of 'current'
@@ -58,8 +58,8 @@ Feature: Generate plates for technical records, so that we can supply plates wit
     And the "test history" tech record section should have 1 entry
     And I should see the "vin" attribute of newly created vehicle
     And tech record fields should have values
-      | Field               | Value                       |
-      | status              | Current                     |
+      | Field  | Value   |
+      | status | Current |
     Then I should see "Send ministry plates" button
     #AC3
     When I click "Send ministry plates" button
@@ -68,11 +68,11 @@ Feature: Generate plates for technical records, so that we can supply plates wit
       | Field   | Value                      |
       | issue-0 | Issue original certificate |
     And I set values for fields
-      | Field   | Value                      |
-      | issue-1 | Issue replacement          |
+      | Field   | Value             |
+      | issue-1 | Issue replacement |
     And I check values for fields
-      | Field   | Value                      |
-      | issue-1 | Issue replacement          |
+      | Field   | Value             |
+      | issue-1 | Issue replacement |
     And I set values for fields
       | Field   | Value                      |
       | issue-0 | Issue original certificate |
@@ -98,32 +98,32 @@ Feature: Generate plates for technical records, so that we can supply plates wit
     And I open tech record "plates" section
     And the "plates" tech record section should have 3 entries
     And tech record fields should have values
-      | Field                            | Value          |
-      | plateSerialNumber-0              | DIGIT          |
-      | plateReasonForIssue-0            | Original       |
-      | plateIssuer-0                    | VTM_USERNAME   |
-      | plateIssueDate-0                 | TODAYS_DATE    |
+      | Field                 | Value        |
+      | plateSerialNumber-0   | DIGIT        |
+      | plateReasonForIssue-0 | Original     |
+      | plateIssuer-0         | VTM_USERNAME |
+      | plateIssueDate-0      | TODAYS_DATE  |
     And I close tech record "plates" section
     When I click "Send ministry plates" button
     And wait until I see "Select reason for sending ministry plate"
     And I set values for fields
-      | Field   | Value                      |
-      | issue-1 | Issue replacement          |
+      | Field   | Value             |
+      | issue-1 | Issue replacement |
     And I check values for fields
-      | Field   | Value                      |
-      | issue-1 | Issue replacement          |
+      | Field   | Value             |
+      | issue-1 | Issue replacement |
     And I click Send ministry plate button from send ministry plates modal
     Then I should see "Change technical record"
     And I should not see "Cancel"
     And I open tech record "plates" section
     And the "plates" tech record section should have 4 entries
     And tech record fields should have values
-      | Field                            | Value          |
-      | plateSerialNumber-1              | DIGIT          |
-      | plateReasonForIssue-1            | Replacement    |
-      | plateIssuer-1                    | VTM_USERNAME   |
-      | plateIssueDate-1                 | TODAYS_DATE    |
-      Examples:
-        | vehicle |
-        | hgv     |
-        | trl     |
+      | Field                 | Value        |
+      | plateSerialNumber-1   | DIGIT        |
+      | plateReasonForIssue-1 | Replacement  |
+      | plateIssuer-1         | VTM_USERNAME |
+      | plateIssueDate-1      | TODAYS_DATE  |
+    Examples:
+      | vehicle |
+      | hgv     |
+      | trl     |

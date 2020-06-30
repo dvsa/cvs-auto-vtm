@@ -65,14 +65,14 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | vin   |
       | vrm   |
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | testExpiryDate         |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     And I should see "Certificate number"
     And I should see "Expiry date"
     And I should not see "Anniversary date"
@@ -82,7 +82,7 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Lev                                     |
+      | testCode                     | lev                                     |
       | testResult                   | Pass                                    |
       # reasonForAbandoning is null in DynamoDB
       | reasonForAbandoning          | -                                       |
@@ -169,14 +169,14 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | vin   |
       | vrm   |
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | testExpiryDate         |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | testExpiryDate    |
+      | certificateNumber |
     And I should see "Certificate number"
     And I should see "Expiry date"
     And I should not see "Anniversary date"
@@ -186,7 +186,7 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ldv                                     |
+      | testCode                     | ldv                                     |
       | testResult                   | Fail                                    |
       # reasonForAbandoning is null in DynamoDB
       | reasonForAbandoning          | -                                       |
@@ -256,20 +256,20 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                                   |
       | countryOfRegistration        | Great Britain and Northern Ireland - GB |
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Abandoned                               |
       | reasonForAbandoning          | Reason for abandoning                   |
       | additionalCommentsForAbandon | Additional comments for abandon         |
@@ -355,20 +355,20 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                                   |
       | countryOfRegistration        | Great Britain and Northern Ireland - GB |
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Pass                                    |
       | reasonForAbandoning          | -                                       |
       | additionalCommentsForAbandon | -                                       |
@@ -435,20 +435,20 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                                   |
       | countryOfRegistration        | Great Britain and Northern Ireland - GB |
       | euVehicleCategory            | N2                                      |
       | odometerReading              | 55,000 kilometres                       |
       | preparer                     | Durrell Vehicles Limited - BL5545       |
-      | testCode                     | Ruv                                     |
+      | testCode                     | ruv                                     |
       | testResult                   | Prs                                     |
       | reasonForAbandoning          | -                                       |
       | additionalCommentsForAbandon | -                                       |
@@ -533,13 +533,13 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                             |
       | vrm                          | -                                 |
@@ -547,7 +547,7 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
       | testResult                   | Fail                              |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
       | deficiencyRef-0              | 3000.3500 (c)                     |
@@ -632,19 +632,19 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                             |
       | countryOfRegistration        | Country Not Known                 |
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | testResult                   | Pass                              |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
@@ -711,13 +711,13 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
     And I should not see "Expiry date"
     And I should not see "Anniversary date"
     And test record fields of newly created test should have expected values
-      | Field                  |
-      | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | certificateNumber      |
+      | Field             |
+      | testNumber        |
+      | testTypeEndDate   |
+      | testTypeStartTime |
+      | testTypeEndTime   |
+      | testTypeName      |
+      | certificateNumber |
     And test record fields should have values
       | Field                        | Value                             |
       | vrm                          | -                                 |
@@ -725,7 +725,7 @@ Feature: CVSB-10283 - Show test accurately for queried vehicle
       | euVehicleCategory            | O2                                |
       | preparer                     | Durrell Vehicles Limited - BL5545 |
       | testResult                   | Prs                               |
-      | testCode                     | Rut                               |
+      | testCode                     | rut                               |
       | reasonForAbandoning          | -                                 |
       | additionalCommentsForAbandon | -                                 |
       | deficiencyRef-0              | 3000.3500 (c)                     |
