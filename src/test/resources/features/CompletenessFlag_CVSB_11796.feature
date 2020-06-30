@@ -1,6 +1,6 @@
-Feature: See the completeness flag so that I can assess how complete the vehicle's technical record is - CVSB-11796
+Feature: CVSB-11796 - See the completeness flag so that I can assess how complete the vehicle's technical record is
 
-  Scenario Outline: See the completeness flag so that I can assess how complete the vehicle's technical record is - TRL
+  Scenario Outline: See the completeness flag so that I can assess how complete the vehicle's technical record is
   AC1 - View a technical record - all vehicle types
   AC2 - Edit a technical record - all vehicle types
     Given I login with admin credentials

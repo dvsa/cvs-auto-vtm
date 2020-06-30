@@ -1,4 +1,4 @@
-Feature: As a VTM user, I want the ability to generate a certificate for a PSV/HGV,
+Feature: CVSB-10710 - As a VTM user, I want the ability to generate a certificate for a PSV or HGV
   so that DVSA can provide the customer with a duplicate/replacement certificate
 
   Background:
