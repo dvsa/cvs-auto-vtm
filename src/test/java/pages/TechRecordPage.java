@@ -138,6 +138,7 @@ public class TechRecordPage extends GenericPage {
     private static final String ADDITIONAL_ADR_DETAILS = "#additionalExaminerNotes";
     private static final String CANCEL_SAVE_DETAILS_MODAL = "vtm-adr-reason-modal a";
     private static final String ERROR_BLOCK = "span.govuk-error-message";
+    private static final String SUBSEQUENT_INSPECTION_EXPIRY_DATE_FIELDS = "[id^=tc3PeriodicExpiryDate]";
 
     static String testRecordPageUrl;
     private static int noOfDocuments;
@@ -1920,6 +1921,30 @@ public class TechRecordPage extends GenericPage {
             default:  // should be unreachable!
                 throw new AutomationException(
                         "Invalid tech record section '" + option + "'");
+        }
+    }
+
+    public void checkSubsequentInspectionExpiryDateFieldsNotPresent() {
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(SUBSEQUENT_INSPECTION_EXPIRY_DATE_FIELDS));
+        if (elements.size() > 0) {
+            Assert.assertFalse("Element with css selector '" + SUBSEQUENT_INSPECTION_EXPIRY_DATE_FIELDS + "' is displayed",
+                    getDriver().findElement(By.cssSelector(SUBSEQUENT_INSPECTION_EXPIRY_DATE_FIELDS)).isDisplayed());
+        }
+    }
+
+    public void checkSubsequentInspectionTypeNotPresent() {
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(SUBSEQUENT_INSPECTION_TYPE));
+        if (elements.size() > 0) {
+            Assert.assertFalse("Element with css selector '" + SUBSEQUENT_INSPECTION_TYPE + "' is displayed",
+                    getDriver().findElement(By.cssSelector(SUBSEQUENT_INSPECTION_TYPE)).isDisplayed());
+        }
+    }
+
+    public void checkSubsequentInspectionCertificateNotPresent() {
+        List<WebElement> elements = getDriver().findElements(By.cssSelector(SUBSEQUENT_INSPECTION_CERTIFICATE));
+        if (elements.size() > 0) {
+            Assert.assertFalse("Element with css selector '" + SUBSEQUENT_INSPECTION_CERTIFICATE + "' is displayed",
+                    getDriver().findElement(By.cssSelector(SUBSEQUENT_INSPECTION_CERTIFICATE)).isDisplayed());
         }
     }
 }
