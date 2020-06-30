@@ -384,21 +384,6 @@ public class TechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
-    public void setInputTechRecordField(String field, String country) {
-        techRecordPage.setInputTechRecordField(field, country);
-    }
-
-    @Step
-    public void setRadioButtonTechRecordField(String field, String value) {
-        techRecordPage.setRadioButtonTechRecordField(field, value);
-    }
-
-    @Step
-    public void setSelectTechRecordField(String field, String value) {
-        techRecordPage.setSelectTechRecordField(field, value);
-    }
-
-    @Step
     public void checkAllSectionsAreExpanded() {
         techRecordPage.checkAllSectionsAreExpanded();
     }
@@ -416,5 +401,45 @@ public class TechRecordPageSteps extends GenericPageSteps {
     @Step
     public void checkSectionIsNotPresent(String section) {
         techRecordPage.checkSectionIsNotPresent(section);
+    }
+
+    @Step
+    public void checkFieldEditable(String field) {
+        techRecordPage.checkFieldEditable(field);
+    }
+
+    @Step
+    public void checkFieldNotEditable(String field) {
+        techRecordPage.checkFieldNotEditable(field);
+    }
+
+    @Step
+    public void setValueForTechRecordInputField(String field, String value) {
+        techRecordPage.setValueForInputField(field, value);
+    }
+
+    @Step
+    public void setValueForTechRecordRadioButtonField(String field, String value) {
+        techRecordPage.setValueForRadioButtonField(field, value);
+    }
+
+    @Step
+    public void setValueForTechRecordSelectField(String field, String value) {
+        techRecordPage.setValueForSelectField(field, value);
+    }
+
+    @Step
+    public void checkTestRecordInputFieldValue(String inputField, String value) {
+        techRecordPage.checkValueForInputField(inputField, value);
+    }
+
+    @Step
+    public void checkTestRecordRadioButtonFieldValue(String radioButtonField, String value) {
+        techRecordPage.checkValueForRadioButtonField(radioButtonField, value);
+    }
+
+    @Step
+    public void checkTestRecordSelectFieldValue(String selectField, String value) {
+        techRecordPage.checkValueForSelectField(selectField, value);
     }
 }

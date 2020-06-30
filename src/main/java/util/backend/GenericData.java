@@ -174,10 +174,6 @@ public class GenericData {
         return RandomStringUtils.randomAlphanumeric(new Random().nextInt(13) + 3).toUpperCase() + RandomStringUtils.randomNumeric(6);
     }
 
-    public static String generateRandomSystemNumber() {
-        return RandomStringUtils.randomAlphanumeric(16).toUpperCase();
-    }
-
     public static String generateRandomVrm() {
         return RandomStringUtils.randomAlphanumeric(new Random().nextInt(6) + 3).toUpperCase();
     }

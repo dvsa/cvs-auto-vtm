@@ -233,7 +233,7 @@ Feature: Updating and saving core adrDetails - CVSB-10084
       | Additional ADR details         |
       | Battery list                   |
 
-
+  @feature_bug @CVSB-16818
   Scenario: User updates adr details on a vehicle with ADR details
   AC4 - Technical record DOES already have ADR details on it
   AC6 - User enters the remaining details for their vehicle type

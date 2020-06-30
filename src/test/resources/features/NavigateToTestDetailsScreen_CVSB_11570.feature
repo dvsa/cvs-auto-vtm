@@ -8,7 +8,7 @@ Feature: Test details screen
     Then I should see "Select activity"
     And search vehicle link should be present
 
-  @skip
+
   Scenario: Navigate to test details screen
   AC1 - The test history table, on the tech record screen, now has a tester name column
   AC2 - 'View' link is displayed for each record in the test history section on the tech record page
