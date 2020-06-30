@@ -1113,7 +1113,7 @@ public class TechRecordPage extends GenericPage {
         String[] letters = reason. split("");
         for (int i = 0; i < reason.length(); i++) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
                 findElementByCss(CHANGES_REASON_TEXT_AREA).sendKeys(letters[i]);
                 Thread.sleep(50);
             } catch (InterruptedException e) {
