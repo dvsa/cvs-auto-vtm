@@ -19,6 +19,12 @@ public class GenericBackendRequestSteps {
     }
 
     @Step
+    public void createTechRecordWithSpecialAttributes(String vehicleType) {
+        genericBackendRequestPage.goToAuthTokenUrl();
+        genericBackendRequestPage.createTechRecordWithSpecialCharacters(vehicleType);
+    }
+
+    @Step
     public String getNewVehicleAttribute(String attribute) {
         return genericBackendRequestPage.getNewVehicleAttribute(attribute);
     }

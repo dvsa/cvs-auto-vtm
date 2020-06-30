@@ -39,6 +39,13 @@ public class SearchPageStepDefinition {
         searchPageSteps.searchVehicle();
     }
 
+    @When("^I search for previously created vehicle after \"([^\"]*)\"$")
+    public void searchForPreviouslyCreatedVehicleAfter(String vehicleAttribute) {
+        searchPageSteps.clearSearchInput();
+        searchPageSteps.inputVehicleIdentifier(genericBackendRequestSteps.getNewVehicleAttribute(vehicleAttribute));
+        searchPageSteps.searchVehicle();
+    }
+
     @When("^I search for vehicle using wrong identifier \"([^\"]*)\"$")
     public void iSearchForVehicleUsingWrongIdentifier(String identifier) {
         searchPageSteps.clearSearchInput();
