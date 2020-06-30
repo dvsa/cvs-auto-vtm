@@ -28,7 +28,6 @@
       },
       "remarks": "remarks",
       "reasonForCreation": "test",
-      "recordCompleteness": "complete",
       "vehicleClass": {
         "description": "motorbikes up to 200cc"
       },

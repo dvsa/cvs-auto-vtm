@@ -205,7 +205,7 @@ public class GenericPage extends PageObject {
         catch (TimeoutException e) {
             System.out.println("Spinner did not appear");
         }
-        waitForAngular();
+        waitForAngularRequestsToFinish();
     }
 
     protected void waitForAngular() {
@@ -437,7 +437,7 @@ public class GenericPage extends PageObject {
             tagName = "input";
         }
         else {
-            element = getDriver().findElement(By.cssSelector("[id^=test-" + field + "]"));
+            element = getDriver().findElement(By.id("test-" + field));
             if (element.getAttribute("type").contentEquals("radio")) {
                 tagName = "radio";
             } else if (element.getAttribute("type").contentEquals("checkbox")) {
@@ -471,7 +471,7 @@ public class GenericPage extends PageObject {
             tagName = "input";
         }
         else {
-            element = getDriver().findElement(By.cssSelector("[id^=test-" + field + "]"));
+            element = getDriver().findElement(By.id("test-" + field));
             if (element.getAttribute("type").contentEquals("radio")) {
                 tagName = "radio";
             } else if (element.getAttribute("type").contentEquals("checkbox")) {
