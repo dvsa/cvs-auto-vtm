@@ -1,20 +1,18 @@
-Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test records, so that DVSA keeps accurate information for
-  the vehicle owner and FTAs
+Feature: CVSB-12375 - I want the ability to update an existing test record with new test type attributes, so that DVSA keeps accurate test record information
   As an admin user I can log in the VTM app
-  And edit the test results with version current, belonging to the queried vehicle
+  And edit details in the test section of test types with version current, belonging to the queried vehicle
 
   Background:
     Given I login with admin credentials
     Then I should see "Select activity"
     And search vehicle link should be present
 
-
+  @skip
   Scenario: Check buttons and hyperlinks work as expected
   AC1 - Ability to edit fields on the Test Record screen
-  AC2 - User updates test record
-  AC3 - User decides to cancel from the dialog box
-  AC4 - User decides to cancel using the hyperlink at the top of the page (next to Save button)
-  AC5 - User accidentally selects the 'Cancel' hyperlink
+  AC2 - Ability to notify the user that test details will be lost if they change a test type
+  AC3 - 'Change' hyperlink is selected by mistake
+  AC4 - Ability to select a new test type
     When I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
@@ -41,68 +39,31 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
     # AC2
-    When I am increasing the odometer reading by 1
-    And I click "Save test record" button
-    Then I should see "Enter reason for changing test record"
-    And I should see "Save test record" in the save changes modal
-    And I should see "Cancel" in the save changes modal
-    When I enter "cvsb-10278" as reason for test record changes
-    And I confirm saving the test record changes
-    And I should see "Change test record"
-    And I should not see "Cancel"
-    Then odometer reading should have expected value
+    When I click "Change" link
+    Then I should see "If you change the test type, some of the current test details will be lost."
+    And I should see "Print a version of the current test record or save the details to refer to when entering the details for the new test type."
+    And I should see "Change test type" button
+    And I should see "Cancel" hyperlink in change test type modal
     # AC3
-    When I click "Change test record" button
+    When I click "Cancel" link in change test type modal
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
-    When I am increasing the odometer reading by 1
-    And I click "Save test record" button
-    Then I should see "Enter reason for changing test record"
-    And I should see "Save test record" in the save changes modal
-    And I should see "Cancel" in the save changes modal
-    And I cancel saving the test record details
-    And I should see "Save test record"
-    And I should see "Cancel"
-    Then odometer reading should have expected value on edit
+    And I should not see "If you change the test type, some of the current test details will be lost."
     # AC4
-    When I click "Cancel" link
-    Then I should see "Unsaved changes"
-    And I should see "Leave and lose changes"
-    And I should see "Continue changing record"
-    When I click "Leave and lose changes" button
-    And I should see "Change test record"
-    And I should not see "Cancel"
-    And odometer reading should have expected value
-    # AC5
-    When I click "Change test record" button
+    When I click "Change" link
+    Then I should see "Change test type" button
+    When I click "Change test type" button
+    Then I should be taken to the correct page for changing test type of test record
+    When I go back to previous page
     Then I should see "Save test record"
-    And I should see "Cancel" hyperlink
-    When I am increasing the odometer reading by 1
-    And I click "Cancel" link
-    Then I should see "Unsaved changes"
-    And I should see "Leave and lose changes"
-    And I should see "Continue changing record"
-    When I click "Continue changing record" link
-    And I should not see "Change test record"
-    Then I should see "Save test record"
-    And I should see "Cancel" hyperlink
-    And odometer reading should have expected value on edit
 
-
+  @skip
   Scenario: Edit fields for Low Emissions Certificate (Lec) With Annual Test (group 16)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC12 - Ability to edit Emission details
-  AC13 - Ability to select modification type used
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC9 - Prohibition issued is updated from Yes to No
+  AC12 - Unable to edit some test fields
     When I create test record with status "submitted" and result "pass" and test type "ldv" for new "hgv" vehicle
     When I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -160,150 +121,67 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     When I click "Change test record" button
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
-    And test record sections are displayed
-      | Section          |
-      | Vehicle          |
-      | Test             |
-      | Emission details |
-      | Visit            |
-      | Notes            |
-    And test record sections are not displayed
-      | Section                     |
-      | Defects                     |
-      | Seatbelt installation check |
-      | Test record history         |
-    # AC9
+    # AC12
     And test record fields should not be editable
-      | Field |
-      | vin   |
-      | vrm   |
+      | Field            |
+      | vin              |
+      | vrm              |
+      | testTypeName     |
+      | testCode         |
+      | testNumber       |
+      | testEndTimestamp |
     And test record fields should be editable
-      | Field                 |
-      | countryOfRegistration |
-      | euVehicleCategory-0   |
-      | euVehicleCategory-1   |
-      | odometerReading       |
-      | odometerReadingUnit   |
-      | preparer              |
-    # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
-    And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
-    And I should see "55000" as odometer reading
-    And I should see "kilometres" as odometer reading unit
-    And I should see "Durrell Vehicles Limited(BL5545)" as preparer
-    When I set "Romania - RO" as country of registration
-    And I select "N3" as EU vehicle category
-    And I set odometer reading to "10000"
-    And I set odometer reading unit to "miles"
-    And I set preparer to "Glasshouse Group Limited (MB8527)"
-    # AC12 + AC13
-    Then I should see "Euro 3" as emission standard
-    And I should see "20" as smoke test K limit applied
-    And I should see "Diesel" as fuel type
-    And I should see "P - Particulate trap" as modification type
-    And I should not see "Modification type used"
-    And I should see "yes" as particulate trap fitted
-    And I should see "1234" as particulate trap serial number
-    When I select "Euro 4" as emission standard
-    And I set "30" as smoke test limit applied
-    And I select "Full electric" as fuel type
-    And I select "G - Gas engine" as modification type
-    And I should not see "Particulate trap fitted"
-    And I should not see "Particulate trap serial number"
-    And I should see "Modification type used"
-    And I set "alteration" as modification type used
-    # AC15 + AC16 + AC17
-    Then I should see "Abshire-Kub  (09-4129632)" as test facility name
-    And I should see "GVTS" as test station type
-    And I should see "Test Test" as tester name
-    And I should see "test@test-station.com" as email address
-    When I set test facility name to "Mraz-Hermann (46-1741156)"
-    And I set tester name to "Test1 Test1"
-    And I set email address to "test1@test-station1.com"
-    # AC18
-    Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+      | Field                  |
+      | testResult             |
+      | certificateNumber      |
+      | testExpiryDate         |
+      | testTypeStartTimestamp |
+      | testTypeEndTimestamp   |
+    # AC5 + AC6 + AC7 + AC9
+    And I should see "Pass" as test result
+    And I should see correct certificate number
+    And I should see correct expiry date
+    And I should see correct start time
+    And I should see correct end time
+    When I set test result as "Fail"
+    And I set certificate number as "Y123456"
+    And I set expiry date to "01/06/2022"
+    And I set start time to "09:6"
+    And I set end time to "13:14"
+    When I set prohibition issued to "Yes"
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
     And I should see "Cancel" in the save changes modal
-    When I enter "cvsb-10278" as reason for test record changes
+    When I enter "cvsb-12375" as reason for test record changes
     And I confirm saving the test record changes
     Then I should see "Change test record"
     And I should not see "Cancel"
-    # AC19
     And the "test record history" test record section should have 2 entries
-    And I should not see "Particulate trap fitted"
-    And I should not see "Particulate trap serial number"
+    And I should see "Particulate trap fitted"
+    And I should see "Particulate trap serial number"
     And test record fields should have values
-      | Field                             | Value                             |
-      | countryOfRegistration             | Romania - RO                      |
-      | euVehicleCategory                 | N3                                |
-      | odometerReading                   | 10,000 miles                      |
-      | preparer                          | Glasshouse Group Limited - MB8527 |
-      | emissionStandard                  | Euro 4                            |
-      | smokeTestKLimitApplied            | 30                                |
-      | fuelType                          | Full electric                     |
-      | modType                           | G - Gas engine                    |
-      | modificationTypeUsed              | Alteration                        |
-      | testStationName                   | Mraz-Hermann - 46-1741156         |
-      | testStationType                   | ATF                               |
-      | testerName                        | Test1 Test1                       |
-      | testerEmailAddress                | test1@test-station1.com           |
-      | additionalNotesRecorded           | new notes                         |
-      | testVersion-curr                  | Current                           |
-      | reasonForCreation-curr            | cvsb-10278                        |
-      | createdByName-curr                | VTM_USER                          |
-      | createdAt-curr                    | TODAYS_DATE                       |
-      | lastUpdatedByName-curr            | -                                 |
-      | lastUpdatedAt-curr                | -                                 |
-      | testVersion-arch-0                | Archived                          |
-      | reasonForCreation-arch-0          | Test conducted                    |
-      | createdByName-arch-0              | Test Test                         |
-      | createdAt-arch-0                  | TODAYS_DATE                       |
-      | lastUpdatedByName-arch-0          | vtm-full-access                   |
-      | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+      | Field                        | Value      |
+      | testResult                   | Fail       |
+      | testCode                     | ldv        |
+      | reasonForAbandoning          | -          |
+      | additionalCommentsForAbandon | -          |
+      | certificateNumber            | Y123456    |
+      | testExpiryDate               | 31/05/2022 |
+      | testTypeStartTimestamp       | 9:06 AM    |
+      | testTypeEndTimestamp         | 1:14 PM    |
+      | prohibitionIssued            | Yes        |
     And test record fields of newly created test should have expected values
       | Field                  |
       | testNumber             |
-      | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | testExpiryDate         |
-      | certificateNumber      |
-    When I click "Change test record" button
-    Then I should see "Save test record"
-    And I should see "Cancel" hyperlink
-    # AC18
-    Then I should see "new notes" as test notes
-    When I set "old notes" as test notes
-    And I click "Save test record" button
-    Then I should see "Enter reason for changing test record"
-    And I should see "Save test record" in the save changes modal
-    And I should see "Cancel" in the save changes modal
-    When I enter "cvsb-10278" as reason for test record changes
-    And I confirm saving the test record changes
-    Then I should see "Change test record"
-    And I should not see "Cancel"
-    And test record fields should have values
-      | Field                             | Value                             |
-      | additionalNotesRecorded           | old notes                         |
 
-
+  @skip
   Scenario: Edit fields for Annual test (group 1)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC11 - Ability to edit 'Seatbelt installation check' details
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
     When I create test record with status "submitted" and result "fail" and test type "aal" for new "psv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -331,6 +209,9 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should see "Certificate number"
     And I should see "Expiry date"
     And I should see "Anniversary date"
+    # AC10
+    And I should not see "Prohibition Issued" in "Test" test record section
+    And I should not see "Prohibition Issued" in "Defects" test record section
     And test record fields of newly created test should have expected values
       | Field                  |
       | testNumber             |
@@ -365,121 +246,75 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     When I click "Change test record" button
     Then I should see "Save test record"
     And I should see "Cancel" hyperlink
-    And test record sections are displayed
-      | Section                     |
-      | Vehicle                     |
-      | Test                        |
-      | Defects                     |
-      | Seatbelt installation check |
-      | Visit                       |
-      | Notes                       |
-    And test record sections are not displayed
-      | Section             |
-      | Emission details    |
-      | Test record history |
-    # AC9
+    # AC12
     And test record fields should not be editable
-      | Field |
-      | vin   |
-      | vrm   |
+      | Field            |
+      | vin              |
+      | vrm              |
+      | testTypeName     |
+      | testCode         |
+      | testNumber       |
+#      | testEndTimestamp |
     And test record fields should be editable
-      | Field                 |
-      | countryOfRegistration |
-      | euVehicleCategory-0   |
-      | euVehicleCategory-1   |
-      | odometerReading       |
-      | odometerReadingUnit   |
-      | preparer              |
-    # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
-    And I should see "Romania - RO" as country of registration
-    And I should see "M2" as EU vehicle category
-    And I should see "55000" as odometer reading
-    And I should see "kilometres" as odometer reading unit
-    And I should see "Durrell Vehicles Limited(BL5545)" as preparer
-    When I set "Austria - A" as country of registration
-    And I select "M3" as EU vehicle category
-    And I set odometer reading to "11000"
-    And I set odometer reading unit to "miles"
-    And I set preparer to "Glasshouse Group Limited (MB8527)"
-    # AC11
-    Then I should see carried out during test set to "Yes"
-    And I should see "2" as number of seatbelts fitted
-    And I should see "14/01/2019" as most recent installation check date
-    When I set carried out during test set to "No"
-    And I set number of seatbelts fitted to "4"
-    And I set most recent installation check date to "30/03/2020"
-    # AC15 + AC16 + AC17
-    Then I should see "Lowe-Veum  (35-7138320)" as test facility name
-    And I should see "ATF" as test station type
-    And I should see "Test Test" as tester name
-    And I should see "test@test-station.com" as email address
-    When I set test facility name to "Abshire-Kub  (09-4129632)"
-    And I set tester name to "Test1 Test1"
-    And I set email address to "test1@test-station1.com"
-    # AC18
-    Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    When I set "new notes" as test notes
+      | Field                  |
+      | testResult             |
+      | certificateNumber      |
+      | testExpiryDate         |
+      | testAnniversaryDate    |
+      | testTypeStartTimestamp |
+      | testTypeEndTimestamp   |
+    # AC5 + AC6 + AC7
+    And I should see "Fail" as test result
+    And I should see correct certificate number
+    And I should see correct expiry date
+    And I should see correct anniversary date
+    And I should see correct start time
+    And I should see correct end time
+    When I set test result as "Pass"
+    And I set certificate number as "Y123456"
+    And I set expiry date to "01/06/2022"
+    And I set anniversary date to "01/06/2021"
+    And I set start time to "16:6"
+    And I set end time to "0:14"
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
     And I should see "Cancel" in the save changes modal
-    When I enter "cvsb-10278" as reason for test record changes
+    When I enter "cvsb-12375" as reason for test record changes
     And I confirm saving the test record changes
     Then I should see "Change test record"
     And I should not see "Cancel"
-    # AC19
     And the "test record history" test record section should have 2 entries
-    Then test record fields should have values
-      | Field                             | Value                             |
-      | countryOfRegistration             | Austria - A                       |
-      | euVehicleCategory                 | M3                                |
-      | odometerReading                   | 11,000 miles                      |
-      | preparer                          | Glasshouse Group Limited - MB8527 |
-      | seatbeltInstallationCheckDate     | No                                |
-      | numberOfSeatbeltsFitted           | 4                                 |
-      | lastSeatbeltInstallationCheckDate | 30/03/2020                        |
-      | testStationName                   | Abshire-Kub - 09-4129632          |
-      | testStationType                   | GVTS                              |
-      | testerName                        | Test1 Test1                       |
-      | testerEmailAddress                | test1@test-station1.com           |
-      | additionalNotesRecorded           | new notes                         |
-      | testVersion-curr                  | Current                           |
-      | reasonForCreation-curr            | cvsb-10278                        |
-      | createdByName-curr                | VTM_USER                          |
-      | createdAt-curr                    | TODAYS_DATE                       |
-      | lastUpdatedByName-curr            | -                                 |
-      | lastUpdatedAt-curr                | -                                 |
-      | testVersion-arch-0                | Archived                          |
-      | reasonForCreation-arch-0          | Test conducted                    |
-      | createdByName-arch-0              | Test Test                         |
-      | createdAt-arch-0                  | TODAYS_DATE                       |
-      | lastUpdatedByName-arch-0          | vtm-full-access                   |
-      | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
+    And I should not see "Particulate trap fitted"
+    And I should not see "Particulate trap serial number"
+    And test record fields should have values
+      | Field                        | Value      |
+      | testResult                   | Pass       |
+      | testCode                     | aal        |
+      | reasonForAbandoning          | -          |
+      | additionalCommentsForAbandon | None       |
+      | certificateNumber            | Y123456    |
+      | testExpiryDate               | 31/05/2022 |
+      | testAnniversaryDate          | 31/05/2021 |
+      | testTypeStartTimestamp       | 4:06 PM    |
+      | testTypeEndTimestamp         | 0:14 AM    |
     And test record fields of newly created test should have expected values
       | Field                  |
       | testNumber             |
       | testEndTimestamp       |
-      | testTypeStartTimestamp |
-      | testTypeEndTimestamp   |
-      | testTypeName           |
-      | testExpiryDate         |
-      | testAnniversaryDate    |
-      | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certificate) test (group 2)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC11 - Ability to edit 'Seatbelt installation check' details
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "prs" and test type "phl" for new "psv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -562,7 +397,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as EU vehicle category
+    And I should see "M2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -574,10 +409,14 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     # AC11
     Then I should see carried out during test set to "Yes"
     And I should see "2" as number of seatbelts fitted
-    And I should see "14/01/2019" as most recent installation check date
+    Then I should see "14" as day of most recent installation check
+    And I should see "01" as month of most recent installation check
+    And I should see "2019" as year of most recent installation check
     When I set carried out during test set to "No"
-    And I set number of seatbelts fitted to "4"
-    And I set most recent installation check date to "30/03/2020"
+    When I set number of seatbelts fitted to "4"
+    When I set day of most recent installation check to "30"
+    When I set month of most recent installation check to "03"
+    When I set year of most recent installation check to "2020"
     # AC15 + AC16 + AC17
     Then I should see "Lowe-Veum  (35-7138320)" as test facility name
     And I should see "ATF" as test station type
@@ -588,7 +427,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -636,19 +475,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Voluntary brake test test (group 3)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "pass" and test type "qal" for new "psv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -731,7 +569,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as EU vehicle category
+    And I should see "M2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -750,7 +588,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -792,19 +630,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Voluntary multi-check test (group 4)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "abandoned" and test type "qbv" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -889,7 +726,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -908,7 +745,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -950,19 +787,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Paid TIR retest (group 5)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "fail" and test type "trv" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1048,7 +884,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1067,7 +903,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1110,19 +946,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeName           |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Paid roadworthiness retest (group 6)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "pass" and test type "qpv" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1205,7 +1040,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1224,7 +1059,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1267,19 +1102,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | certificateNumber      |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Paid ADR retest (group 7)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "prs" and test type "arv" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1363,7 +1197,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1382,7 +1216,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1426,19 +1260,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testExpiryDate         |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Voluntary brake test (group 8)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "fail" and test type "qav3" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1523,7 +1356,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1542,7 +1375,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1584,19 +1417,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Paid prohibition clearance (retest with certification) (group 9)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "fail" and test type "p3v2" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1684,7 +1516,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1703,7 +1535,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1748,19 +1580,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testAnniversaryDate    |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for First Test (group 10)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "pass" and test type "fft1" for new "trl" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -1866,7 +1697,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as EU vehicle category
+    And I should see "O2" as eu vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -1881,7 +1712,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1925,19 +1756,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testAnniversaryDate    |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Voluntary roadworthiness test (group 11)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "prs" and test type "qjt1" for new "trl" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -2028,7 +1858,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as EU vehicle category
+    And I should see "O2" as eu vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -2043,7 +1873,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2085,19 +1915,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeName           |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Part paid prohibition clearance (retest without certification) (group 12)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "fail" and test type "p2t1" for new "trl" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -2190,7 +2019,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as EU vehicle category
+    And I should see "O2" as eu vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -2205,7 +2034,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2246,19 +2075,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Free TIR retest (group 13)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "abandoned" and test type "rft" for new "trl" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -2352,7 +2180,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as EU vehicle category
+    And I should see "O2" as eu vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -2367,7 +2195,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2409,19 +2237,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeName           |
       | certificateNumber      |
 
-
+  @skip
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certification) (group 14)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "pass" and test type "pbv2" for new "hgv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -2503,7 +2330,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as EU vehicle category
+    And I should see "N2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -2522,7 +2349,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2564,21 +2391,18 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | testTypeEndTimestamp   |
       | testTypeName           |
 
-
+  @skip
   Scenario: Edit fields for Low Emissions Certificate (LEC) with annual test (group 15)
-  AC1 - Ability to edit fields on the Test Record screen
-  AC6 - Ability to edit vehicle details
-  AC7 - Ability to select an option from the 'Country of Registration' drop down
-  AC8 - Ability for a user to select an 'EU vehicle category' option
-  AC9 - Unable to edit some vehicle details
-  AC10 - Ability for the system to autocomplete 'Preparer'
-  AC12 - Ability to edit Emission details
-  AC14 - Ability to capture 'Particulate Trap' details
-  AC15 - Ability to edit Test Facility details
-  AC16 - Type of test facility automatically updates when Test facility name/number is updated
-  AC17 - Tester email address can be manually updated
-  AC18 - User is able to enter notes
-  AC19 - Ability to view audit trail information for amended test records
+  AC5 - Ability to change the test result
+  AC6 - The test number remains the same when the test record is updated
+  AC7 - Ability to edit test type fields for a test that is NOT abandoned
+  AC8 - Ability to edit test type fields for an abandoned test
+  AC9 - Prohibition issued is updated from Yes to No
+  AC10 - Prohibition issued only displays in the Defects section
+  AC12 - Unable to edit some test fields
+  AC13 - Ability to update the Test Result to Abandoned (for a PSV)
+  AC14 - Ability to update the Test Result to Abandoned (for a HGV or TRL)
+  AC15 - Ability to update the Test Result to Abandoned (for a TIR test type)
     When I create test record with status "submitted" and result "pass" and test type "lbp" for new "psv" vehicle
     And I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
@@ -2666,7 +2490,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as EU vehicle category
+    And I should see "M2" as eu vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -2700,7 +2524,7 @@ Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test r
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    When I set "new notes" as test notes
+    And I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal

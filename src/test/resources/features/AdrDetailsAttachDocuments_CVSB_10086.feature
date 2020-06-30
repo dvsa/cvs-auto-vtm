@@ -1,4 +1,4 @@
-Feature: Attaching documents to the ADR record + Upload + Download Attachments - CVSB-10086 + CVSB-10254
+Feature: CVSB-10086 + CVSB-10254 - Attaching documents to the ADR record + Upload + Download Attachments
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should be able to attach documents in ADR section

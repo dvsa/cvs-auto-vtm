@@ -1,4 +1,4 @@
-Feature: Display Adr details - CVSB-10083
+Feature: CVSB-10083 - Display Adr details
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see the adr fields in the adr section
@@ -11,7 +11,7 @@ Feature: Display Adr details - CVSB-10083
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
 
-
+  @feature_bug @CVSB-16813
   Scenario: Displaying the Adr details
   AC1 - HGV/TRL tech records are structured correctly, ADR heading is now present
   AC2 - ADR heading contains the correct attributes
