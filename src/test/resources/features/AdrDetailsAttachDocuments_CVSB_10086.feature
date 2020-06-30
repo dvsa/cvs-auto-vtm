@@ -11,7 +11,7 @@ Feature: Attaching documents to the ADR record + Upload + Download Attachments -
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
 
-
+  @feature_bug @CVSB-16813
   Scenario: Attaching documents to the ADR record
   AC1 - User selected a vehicle type that contained the word 'battery' or 'tank', and is therefore able to attach documents to the ADR record
   AC2 - User uploads documents to the ADR record

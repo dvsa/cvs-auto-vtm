@@ -1,5 +1,6 @@
 package pages;
 
+import exceptions.AutomationException;
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.apache.commons.lang3.StringUtils;
@@ -10,10 +11,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.TypeLoader;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Date;
 import java.util.List;
 
 import static java.time.Duration.ofMillis;
@@ -37,7 +40,7 @@ public class GenericPage extends PageObject {
     }
 
     public void checkTextIsPresentInPage(String text) {
-        FluentWait wait = globalFluentWait(25, 200);
+        FluentWait wait = globalFluentWait(30, 200);
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("body"), text));
     }
 
@@ -178,6 +181,12 @@ public class GenericPage extends PageObject {
                 "//a[contains(text(),'" + text + "')] | //a/span[contains(text(),'" + text + "')]")));
     }
 
+    public void checkTextIsPresentInHyperlinkInElement(String text, String locator) {
+        String selector = "//" + locator + "//a[contains(text(),'" + text + "')] | //" + locator + "//a/span[contains(text(),'" + text + "')]";
+        Assert.assertNotNull("Hyperlink with text '" + text + "' was not found in element with locator '" + locator +
+                "'!", getDriver().findElement(By.xpath(selector)));
+    }
+
     public void checkTextIsPresentInButton(String text) {
         Assert.assertNotNull("Button with text '" + text + "' was not found!", getDriver().findElement(By.xpath(
                 "//button[contains(text(),'" + text + "')]")));
@@ -196,7 +205,16 @@ public class GenericPage extends PageObject {
         catch (TimeoutException e) {
             System.out.println("Spinner did not appear");
         }
-        waitForAngularRequestsToFinish();
+        waitForAngular();
+    }
+
+    protected void waitForAngular() {
+        try {
+            waitForAngularRequestsToFinish();
+        } catch (Exception e) {
+            System.out.println("NgWebDriver.waitForAngularRequestsToFinish() timeout!");
+        }
+
     }
 
     public void clickLink(String text) {
@@ -214,6 +232,20 @@ public class GenericPage extends PageObject {
         }
     }
 
+    public void clickLinkInElement(String text, String locator) {
+        String selector = "//" + locator + "//a[contains(text(),'" + text + "')] | //" + locator + "//a/span[contains(text(),'" + text + "')]";
+        FluentWait wait = globalFluentWait(5, 200);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(selector)));
+        findElementByXpath(selector).click();
+        try {
+            FluentWait spinnerWait = globalFluentWait(1, 200);
+            spinnerWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(SPINNER)));
+            waitForRenderedElementsToDisappear(By.cssSelector(SPINNER));
+        }
+        catch (TimeoutException e) {
+            System.out.println("Spinner did not appear");
+        }
+    }
 
     void selectOptionFromDropdown(WebElement element, String searchCriteria) {
         new Select(element).selectByValue(searchCriteria);
@@ -274,5 +306,230 @@ public class GenericPage extends PageObject {
         WebElement element = findElementByCss(cssSelector);
         Assert.assertTrue("Element with css selector '" + cssSelector + "' has text '" + element.getText().contains(text)
                 + "' which does not contain expected text '" + text + "'", element.getText().contains(text));
+    }
+
+    public void checkFieldEditable(String field) {
+        if (getDriver().findElements(By.id("test-" + field)).size() > 0) {
+            WebElement element = getDriver().findElement(By.id("test-" + field));
+            Assert.assertNull("Element with id 'test-" + field + "' has the 'disabled' attribute",
+                    element.getAttribute("disabled"));
+        }
+        else {
+            if (getDriver().findElements(By.cssSelector("[id^='test-" + field + "'")).size() > 0) {
+                List<WebElement> list = getDriver().findElements(By.cssSelector("[id^='test-" + field + "'"));
+                for (WebElement element : list) {
+                    Assert.assertTrue("Element is not editable",
+                            element.getTagName().contentEquals("input") || element.getTagName().contentEquals("select"));
+                    Assert.assertNull("Element with id starting with 'test-" + field + "' has the 'disabled' attribute",
+                            element.getAttribute("disabled"));
+                }
+            }
+        }
+    }
+
+    public void checkFieldNotEditable(String field) {
+        if (getDriver().findElement(By.id("test-" + field)).getTagName().contentEquals("input") ||
+                getDriver().findElement(By.id("test-" + field)).getTagName().contentEquals("select")) {
+            WebElement element = getDriver().findElement(By.id("test-" + field));
+            Assert.assertNotNull("Element with id 'test-" + field + "' does not have the 'disabled' attribute",
+                    element.getAttribute("disabled"));
+        }
+        else {
+            System.out.println("Element with id 'test-" + field + "' is not editable since it is a <dd> element");
+        }
+    }
+
+    public void setValueForInputField(String inputField, String value) {
+        FluentWait wait = globalFluentWait(10, 300);
+        if (inputField.endsWith("-day") || inputField.endsWith("-month") || inputField.endsWith("-year") ||
+                inputField.endsWith("-hour") || inputField.endsWith("-minute")) {
+            String[] parts = inputField.split("-");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[id^='test-" + parts[0] + "'][id$='-" +
+                    parts[parts.length-1] + "']")));
+            WebElement element = getDriver().findElement(By.cssSelector("[id^='test-" + parts[0] + "'][id$='-" + parts[parts.length-1] + "']"));
+            element.clear();
+            element.sendKeys(value);
+        }
+        else {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("test-" + inputField)));
+            WebElement element = getDriver().findElement(By.id("test-" + inputField));
+            element.clear();
+            element.sendKeys(value);
+        }
+    }
+
+    public void setValueForRadioButtonField(String radioButtonField, String value) {
+        WebElement element = getDriver().findElement(By.xpath("//input[starts-with(@id,'test-" + radioButtonField + "')]" +
+                "/following-sibling::label[normalize-space(text())='" + value + "']/preceding-sibling::input"));
+        element.click();
+    }
+
+    public void setValueForSelectField(String selectField, String value) {
+        Select selectElement = new Select(getDriver().findElement(By.id("test-" + selectField)));
+        selectElement.selectByVisibleText(value);
+    }
+
+    private void setValueForCheckboxField(String checkboxField, String value) {
+        if (!(value.toLowerCase().contentEquals("checked")) && !(value.toLowerCase().contentEquals("unchecked"))) {
+            throw new AutomationException("Value '" + value + "' is not applicable for checkbox fields");
+        }
+        WebElement element = getDriver().findElement(By.id("test-" + checkboxField));
+        if (value.toLowerCase().contentEquals("checked")) {
+            if (element.getAttribute("value").contentEquals("false")) {
+                element.click();
+            }
+        }
+        else {
+            if (element.getAttribute("value").contentEquals("true")) {
+                element.click();
+            }
+        }
+    }
+
+    public void checkValueForInputField(String inputField, String value) {
+        if (inputField.endsWith("-day") || inputField.endsWith("-month") || inputField.endsWith("-year") ||
+                inputField.endsWith("-hour") || inputField.endsWith("-minute")) {
+            String[] parts = inputField.split("-");
+            WebElement element = getDriver().findElement(By.cssSelector("[id^='test-" + parts[0] + "'][id$='-" + parts[parts.length-1] + "']"));
+            Assert.assertEquals("Value in element with id starting with 'test-" + parts[0] + "' and ending with '-"
+                    + parts[parts.length-1] + "' is '" +
+                    element.getAttribute("value") + "' instead of '" + value + "'", value, element.getAttribute("value"));
+        }
+        else {
+            WebElement element = getDriver().findElement(By.id("test-" + inputField));
+            Assert.assertEquals("Value in element with id 'test-" + inputField + "' is '" +
+                    element.getAttribute("value") + "' instead of '" + value + "'", value, element.getAttribute("value"));
+        }
+    }
+
+    public void checkValueForCheckboxField(String checkboxField, String value) {
+        if (!(value.toLowerCase().contentEquals("checked")) && !(value.toLowerCase().contentEquals("unchecked"))) {
+            throw new AutomationException("Value '" + value + "' is not applicable for checkbox fields");
+        }
+        WebElement element = getDriver().findElement(By.id("test-" + checkboxField));
+        if (value.toLowerCase().contentEquals("checked")) {
+            Assert.assertEquals("Value in element with id 'test-" + checkboxField + "' is '" +
+                    element.getAttribute("value") + "' instead of 'true'", "true", element.getAttribute("value"));
+            if (element.getAttribute("value").contentEquals("false")) {
+                Assert.assertEquals("Value in element with id 'test-" + checkboxField + "' is '" +
+                        element.getAttribute("value") + "' instead of 'false'", "false", element.getAttribute("value"));
+            }
+        }
+    }
+
+    public void checkValueForRadioButtonField(String radioButtonField, String value) {
+        WebElement element = getDriver().findElement(By.xpath("//input[starts-with(@id,'test-" + radioButtonField + "')]" +
+                "/following-sibling::label[normalize-space(text())='" + value + "']/preceding-sibling::input"));
+        Assert.assertTrue("Value '" + value + "' should be selected but it is not", element.isSelected());
+    }
+
+    public void checkValueForSelectField(String selectField, String value) {
+        Select select = new Select(getDriver().findElement(By.id("test-" + selectField)));
+        WebElement option = select.getFirstSelectedOption();
+        Assert.assertTrue("Option '" + value + "' should be selected but it is not", option.getText().contentEquals(value));
+    }
+
+    public void setValueForField(String field, String value) {
+        WebElement element;
+        String tagName;
+        if (field.endsWith("-day") || field.endsWith("-month") || field.endsWith("-year") ||
+                field.endsWith("-hour") || field.endsWith("-minute")) {
+            tagName = "input";
+        }
+        else {
+            element = getDriver().findElement(By.cssSelector("[id^=test-" + field + "]"));
+            if (element.getAttribute("type").contentEquals("radio")) {
+                tagName = "radio";
+            } else if (element.getAttribute("type").contentEquals("checkbox")) {
+                tagName = "checkbox";
+            } else {
+                tagName = element.getTagName();
+            }
+        }
+        switch (tagName) {
+            case "select":
+                setValueForSelectField(field, value);
+                break;
+            case "input":
+            case "textarea":
+                setValueForInputField(field, value);
+                break;
+            case "radio":
+                setValueForRadioButtonField(field, value);
+                break;
+            case "checkbox":
+                setValueForCheckboxField(field, value);
+                break;
+        }
+    }
+
+    public void checkValueForField(String field, String value) {
+        String tagName;
+        WebElement element;
+        if (field.endsWith("-day") || field.endsWith("-month") || field.endsWith("-year") ||
+                field.endsWith("-hour") || field.endsWith("-minute")) {
+            tagName = "input";
+        }
+        else {
+            element = getDriver().findElement(By.cssSelector("[id^=test-" + field + "]"));
+            if (element.getAttribute("type").contentEquals("radio")) {
+                tagName = "radio";
+            } else if (element.getAttribute("type").contentEquals("checkbox")) {
+                tagName = "checkbox";
+            }
+            else {
+                tagName = element.getTagName();
+            }
+        }
+        switch (tagName) {
+            case "select":
+                checkValueForSelectField(field, value);
+                break;
+            case "input":
+            case "textarea":
+                checkValueForInputField(field, value);
+                break;
+            case "radio":
+                checkValueForRadioButtonField(field, value);
+                break;
+            case "checkbox":
+                checkValueForCheckboxField(field, value);
+                break;
+            default:
+                checkFieldValue(field, value);
+                break;
+        }
+    }
+
+    private void checkFieldValue(String field, String value) {
+        if (value.equals("TODAYS_DATE")) {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            value = dateFormat.format(date);
+        }
+        if (value.equals("VTM_USER_EMAIL")) {
+            value = TypeLoader.getAppUsername().substring(0, 1).toUpperCase() + TypeLoader.getAppUsername().substring(1);
+        }
+        if (value.equals("VTM_USER")) {
+            value = TypeLoader.getAppUsername().split("-")[0];
+        }
+        if (StringUtils.isNumeric(value)) {
+            Assert.assertTrue("Expected value '" + value + "' for field '" + field + "' is not the actual one '"
+                    + getValueInField(field) + "'", getValueInField(field).contentEquals(value));
+        }
+        else {
+            Assert.assertTrue("Expected value '" + value + "' for field '" + field + "' is not the actual one '"
+                    + getValueInField(field) + "'", getValueInField(field).contains(value));
+        }
+    }
+
+    public String getValueInField(String field) {
+        WebElement element = getDriver().findElement(By.cssSelector("#test-" + field));
+        FluentWait wait = globalFluentWait(10, 300);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#test-" + field)));
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element);
+        actions.perform();
+        return element.getText();
     }
 }

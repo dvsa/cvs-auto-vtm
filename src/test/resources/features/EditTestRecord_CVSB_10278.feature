@@ -1,5 +1,5 @@
-Feature: As a VTM user, I need the ability to edit submitted test records, so that DVSA keeps accurate information for
-  the vehicle owner and FTAs - CVSB-10278
+Feature: CVSB-10278 - As a VTM user, I need the ability to edit submitted test records, so that DVSA keeps accurate information for
+  the vehicle owner and FTAs
   As an admin user I can log in the VTM app
   And edit the test results with version current, belonging to the queried vehicle
 
@@ -8,7 +8,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     Then I should see "Select activity"
     And search vehicle link should be present
 
-  
+
   Scenario: Check buttons and hyperlinks work as expected
   AC1 - Ability to edit fields on the Test Record screen
   AC2 - User updates test record
@@ -88,7 +88,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should see "Cancel" hyperlink
     And odometer reading should have expected value on edit
 
-  
+
   Scenario: Edit fields for Low Emissions Certificate (Lec) With Annual Test (group 16)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -175,7 +175,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -210,7 +210,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -256,7 +256,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should see "Cancel" hyperlink
     # AC18
     Then I should see "new notes" as test notes
-    And I set "old notes" as test notes
+    When I set "old notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -269,7 +269,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | Field                             | Value                             |
       | additionalNotesRecorded           | old notes                         |
 
-  
+
   Scenario: Edit fields for Annual test (group 1)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -358,7 +358,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as eu vehicle category
+    And I should see "M2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -370,14 +370,10 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     # AC11
     Then I should see carried out during test set to "Yes"
     And I should see "2" as number of seatbelts fitted
-    Then I should see "14" as day of most recent installation check
-    And I should see "01" as month of most recent installation check
-    And I should see "2019" as year of most recent installation check
+    And I should see "14/01/2019" as most recent installation check date
     When I set carried out during test set to "No"
-    When I set number of seatbelts fitted to "4"
-    When I set day of most recent installation check to "30"
-    When I set month of most recent installation check to "03"
-    When I set year of most recent installation check to "2020"
+    And I set number of seatbelts fitted to "4"
+    And I set most recent installation check date to "30/03/2020"
     # AC15 + AC16 + AC17
     Then I should see "Lowe-Veum  (35-7138320)" as test facility name
     And I should see "ATF" as test station type
@@ -388,7 +384,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -426,7 +422,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0          | vtm-full-access                   |
       | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certificate) test (group 2)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -512,7 +508,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as eu vehicle category
+    And I should see "M2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -524,14 +520,10 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     # AC11
     Then I should see carried out during test set to "Yes"
     And I should see "2" as number of seatbelts fitted
-    Then I should see "14" as day of most recent installation check
-    And I should see "01" as month of most recent installation check
-    And I should see "2019" as year of most recent installation check
+    And I should see "14/01/2019" as most recent installation check date
     When I set carried out during test set to "No"
-    When I set number of seatbelts fitted to "4"
-    When I set day of most recent installation check to "30"
-    When I set month of most recent installation check to "03"
-    When I set year of most recent installation check to "2020"
+    And I set number of seatbelts fitted to "4"
+    And I set most recent installation check date to "30/03/2020"
     # AC15 + AC16 + AC17
     Then I should see "Lowe-Veum  (35-7138320)" as test facility name
     And I should see "ATF" as test station type
@@ -542,7 +534,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -559,7 +551,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | euVehicleCategory                 | M3                                |
       | odometerReading                   | 11,000 miles                      |
       | preparer                          | Glasshouse Group Limited - MB8527 |
-#      | seatbeltInstallationCheckDate     | No                                |
+      | seatbeltInstallationCheckDate     | No                                |
       | numberOfSeatbeltsFitted           | 4                                 |
       | lastSeatbeltInstallationCheckDate | 30/03/2020                        |
       | testStationName                   | Abshire-Kub - 09-4129632          |
@@ -580,7 +572,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0          | vtm-full-access                   |
       | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Voluntary brake test test (group 3)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -665,7 +657,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as eu vehicle category
+    And I should see "M2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -684,7 +676,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -719,7 +711,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0          | vtm-full-access                   |
       | lastUpdatedAt-arch-0              | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Voluntary multi-check test (group 4)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -806,7 +798,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -825,7 +817,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -860,7 +852,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid TIR retest (group 5)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -947,7 +939,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -966,7 +958,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1001,7 +993,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid roadworthiness retest (group 6)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1085,7 +1077,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1104,7 +1096,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1139,7 +1131,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid ADR retest (group 7)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1223,7 +1215,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1242,7 +1234,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1277,7 +1269,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Voluntary brake test (group 8)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1364,7 +1356,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1383,7 +1375,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1418,7 +1410,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid prohibition clearance (retest with certification) (group 9)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1505,7 +1497,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -1524,7 +1516,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1559,7 +1551,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for First Test (group 10)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1651,7 +1643,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as eu vehicle category
+    And I should see "O2" as EU vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -1666,7 +1658,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1700,7 +1692,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Voluntary roadworthiness test (group 11)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1792,7 +1784,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as eu vehicle category
+    And I should see "O2" as EU vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -1807,7 +1799,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1841,7 +1833,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Part paid prohibition clearance (retest without certification) (group 12)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -1936,7 +1928,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as eu vehicle category
+    And I should see "O2" as EU vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -1951,7 +1943,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -1985,7 +1977,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Free TIR retest (group 13)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -2080,7 +2072,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should not see "Odometer reading"
     And I should not see "Odometer reading unit"
     And I should see "Country Not Known" as country of registration
-    And I should see "O2" as eu vehicle category
+    And I should see "O2" as EU vehicle category
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
     When I set "Romania - RO" as country of registration
     And I select "O3" as EU vehicle category
@@ -2095,7 +2087,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2129,7 +2121,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Paid prohibition clearance (full inspection without certification) (group 14)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -2213,7 +2205,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | odometerReadingUnit   |
       | preparer              |
     And I should see "Great Britain and Northern Ireland - GB" as country of registration
-    And I should see "N2" as eu vehicle category
+    And I should see "N2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -2232,7 +2224,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "notes" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2267,7 +2259,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | lastUpdatedByName-arch-0 | vtm-full-access                   |
       | lastUpdatedAt-arch-0     | TODAYS_DATE                       |
 
-  
+
   Scenario: Edit fields for Low Emissions Certificate (LEC) with annual test (group 15)
   AC1 - Ability to edit fields on the Test Record screen
   AC6 - Ability to edit vehicle details
@@ -2357,7 +2349,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
       | preparer              |
     # AC1 + AC6 +AC7 + AC8 + AC9 + AC10
     And I should see "Romania - RO" as country of registration
-    And I should see "M2" as eu vehicle category
+    And I should see "M2" as EU vehicle category
     And I should see "55000" as odometer reading
     And I should see "kilometres" as odometer reading unit
     And I should see "Durrell Vehicles Limited(BL5545)" as preparer
@@ -2391,7 +2383,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I set email address to "test1@test-station1.com"
     # AC18
     Then I should see "VEHICLE FRONT ROW SECOND SEAT HAS MISSING SEATBELT" as test notes
-    And I set "new notes" as test notes
+    When I set "new notes" as test notes
     And I click "Save test record" button
     Then I should see "Enter reason for changing test record"
     And I should see "Save test record" in the save changes modal
@@ -2402,7 +2394,7 @@ Feature: As a VTM user, I need the ability to edit submitted test records, so th
     And I should not see "Cancel"
     # AC19
     And the "test record history" test record section should have 2 entries
-#    And I should not see "Modification type used"
+    And I should not see "Modification type used"
     Then test record fields should have values
       | Field                             | Value                             |
       | countryOfRegistration             | Austria - A                       |
