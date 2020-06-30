@@ -1,10 +1,16 @@
 package stepDefinitions;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.After;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
+import org.junit.ComparisonFailure;
 import step.GenericPageSteps;
+
+import java.util.List;
+import java.util.Map;
 
 public class GenericPageStepDefinition {
 
@@ -114,5 +120,45 @@ public class GenericPageStepDefinition {
     @Then("^I should no longer see the sign out confirmation screen$")
     public void iShouldNoLongerSeeTheSignOutConfirmationScreen() {
         genericPageSteps.checkSignOutScreenNotPresent();
+    }
+
+    @Then("^I should see$")
+    public void iShouldSee(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            genericPageSteps.checkTextIsPresentInPage(stringMap.get("Text"));
+        }
+    }
+
+    @Then("^I should not see$")
+    public void iShouldNotSee(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            genericPageSteps.checkTextIsNotPresentInPage(stringMap.get("Text"));
+        }
+    }
+
+    @When("^I set values for fields$")
+    public void iSetValuesForFields(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            genericPageSteps.setValueForField(stringMap.get("Field"), stringMap.get("Value"));
+        }
+    }
+
+    @When("^I check values for fields$")
+    public void iSetValuesForTechRecordFields(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            genericPageSteps.checkValueForField(stringMap.get("Field"), stringMap.get("Value"));
+        }
+    }
+
+    @Then("^fields should be editable$")
+    public void techRecordFieldsShouldBeEditable(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            genericPageSteps.checkFieldEditable(stringMap.get("Field"));
+        }
     }
 }
