@@ -3,7 +3,6 @@ Feature: Updating and saving core adrDetails - CVSB-10084
   After I search for a tech record
   I should be able to update and save adr details
 
-
   Scenario: User adds adr details on a vehicle without ADR details
   AC1 - User clicks the call to action to change the technical record
   AC2 - User clicks the call to action to cancel the change
