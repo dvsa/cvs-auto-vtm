@@ -11,7 +11,6 @@ Feature: Display Adr details - CVSB-10083
     And I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
 
-  @feature_bug @CVSB-16813
   Scenario: Displaying the Adr details
   AC1 - HGV/TRL tech records are structured correctly, ADR heading is now present
   AC2 - ADR heading contains the correct attributes
