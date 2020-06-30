@@ -1,4 +1,4 @@
-Feature: Search for vehicle before creation - CVSB-10139
+Feature: CVSB-10139 - Search for vehicle before creation
   As an admin user I can search for a vehicle in the create vehicle page
   And make sure that the vehicle I wish to create does not already exist
 

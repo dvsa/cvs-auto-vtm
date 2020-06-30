@@ -1,4 +1,4 @@
-Feature: Show test accurately for queried vehicle - CVSB-10283
+Feature: CVSB-10283 - Show test accurately for queried vehicle
   As an admin user I can log in the VTM app
   And view the details of the tests on the test results belonging to the queried vehicle
 

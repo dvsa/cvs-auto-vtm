@@ -1,4 +1,4 @@
-Feature: Display Adr details - CVSB-10083
+Feature: CVSB-10083 - Display Adr details
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see the adr fields in the adr section

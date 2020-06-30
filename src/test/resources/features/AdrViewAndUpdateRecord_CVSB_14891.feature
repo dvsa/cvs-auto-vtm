@@ -1,5 +1,5 @@
-Feature: As the DVSA, we want the fields on the VTM ADR screen to be appropriately named so we know how to correctly
-  populate these fields - CVSB-14891
+Feature: CVSB-14891 - As the DVSA, we want the fields on the VTM ADR screen to be appropriately named so we know how to correctly
+  populate these fields
 
   Background:
     Given I login with admin credentials
