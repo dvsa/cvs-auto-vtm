@@ -43,6 +43,11 @@ public class TestRecordPageStepDefinition {
         testRecordPageSteps.checkTestRecordPageUrl();
     }
 
+    @Then("^I should be taken to the correct page for changing test type of test record$")
+    public void iShouldBeTakenToTheCorrectPageChangeTestTypeOfTestRecord() {
+        testRecordPageSteps.checkChangeTestTypePageUrl();
+    }
+
     @Then("^I open all test record sections$")
     public void iOpenAllTestRecordSections() {
         testRecordPageSteps.openAllSections();
@@ -133,47 +138,47 @@ public class TestRecordPageStepDefinition {
 
     @When("^I set \"([^\"]*)\" as country of registration$")
     public void iSetAsCountryOfRegistration(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("countryOfRegistration", value);
+        testRecordPageSteps.setValueForField("countryOfRegistration", value);
     }
 
     @When("^I select \"([^\"]*)\" as EU vehicle category$")
     public void iSelectAsEUVehicleCategory(String value) {
-        testRecordPageSteps.setValueForTestRecordRadioButtonField("euVehicleCategory", value);
+        testRecordPageSteps.setValueForField("euVehicleCategory", value);
     }
 
     @When("^I set odometer reading to \"([^\"]*)\"$")
     public void iSetOdometerReadingTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("odometerReading", value);
+        testRecordPageSteps.setValueForField("odometerReading", value);
     }
 
     @When("^I set odometer reading unit to \"([^\"]*)\"$")
     public void iSetOdometerReadingUnitTo(String value) {
-        testRecordPageSteps.setValueForTestRecordSelectField("odometerReadingUnit", value);
+        testRecordPageSteps.setValueForField("odometerReadingUnit", value);
     }
 
     @When("^I set preparer to \"([^\"]*)\"$")
     public void iSetPreparerTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("preparer", value);
+        testRecordPageSteps.setValueForField("preparer", value);
     }
 
     @When("^I set test facility name to \"([^\"]*)\"$")
     public void iSetTestFacilityNameTo(String name) {
-        testRecordPageSteps.setValueForTestRecordInputField("testStationNameNumber", name);
+        testRecordPageSteps.setValueForField("testStationNameNumber", name);
     }
 
     @When("^I set tester name to \"([^\"]*)\"$")
     public void iSetTesterNameTo(String name) {
-        testRecordPageSteps.setValueForTestRecordInputField("testerName", name);
+        testRecordPageSteps.setValueForField("testerName", name);
     }
 
     @When("^I set email address to \"([^\"]*)\"$")
     public void iSetEmailAddressTo(String emailAddress) {
-        testRecordPageSteps.setValueForTestRecordInputField("testerEmailAddress", emailAddress);
+        testRecordPageSteps.setValueForField("testerEmailAddress", emailAddress);
     }
 
     @When("^I set \"([^\"]*)\" as test notes$")
     public void iSetAsTestNotes(String text) {
-        testRecordPageSteps.setValueForTestRecordInputField("additionalNotesRecorded", text);
+        testRecordPageSteps.setValueForField("additionalNotesRecorded", text);
     }
 
     @Then("^the \"([^\"]*)\" test record section should have (\\d+) entry$")
@@ -244,72 +249,72 @@ public class TestRecordPageStepDefinition {
 
     @Then("^I should see \"([^\"]*)\" as country of registration$")
     public void iShouldSeeAsCountryOfRegistration(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("countryOfRegistration", value);
+        testRecordPageSteps.checkValueForField("countryOfRegistration", value);
     }
 
-    @Then("^I should see \"([^\"]*)\" as eu vehicle category$")
+    @Then("^I should see \"([^\"]*)\" as EU vehicle category$")
     public void iShouldSeeAsEuVehicleCategory(String value) {
-        testRecordPageSteps.checkTestRecordRadioButtonFieldValue("euVehicleCategory", value);
+        testRecordPageSteps.checkValueForField("euVehicleCategory", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as odometer reading unit$")
     public void iShouldSeeAsOdometerReadingUnit(String value) {
-        testRecordPageSteps.checkTestRecordSelectFieldValue("odometerReadingUnit", value);
+        testRecordPageSteps.checkValueForField("odometerReadingUnit", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as odometer reading$")
     public void iShouldSeeAsOdometerReading(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("odometerReading", value);
+        testRecordPageSteps.checkValueForField("odometerReading", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as preparer$")
     public void iShouldSeeAsPreparer(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("preparer", value);
+        testRecordPageSteps.checkValueForField("preparer", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as emission standard$")
     public void iShouldSeeAsEmissionStandard(String value) {
-        testRecordPageSteps.checkTestRecordRadioButtonFieldValue("emissionStandard", value);
+        testRecordPageSteps.checkValueForField("emissionStandard", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as smoke test K limit applied$")
     public void iShouldSeeAsSmokeTestKLimitApplied(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("smokeTestKLimitApplied", value);
+        testRecordPageSteps.checkValueForField("smokeTestKLimitApplied", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as fuel type$")
     public void iShouldSeeAsFuelType(String value) {
-        testRecordPageSteps.checkTestRecordRadioButtonFieldValue("fuelType", value);
+        testRecordPageSteps.checkValueForField("fuelType", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as modification type$")
     public void iShouldSeeAsModificationType(String value) {
-        testRecordPageSteps.checkTestRecordRadioButtonFieldValue("modType", value);
+        testRecordPageSteps.checkValueForField("modType", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as particulate trap fitted$")
     public void iShouldSeeAsParticulateTrappFitted(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("particulateTrapFitted", value);
+        testRecordPageSteps.checkValueForField("particulateTrapFitted", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as particulate trap serial number$")
     public void iShouldSeeAsParticulateTrapSerialNumber(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("particulateTrapSerialNumber", value);
+        testRecordPageSteps.checkValueForField("particulateTrapSerialNumber", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as test facility name$")
     public void iShouldSeeAsTestFacilityName(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("testStationNameNumber", value);
+        testRecordPageSteps.checkValueForField("testStationNameNumber", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as tester name$")
     public void iShouldSeeAsTesterName(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("testerName", value);
+        testRecordPageSteps.checkValueForField("testerName", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as email address$")
     public void iShouldSeeAsEmailAddress(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("testerEmailAddress", value);
+        testRecordPageSteps.checkValueForField("testerEmailAddress", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as test station type$")
@@ -319,95 +324,200 @@ public class TestRecordPageStepDefinition {
 
     @When("^I select \"([^\"]*)\" as emission standard$")
     public void iSelectAsEmissionStandard(String value) {
-        testRecordPageSteps.setValueForTestRecordRadioButtonField("emissionStandard", value);
+        testRecordPageSteps.setValueForField("emissionStandard", value);
     }
 
     @When("^I set \"([^\"]*)\" as smoke test limit applied$")
     public void iSetAsSmokeTestLimitApplied(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("smokeTestKLimitApplied", value);
+        testRecordPageSteps.setValueForField("smokeTestKLimitApplied", value);
     }
 
     @When("^I select \"([^\"]*)\" as fuel type$")
     public void iSelectAsFuelType(String value) {
-        testRecordPageSteps.setValueForTestRecordRadioButtonField("fuelType", value);
+        testRecordPageSteps.setValueForField("fuelType", value);
     }
 
     @When("^I select \"([^\"]*)\" as modification type$")
     public void iSelectAsModificationType(String value) {
-        testRecordPageSteps.setValueForTestRecordRadioButtonField("modType", value);
+        testRecordPageSteps.setValueForField("modType", value);
     }
 
     @When("^I set \"([^\"]*)\" as particulate trap fitted$")
     public void iSelectAsParticulateTrapFitted(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("particulateTrapFitted", value);
+        testRecordPageSteps.setValueForField("particulateTrapFitted", value);
     }
     @When("^I set \"([^\"]*)\" as particulate trap serial number$")
     public void iSetAsParticulateTrapSerialNumber(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("particulateTrapSerialNumber", value);
+        testRecordPageSteps.setValueForField("particulateTrapSerialNumber", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as test notes$")
     public void iShouldSeeAsTestNotes(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("additionalNotesRecorded", value);
+        testRecordPageSteps.setValueForField("additionalNotesRecorded", value);
     }
 
     @When("^I set \"([^\"]*)\" as modification type used$")
     public void iSetAsModificationTypeUsed(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("modificationTypeUsed", value);
+        testRecordPageSteps.setValueForField("modificationTypeUsed", value);
     }
 
     @Then("^I should see carried out during test set to \"([^\"]*)\"$")
     public void iShouldSeeCarriedOutDuringTestSetTo(String value) {
-        testRecordPageSteps.checkTestRecordRadioButtonFieldValue("seatbelt", value);
+        testRecordPageSteps.checkValueForField("seatbelt", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as number of seatbelts fitted$")
     public void iShouldSeeAsNumberOfSeatbeltsFitted(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("numberOfSeatbeltsFitted", value);
+        testRecordPageSteps.checkValueForField("numberOfSeatbeltsFitted", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as day of most recent installation check$")
     public void iShouldSeeAsDayOfMostRecentInstallationCheck(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("lastSeatbeltInstallationCheckDate-1-day", value);
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-1-day", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as month of most recent installation check$")
     public void iShouldSeeAsMonthOfMostRecentInstallationCheck(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("lastSeatbeltInstallationCheckDate-1-month", value);
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-1-month", value);
     }
 
     @Then("^I should see \"([^\"]*)\" as year of most recent installation check$")
     public void iShouldSeeAsYearOfMostRecentInstallationCheck(String value) {
-        testRecordPageSteps.checkTestRecordInputFieldValue("lastSeatbeltInstallationCheckDate-1-year", value);
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-1-year", value);
     }
 
     @When("^I set carried out during test set to \"([^\"]*)\"$")
     public void iSetCarriedOutDuringTestSetTo(String value) {
-        testRecordPageSteps.setValueForTestRecordRadioButtonField("seatbelt", value);
+        testRecordPageSteps.setValueForField("seatbelt", value);
     }
 
     @When("^I set number of seatbelts fitted to \"([^\"]*)\"$")
     public void iSetNumberOfSeatbeltsFittedTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("numberOfSeatbeltsFitted", value);
+        testRecordPageSteps.setValueForField("numberOfSeatbeltsFitted", value);
     }
 
     @When("^I set day of most recent installation check to \"([^\"]*)\"$")
     public void iSetDayOfMostRecentInstallationCheckTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("lastSeatbeltInstallationCheckDate-1-day", value);
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-1-day", value);
     }
 
     @When("^I set month of most recent installation check to \"([^\"]*)\"$")
     public void iSetMonthOfMostRecentInstallationCheckTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("lastSeatbeltInstallationCheckDate-1-month", value);
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-1-month", value);
     }
 
     @When("^I set year of most recent installation check to \"([^\"]*)\"$")
     public void iSetYearOfMostRecentInstallationCheckTo(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("lastSeatbeltInstallationCheckDate-1-year", value);
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-1-year", value);
     }
 
-    @And("^I should see \"([^\"]*)\" as modification type used$")
+    @Then("^I should see \"([^\"]*)\" as modification type used$")
     public void iShouldSeeAsModificationTypeUsed(String value) {
-        testRecordPageSteps.setValueForTestRecordInputField("modificationTypeUsed", value);
+        testRecordPageSteps.checkValueForField("modificationTypeUsed", value);
+    }
+
+    @Then("^I should see \"([^\"]*)\" as test result$")
+    public void iShouldSeeAsTestResult(String result) {
+        testRecordPageSteps.checkValueForField("testResult", result);
+    }
+
+    @Then("^I should see correct certificate number$")
+    public void iShouldSeeCorrectCertificateNumber() {
+        testRecordPageSteps.checkValueForField("certificateNumber", genericBackendRequestSteps.getNewTestAttribute("certificateNumber"));
+    }
+
+    @Then("^I should see correct expiry date$")
+    public void iShouldSeeCorrectExpiryDate() {
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testExpiryDate").split("/");
+//        testRecordPageSteps.checkValueForField("testExpiryDate-day", parts[0]);
+        testRecordPageSteps.checkValueForField("testExpiryDate-month", parts[1]);
+        testRecordPageSteps.checkValueForField("testExpiryDate-year", parts[2]);
+    }
+
+    @Then("^I should see correct start time$")
+    public void iShouldSeeCorrectStartTime() {
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeStartTimestamp").split("[: .]");
+        if (parts[2].contentEquals("PM")) {
+            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+        }
+        else {
+            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-hour", parts[0]);
+        }
+        if (parts[1].substring(0,1).contentEquals("0")) {
+            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-minute", parts[1].substring(1,2));
+        }
+        else {
+            testRecordPageSteps.checkValueForField("testTypeStartTimestamp-minute", parts[1]);
+        }
+    }
+
+    @Then("^I should see correct end time$")
+    public void iShouldSeeCorrectEndTime() {
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testTypeEndTimestamp").split("[: .]");
+        if (parts[2].contentEquals("PM")) {
+            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-hour", Integer.toString(Integer.parseInt(parts[0]) + 12));
+        }
+        else {
+            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-hour", parts[0]);
+        }
+        if (parts[1].substring(0,1).contentEquals("0")) {
+            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-minute", parts[1].substring(1,2));
+        }
+        else {
+            testRecordPageSteps.checkValueForField("testTypeEndTimestamp-minute", parts[1]);
+        }
+    }
+
+    @When("^I set test result as \"([^\"]*)\"$")
+    public void iSetTestResultAs(String testResult) {
+        testRecordPageSteps.setValueForField("testResult", testResult);
+    }
+
+    @When("^I set certificate number as \"([^\"]*)\"$")
+    public void iSetCertificateNumberAs(String certificateNumber) {
+        testRecordPageSteps.setValueForField("certificateNumber", certificateNumber);
+    }
+
+    @When("^I set expiry date to \"([^\"]*)\"$")
+    public void iSetExpiryDateTo(String expiryDate) {
+        String[] parts = expiryDate.split("/");
+        testRecordPageSteps.setValueForField("testExpiryDate-day", parts[0]);
+        testRecordPageSteps.setValueForField("testExpiryDate-month", parts[1]);
+        testRecordPageSteps.setValueForField("testExpiryDate-year", parts[2]);
+    }
+
+    @When("^I set start time to \"([^\"]*)\"$")
+    public void iSetStartTimeTo(String startTime) {
+        String[] parts = startTime.split(":");
+        testRecordPageSteps.setValueForField("testTypeStartTimestamp-hour", parts[0]);
+        testRecordPageSteps.setValueForField("testTypeStartTimestamp-minute", parts[1]);
+    }
+
+    @When("^I set end time to \"([^\"]*)\"$")
+    public void iSetEndTimeTo(String endTime) {
+        String[] parts = endTime.split(":");
+        testRecordPageSteps.setValueForField("testTypeEndTimestamp-hour", parts[0]);
+        testRecordPageSteps.setValueForField("testTypeEndTimestamp-minute", parts[1]);
+    }
+
+    @Then("^I should see \"([^\"]*)\" as most recent installation check date$")
+    public void iShouldSeeAsMostRecentInstallationCheckDate(String checkDate) {
+        String[] parts = checkDate.split("/");
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-day", parts[0]);
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-month", parts[1]);
+        testRecordPageSteps.checkValueForField("lastSeatbeltInstallationCheckDate-year", parts[2]);
+    }
+
+    @When("^I set most recent installation check date to \"([^\"]*)\"$")
+    public void iSetMostRecentInstallationCheckDateTo(String checkDate) {
+        String[] parts = checkDate.split("/");
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-day", parts[0]);
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-month", parts[1]);
+        testRecordPageSteps.setValueForField("lastSeatbeltInstallationCheckDate-year", parts[2]);
+    }
+
+    @When("^I set prohibition issued to \"([^\"]*)\"$")
+    public void iSetProhibitionIssuedTo(String value) {
+        testRecordPageSteps.setValueForField("prohibitionIssued", value);
     }
 }

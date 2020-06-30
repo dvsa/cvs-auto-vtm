@@ -1,12 +1,15 @@
 package stepDefinitions;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Steps;
+import org.junit.ComparisonFailure;
 import step.CreateTechRecordPageSteps;
 import step.GenericPageSteps;
+
+import java.util.List;
+import java.util.Map;
 
 public class CreateTechRecordPageStepDefinition {
 
@@ -80,5 +83,57 @@ public class CreateTechRecordPageStepDefinition {
     @Then("^vin input field should be present$")
     public void vinInputFieldShouldBePresent() {
         genericPageSteps.elementWithIdShouldBePresent("test-vin");
+    }
+
+    @When("^I set vin to random value$")
+    public void iSetVinToRandomValue() {
+        createTechRecordPageSteps.setVinToRandomValue();
+    }
+
+    @When("^I set vrm to random value$")
+    public void iSetVrmToRandomValue() {
+        createTechRecordPageSteps.setVrmToRandomValue();
+    }
+
+    @Then("^sections in create tech record page are displayed$")
+    public void sectionsInCreateTechRecordPageAreDisplayed(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            createTechRecordPageSteps.checkSectionIsPresent(stringMap.get("Section"));
+        }
+    }
+
+    @Then("^sections in create tech record page are not displayed$")
+    public void sectionsInCreateTechRecordPageAreNotDisplayed(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            createTechRecordPageSteps.checkSectionIsNotPresent(stringMap.get("Section"));
+        }
+    }
+
+    @Then("^all sections in create tech record page should be expanded$")
+    public void allSectionsInCreateTechRecordPageShouldBeExpanded() {
+        createTechRecordPageSteps.checkAllSectionsAreExpanded();
+    }
+
+    @Then("^fields in create tech record page should be editable$")
+    public void fieldsShouldBeEditable(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            createTechRecordPageSteps.checkFieldEditable(stringMap.get("Field"));
+        }
+    }
+
+    @Then("^fields in create tech record page should not be editable$")
+    public void fieldsShouldNotBeEditable(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            createTechRecordPageSteps.checkFieldNotEditable(stringMap.get("Field"));
+        }
+    }
+
+    @Then("^all sections in create tech record page should be collapsed$")
+    public void allSectionsInCreateTechRecordPageShouldBeCollapsed() {
+        createTechRecordPageSteps.checkAllSectionsAreCollapsed();
     }
 }

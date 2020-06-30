@@ -65,7 +65,7 @@ Feature: Show technical record accurately for queried psv - CVSB-10175
       | Field                            | Value                                            |
       # generic fields
       | status                           | Provisional                                      |
-      | record-completeness              | Testable                                         |
+      | record-completeness              | Conplete                                         |
       | vrm-0                            | PSV223344                                        |
       # PSV tech records are structured correctly
       # 'vehicle summary' section

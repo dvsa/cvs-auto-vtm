@@ -128,7 +128,7 @@ Feature: Search tech record - CVSB-10089
     When I close tech record "Vehicle summary" section
     Then I should not see "Vehicle type"
 
-  @skip
+
   Scenario: Search using primary vrm for HGV with only archived tech records
   AC3 - After searching, the technical record with status "archived" and most recent "createdAt" is displayed, if this vehicle
   only has technical records with status "archived" in DynamoDB
@@ -228,7 +228,7 @@ Feature: Search tech record - CVSB-10089
      | plateIssuer-0                       | -                   |
      | plateIssueDate-0                    | -                   |
 
-  @skip
+
   Scenario: Search using trailer id for TRL with a provisional and an archived tech record
   AC2 - After searching, technical record with status "provisional" is displayed, if this vehicle does not have a technical
   record with status "current" in DynamoDB
@@ -325,8 +325,8 @@ Feature: Search tech record - CVSB-10089
       | frontAxleToRearAxle              | 1700             |
       | rearAxleToRearTrl                | 400              |
       | centreOfRearmostAxleToRearOfTrl  | -                |
-      | axleSpacing-axles-0              | Axle 1 to 2 (mm) |
-      | axleSpacing-value-0              | 1200             |
+      | axleSpacing-axles-1              | Axle 1 to 2 (mm) |
+      | axleSpacing-value-1              | 1200             |
       | couplingCenterToRearAxleMin      | 1000             |
       | couplingCenterToRearAxleMax      | 900              |
       | couplingCenterToRearTrlMin       | 800              |
@@ -404,7 +404,7 @@ Feature: Search tech record - CVSB-10089
     And I should not see "Speed limiter exempt"
     And I should not see "Tacho exempt"
 
-  @skip
+
   Scenario: Search using partial vin for TRL with a current tech record and without primary or secondary vrms and without
   any axle that is fitted with a parking brake
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB

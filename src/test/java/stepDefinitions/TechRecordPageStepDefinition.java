@@ -468,8 +468,8 @@ public class TechRecordPageStepDefinition {
         techRecordPageSteps.checkAllSectionsAreExpanded();
     }
 
-    @Then("^test record fields of newly created test should have correct values$")
-    public void testRecordFieldForNewlyCreatedTestShouldHaveValues(DataTable dt) {
+    @Then("^tech record fields of newly created test should have correct values$")
+    public void techRecordFieldForNewlyCreatedTestShouldHaveValues(DataTable dt) {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (Map<String, String> stringMap : list) {
             techRecordPageSteps.checkValueInTechRecordField(
@@ -485,5 +485,30 @@ public class TechRecordPageStepDefinition {
     @Then("^I should not see \"([^\"]*)\" in \"([^\"]*)\" tech record section$")
     public void iShouldNotSeeInTestRecordSection(String text, String section) {
         techRecordPageSteps.checkTextIsNotPresentInSection(text, section);
+    }
+
+    @Then("^tech record fields should be editable$")
+    public void techRecordFieldsShouldBeEditable(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkFieldEditable(stringMap.get("Field"));
+        }
+    }
+
+    @Then("^tech record fields should not be editable$")
+    public void techRecordFieldsShouldNotBeEditable(DataTable dt) throws ComparisonFailure {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkFieldNotEditable(stringMap.get("Field"));
+        }
+    }
+
+    @Then("^test record fields of newly created test should have correct values$")
+    public void testRecordFieldForNewlyCreatedTestShouldHaveValues(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (Map<String, String> stringMap : list) {
+            techRecordPageSteps.checkValueInTechRecordField(
+                    genericBackendRequestSteps.getNewTestAttribute(stringMap.get("Field")), stringMap.get("Field"));
+        }
     }
 }
