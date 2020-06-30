@@ -442,4 +442,19 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void checkTestRecordSelectFieldValue(String selectField, String value) {
         techRecordPage.checkValueForSelectField(selectField, value);
     }
+
+    @Step
+    public void iShouldNotSeeSubsequentInspectionTypeField() {
+        techRecordPage.checkSubsequentInspectionTypeNotPresent();
+    }
+
+    @Step
+    public void iShouldNotSeeSubsequentInspectionCertificateField() {
+        techRecordPage.checkSubsequentInspectionCertificateNotPresent();
+    }
+
+    @Step
+    public void iShouldNotSeeSubsequentInspectionExpiryDateFields() {
+        techRecordPage.checkSubsequentInspectionExpiryDateFieldsNotPresent();
+    }
 }

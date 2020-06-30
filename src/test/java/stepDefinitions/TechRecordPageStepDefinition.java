@@ -511,4 +511,19 @@ public class TechRecordPageStepDefinition {
                     genericBackendRequestSteps.getNewTestAttribute(stringMap.get("Field")), stringMap.get("Field"));
         }
     }
+
+    @Then("^I should not see Subsequent Inspection Type field$")
+    public void iShouldNotSeeSubsequentInspectionTypeField() {
+        techRecordPageSteps.iShouldNotSeeSubsequentInspectionTypeField();
+    }
+
+    @Then("^I should not see Subsequent Inspection Certificate field$")
+    public void iShouldNotSeeSubsequentInspectionCertificateField() {
+        techRecordPageSteps.iShouldNotSeeSubsequentInspectionCertificateField();
+    }
+
+    @Then("^I should not see Subsequent Inspection Expiry Date fields$")
+    public void iShouldNotSeeSubsequentInspectionExpiryDateFields() {
+        techRecordPageSteps.iShouldNotSeeSubsequentInspectionExpiryDateFields();
+    }
 }
