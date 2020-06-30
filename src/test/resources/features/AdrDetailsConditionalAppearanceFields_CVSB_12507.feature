@@ -35,13 +35,13 @@ Feature: CVSB-12507 - Adr details conditional appearance of fields
     Then I should see "Save technical record"
     #selecting "Explosives (type 2)" or "Explosives (type 3)" from "Permitted dangerous goods" selection makes "Compatilibity Group J" appear
     When I select "Explosives (type 2)" dangerous good
-    Then I should see "Compatibility group J"
+    Then I should see "Compatibility group J (optional)"
     When I deselect "Explosives (type 2)" dangerous good
-    Then I should not see "Compatibility group J"
+    Then I should not see "Compatibility group J (optional)"
     When I select "Explosives (type 3)" dangerous good
-    Then I should see "Compatibility group J"
+    Then I should see "Compatibility group J (optional)"
     When I deselect "Explosives (type 3)" dangerous good
-    Then I should not see "Compatibility group J"
+    Then I should not see "Compatibility group J (optional)"
     #selecting "statement" will display "Reference number" field while selecting "product list" will display "Reference number", "UN number" and "Additional Details" fields
     When I select "Rigid tank" adr vehicle type
     Then I should not see "Battery list applicable"

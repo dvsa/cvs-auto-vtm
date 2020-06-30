@@ -9,7 +9,7 @@ Feature: CVSB-10163 - Show technical record accurately for queried trailer
     When I create "trl" vehicle
     And I create test record with status "submitted" and result "pass" and test type "rut" for previously created vehicle
 
-
+  @ci_bug @CVSB-16216
   Scenario: I want to view detailed information for a trl, so that I can provide accurate information when a customer/VSA
   calls with questions regarding that vehicle
   AC1 - TRL tech record contains all the correct headings
@@ -269,4 +269,4 @@ Feature: CVSB-10163 - Show technical record accurately for queried trailer
       | plateIssueDate-1                 | 01/01/2020                                    |
     And I should not see "Speed category symbol"
     And I should not see "Max train"
-    And I should see "Type Approval"
+    And I should see "Type approval"
