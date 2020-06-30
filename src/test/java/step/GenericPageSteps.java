@@ -107,4 +107,19 @@ public class GenericPageSteps {
     public void checkSignOutScreenNotPresent() {
         genericPage.checkSignOutScreenNotPresent();
     }
+
+    @Step
+    public void setValueForField(String field, String value) {
+        genericPage.setValueForField(field, value);
+    }
+
+    @Step
+    public void checkValueForField(String field, String value) {
+        genericPage.checkValueForField(field, value);
+    }
+
+    @Step
+    public void checkFieldEditable(String field) {
+        genericPage.checkFieldEditable(field);
+    }
 }
