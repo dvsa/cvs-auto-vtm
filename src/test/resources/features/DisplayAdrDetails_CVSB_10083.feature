@@ -191,7 +191,7 @@ Feature: Display Adr details - CVSB-10083
       | weight                        | 29500                              |
       | declarationsSeen              | Yes                                |
 
-  @feature_bug @CVSB-16813
+
   Scenario: Tank documents
   AC4 - User can see if an ADR record has documents attached
   AC5 - User clicks the call to action 'view' a document

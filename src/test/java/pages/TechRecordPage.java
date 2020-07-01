@@ -159,8 +159,7 @@ public class TechRecordPage extends GenericPage {
         WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
         FluentWait wait = globalFluentWait(10, 200);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
-        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss("a.govuk-link"), "Open all"));
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.govuk-link")));
+        wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Open all"));
         Actions actions = new Actions(getDriver());
         actions.moveToElement(element);
         actions.perform();
@@ -1330,9 +1329,8 @@ public class TechRecordPage extends GenericPage {
     }
 
     public void addSubsequentInspection(int index, String inspectionType, String certificateNo, String expiryDate) {
-        int actualIndex = index + 1;
-        Select selectInspectionType = new Select(findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" +
-                actualIndex + ") " + SUBSEQUENT_INSPECTION_TYPE));
+        Select selectInspectionType = new Select(findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") "
+                + SUBSEQUENT_INSPECTION_TYPE));
         switch(inspectionType.toLowerCase()) {
             case "intermediate":
                 selectInspectionType.selectByIndex(0);
@@ -1347,25 +1345,25 @@ public class TechRecordPage extends GenericPage {
                 throw new AutomationException(
                         "Invalid subsequent inspection type '" + inspectionType + "'");
         }
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_CERTIFICATE).clear();
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_CERTIFICATE).sendKeys(certificateNo);
         String[] date = expiryDate.split("/");
         if (date.length != 3) {
             throw new AutomationException("The date is not in proper format dd/MM/YYYY");
         }
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).clear();
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_DAY).sendKeys(date[0]);
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).clear();
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_MONTH).sendKeys(date[1]);
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).clear();
-        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + actualIndex + ") " +
+        findElementByCss("[formarrayname='tc3Details']>div:nth-of-type(" + index + ") " +
                 SUBSEQUENT_INSPECTION_EXPIRY_DATE_YEAR).sendKeys(date[2]);
 
     }
@@ -1660,6 +1658,22 @@ public class TechRecordPage extends GenericPage {
                 throw new AutomationException(
                         "Invalid tech record section " + section);
         }
+    }
+
+    public void setInputTechRecordField(String field, String country) {
+        WebElement element = getDriver().findElement(By.id("test-" + field));
+        element.clear();
+        element.sendKeys(country);
+    }
+
+    public void setRadioButtonTechRecordField(String field, String value) {
+        WebElement element = getDriver().findElement(By.id("test-" + field + "-" + value));
+        element.click();
+    }
+
+    public void setSelectTechRecordField(String field, String value) {
+        Select selectElement = new Select(getDriver().findElement(By.id("test-" + field)));
+        selectElement.selectByValue(value);
     }
 
     public void checkSectionIsExpanded(String section) {

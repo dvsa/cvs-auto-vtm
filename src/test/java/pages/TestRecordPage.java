@@ -35,8 +35,8 @@ public class TestRecordPage extends GenericPage {
     private static final String CLOSE_NOTES_SECTION = "#test-fa-minus-notes";
     private static final String CLOSE_TEST_HISTORY_SECTION = "#test-fa-minus-testHistory";
     private static final String CHANGES_REASON_TEXT_AREA = "#test-reasonForCreation";
-    private static final String CONFIRM_SAVE_CHANGES_MODAL = "vtm-dialog-box button";
-    private static final String CANCEL_SAVE_CHANGES_MODAL = "vtm-dialog-box a";
+    private static final String CONFIRM_SAVE_CHANGES_MODAL = "vtm-dialog-box>button";
+    private static final String CANCEL_SAVE_CHANGES_MODAL = "vtm-dialog-box>a";
     private static final String REASON_FOR_CHANGES_MODAL = "mat-dialog-container";
     private static final String ODOMETER_READING = "#test-odometerReading";
     private static final String ODOMETER_READING_UNIT = "#test-odometerReadingUnit";
@@ -57,13 +57,6 @@ public class TestRecordPage extends GenericPage {
     public void checkTestRecordPageUrl() {
         Assert.assertTrue("The expected url '" + TechRecordPage.testRecordPageUrl + "' does not match actual one '"
                 + getDriver().getCurrentUrl() + "'", getDriver().getCurrentUrl().contentEquals(TechRecordPage.testRecordPageUrl));
-    }
-
-    public void checkChangeTestTypePageUrl() {
-        String[] parts = TechRecordPage.testRecordPageUrl.split("[/?.]");
-        Assert.assertTrue("The expected url does not contain 'select-test-type/"
-                + parts[8] + "'", getDriver().getCurrentUrl().contains("select-test-type/" +
-                parts[8]));
     }
 
     public void openAllSections() {
@@ -332,6 +325,37 @@ public class TestRecordPage extends GenericPage {
         FluentWait wait = globalFluentWait(5, 200);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CANCEL_SAVE_CHANGES_MODAL)));
         findElementByCss(CANCEL_SAVE_CHANGES_MODAL).click();
+    }
+
+    public void checkFieldEditable(String field) {
+        WebElement element = getDriver().findElement(By.id("test-" + field));
+        Assert.assertNull("Element with id 'test-" + field + "' has the 'disabled' attribute",
+                element.getAttribute("disabled"));
+    }
+
+    public void checkFieldNotEditable(String field) {
+        WebElement element = getDriver().findElement(By.id("test-" + field));
+        Assert.assertNotNull("Element with id 'test-" + field + "' does not have the 'disabled' attribute",
+                element.getAttribute("disabled"));
+    }
+
+    public void setValueForTestRecordInputField(String inputField, String value) {
+        FluentWait wait = globalFluentWait(10, 300);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("test-" + inputField)));
+        WebElement element = getDriver().findElement(By.id("test-" + inputField));
+        element.clear();
+        element.sendKeys(value);
+    }
+
+    public void setValueForTestRecordRadioButtonField(String radioButtonField, String value) {
+        WebElement element = getDriver().findElement(By.xpath("//input[starts-with(@id,'test-" + radioButtonField + "')]" +
+                "/following-sibling::label[normalize-space(text())='" + value + "']/preceding-sibling::input"));
+        element.click();
+    }
+
+    public void setValueForTestRecordSelectField(String selectField, String value) {
+        Select selectElement = new Select(getDriver().findElement(By.id("test-" + selectField)));
+        selectElement.selectByVisibleText(value);
     }
 
     public void checkNumberOfEntriesInSection(String section, int numberOfEntries) {
@@ -608,6 +632,24 @@ public class TestRecordPage extends GenericPage {
                 throw new AutomationException(
                         "Invalid test record section " + section);
         }
+    }
+
+    public void checkTestRecordInputFieldValue(String inputField, String value) {
+        WebElement element = getDriver().findElement(By.id("test-" + inputField));
+        Assert.assertEquals("Value in element with id 'test-" + inputField + "' is '" +
+                element.getAttribute("value") + "' instead of '" + value + "'", value, element.getAttribute("value"));
+    }
+
+    public void checkTestRecordRadioButtonFieldValue(String radioButtonField, String value) {
+        WebElement element = getDriver().findElement(By.xpath("//input[starts-with(@id,'test-" + radioButtonField + "')]" +
+                "/following-sibling::label[normalize-space(text())='" + value + "']/preceding-sibling::input"));
+        Assert.assertTrue("Value '" + value + "' should be selected but it is not", element.isSelected());
+    }
+
+    public void checkTestRecordSelectFieldValue(String selectField, String value) {
+        Select select = new Select(getDriver().findElement(By.id("test-" + selectField)));
+        WebElement option = select.getFirstSelectedOption();
+        Assert.assertTrue("Option '" + value + "' should be selected but it is not", option.getText().contentEquals(value));
     }
 
     public void checkTestStationType(String value) {

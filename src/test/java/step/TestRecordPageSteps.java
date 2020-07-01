@@ -11,10 +11,6 @@ public class TestRecordPageSteps extends GenericPageSteps {
         testRecordPage.checkTestRecordPageUrl();
     }
 
-    public void checkChangeTestTypePageUrl() {
-        testRecordPage.checkChangeTestTypePageUrl();
-    }
-
     @Step
     public void openAllSections() {
         testRecordPage.openAllSections();
@@ -92,17 +88,17 @@ public class TestRecordPageSteps extends GenericPageSteps {
 
     @Step
     public void setValueForTestRecordInputField(String field, String value) {
-        testRecordPage.setValueForInputField(field, value);
+        testRecordPage.setValueForTestRecordInputField(field, value);
     }
 
     @Step
     public void setValueForTestRecordRadioButtonField(String field, String value) {
-        testRecordPage.setValueForRadioButtonField(field, value);
+        testRecordPage.setValueForTestRecordRadioButtonField(field, value);
     }
 
     @Step
     public void setValueForTestRecordSelectField(String field, String value) {
-        testRecordPage.setValueForSelectField(field, value);
+        testRecordPage.setValueForTestRecordSelectField(field, value);
     }
 
     @Step
@@ -162,17 +158,17 @@ public class TestRecordPageSteps extends GenericPageSteps {
 
     @Step
     public void checkTestRecordInputFieldValue(String inputField, String value) {
-        testRecordPage.checkValueForInputField(inputField, value);
+        testRecordPage.checkTestRecordInputFieldValue(inputField, value);
     }
 
     @Step
     public void checkTestRecordRadioButtonFieldValue(String radioButtonField, String value) {
-        testRecordPage.checkValueForRadioButtonField(radioButtonField, value);
+        testRecordPage.checkTestRecordRadioButtonFieldValue(radioButtonField, value);
     }
 
     @Step
     public void checkTestRecordSelectFieldValue(String selectField, String value) {
-        testRecordPage.checkValueForSelectField(selectField, value);
+        testRecordPage.checkTestRecordSelectFieldValue(selectField, value);
     }
 
     @Step
