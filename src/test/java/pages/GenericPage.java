@@ -1,6 +1,5 @@
 package pages;
 
-import exceptions.AutomationException;
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import org.apache.commons.lang3.StringUtils;

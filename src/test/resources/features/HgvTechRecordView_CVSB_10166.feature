@@ -66,7 +66,7 @@ Feature: Show technical record accurately for queried hgv - CVSB-10166
       | Field                            | Value                                         |
       # generic fields
       | status                           | Provisional                                   |
-      | record-completeness              | Complete                                      |
+      | record-completeness              | Testable                                      |
       | vrm-0                            | E5F1I00                                       |
       # HGV tech records are structured correctly
       # 'vehicle summary' section
@@ -143,10 +143,10 @@ Feature: Show technical record accurately for queried hgv - CVSB-10166
       | length                           | 9000                                          |
       | width                            | 2500                                          |
       | frontAxleToRearAxle              | 1800                                          |
-      | axleSpacing-axles-1              | Axle 1 to 2 (mm)                              |
-      | axleSpacing-value-1              | 5000                                          |
-      | axleSpacing-axles-2              | Axle 2 to 3 (mm)                              |
-      | axleSpacing-value-2              | 6000                                          |
+      | axleSpacing-axles-0              | Axle 1 to 2 (mm)                              |
+      | axleSpacing-value-0              | 5000                                          |
+      | axleSpacing-axles-1              | Axle 2 to 3 (mm)                              |
+      | axleSpacing-value-1              | 6000                                          |
       | frontAxleTo5thWheelCouplingMin   | 900                                           |
       | frontAxleTo5thWheelCouplingMax   | 1000                                          |
       | frontAxleTo5thWheelMin           | 400                                           |

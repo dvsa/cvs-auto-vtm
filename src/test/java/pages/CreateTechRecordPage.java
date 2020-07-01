@@ -7,16 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import util.backend.GenericData;
 
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 
 public class CreateTechRecordPage extends GenericPage {
-
-    public static String vin;
-    public static String vrm;
 
     private static final String VIN_INPUT = "#test-vin";
     private static final String VIN_LABEL = "[for='test-vin']";
@@ -206,48 +202,5 @@ public class CreateTechRecordPage extends GenericPage {
             default:  // should be unreachable!
                 throw new AutomationException("Invalid field type " + fieldType);
         }
-    }
-
-    public String setVinToRandomValue() {
-        String vin = GenericData.generateRandomVin();
-        getDriver().findElement(By.cssSelector(VIN_INPUT)).clear();
-        getDriver().findElement(By.cssSelector(VIN_INPUT)).sendKeys(vin);
-        return vin;
-    }
-
-    public String setVrmToRandomValue() {
-        String vrm = GenericData.generateRandomVin();
-        getDriver().findElement(By.cssSelector(VRM_INPUT)).clear();
-        getDriver().findElement(By.cssSelector(VRM_INPUT)).sendKeys(vrm);
-        return vrm;
-    }
-
-    public void checkSectionIsPresent(String sectionTitle) {
-        List<WebElement> sections  = getDriver().findElements(By.cssSelector("[id^='mat-expansion-panel-header-']"));
-        int i = 0;
-        for (WebElement section : sections) {
-            if (section.getText().contains(sectionTitle)) break;
-            i++;
-        }
-        Assert.assertTrue("Section with title '" + sectionTitle + "' is not present", i < sections.size());
-    }
-
-    public void checkSectionIsNotPresent(String sectionTitle) {
-        List<WebElement> sections  = getDriver().findElements(By.cssSelector("[id^='mat-expansion-panel-header-']"));
-        for (WebElement section : sections) {
-            Assert.assertFalse("There is a section with title '" + sectionTitle + "'",
-                    section.getText().contains(sectionTitle));
-        }
-    }
-
-    public void checkAllSectionsAreExpanded() {
-        int numberOfSections = getDriver().findElements(By.cssSelector("mat-expansion-panel-header")).size();
-        Assert.assertEquals("Not all sections are expanded", numberOfSections, getDriver().findElements
-                (By.cssSelector("mat-expansion-panel-header[aria-expanded='true']")).size());
-    }
-
-    public void checkAllSectionsAreCollapsed() {
-        Assert.assertEquals("Not all sections are collapsed", 0, getDriver().findElements
-                (By.cssSelector("mat-expansion-panel-header[aria-expanded='true']")).size());
     }
 }

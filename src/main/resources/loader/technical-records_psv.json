@@ -163,7 +163,8 @@
       "vehicleClass": {
         "description": "large psv(ie: greater than 23 seats)"
       },
-      "vehicleConfiguration": "other"
+      "vehicleConfiguration": "other",
+      "recordCompleteness": "testable"
     }
   ]
 }

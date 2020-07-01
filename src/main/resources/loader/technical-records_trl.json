@@ -250,7 +250,8 @@
         }
       ],
       "notes": "tech record note",
-      "reasonForCreation": "new record"
+      "reasonForCreation": "new record",
+      "recordCompleteness": "complete"
     }
   ]
 }

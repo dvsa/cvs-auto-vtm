@@ -227,7 +227,8 @@
       "notes": "tech record note",
       "speedLimiterMrk": true,
       "tachoExemptMrk": false,
-      "reasonForCreation": "new record"
+      "reasonForCreation": "new record",
+      "recordCompleteness": "testable"
     }
   ]
 }
