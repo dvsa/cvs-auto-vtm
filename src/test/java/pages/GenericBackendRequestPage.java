@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import util.AwsUtil;
 import util.TypeLoader;
 import util.backend.GenericBackendClient;
 import util.backend.GenericData;
@@ -196,6 +197,7 @@ public class GenericBackendRequestPage extends PageObject {
         // create alteration to change primary vrm in the request body with the random generated primary vrm
         JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", randomVrm,"","REPLACE");
         // initialize the alterations list with both declared alteration
+
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationVin, alterationVrm));
 
         String alteredBody = GenericData.applyJsonAlterations(postRequestBody, alterations);
@@ -291,6 +293,113 @@ public class GenericBackendRequestPage extends PageObject {
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
         }
 
+    }
+
+    public void createTechRecordWithRecordCompleteness(String typeOfVehicle, String recordCompleteness) {
+        String postRequestBody;
+
+        // TEST SETUP
+        //generate random Vin
+        String randomVin = GenericData.generateRandomVin();
+        //generate random Vrm
+        String randomVrm = GenericData.generateRandomVrm();
+        if(!Arrays.asList("hgv", "psv", "trl", "car", "lgv", "motorcycle").contains(typeOfVehicle)) {
+            throw new AutomationException("Invalid vehicle type");
+        }
+        if(!Arrays.asList("skeleton", "testable", "complete").contains(recordCompleteness)) {
+            throw new AutomationException("Invalid record completeness flag");
+        }
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>();
+
+        if("skeleton".equals(recordCompleteness)) {
+            postRequestBody = GenericData.readJsonValueFromFile(
+                    "technical-records_" + typeOfVehicle + "_all_fields_skeleton_11796.json", "$");
+            //generate random systemNumber
+            String randomSystemNumber = GenericData.generateRandomSystemNumber();
+            alterations.add(new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE"));
+        } else {
+            String fileName = !Arrays.asList("car", "lgv", "motorcycle").contains(typeOfVehicle) ?
+                    "technical-records_" + typeOfVehicle + "_all_fields.json" : "technical-records_" + typeOfVehicle + ".json";
+            postRequestBody = GenericData.readJsonValueFromFile(fileName,"$");
+        }
+
+        // create alteration to change Vin in the request body with the random generated Vin
+        alterations.add(new JsonPathAlteration("$.vin", randomVin,"","REPLACE"));
+        // create alteration to change primary vrm in the request body with the random generated primary vrm
+        alterations.add(new JsonPathAlteration("$.primaryVrm", randomVrm,"","REPLACE"));
+
+        if("testable".equals(recordCompleteness)) {
+            switch(typeOfVehicle) {
+                case "psv":
+                    alterations.add(new JsonPathAlteration(
+                            "$.techRecord[0].axles[0].parkingBrakeMrk", "", "", "DELETE"));
+                    break;
+                case "hgv":
+                    alterations.add(new JsonPathAlteration(
+                            "$.techRecord[0].tyreUseCode", "", "", "DELETE"));
+                    break;
+                case "trl":
+                    alterations.add(new JsonPathAlteration(
+                            "$.techRecord[0].suspensionType", "", "", "DELETE"));
+                    break;
+            }
+        }
+
+        String alteredBody = GenericData.applyJsonAlterations(postRequestBody, alterations);
+        if("skeleton".equalsIgnoreCase(recordCompleteness)) {
+            AwsUtil.insertJsonInTable(alteredBody, "technical-records", "systemNumber");
+        } else {
+            Response response = given()
+                    .headers(
+                            "Authorization",
+                            "Bearer " + token)
+                    .body(alteredBody)
+                    .log().method().log().uri().log().body()
+                    .post(TypeLoader.getBasePathUrl() + "/vehicles");
+            response.prettyPrint();
+            if (response.getStatusCode() == 401 || response.getStatusCode() == 403) {
+                response = given()
+                        .headers(
+                                "Authorization",
+                                "Bearer " + token)
+                        .contentType(ContentType.JSON)
+                        .body(alteredBody)
+                        .log().method().log().uri().log().body()
+                        .post(TypeLoader.getBasePathUrl() + "/vehicles");
+                response.prettyPrint();
+            }
+            Assert.assertEquals(201, response.statusCode());
+        }
+
+        vin = randomVin;
+        vrm = randomVrm;
+        Response getRequestResponse = given().headers(
+                "Authorization",
+                "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .pathParam("searchIdentifier", randomVin)
+                .queryParam("status", "all")
+                .queryParam("searchCriteria", "vin")
+                .log().method().log().uri().log().body()
+                .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        if (getRequestResponse.getStatusCode() == 401 || getRequestResponse.getStatusCode() == 403) {
+            getRequestResponse = given().headers(
+                    "Authorization",
+                    "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .pathParam("searchIdentifier", randomVin)
+                    .queryParam("status", "all")
+                    .queryParam("searchCriteria", "vin")
+                    .log().method().log().uri().log().body()
+                    .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        }
+        getRequestResponse.prettyPrint();
+        Assert.assertEquals(200, getRequestResponse.statusCode());
+
+        vehicleVin = vin;
+        vehicleVrm = vrm;
     }
 
     public void createTestRecord(String testStatus, String testResult, String testCode, boolean withWithoutDefects) {

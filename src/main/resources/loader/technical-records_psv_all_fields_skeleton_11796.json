@@ -1,0 +1,173 @@
+{
+  "partialVin": "122224",
+  "primaryVrm": "PSV112244",
+  "secondaryVrms": [
+    "PSV223344"
+  ],
+  "systemNumber": "10000225",
+  "techRecord": [
+    {
+      "alterationMarker": true,
+      "applicantDetails": {
+        "address1": "*****",
+        "address2": "*****",
+        "address3": "*****",
+        "emailAddress": "*************",
+        "name": "************",
+        "postCode": "*****",
+        "postTown": "*",
+        "telephoneNumber": "**************"
+      },
+      "approvalType": "NTA",
+      "approvalTypeNumber": "123456",
+      "axles": [
+        {
+          "axleNumber": 1,
+          "parkingBrakeMrk": true,
+          "tyres": {
+            "dataTrAxles": 888,
+            "fitmentCode": "double",
+            "plyRating": "1",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 383,
+            "tyreSize": "385/65-22.5"
+          },
+          "weights": {
+            "designWeight": 8000,
+            "gbWeight": 8000,
+            "kerbWeight": 9999,
+            "ladenWeight": 4000
+          }
+        },
+        {
+          "axleNumber": 2,
+          "parkingBrakeMrk": false,
+          "tyres": {
+            "dataTrAxles": 777,
+            "fitmentCode": "single",
+            "plyRating": "2",
+            "speedCategorySymbol": "a8",
+            "tyreCode": 282,
+            "tyreSize": "380/65-22.5"
+          },
+          "weights": {
+            "designWeight": 7000,
+            "gbWeight": 7000,
+            "kerbWeight": 7000,
+            "ladenWeight": 7000
+          }
+        }
+      ],
+      "bodyMake": "Isuzu",
+      "bodyModel": "X40",
+      "bodyType": {
+        "code": "o",
+        "description": "other"
+      },
+      "brakeCode": "code",
+      "brakes": {
+        "brakeCode": "code",
+        "brakeCodeOriginal": "ode",
+        "brakeForceWheelsNotLocked": {
+          "parkingBrakeForceA": 2,
+          "secondaryBrakeForceA": 3,
+          "serviceBrakeForceA": 4
+        },
+        "brakeForceWheelsUpToHalfLocked": {
+          "parkingBrakeForceB": 5,
+          "secondaryBrakeForceB": 6,
+          "serviceBrakeForceB": 7
+        },
+        "dataTrBrakeOne": "312677",
+        "dataTrBrakeThree": "98765",
+        "dataTrBrakeTwo": "98765",
+        "dtpNumber": "3799A",
+        "retarderBrakeOne": "electric",
+        "retarderBrakeTwo": "exhaust"
+      },
+      "chassisMake": "Isuzu",
+      "chassisModel": "X40",
+      "coifCertifierName": "12345678",
+      "coifDate": "2020-12-12",
+      "coifSerialNumber": "123456",
+      "conversionRefNo": "123456",
+      "createdAt": "2020-06-10T14:48:34.320Z",
+      "createdById": "12345",
+      "createdByName": "sean",
+      "dda": {
+        "certificateIssued": true,
+        "ddaNotes": "test",
+        "ddaSchedules": "test",
+        "minEmergencyExits": 1,
+        "outswing": "test",
+        "seatbeltsFitted": 2,
+        "wheelchairCapacity": 20,
+        "wheelchairFittings": "test",
+        "wheelchairLiftInformation": "test",
+        "wheelchairLiftPresent": true,
+        "wheelchairRampInformation": "test",
+        "wheelchairRampPresent": true
+      },
+      "departmentalVehicleMarker": false,
+      "dimensions": {
+        "height": 4562,
+        "length": 13760,
+        "width": 2480
+      },
+      "dispensations": "dispensations",
+      "emissionsLimit": 20,
+      "euroStandard": "2",
+      "euVehicleCategory": "m1",
+      "frontAxleToRearAxle": 1000,
+      "fuelPropulsionSystem": "DieselPetrol",
+      "functionCode": "R",
+      "grossDesignWeight": 38000,
+      "grossGbWeight": 38000,
+      "grossKerbWeight": 38000,
+      "grossLadenWeight": 38000,
+      "manufactureYear": 1995,
+      "maxTrainGbWeight": 14000,
+      "microfilm": {
+        "microfilmDocumentType": "PSV Miscellaneous",
+        "microfilmRollNumber": "55555",
+        "microfilmSerialNumber": "4444"
+      },
+      "modelLiteral": "123456",
+      "ntaNumber": "123456",
+      "numberOfSeatbelts": "56",
+      "numberOfWheelsDriven": 10,
+      "plates": [
+        {
+          "plateIssueDate": "2020-02-02",
+          "plateIssuer": "Mr Jones",
+          "plateReasonForIssue": "Original",
+          "plateSerialNumber": "11111111"
+        }
+      ],
+      "reasonForCreation": "because",
+      "recordCompleteness": "Skeleton",
+      "regnDate": "1995-01-01",
+      "remarks": "remarks",
+      "seatbeltInstallationApprovalDate": "2020-02-02",
+      "seatsLowerDeck": 30,
+      "seatsUpperDeck": 26,
+      "speedLimiterMrk": false,
+      "speedRestriction": 10,
+      "standingCapacity": 10,
+      "statusCode": "provisional",
+      "tachoExemptMrk": false,
+      "trainDesignWeight": 14000,
+      "unladenWeight": 38000,
+      "variantNumber": "123456",
+      "variantVersionNumber": "123456",
+      "vehicleClass": {
+        "code": "l",
+        "description": "large psv(ie: greater than 23 seats)"
+      },
+      "vehicleConfiguration": "other",
+      "vehicleSize": "large",
+      "vehicleType": "psv"
+    }
+  ],
+  "vin": "P91122224"
+}
