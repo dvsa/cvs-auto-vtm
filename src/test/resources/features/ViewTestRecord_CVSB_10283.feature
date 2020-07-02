@@ -196,7 +196,7 @@ Feature: Show test accurately for queried vehicle - CVSB-10283
       | testStationName              | Abshire-Kub - 09-4129632                |
       | testStationType              | GVTS                                    |
       | testerName                   | Test Test                               |
-      | testerEmailAddress           | test@test-station.com                         |
+      | testerEmailAddress           | test@test-station.com                   |
       | additionalNotesRecorded      | notes                                   |
 
 
