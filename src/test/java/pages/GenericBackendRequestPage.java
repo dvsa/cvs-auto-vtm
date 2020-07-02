@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import util.AwsUtil;
 import util.TypeLoader;
 import util.backend.GenericBackendClient;
 import util.backend.GenericData;
@@ -266,6 +267,122 @@ public class GenericBackendRequestPage extends PageObject {
         }
         vehicleConfiguration = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        vehicleVin = vin;
+        vehicleVrm = vrm;
+        if (vehicleType.contentEquals("trl")) {
+            trailerId = GenericData.extractStringValueFromJsonString(getRequestResponse.prettyPrint(), "$[0].trailerId");
+            firstUseDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].firstUseDate");
+        }
+        else {
+            trailerId = null;
+            firstUseDate = null;
+        }
+        if (vehicleType.contentEquals("psv")) {
+            vehicleSize = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleSize");
+        }
+        else {
+            vehicleSize = null;
+        }
+        euVehicleCategory = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].euVehicleCategory");
+        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv")) {
+            numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
+        }
+
+    }
+
+    public void createTechRecordSkeleton(String typeOfVehicle) {
+
+        // TEST SETUP
+        //generate random Vin
+        String randomVin = GenericData.generateRandomVin();
+        //generate random Vrm
+        String randomVrm = GenericData.generateRandomVrm();
+        if (! Arrays.asList("hgv", "psv", "trl", "car", "lgv", "motorcycle").contains(typeOfVehicle.toLowerCase())) {
+            throw new AutomationException("Invalid vehicle type");
+        }
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile(
+                "technical-records_" + typeOfVehicle + "_all_fields_skeleton_11796.json","$");
+
+        // create alteration to change Vin in the request body with the random generated Vin
+        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
+        // create alteration to change primary vrm in the request body with the random generated primary vrm
+        JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", randomVrm,"","REPLACE");
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationVin, alterationVrm));
+
+        String alteredBody = GenericData.applyJsonAlterations(postRequestBody, alterations);
+        AwsUtil.insertJsonInTable(alteredBody,"technical-records","systemNumber");
+
+        Response response = given()
+                .headers(
+                        "Authorization",
+                        "Bearer " + token)
+                .body(alteredBody)
+                .log().method().log().uri().log().body()
+                .post(TypeLoader.getBasePathUrl() + "/vehicles");
+        response.prettyPrint();
+        if (response.getStatusCode() == 401 || response.getStatusCode() == 403) {
+            response = given()
+                    .headers(
+                            "Authorization",
+                            "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .body(alteredBody)
+                    .log().method().log().uri().log().body()
+                    .post(TypeLoader.getBasePathUrl() + "/vehicles");
+            response.prettyPrint();
+        }
+        Assert.assertEquals(201, response.statusCode());
+
+        vin = randomVin;
+        vrm = randomVrm;
+        Response getRequestResponse = given().headers(
+                "Authorization",
+                "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .pathParam("searchIdentifier", randomVin)
+                .queryParam("status", "all")
+                .queryParam("searchCriteria", "vin")
+                .log().method().log().uri().log().body()
+                .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        if (getRequestResponse.getStatusCode() == 401 || getRequestResponse.getStatusCode() == 403) {
+            getRequestResponse = given().headers(
+                    "Authorization",
+                    "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .pathParam("searchIdentifier", randomVin)
+                    .queryParam("status", "all")
+                    .queryParam("searchCriteria", "vin")
+                    .log().method().log().uri().log().body()
+                    .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        }
+        getRequestResponse.prettyPrint();
+        Assert.assertEquals(200, getRequestResponse.statusCode());
+
+        systemNumber = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].systemNumber");
+        noOfAxles = GenericData.extractIntegerValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].noOfAxles");
+        vehicleClassCode = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleClass.code");
+        vehicleClassDescription = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleClass.description");
+        vehicleType = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleType");
+        if (vehicleType.contentEquals("car") || vehicleType.contentEquals("lgv")) {
+            vehicleSubclass = GenericData.extractArrayListStringFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleSubclass");
+        }
+        else {
+            vehicleSubclass = null;
+        }
+//        vehicleConfiguration = GenericData.extractStringValueFromJsonString
+//                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
