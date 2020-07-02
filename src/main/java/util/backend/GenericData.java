@@ -182,6 +182,10 @@ public class GenericData {
         return RandomStringUtils.randomAlphabetic(1).toUpperCase() + RandomStringUtils.randomNumeric(6);
     }
 
+    public static String generateRandomSystemNumber() {
+        return "12" + RandomStringUtils.randomNumeric(6);
+    }
+
     public static String generateRandomVrmForEmailValidations() {
         return "AUT" + RandomStringUtils.randomAlphanumeric(5).toUpperCase();
     }

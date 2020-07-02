@@ -40,7 +40,8 @@ public class AwsUtil {
         client.setRegion(Region.getRegion(clientRegion));
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        Table table = dynamoDB.getTable("cvs-" + System.getProperty("BRANCH") + "-" + tableName);
+        String[] parts = System.getProperty("DEVELOP_BASE_PATH").split("/");
+        Table table = dynamoDB.getTable("cvs-" + parts[parts.length-1] + "-" + tableName);
         String valueForPrimaryKey = GenericData.getValueFromJsonPath(json, "$." + primaryKey);
 
         try {

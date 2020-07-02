@@ -37,7 +37,7 @@ public class GenericBackendRequestSteps {
     @Step
     public void createTechRecordWithRecordCompleteness(String vehicleType, String recordCompleteness) {
         genericBackendRequestPage.goToAuthTokenUrl();
-        genericBackendRequestPage.createTechRecordSkeleton(vehicleType);
+        genericBackendRequestPage.createTechRecordWithRecordCompleteness(vehicleType, recordCompleteness);
     }
 
     @Step
