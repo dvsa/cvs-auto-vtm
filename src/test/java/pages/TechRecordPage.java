@@ -951,16 +951,17 @@ public class TechRecordPage extends GenericPage {
 
     public void checkNumberOfEntriesInSection(String section, int numberOfEntries) {
         String option = section.toLowerCase();
+        int actualSize;
         switch (option) {
             case "test history":
+                actualSize = getDriver().findElements(By.cssSelector(TEST_HISTORY_SECTION)).size() - 1;
                 Assert.assertEquals("Expected number of entries '" + numberOfEntries + "' differs than actual number '" +
-                                getDriver().findElements(By.cssSelector(VEHICLE_SUMMARY_SECTION)).size() + "'",
-                        numberOfEntries, getDriver().findElements(By.cssSelector(TEST_HISTORY_SECTION)).size() - 1);
+                                actualSize + "'", numberOfEntries, actualSize);
                 break;
             case "technical record history":
+                actualSize = getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1;
                 Assert.assertEquals("Expected number of entries '" + numberOfEntries + "' differs than actual number '" +
-                        getDriver().findElements(By.cssSelector(VEHICLE_SUMMARY_SECTION)).size() + "'",
-                        numberOfEntries, getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1);
+                        actualSize + "'", numberOfEntries, actualSize);
                 break;
             default:  // should be unreachable!
                 throw new AutomationException(
