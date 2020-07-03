@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         plugin = {"pretty"},
         features = "src/test/resources/features/HgvTechRecordCreate_CVSB_10202.feature",
         glue = {"stepDefinitions"},
-        tags = {"@Smoke"}
+        tags = {"@smoke"}
 )
 
 public class HgvTechRecordCreate_CVSB_10202 {

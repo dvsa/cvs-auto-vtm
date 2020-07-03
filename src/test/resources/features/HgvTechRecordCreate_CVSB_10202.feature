@@ -239,7 +239,7 @@ Feature: Create new HGVs in VTM - CVSB-10202 and CVSB-10619
       | edit-noOfAxles | 2     |
 
   #these validations that follow are for 10619
-  @Smoke
+  @smoke
   Scenario: I want to create new HGVs in VTM so that they can be tested accordingly
   AC1 -  User clicks the call to action to 'go back'
   AC2 -  Fields dynamically display, based on the 'number of axles' selected
@@ -330,8 +330,105 @@ Feature: Create new HGVs in VTM - CVSB-10202 and CVSB-10619
     Then I should not see
       | Text                              |
       | Axle 3 to axle 4 (mm)             |
-    #AC6
+    #AC6 AC9
     When I close all tech record sections
+    Then I should not see
+      | Text                                         |
+      | Vehicle type                                 |
+      | Date of first registration                   |
+      | Year of manufacture                          |
+      | Number of axles                              |
+      | DTp number                                   |
+      | Axles fitted with a parking brake            |
+      | Speed limiter exempt                         |
+      | Tacho exempt                                 |
+      | Euro standard                                |
+      | Road friendly suspension                     |
+      | Fuel/propulsion system                       |
+      | Drawbar coupling fitted                      |
+      | Vehicle class                                |
+      | Vehicle configuration                        |
+      | Off road vehicle                             |
+      | Number of wheels driven                      |
+      | EU vehicle category                          |
+      | Emission limit (optional)                    |
+      | Departmental vehicle marker                  |
+      | Approval type                                |
+      | Approval type number (optional)              |
+      | National type approval number (optional)     |
+      | Variant number (optional)                    |
+      | Variant version number (optional)            |
+      | Make                                         |
+      | Model                                        |
+      | Body type                                    |
+      | Function (optional)                          |
+      | Conversion reference number (optional)       |
+      | Text                                         |
+      | Gross vehicle weight                         |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Gross train weight                           |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Max train weight                             |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Axle 1                                       |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Axle 2                                       |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Axle 3                                       |
+      | GB                                           |
+      | EEC (optional)                               |
+      | Design                                       |
+      | Tyre use code (optional)                     |
+      | Axle 1                                       |
+      | Tyre code                                    |
+      | Tyre size                                    |
+      | Ply rating (optional)                        |
+      | Fitment code                                 |
+      | Load index (optional)                        |
+      | Axle 2                                       |
+      | Tyre code                                    |
+      | Tyre size                                    |
+      | Ply rating (optional)                        |
+      | Fitment code                                 |
+      | Load index (optional)                        |
+      | Axle 3                                       |
+      | Tyre code                                    |
+      | Tyre size                                    |
+      | Ply rating (optional)                        |
+      | Fitment code                                 |
+      | Load index (optional)                        |
+      | Length (mm)                                  |
+      | Width (mm)                                   |
+      | Front axle to rear axle (mm)                 |
+      | Front of vehicle to 5th wheel coupling       |
+      | Minimum (mm)                                 |
+      | Maximum (mm)                                 |
+      | Front axle to 5th wheel                      |
+      | Minimum (mm)                                 |
+      | Maximum (mm)                                 |
+      | Axle 1 to axle 2 (mm)                        |
+      | Axle 2 to axle 3 (mm)                        |
+      | Name                                         |
+      | Building and street                          |
+      | Town or city                                 |
+      | County (optional)                            |
+      | Postcode (optional)                          |
+      | Telephone number (optional)                  |
+      | Email address (optional)                     |
+      | Microfilm document type (optional)           |
+      | Microfilm roll number (optional)             |
+      | Microfilm serial number (optional)           |
+    Then I should see "Open all"
     When I open tech record "Vehicle summary" section
     Then I should see
       | Text                                   |
@@ -503,6 +600,25 @@ Feature: Create new HGVs in VTM - CVSB-10202 and CVSB-10619
       | Tyre use code (optional)          |
       | Length (mm)                       |
       | Name                              |
+    When I close tech record "Documents" section
+    When I open tech record "Notes" section
+    When I set values for fields
+      | Field                               | Value                |
+      | edit-notes                          | hgv notes            |
+    Then I should not see
+      | Text                               |
+      | Vehicle type                       |
+      | Make                               |
+      | Vehicle weight (kg)                |
+      | Tyre use code (optional)           |
+      | Length (mm)                        |
+      | Name                               |
+      | Microfilm document type (optional) |
+    When I close tech record "Notes" section
+    When I open all tech record sections
+    Then all tech record sections should be expanded
+
+
 
 
 
