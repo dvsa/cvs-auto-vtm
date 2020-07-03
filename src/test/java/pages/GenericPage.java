@@ -426,7 +426,7 @@ public class GenericPage extends PageObject {
     public void checkValueForSelectField(String selectField, String value) {
         Select select = new Select(getDriver().findElement(By.id("test-" + selectField)));
         WebElement option = select.getFirstSelectedOption();
-        Assert.assertTrue("Option '" + value + "' should be selected but it is not", option.getText().contentEquals(value));
+        Assert.assertTrue("Option '" + value + "' should be selected but it is not", option.getText().trim().contentEquals(value));
     }
 
     public void setValueForField(String field, String value) {
