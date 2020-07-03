@@ -16,7 +16,7 @@
         <serenity.cucumber.version>1.9.45</serenity.cucumber.version>
         <sl4j.version>1.7.28</sl4j.version>
         <assertj.version>3.11.1</assertj.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.10.5</jackson.version>
         <jsonpath.version>2.4.0</jsonpath.version>
         <encoding>UTF-8</encoding>
         <PARALLEL_TEST>1</PARALLEL_TEST>
