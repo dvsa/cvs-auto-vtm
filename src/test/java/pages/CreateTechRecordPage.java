@@ -28,6 +28,8 @@ public class CreateTechRecordPage extends GenericPage {
     private static final String VEHICLE_TYPE_ERROR = "#vType-error";
     private static final String VIN_ERROR = "#vin-error";
     private static final String VRM_ERROR = "#vrm-error";
+    private static final String VIN_EDIT_INPUT = "#test-edit-vin";
+    private static final String VRM_EDIT_INPUT = "#test-edit-vrm";
 
     public void fillInVin(String vin) {
         findElementByCss(VIN_INPUT).clear();
@@ -110,6 +112,22 @@ public class CreateTechRecordPage extends GenericPage {
             case "vrm":
                 Assert.assertTrue("Value for field vrm is '" + findElementByCss(VRM_INPUT).getAttribute("value")
                         + "' and does not contain '" + text + "'", findElementByCss(VRM_INPUT).getAttribute("value").contains(text));
+                break;
+            default:  // should be unreachable!
+                throw new AutomationException("Invalid input type " + input);
+        }
+    }
+
+    public void checkEditInputFieldText(String text, String input) {
+        String option = input.toLowerCase();
+        switch (option) {
+            case "vin":
+                Assert.assertTrue("Value for field vin is '" + findElementByCss(VIN_EDIT_INPUT).getAttribute("value")
+                        + "' and does not contain '" + text + "'", findElementByCss(VIN_EDIT_INPUT).getAttribute("value").contains(text));
+                break;
+            case "vrm":
+                Assert.assertTrue("Value for field vrm is '" + findElementByCss(VRM_EDIT_INPUT).getAttribute("value")
+                        + "' and does not contain '" + text + "'", findElementByCss(VRM_EDIT_INPUT).getAttribute("value").contains(text));
                 break;
             default:  // should be unreachable!
                 throw new AutomationException("Invalid input type " + input);

@@ -24,6 +24,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.restassured.RestAssured.given;
 
@@ -32,6 +34,7 @@ public class GenericBackendRequestPage extends PageObject {
     private static GenericBackendClient genericBackendClient = new GenericBackendClient();
     private static String token;
     public static String vin;
+    public static String partialVin;
     public static String vrm;
     public static String trailerId;
     public static String systemNumber;
@@ -696,6 +699,146 @@ public class GenericBackendRequestPage extends PageObject {
                 (getTestResults, "$[0].testerName");
     }
 
+    private List<String> generateRandomCharacters(int numberOfCharacters) {
+        List<String> specialCharactersList = Arrays.asList(" ", "!", "\"", "#", "$", "&", "'",
+                "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`",
+                "{", "|", "}", "~");
+
+        Random random = new Random();
+        return IntStream
+                .generate(() -> random.nextInt(specialCharactersList.size()))
+                .distinct()
+                .limit(numberOfCharacters)
+                .mapToObj(specialCharactersList::get)
+                .collect(Collectors.toList());
+    }
+
+    public  void createTechRecordWithSpecialCharacters(String typeOfVehicle) {
+        StringBuilder vinWithSpecialCharactersBuilder = new StringBuilder();
+        StringBuilder primaryVrmWithSpecialCharactersBuilder = new StringBuilder();
+
+        vinWithSpecialCharactersBuilder.append(RandomStringUtils
+                .randomAlphanumeric(10, 12).toUpperCase())
+                .append(RandomStringUtils.randomNumeric(4));
+        primaryVrmWithSpecialCharactersBuilder.append(RandomStringUtils
+                .randomAlphanumeric(4, 4).toUpperCase());
+
+        generateRandomCharacters(4).forEach(vinWithSpecialCharactersBuilder::append);
+        generateRandomCharacters(2).forEach(primaryVrmWithSpecialCharactersBuilder::append);
+
+        String vinWithSpecialCharacters = vinWithSpecialCharactersBuilder.toString();
+        String primaryVrmWithSpecialCharacters = primaryVrmWithSpecialCharactersBuilder.toString();
+        String partialVinSpecialCharacters = vinWithSpecialCharacters.substring(vinWithSpecialCharacters.length() - 6);
+
+        if (!typeOfVehicle.equals("hgv") && !typeOfVehicle.equals("psv") && !typeOfVehicle.equals("trl")) {
+            throw new AutomationException("Invalid vehicle type");
+        }
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_" + typeOfVehicle + ".json","$");
+        // create alteration to change Vin in the request body with the random generated Vin
+        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", vinWithSpecialCharacters,"","REPLACE");
+        // create alteration to change primary vrm in the request body with the random generated primary vrm
+        JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", primaryVrmWithSpecialCharacters,"","REPLACE");
+        // create alteration to change partial Vin in the request body with the partial vin
+        JsonPathAlteration alterationPartialVin = new JsonPathAlteration("$.partialVin", partialVinSpecialCharacters ,"","REPLACE");
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationVin, alterationVrm, alterationPartialVin));
+
+        String alteredBody = GenericData.applyJsonAlterations(postRequestBody, alterations);
+
+        Response response = given()
+                .headers(
+                        "Authorization",
+                        "Bearer " + token)
+                .body(alteredBody)
+                .log().method().log().uri().log().body()
+                .post(TypeLoader.getBasePathUrl() + "/vehicles");
+        response.prettyPrint();
+        if (response.getStatusCode() == 401 || response.getStatusCode() == 403) {
+            response = given()
+                    .headers(
+                            "Authorization",
+                            "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .body(alteredBody)
+                    .log().method().log().uri().log().body()
+                    .post(TypeLoader.getBasePathUrl() + "/vehicles");
+            response.prettyPrint();
+        }
+        Assert.assertEquals(201, response.statusCode());
+
+        vin = vinWithSpecialCharacters;
+        vrm = primaryVrmWithSpecialCharacters;
+        partialVin = partialVinSpecialCharacters;
+
+        Response getRequestResponse = given().headers(
+                "Authorization",
+                "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .pathParam("searchIdentifier", vinWithSpecialCharacters)
+                .queryParam("status", "all")
+                .queryParam("searchCriteria", "vin")
+                .log().method().log().uri().log().body()
+                .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        if (getRequestResponse.getStatusCode() == 401 || getRequestResponse.getStatusCode() == 403) {
+            getRequestResponse = given().headers(
+                    "Authorization",
+                    "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                    .pathParam("searchIdentifier", vinWithSpecialCharacters)
+                    .queryParam("status", "all")
+                    .queryParam("searchCriteria", "vin")
+                    .log().method().log().uri().log().body()
+                    .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
+        }
+        getRequestResponse.prettyPrint();
+        Assert.assertEquals(200, getRequestResponse.statusCode());
+
+        systemNumber = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].systemNumber");
+        noOfAxles = GenericData.extractIntegerValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].noOfAxles");
+        vehicleClassCode = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleClass.code");
+        vehicleClassDescription = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleClass.description");
+        vehicleType = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleType");
+        if (vehicleType.contentEquals("car") || vehicleType.contentEquals("lgv")) {
+            vehicleSubclass = GenericData.extractArrayListStringFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleSubclass");
+        }
+        else {
+            vehicleSubclass = null;
+        }
+        vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        vehicleVin = vin;
+        vehicleVrm = vrm;
+        if (vehicleType.contentEquals("trl")) {
+            trailerId = GenericData.extractStringValueFromJsonString(getRequestResponse.prettyPrint(), "$[0].trailerId");
+            firstUseDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].firstUseDate");
+        }
+        else {
+            trailerId = null;
+            firstUseDate = null;
+        }
+        if (vehicleType.contentEquals("psv")) {
+            vehicleSize = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleSize");
+        }
+        else {
+            vehicleSize = null;
+        }
+        euVehicleCategory = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].euVehicleCategory");
+        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv")) {
+            numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
+        }
+    }
+
     public String getNewVehicleAttribute(String attribute) {
         switch (attribute.toLowerCase()) {
             case "vin":
@@ -704,6 +847,8 @@ public class GenericBackendRequestPage extends PageObject {
                 return vrm;
             case "trailerid":
                 return trailerId;
+            case "partial vin":
+                return partialVin;
             default:
                 throw new AutomationException("Invalid tech record attribute '" + attribute + "'");
         }
