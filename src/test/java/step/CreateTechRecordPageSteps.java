@@ -41,6 +41,11 @@ public class CreateTechRecordPageSteps extends GenericPageSteps {
     }
 
     @Step
+    public void checkEditInputFieldText(String text, String input) {
+        createTechRecordPage.checkEditInputFieldText(text, input);
+    }
+
+    @Step
     public void checkNotInputFieldText(String text, String input) {
         createTechRecordPage.checkNotInputFieldText(text, input);
     }
