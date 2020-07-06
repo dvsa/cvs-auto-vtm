@@ -11,10 +11,11 @@
   ],
   "techRecord": [
     {
-      "vehicleType": "car",
+      "vehicleType": "motorcycle",
       "regnDate": "2018-12-07",
       "manufactureYear": 1999,
       "noOfAxles": 2,
+      "numberOfWheelsDriven" : 2,
       "euVehicleCategory": "l7e",
       "applicantDetails": {
         "address1": "applicant address 1",
@@ -31,10 +32,7 @@
       "recordCompleteness": "complete",
       "vehicleClass": {
         "description": "motorbikes up to 200cc"
-      },
-      "vehicleSubclass": [
-        "m"
-      ]
+      }
     }
   ]
 }
