@@ -1,6 +1,5 @@
 Feature: See the completeness flag so that I can assess how complete the vehicle's technical record is - CVSB-11796
 
-  @In_Test
   Scenario Outline: See the completeness flag so that I can assess how complete the vehicle's technical record is - TRL
   AC1 - View a technical record - all vehicle types
   AC2 - Edit a technical record - all vehicle types
