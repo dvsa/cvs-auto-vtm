@@ -28,18 +28,18 @@ Feature: See the completeness flag so that I can assess how complete the vehicle
 
       Examples:
         | vehicle         | record_completeness_flag | record_completeness_value                                   |
-        | trl             | complete                 | Skeleton |
-        | trl             | testable                 | Testable |
+        | trl             | skeleton                 | Skeleton  |
+        | trl             | testable                 | Testable  |
         | trl             | complete                 | Complete                                                    |
-        | psv             | complete                 | Skeleton |
+        | psv             | skeleton                 | Skeleton |
         | psv             | testable                 | Testable |
         | psv             | complete                 | Complete                                                    |
-        | hgv             | complete                 | Skeleton |
+        | hgv             | skeleton                 | Skeleton |
         | hgv             | testable                 | Testable |
         | hgv             | complete                 | Complete                                                    |
-        | car             | complete                 | Skeleton |
+        | car             | skeleton                 | Skeleton |
         | car             | complete                 | Complete                                                    |
-        | lgv             | complete                 | Skeleton |
+        | lgv             | skeleton                 | Skeleton |
         | lgv             | complete                 | Complete                                                    |
-        | motorcycle      | complete                 | Skeleton |
+        | motorcycle      | skeleton                 | Skeleton |
         | motorcycle      | complete                 | Complete                                                    |
