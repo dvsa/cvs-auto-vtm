@@ -21,6 +21,11 @@ public class GenericBackendRequestStepDefinition {
         genericBackendRequestSteps.createTechRecord(vehicleType);
     }
 
+    @When("^I create \"([^\"]*)\" vehicle with record completeness \"([^\"]*)\"$")
+    public void iCreateVehicle(String vehicleType, String recordCompleteness) {
+        genericBackendRequestSteps.createTechRecordWithRecordCompleteness(vehicleType, recordCompleteness);
+    }
+
     @When("^I create test record with status \"([^\"]*)\" and result \"([^\"]*)\" and test type \"([^\"]*)\" " +
             "for previously created vehicle$")
     public void iCreateTestRecordWithStatusResultForPreviouslyCreatedVehicle(String testStatus, String testResult,
