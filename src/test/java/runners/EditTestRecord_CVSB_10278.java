@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         plugin = {"html:target/site/cucumber-pretty","json:target/cucumber.json", "pretty"},
         features = "src/test/resources/features/EditTestRecord_CVSB_10278.feature",
         glue = {"stepDefinitions"},
-        tags = {"not @skip"}
+        tags = {"@smoke"}
 )
 public class EditTestRecord_CVSB_10278 {
 

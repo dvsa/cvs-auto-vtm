@@ -150,8 +150,13 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             vehicleSubclass = null;
         }
-        vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
+            vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        }
+        else {
+            vehicleConfiguration = null;
+        }
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
@@ -264,8 +269,13 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             vehicleSubclass = null;
         }
-        vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
+            vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        }
+        else {
+            vehicleConfiguration = null;
+        }
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
@@ -780,8 +790,13 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             vehicleSubclass = null;
         }
-        vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
+            vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
+        }
+        else {
+            vehicleConfiguration = null;
+        }
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {

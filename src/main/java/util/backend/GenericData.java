@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import exceptions.AutomationException;
-import net.minidev.json.JSONArray;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.lang.NonNull;
 import util.model.TestTypes;
 
@@ -105,9 +105,21 @@ public class GenericData {
             final boolean valueIsJson = alteration.getValue() != null &&
                     alteration.getValue().getClass().getName().equals("java.lang.String")
                     && !alteration.getValue().toString().isEmpty()
-                    && ((alteration.getValue().toString().startsWith("{") && alteration.getValue().toString().endsWith("}"))
-                    || (alteration.getValue().toString().startsWith("[") && alteration.getValue().toString().endsWith("]")));
-            final Object value = valueIsJson ? readJson(alteration.getValue().toString()) : alteration.getValue();
+                    && ((alteration.getValue().toString().startsWith("{") && alteration.getValue().toString().endsWith("}")));
+            Object value = valueIsJson ? readJson(alteration.getValue().toString()) : alteration.getValue();
+            List<String> array = new ArrayList<>();
+            if (alteration.getValue().toString().startsWith("[") && alteration.getValue().toString().endsWith("]")) {
+                JSONArray jsonArray = (JSONArray) value;
+                assert jsonArray != null;
+                for(int i = 0; i < jsonArray.length(); i++){
+                    try {
+                        array.add(jsonArray.get(i).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                value = array;
+            }
 
             switch (alteration.getAction()) {
                 case "ADD_FIELD":
@@ -297,7 +309,7 @@ public class GenericData {
                         switch (key) {
                             case "forVehicleType":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("vehicleType", array.get(randomNumber));
@@ -308,7 +320,7 @@ public class GenericData {
                                 break;
                             case "forVehicleSize":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("vehicleSize", array.get(randomNumber));
@@ -319,7 +331,7 @@ public class GenericData {
                                 break;
                             case "forVehicleConfiguration":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("vehicleConfiguration", array.get(randomNumber));
@@ -330,7 +342,7 @@ public class GenericData {
                                 break;
                             case "forVehicleAxles":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.Integer"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("noOfAxles", array.get(randomNumber));
@@ -341,7 +353,7 @@ public class GenericData {
                                 break;
                             case "forEuVehicleCategory":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("euVehicleCategory", array.get(randomNumber));
@@ -352,7 +364,7 @@ public class GenericData {
                                 break;
                             case "forVehicleClass":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("vehicleClass", array.get(randomNumber));
@@ -363,10 +375,8 @@ public class GenericData {
                                 break;
                             case "forVehicleSubclass":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
-                                    Random r = new Random();
-                                    int randomNumber = r.nextInt(array.length());
-                                    actualRestrictions.put("vehicleSubclass", array.get(randomNumber));
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
+                                    actualRestrictions.put("vehicleSubclass", array);
                                 }
                                 else {
                                     actualRestrictions.put("vehicleSubclass", jsonObject.get(key));
@@ -374,7 +384,7 @@ public class GenericData {
                                 break;
                             case "forVehicleWheels":
                                 if (!(jsonObject.get(key).getClass().getName().contentEquals("java.lang.String"))) {
-                                    org.json.JSONArray array = (org.json.JSONArray) jsonObject.get(key);
+                                    JSONArray array = (JSONArray) jsonObject.get(key);
                                     Random r = new Random();
                                     int randomNumber = r.nextInt(array.length());
                                     actualRestrictions.put("numberOfWheelsDriven", array.get(randomNumber));
