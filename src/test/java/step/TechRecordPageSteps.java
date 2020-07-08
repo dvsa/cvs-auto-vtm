@@ -457,4 +457,14 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void iShouldNotSeeSubsequentInspectionExpiryDateFields() {
         techRecordPage.checkSubsequentInspectionExpiryDateFieldsNotPresent();
     }
+
+    @Step
+    public void checkEmailAddressFromSendMinistryPlatesModal() {
+        techRecordPage.checkEmailAddressFromSendMinistryPlatesModal();
+    }
+
+    @Step
+    public void clickSendMinistryPlate() {
+        techRecordPage.clickSendMinistryPlate();
+    }
 }

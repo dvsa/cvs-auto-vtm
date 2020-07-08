@@ -58,4 +58,8 @@ public class GenericBackendRequestSteps {
         genericBackendRequestPage.createTestRecordWithStatusAndResultAndTestTypeForNewVehicle(status, result, testType,
                 vehicleType);
     }
+
+    public void updateTechRecord() {
+        genericBackendRequestPage.updateTechRecord();
+    }
 }

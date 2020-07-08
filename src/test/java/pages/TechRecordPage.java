@@ -2,6 +2,7 @@ package pages;
 
 import exceptions.AutomationException;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -9,12 +10,16 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.*;
 import util.TypeLoader;
+import util.backend.GenericData;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static pages.GenericBackendRequestPage.applicantDetailsEmailAddress;
 
 public class TechRecordPage extends GenericPage {
 
@@ -139,6 +144,9 @@ public class TechRecordPage extends GenericPage {
     private static final String CANCEL_SAVE_DETAILS_MODAL = "vtm-adr-reason-modal a";
     private static final String ERROR_BLOCK = "span.govuk-error-message";
     private static final String SUBSEQUENT_INSPECTION_EXPIRY_DATE_FIELDS = "[id^=tc3PeriodicExpiryDate]";
+    private static final String SEND_MINISTRY_PLATE_BUTTON = "test-send-ministry-plate";
+    private static final String MINISTRY_PLATES_MODAL_MESSAGE = "vtm-ministry-plates > div";
+    private static final String PLATES_SECTION = "vtm-plates>table tr";
 
     static String testRecordPageUrl;
     private static int noOfDocuments;
@@ -963,6 +971,11 @@ public class TechRecordPage extends GenericPage {
                 Assert.assertEquals("Expected number of entries '" + numberOfEntries + "' differs than actual number '" +
                         actualSize + "'", numberOfEntries, actualSize);
                 break;
+            case "plates":
+                actualSize = getDriver().findElements(By.cssSelector(PLATES_SECTION)).size() - 1;
+                Assert.assertEquals("Expected number of entries '" + numberOfEntries + "' differs than actual number '" +
+                        actualSize + "'", numberOfEntries, actualSize);
+                break;
             default:  // should be unreachable!
                 throw new AutomationException(
                         "Invalid tech record section '" + option + "'");
@@ -1227,9 +1240,15 @@ public class TechRecordPage extends GenericPage {
         if (value.equals("VTM_USER")) {
             value = TypeLoader.getAppUsername().split("-")[0];
         }
+        if (value.equals("VTM_USERNAME")) {
+            value = TypeLoader.getAppUsername();
+        }
         if (StringUtils.isNumeric(value)) {
             Assert.assertTrue("Expected value '" + value + "' for field '" + field + "' is not the actual one '"
                     + getValueInTechRecordField(field) + "'", getValueInTechRecordField(field).contentEquals(value));
+        } else if (value.equals("DIGIT")) {
+            Assert.assertTrue("Expected value '" + value + "' for field '" + field + "' is not the actual one '"
+                    + getValueInTechRecordField(field) + "'", GenericData.isNumeric(getValueInTechRecordField(field)));
         }
         else {
             Assert.assertTrue("Expected value '" + value + "' for field '" + field + "' is not the actual one '"
@@ -1947,5 +1966,15 @@ public class TechRecordPage extends GenericPage {
             Assert.assertFalse("Element with css selector '" + SUBSEQUENT_INSPECTION_CERTIFICATE + "' is displayed",
                     getDriver().findElement(By.cssSelector(SUBSEQUENT_INSPECTION_CERTIFICATE)).isDisplayed());
         }
+    }
+
+    public void checkEmailAddressFromSendMinistryPlatesModal() {
+        Assertions.assertThat(getDriver()
+                .findElement((By.cssSelector(MINISTRY_PLATES_MODAL_MESSAGE))).getText()
+                .contains(applicantDetailsEmailAddress));
+    }
+
+    public void clickSendMinistryPlate() {
+        getDriver().findElement(By.id(SEND_MINISTRY_PLATE_BUTTON)).click();
     }
 }
