@@ -108,6 +108,42 @@ public class GenericBackendClient {
         return response;
     }
 
+    public Response putTechRecordWithAlterationsNo400(String token, String systemNumber, String requestBody, List<JsonPathAlteration> alterations) {
+        Response response = callPutTechRecordsWithAlterations(token, systemNumber, requestBody, alterations);
+
+        if (response.getStatusCode() == HttpStatus.SC_UNAUTHORIZED || response.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
+            response = callPutTechRecordsWithAlterations(token, systemNumber, requestBody, alterations);
+        }
+        int i =0;
+
+        while ((response.getStatusCode() == HttpStatus.SC_INTERNAL_SERVER_ERROR) && (i < 4)) {
+            response = callPutTechRecordsWithAlterations(token, systemNumber, requestBody, alterations);
+            i++;
+        }
+
+        if (response.getStatusCode() == HttpStatus.SC_UNAUTHORIZED || response.getStatusCode() == HttpStatus.SC_FORBIDDEN ||
+                response.getStatusCode() == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+            response = callPutTechRecordsWithAlterations(token, systemNumber, requestBody, alterations);
+        }
+        Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
+        return response;
+    }
+
+    private Response callPutTechRecordsWithAlterations(String token, String systemNumber, String requestBody, List<JsonPathAlteration> alterations) {
+        //the only actions accepted are ADD_FIELD, ADD_VALUE, DELETE and REPLACE
+        String alteredBody = GenericData.applyJsonAlterations(requestBody, alterations);
+
+        return given().headers(
+                "Authorization",
+                "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body(alteredBody)
+                .pathParam("systemNumber", systemNumber)
+                .queryParam("oldStatusCode", "provisional")
+                .log().method().log().uri().log().body()
+                .put(TypeLoader.getBasePathUrl() + "/vehicles/{systemNumber}");
+    }
+
     public Response getTechRecords(String token, String vin) {
         Response response = callGetTechRecords(token, vin);
 

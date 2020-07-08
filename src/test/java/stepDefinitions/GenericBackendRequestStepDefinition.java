@@ -55,4 +55,9 @@ public class GenericBackendRequestStepDefinition {
         genericBackendRequestSteps.createTestRecordWithStatusAndResultAndTestTypeForNewVehicle(status, result, testType,
                 vehicleType);
     }
+
+    @And("^I update previously created tech record$")
+    public void iUpdatePreviouslyCreatedTechRecord() {
+        genericBackendRequestSteps.updateTechRecord();
+    }
 }

@@ -526,4 +526,14 @@ public class TechRecordPageStepDefinition {
     public void iShouldNotSeeSubsequentInspectionExpiryDateFields() {
         techRecordPageSteps.iShouldNotSeeSubsequentInspectionExpiryDateFields();
     }
+
+    @And("^the email address on the modal is filled with the email address within applicant details$")
+    public void theEmailAddressOnTheModalIsFilledWithTheEmailAddressWithinApplicantDetails() {
+        techRecordPageSteps.checkEmailAddressFromSendMinistryPlatesModal();
+    }
+
+    @And("^I click Send ministry plate button from send ministry plates modal$")
+    public void iClickSendMinistryPlateButton() {
+        techRecordPageSteps.clickSendMinistryPlate();
+    }
 }
