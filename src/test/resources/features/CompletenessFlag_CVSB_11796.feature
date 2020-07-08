@@ -19,11 +19,11 @@ Feature: See the completeness flag so that I can assess how complete the vehicle
     And I click the change technical record button
     Then I should see "Save technical record"
     And tech record fields should have values
-      | Field               | Value                       |
-      | record-completeness | <record_completeness_value> |
+      | Field                    | Value                       |
+      | edit-record-completeness | <record_completeness_value> |
     And test record fields should not be editable
-      | Field                 |
-      | record-completeness   |
+      | Field                      |
+      | edit-record-completeness   |
 
       Examples:
         | vehicle         | record_completeness_flag | record_completeness_value                                   |

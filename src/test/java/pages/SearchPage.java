@@ -29,8 +29,8 @@ public class SearchPage extends GenericPage {
         FluentWait wait = globalFluentWait(20, 200);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
         findElementByCss(SEARCH_BUTTON).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#test-change-btn")));
-        wait.until(ExpectedConditions.textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-change-btn")), "Change technical record"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#test-status")));
+        //wait.until(ExpectedConditions.textToBePresentInElement(getDriver().findElement(By.cssSelector("#test-status")), "Change technical record"));
         wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         waitForAngularRequestsToFinish();
     }
