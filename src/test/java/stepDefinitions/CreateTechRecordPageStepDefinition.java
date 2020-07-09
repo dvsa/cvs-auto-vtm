@@ -3,6 +3,7 @@ package stepDefinitions;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.java.en.And;
 import net.thucydides.core.annotations.Steps;
 import org.junit.ComparisonFailure;
 import step.CreateTechRecordPageSteps;
@@ -154,5 +155,50 @@ public class CreateTechRecordPageStepDefinition {
     @Then("^all sections in create tech record page should be collapsed$")
     public void allSectionsInCreateTechRecordPageShouldBeCollapsed() {
         createTechRecordPageSteps.checkAllSectionsAreCollapsed();
+    }
+
+    @And("^I should see \"([^\"]*)\" as No of axles on tech record create page$")
+    public void iShouldSeeAsNoOfAxles(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-noOfAxles", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Fuel propulsion system on tech record create page$")
+    public void iShouldSeeAsFuelPropulsionSystem(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-fuelPropulsionSystem", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Vehicle class on tech record create page$")
+    public void iShouldSeeAsVehicleClass(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-vehicleClass-description", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Vehicle configuration on tech record create page$")
+    public void iShouldSeeAsVehicleConfiguration(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-vehicleConfiguration", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as EU vehicle category on tech record create page$")
+    public void iShouldSeeAsEuVehicleCategory(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-euVehicleCategory", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Approval type on tech record create page$")
+    public void iShouldSeeAsApprovalType(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-approvalType", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Body type on tech record create page$")
+    public void iShouldSeeAsBodyType(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-bodyType-description", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Fitment Code on tech record create page$")
+    public void iShouldSeeAsFitmentCode(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-fitmentCode-1", value);
+    }
+
+    @And("^I should see \"([^\"]*)\" as Microfilm document type on tech record create page$")
+    public void iShouldSeeAsMicrofilmDocumentType(String value) {
+        createTechRecordPageSteps.checkValueForField("edit-microfilmDocumentType", value);
     }
 }
