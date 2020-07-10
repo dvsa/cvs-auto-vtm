@@ -1,4 +1,4 @@
-Feature: CVSB-10166 - Show technical record accurately for queried hgv
+Feature: Show technical record accurately for queried hgv - CVSB-10166
   As an admin user I can log in the VTM app
   And view the details of the technical records belonging to the queried hgv
 

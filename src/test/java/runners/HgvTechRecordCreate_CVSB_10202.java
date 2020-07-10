@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
         glue = {"stepDefinitions"},
         tags = {"not @skip"}
 )
-
 public class HgvTechRecordCreate_CVSB_10202 {
 
 }

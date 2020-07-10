@@ -428,32 +428,10 @@ public class TestRecordPageStepDefinition {
 
     @Then("^I should see correct expiry date$")
     public void iShouldSeeCorrectExpiryDate() {
-        if (genericBackendRequestSteps.getNewTestAttribute("testExpiryDate").contentEquals("-")) {
-            testRecordPageSteps.checkValueForField("testExpiryDate-day", "");
-            testRecordPageSteps.checkValueForField("testExpiryDate-month", "");
-            testRecordPageSteps.checkValueForField("testExpiryDate-year", "");
-        }
-        else {
-            String[] parts = genericBackendRequestSteps.getNewTestAttribute("testExpiryDate").split("/");
-            testRecordPageSteps.checkValueForField("testExpiryDate-day", parts[0]);
-            testRecordPageSteps.checkValueForField("testExpiryDate-month", parts[1]);
-            testRecordPageSteps.checkValueForField("testExpiryDate-year", parts[2]);
-        }
-    }
-
-    @Then("^I should see correct anniversary date$")
-    public void iShouldSeeCorrectAnniversaryDate() {
-        if (genericBackendRequestSteps.getNewTestAttribute("testAnniversaryDate").contentEquals("-")) {
-            testRecordPageSteps.checkValueForField("testAnniversaryDate-day", "");
-            testRecordPageSteps.checkValueForField("testAnniversaryDate-month", "");
-            testRecordPageSteps.checkValueForField("testAnniversaryDate-year", "");
-        }
-        else {
-            String[] parts = genericBackendRequestSteps.getNewTestAttribute("testAnniversaryDate").split("/");
-//            testRecordPageSteps.checkValueForField("testAnniversaryDate-day", parts[0]);
-            testRecordPageSteps.checkValueForField("testAnniversaryDate-month", parts[1]);
-            testRecordPageSteps.checkValueForField("testAnniversaryDate-year", parts[2]);
-        }
+        String[] parts = genericBackendRequestSteps.getNewTestAttribute("testExpiryDate").split("/");
+//        testRecordPageSteps.checkValueForField("testExpiryDate-day", parts[0]);
+        testRecordPageSteps.checkValueForField("testExpiryDate-month", parts[1]);
+        testRecordPageSteps.checkValueForField("testExpiryDate-year", parts[2]);
     }
 
     @Then("^I should see correct start time$")
@@ -506,14 +484,6 @@ public class TestRecordPageStepDefinition {
         testRecordPageSteps.setValueForField("testExpiryDate-day", parts[0]);
         testRecordPageSteps.setValueForField("testExpiryDate-month", parts[1]);
         testRecordPageSteps.setValueForField("testExpiryDate-year", parts[2]);
-    }
-
-    @When("^I set anniversary date to \"([^\"]*)\"$")
-    public void iSetAnniversaryDateTo(String expiryDate) {
-        String[] parts = expiryDate.split("/");
-        testRecordPageSteps.setValueForField("testAnniversaryDate-day", parts[0]);
-        testRecordPageSteps.setValueForField("testAnniversaryDate-month", parts[1]);
-        testRecordPageSteps.setValueForField("testAnniversaryDate-year", parts[2]);
     }
 
     @When("^I set start time to \"([^\"]*)\"$")

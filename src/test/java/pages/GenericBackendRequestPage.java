@@ -18,7 +18,6 @@ import util.backend.GenericBackendClient;
 import util.backend.GenericData;
 import util.backend.JsonPathAlteration;
 import util.model.TestTypes;
-import util.model.VehicleClass;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -155,13 +154,8 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             vehicleSubclass = null;
         }
-        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
-            vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
-        }
-        else {
-            vehicleConfiguration = null;
-        }
+        vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
@@ -182,12 +176,9 @@ public class GenericBackendRequestPage extends PageObject {
         }
         euVehicleCategory = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].techRecord[0].euVehicleCategory");
-        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv") || vehicleType.contentEquals("motorcycle")) {
+        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv")) {
             numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
-        }
-        if (!(vehicleType.contentEquals("trl"))) {
-            regnDate = GenericData.extractStringValueFromJsonString(getRequestResponse.prettyPrint(), "$[0].techRecord[0].regnDate");
         }
 
     }
@@ -277,13 +268,8 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             vehicleSubclass = null;
         }
-        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
-            vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
-        }
-        else {
-            vehicleConfiguration = null;
-        }
+        vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
@@ -304,12 +290,9 @@ public class GenericBackendRequestPage extends PageObject {
         }
         euVehicleCategory = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].techRecord[0].euVehicleCategory");
-        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv") || vehicleType.contentEquals("motorcycle")) {
+        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv")) {
             numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
-        }
-        if (!(vehicleType.contentEquals("trl"))) {
-            regnDate = GenericData.extractStringValueFromJsonString(getRequestResponse.prettyPrint(), "$[0].techRecord[0].regnDate");
         }
 
     }
@@ -479,34 +462,25 @@ public class GenericBackendRequestPage extends PageObject {
         // create alteration to change vehicleType
         JsonPathAlteration alterationVehicleType =
                 new JsonPathAlteration("$.vehicleType", vehicleType,"","REPLACE");
+        // create alteration to change vehicleConfiguration
+        JsonPathAlteration alterationVehicleConfiguration =
+                new JsonPathAlteration("$.vehicleConfiguration", vehicleConfiguration,"","REPLACE");
         // create alteration to change euVehicleCategory
         JsonPathAlteration alterationEuVehicleCategory =
                 new JsonPathAlteration("$.euVehicleCategory", euVehicleCategory,"","REPLACE");
+        // create alteration to change numberOfWheelsDriven
+        JsonPathAlteration alterationNumberOfWheelsDriven =
+                new JsonPathAlteration("$.numberOfWheelsDriven", numberOfWheelsDriven,"","REPLACE");
+        // create alteration to change regnDate
+        JsonPathAlteration alterationRegnDate = new JsonPathAlteration("$.regnDate", regnDate,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationTestStatus, alterationTestResultId,
                 alterationTestResult, alterationSystemNumber, alterationVin, alterationNoOfAxles, alterationVehicleClassCode,
-                alterationVehicleClassDescription, alterationVehicleType, alterationEuVehicleCategory,
-                alterationTestExpiryDate, alterationTestStartTimestamp, alterationTestEndTimestamp, alterationTestTypeStartTimestamp,
-                alterationTestTypeEndTimestamp));
+                alterationVehicleClassDescription, alterationVehicleType, alterationVehicleConfiguration, alterationEuVehicleCategory,
+                alterationNumberOfWheelsDriven, alterationRegnDate, alterationTestExpiryDate, alterationTestStartTimestamp,
+                alterationTestEndTimestamp, alterationTestTypeStartTimestamp, alterationTestTypeEndTimestamp));
 
-        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
-            // create alteration to change vehicleConfiguration
-            JsonPathAlteration alterationVehicleConfiguration = new JsonPathAlteration("$.vehicleConfiguration",
-                    vehicleConfiguration,"","REPLACE");
-            alterations.add(alterationVehicleConfiguration);
-        }
-        if (vehicleType.contentEquals("hgv") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("psv")) {
-            // create alteration to change numberOfWheelsDriven
-            JsonPathAlteration alterationNumberOfWheelsDriven =
-                    new JsonPathAlteration("$.numberOfWheelsDriven", numberOfWheelsDriven, "", "REPLACE");
-            alterations.add(alterationNumberOfWheelsDriven);
-        }
-        if (!(vehicleType.contentEquals("trl"))) {
-            // create alteration to change regnDate
-            JsonPathAlteration alterationRegnDate = new JsonPathAlteration("$.regnDate", regnDate, "", "REPLACE");
-            alterations.add(alterationRegnDate);
-        }
         if (vehicleType.contentEquals("trl")) {
             // create alteration to change trailerId
             JsonPathAlteration alterationTrailerId = new JsonPathAlteration("$.trailerId", trailerId, "", "REPLACE");
@@ -526,9 +500,43 @@ public class GenericBackendRequestPage extends PageObject {
             alterations.add(alterationVehicleSize);
         }
         if ((vehicleType.contentEquals("car")) || (vehicleType.contentEquals("lgv"))) {
-            // create alteration to change vehicleSize
-            JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass", vehicleSubclass,"","REPLACE");
-            alterations.add(alterationVehicleSubclass);
+            int numberOfSubclasses = GenericData.extractIntegerValueFromJsonString(postRequestBody, "$.vehicleSubclass.size()");
+            if (vehicleSubclass.size() == numberOfSubclasses) {
+                for (int i =0; i < vehicleSubclass.size(); i++) {
+                    // create alteration to change vehicleSubclass
+                    JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass[" + i + "]",
+                            vehicleSubclass.get(i),"","REPLACE");
+                    alterations.add(alterationVehicleSubclass);
+                }
+            }
+            if (vehicleSubclass.size() < numberOfSubclasses) {
+                for (int i =0; i < vehicleSubclass.size(); i++) {
+                    // create alteration to change vehicleSubclass
+                    JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass[" + i + "]",
+                            vehicleSubclass.get(i),"","REPLACE");
+                    alterations.add(alterationVehicleSubclass);
+                }
+                for (int i =vehicleSubclass.size(); i < numberOfSubclasses; i++) {
+                    // create alteration to change vehicleSubclass
+                    JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass[" + i + "]",
+                            "","","DELETE");
+                    alterations.add(alterationVehicleSubclass);
+                }
+            }
+            if (vehicleSubclass.size() > numberOfSubclasses) {
+                for (int i =0; i < numberOfSubclasses; i++) {
+                    // create alteration to change vehicleSubclass
+                    JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass[" + i + "]",
+                            vehicleSubclass.get(i),"","REPLACE");
+                    alterations.add(alterationVehicleSubclass);
+                }
+                for (int i =numberOfSubclasses; i < vehicleSubclass.size(); i++) {
+                    // create alteration to change vehicleSubclass
+                    JsonPathAlteration alterationVehicleSubclass = new JsonPathAlteration("$.vehicleSubclass",
+                            "","","ADD_VALUE");
+                    alterations.add(alterationVehicleSubclass);
+                }
+            }
         }
 
         if (testResult.toLowerCase().contentEquals("abandoned")) {
@@ -577,17 +585,7 @@ public class GenericBackendRequestPage extends PageObject {
                             names[i] = iterator.next();
                             JsonPathAlteration additionalAlteration =
                                     new JsonPathAlteration("$." + names[i].toString(), json.get(names[i].toString()), "", "REPLACE");
-                            JsonPathAlteration alterationToBeDeleted;
-                            for (JsonPathAlteration alteration : alterations) {
-                                if (alteration.getPath().contentEquals(additionalAlteration.getPath())) {
-                                    alterationToBeDeleted = alteration;
-                                    alterations.remove(alterationToBeDeleted);
-                                    break;
-                                }
-                            }
-                            if (!(additionalAlteration.getPath().contains("vehicleClass"))) {
-                                alterations.add(additionalAlteration);
-                            }
+                            alterations.add(additionalAlteration);
                             i += 1;
                         }
                     }
@@ -638,7 +636,26 @@ public class GenericBackendRequestPage extends PageObject {
         response.prettyPrint();
         Assert.assertEquals(201, response.statusCode());
 
-        Response getRequestResponse = genericBackendClient.getTestResultsNo404(token, systemNumber);
+        Response getRequestResponse = given().headers(
+                "Authorization",
+                "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .pathParam("searchIdentifier", systemNumber)
+//                .log().method().log().uri().log().body()
+                .get(TypeLoader.getBasePathUrl() + "/test-results/{searchIdentifier}");
+        for (int i = 0; i < 4; i++) {
+            if (getRequestResponse.getStatusCode() == 401 || getRequestResponse.getStatusCode() == 403 ||
+                    getRequestResponse.getStatusCode() == 404) {
+                getRequestResponse = given().headers(
+                        "Authorization",
+                        "Bearer " + token)
+                        .contentType(ContentType.JSON)
+                        .pathParam("searchIdentifier", systemNumber)
+//                        .log().method().log().uri().log().body()
+                        .get(TypeLoader.getBasePathUrl() + "/test-results/{searchIdentifier}");
+            }
+            else break;
+        }
         getRequestResponse.prettyPrint();
         getTestResults = getRequestResponse.asString();
         Assert.assertEquals(200, getRequestResponse.statusCode());
@@ -930,7 +947,7 @@ public class GenericBackendRequestPage extends PageObject {
                                                                             String typeOfVehicle) {
         // TEST SETUP
         //generate random Vin
-        String randomVin = GenericData.generateRandomVinForVehicleType(typeOfVehicle);
+        String randomVin = GenericData.generateRandomVin();
         //generate random Vrm
         String randomVrm = GenericData.generateRandomVrm();
         if (!(typeOfVehicle.contentEquals("hgv") || typeOfVehicle.contentEquals("psv") ||
@@ -958,24 +975,9 @@ public class GenericBackendRequestPage extends PageObject {
                         int i = 0;
                         while (iterator.hasNext()) {
                             names[i] = iterator.next();
-                            if (names[i].toString().contentEquals("vehicleClass")) {
-                                String vehicleClassFields = "";
-                                for (VehicleClass vehicleClass : VehicleClass.values()) {
-                                    if (vehicleClass.getCode().contentEquals(restrictions.get(names[i].toString()).toString())) {
-                                        vehicleClassFields = "{\"description\":\"" + vehicleClass.getDescription
-                                                (restrictions.get(names[i].toString()).toString()) + "\"}";
-                                        break;
-                                    }
-                                }
-                                JsonPathAlteration additionalAlteration =
-                                        new JsonPathAlteration("$.techRecord[0]." + names[i].toString(), vehicleClassFields, "", "REPLACE");
-                                alterations.add(additionalAlteration);
-                            }
-                            else {
-                                JsonPathAlteration additionalAlteration =
-                                        new JsonPathAlteration("$.techRecord[0]." + names[i].toString(), restrictions.get(names[i].toString()), "", "REPLACE");
-                                alterations.add(additionalAlteration);
-                            }
+                            JsonPathAlteration additionalAlteration =
+                                    new JsonPathAlteration("$.techRecord[0]." + names[i].toString(), restrictions.get(names[i].toString()), "", "REPLACE");
+                            alterations.add(additionalAlteration);
                             i += 1;
                         }
                     }
@@ -1043,20 +1045,15 @@ public class GenericBackendRequestPage extends PageObject {
                 (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleClass.description");
         vehicleType = GenericData.extractStringValueFromJsonString
                 (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleType");
-        if (vehicleType.contentEquals("car") || vehicleType.contentEquals("lgv")) {
+        if (vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle")) {
             vehicleSubclass = GenericData.extractArrayListStringFromJsonString
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleSubclass");
         }
         else {
             vehicleSubclass = null;
         }
-        if (!(vehicleType.contentEquals("car") || vehicleType.contentEquals("motorcycle") || vehicleType.contentEquals("lgv"))) {
-            vehicleConfiguration = GenericData.extractStringValueFromJsonString
-                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
-        }
-        else {
-            vehicleConfiguration = null;
-        }
+        vehicleConfiguration = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].vehicleConfiguration");
         vehicleVin = vin;
         vehicleVrm = vrm;
         if (vehicleType.contentEquals("trl")) {
@@ -1081,12 +1078,14 @@ public class GenericBackendRequestPage extends PageObject {
         else {
             firstUseDate = null;
         }
-        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv") || vehicleType.contentEquals("motorcycle")) {
+        if (vehicleType.contentEquals("psv") || vehicleType.contentEquals("hgv")) {
+            regnDate = GenericData.extractStringValueFromJsonString
+                    (getRequestResponse.prettyPrint(), "$[0].techRecord[0].regnDate");
             numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
         }
-        if (!(vehicleType.contentEquals("trl"))) {
-            regnDate = GenericData.extractStringValueFromJsonString(getRequestResponse.prettyPrint(), "$[0].techRecord[0].regnDate");
+        else {
+            regnDate = null;
         }
 
         createTestRecord(status, result, testCode, true);

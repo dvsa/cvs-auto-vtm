@@ -26,7 +26,7 @@ public class SearchPage extends GenericPage {
     }
 
     public void searchVehicle() {
-        FluentWait wait = globalFluentWait(25, 200);
+        FluentWait wait = globalFluentWait(20, 200);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SEARCH_BUTTON)));
         findElementByCss(SEARCH_BUTTON).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#test-change-btn")));

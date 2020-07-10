@@ -1,4 +1,4 @@
-Feature: CVSB-12661 - Show test accurately for queried vehicle
+Feature: Show test accurately for queried vehicle - CVSB-12661
   As an admin user I can log in the VTM app
   And see all test results that have same system number as the queried vehicle
 
