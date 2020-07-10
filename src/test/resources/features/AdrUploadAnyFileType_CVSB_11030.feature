@@ -1,4 +1,4 @@
-Feature: CVSB-11030 - Supported file types upload and download
+Feature: Supported file types upload/download - CVSB-11030
   As an admin user I can download any file type
   After I previously upload them
 

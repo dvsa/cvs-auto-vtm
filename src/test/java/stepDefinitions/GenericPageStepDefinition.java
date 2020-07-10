@@ -77,11 +77,6 @@ public class GenericPageStepDefinition {
         genericPageSteps.checkTextIsPresentInHyperlink(text);
     }
 
-    @Then("^I should see \"([^\"]*)\" hyperlink in change test type modal$")
-    public void iShouldSeeHyperlinkInChangeTestTypeModal(String text) {
-        genericPageSteps.checkTextIsPresentInHyperlinkInElement(text, "vtm-dialog-box-confirmation");
-    }
-
     @When("^I go back to search page$")
     public void iGoBackToSearchPage() {
         genericPageSteps.goBackToSearchPage();
@@ -95,11 +90,6 @@ public class GenericPageStepDefinition {
     @When("^I click \"([^\"]*)\" link$")
     public void iClickLink(String text) {
         genericPageSteps.clickLink(text);
-    }
-
-    @When("^I click \"([^\"]*)\" link in change test type modal$")
-    public void iClickLinkInChangeTestTypeModal(String text) {
-        genericPageSteps.clickLinkInElement(text, "vtm-dialog-box-confirmation");
     }
 
     @Then("^the header error contains \"([^\"]*)\"$")

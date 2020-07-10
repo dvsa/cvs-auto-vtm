@@ -1,5 +1,5 @@
-Feature: CVSB-14890 - As the DVSA, we want to be able to capture ADR certificate notes on VTM so that these certificate notes
-  can be displayed on the certificate
+Feature: As the DVSA, we want to be able to capture ADR certificate notes on VTM so that these certificate notes
+  can be displayed on the certificate - CVSB-14890
 
   Background:
     Given I login with admin credentials

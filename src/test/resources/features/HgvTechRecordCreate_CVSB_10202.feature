@@ -1,4 +1,4 @@
-Feature: CVSB-10202 + CVSB-10619 + CVSB-15867 - Create new HGVs in VTM
+Feature: Create new HGVs in VTM - CVSB-10202 and CVSB-10619 and CVSB-15867
   As an admin user I can log in the VTM app
   And create new HGVs in VTM so that they can be tested accordingly
 

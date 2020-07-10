@@ -1,4 +1,4 @@
-Feature: CVSB-7943 - VTM Core Landing Page
+Feature: VTM Core Landing Page - CVSN-7943
   As an admin user I can log in the VTM app
   And the VTM Core Landing Page is rendered correctly
 
