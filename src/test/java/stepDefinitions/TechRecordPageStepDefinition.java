@@ -536,4 +536,19 @@ public class TechRecordPageStepDefinition {
     public void iClickSendMinistryPlateButton() {
         techRecordPageSteps.clickSendMinistryPlate();
     }
+
+    @Then("^the 'View' link is not shown for the record with status \"([^\"]*)\"$")
+    public void the_View_link_is_not_shown_for_the_record_with_status(String status) {
+        techRecordPageSteps.checkIsViewButtonNotShownForRecordOfStatus(status);
+    }
+
+    @Then("^the 'View' link is shown for the record with status \"([^\"]*)\"$")
+    public void the_View_link_is_shown_for_the_record_with_status(String status) {
+        techRecordPageSteps.checkIsViewButtonShownForRecordOfStatus(status);
+    }
+
+    @When("^I click on the 'View' button for the technical record with status of \"([^\"]*)\"$")
+    public void i_click_on_the_View_button_for_the_technical_record_with_status_of(String status) {
+        techRecordPageSteps.clickOnTheViewButtonForTechnicalRecordWithStatusOf(status);
+    }
 }

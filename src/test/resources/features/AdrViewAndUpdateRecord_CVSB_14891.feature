@@ -12,10 +12,11 @@ Feature: As the DVSA, we want the fields on the VTM ADR screen to be appropriate
   AC3 - "ADR UPDATE Screen": Optional fields say "(optional)" at the end of their label
     #vehicleType = Artic Tractor
     #AC1
+    When I create "hgv" vehicle with adr details
     When I go to search tech record page
     Then I should see "Vehicle registration mark, trailer ID or vehicle identification number"
     And search vehicle input field should be present
-    When I search for vehicle with identifier "P1234567890123"
+    When I search for previously created vehicle
     Then wait until I see "Technical record"
     When I open tech record "ADR" section
     Then I should see adr subsections

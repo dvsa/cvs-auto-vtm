@@ -467,4 +467,19 @@ public class TechRecordPageSteps extends GenericPageSteps {
     public void clickSendMinistryPlate() {
         techRecordPage.clickSendMinistryPlate();
     }
+
+    @Step
+    public void checkIsViewButtonShownForRecordOfStatus(String status) {
+        techRecordPage.checkViewButtonShownForRecordOfStatus(status);
+    }
+
+    @Step
+    public void checkIsViewButtonNotShownForRecordOfStatus(String status) {
+        techRecordPage.checkViewButtonNotShownForRecordOfStatus(status);
+    }
+
+    @Step
+    public void clickOnTheViewButtonForTechnicalRecordWithStatusOf(String status) {
+        techRecordPage.clickOnViewButtonForTechnicalRecordWithStatusOf(status);
+    }
 }
