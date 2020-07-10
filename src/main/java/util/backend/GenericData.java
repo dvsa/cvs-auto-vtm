@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static net.minidev.json.parser.JSONParser.DEFAULT_PERMISSIVE_MODE;
 
@@ -391,5 +392,13 @@ public class GenericData {
             }
         }
         return actualRestrictions;
+    }
+
+    public static boolean isNumeric(String strNum) {
+        Pattern pattern = Pattern.compile("\\d+");
+        if (strNum == null) {
+            return false;
+        }
+        return pattern.matcher(strNum).matches();
     }
 }

@@ -62,7 +62,9 @@ public class GenericBackendRequestPage extends PageObject {
     public static String certificateNumber;
     public static String testResultId;
     public static String getTestResults;
+    public static String getTechRecords;
     public static String testerName;
+    public static String applicantDetailsEmailAddress;
 
     public void createTechRecord(String typeOfVehicle, String withWithoutAdr) {
 
@@ -135,6 +137,7 @@ public class GenericBackendRequestPage extends PageObject {
                     .get(TypeLoader.getBasePathUrl() + "/vehicles/{searchIdentifier}/tech-records");
         }
         getRequestResponse.prettyPrint();
+        getTechRecords = getRequestResponse.asString();
         Assert.assertEquals(200, getRequestResponse.statusCode());
 
         systemNumber = GenericData.extractStringValueFromJsonString
@@ -180,7 +183,8 @@ public class GenericBackendRequestPage extends PageObject {
             numberOfWheelsDriven = GenericData.extractIntegerValueFromJsonString
                     (getRequestResponse.prettyPrint(), "$[0].techRecord[0].numberOfWheelsDriven");
         }
-
+        applicantDetailsEmailAddress = GenericData.extractStringValueFromJsonString
+                (getRequestResponse.prettyPrint(), "$[0].techRecord[0].applicantDetails.emailAddress");
     }
 
     public void createTechRecord(String typeOfVehicle) {
@@ -1115,5 +1119,32 @@ public class GenericBackendRequestPage extends PageObject {
         alterations.add(alterationChangeAdditionalNotes);
         genericBackendClient.putTestResultsWithAlterationsNo400(token, systemNumber, putTestResultPayload, alterations);
         testerName = newTesterName;
+    }
+
+    public void updateTechRecord() {
+        String putTechRecordPayload = GenericData.readJsonValueFromFile
+                ("technical-records_" + vehicleType + ".json", "$");
+
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList());
+        // create alteration to change Vin in the request body
+        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", vin, "", "REPLACE");
+        // create alteration to change Vrm in the request body
+        JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", vrm, "", "REPLACE");
+        // create alteration to change notes in the request body
+        JsonPathAlteration alterationChangeNotes = new JsonPathAlteration("$.techRecord[0].notes",
+                "Switch from provisional to current", "", "REPLACE");
+        // add json path alteration for changing and attribute that triggers the changing of the statusCode attribute
+        JsonPathAlteration alterationChangeStatusCode = new JsonPathAlteration("$.techRecord[0]",
+                "current", "statusCode", "ADD_FIELD");
+        if(vehicleType.equals("trl")) {
+            // create alteration to change trailerId in the request body
+            alterations.add( new JsonPathAlteration("$.trailerId",
+                    trailerId, "", "REPLACE"));
+        }
+        alterations.add(alterationChangeNotes);
+        alterations.add(alterationChangeStatusCode);
+        alterations.add(alterationVin);
+        alterations.add(alterationVrm);
+        genericBackendClient.putTechRecordWithAlterationsNo400(token, systemNumber, putTechRecordPayload, alterations);
     }
 }
