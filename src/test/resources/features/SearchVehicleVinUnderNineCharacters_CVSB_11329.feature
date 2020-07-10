@@ -1,4 +1,4 @@
-Feature: Search for vehicle in VTM when the full VIN is less than 9 characters - CVSB-11329
+Feature: CVSB-11329 - Search for vehicle in VTM when the full VIN is less than 9 characters
   This story will allow the DVSA to be able to search for a vehicle using:
   The last 6-characters of the VIN, in the scenario where these last 6 characters (can also be special characters) contain letters, not only numbers.
   The full VIN, in case that the VIN has 8 or less digits.

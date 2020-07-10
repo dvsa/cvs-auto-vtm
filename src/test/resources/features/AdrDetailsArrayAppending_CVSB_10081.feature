@@ -1,4 +1,4 @@
-Feature: Adr details array appending - CVSB-10081
+Feature: CVSB-10081 - Adr details array appending
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should be able to add specific adr details
