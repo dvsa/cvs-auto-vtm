@@ -57,6 +57,11 @@ public class GenericPageSteps {
     }
 
     @Step
+    public void checkTextIsPresentInHyperlinkInElement(String text, String locator) {
+        genericPage.checkTextIsPresentInHyperlinkInElement(text, locator);
+    }
+
+    @Step
     public void goBackToSearchPage() {
         header.goBackToHomePage();
         homePage.goToSearchTechRecordPage();
@@ -81,6 +86,11 @@ public class GenericPageSteps {
     @Step
     public void clickLink(String text) {
         genericPage.clickLink(text);
+    }
+
+    @Step
+    public void clickLinkInElement(String text, String locator) {
+        genericPage.clickLinkInElement(text, locator);
     }
 
     @Step

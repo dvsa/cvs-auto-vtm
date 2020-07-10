@@ -1,4 +1,4 @@
-Feature: VTM headers and footers - CVSB-7409
+Feature: CVSB-7409 - VTM headers and footers
   As an admin user I can log in the VTM app
   And the VTM headers and footers are rendered correctly
 
