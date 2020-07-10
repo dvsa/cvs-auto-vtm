@@ -1,4 +1,4 @@
-Feature: CVSB-10760 - Search Vehicle Special Characters
+Feature: Search Vehicle Special Characters - CVSB-10760
   As an admin, I can search for vehicles which contain special characters
   And I am able to view and manage vehicles which contain special characters
 

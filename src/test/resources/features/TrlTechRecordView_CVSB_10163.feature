@@ -1,4 +1,4 @@
-Feature: CVSB-10163 - Show technical record accurately for queried trailer
+Feature: Show technical record accurately for queried trailer - CVSB-10163
   As an admin user I can log in the VTM app
   And view the details of the technical records belonging to the queried trailer
 

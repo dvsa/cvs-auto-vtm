@@ -1,4 +1,4 @@
-Feature: CVSB-10089 - Search tech record
+Feature: Search tech record - CVSB-10089
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see all required attributes displayed for the tech record
@@ -103,7 +103,7 @@ Feature: CVSB-10089 - Search tech record
       | testResult-tRes-1-0                 | ABANDONED            |
       | testCode-tRes-2-0                   | Annual Test          |
       | testTypeEndTimestamp-tRes-2-0       | 14/01/2019           |
-#      | expiryDate-tRes-2-0                 | 24/01/2020           |
+      | expiryDate-tRes-2-0                 | 24/01/2020           |
       | certificateNumber-tRes-2-0          | 123456789            |
       | testResult-tRes-2-0                 | PASS                 |
       | statusCode-0                        | Current              |

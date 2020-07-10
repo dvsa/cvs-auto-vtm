@@ -1,4 +1,5 @@
-Feature: CVSB-14893 - As the DVSA, we want the ability to remove subsequent inspections from the ADR record,in case they are incorrectly added
+Feature: As the DVSA, we want the ability to remove subsequent inspections from the ADR record,in case they are incorrectly added -
+  CVSB-14893
 
   Background:
     Given I login with admin credentials

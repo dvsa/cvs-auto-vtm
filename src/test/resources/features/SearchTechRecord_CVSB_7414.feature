@@ -1,4 +1,4 @@
-Feature: CVSB-7414 - Search tech record
+Feature: Search tech record - CVSB-7414
   As an admin user I can log in the VTM app
   And search for tech records using Vin, primary Vrm, partial Vin or trailerId
 

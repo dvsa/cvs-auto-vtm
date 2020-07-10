@@ -1,4 +1,4 @@
-Feature: CVSB-14486 - ADR error handling for initial release
+Feature: ADR error handling for initial release - CVSB-14486
   As an admin user I can log in the VTM app
   After I search for a tech record
   And I try to edit adr details

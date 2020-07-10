@@ -1,4 +1,4 @@
-Feature: CVSB-10597 - Select correct vehicle when multiple vehicles are returned following a search
+Feature: Select correct vehicle when multiple vehicles are returned following a search - CVSB-10597
   As an admin user I can search for a vehicle in the search vehicle page
   After which I should be able to select the correct vehicle when multiple vehicles are returned following a search
   So that I can view the tech record of the correct vehicle
