@@ -1,4 +1,4 @@
-Feature: Adr details conditional appearance of fields - CVSB-12507
+Feature: CVSB-12507 - Adr details conditional appearance of fields
   As an admin user I can log in the VTM app
   After I search for a tech record
   I should see specific adr fields will appear only under certain conditions

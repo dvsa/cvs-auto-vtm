@@ -30,7 +30,7 @@
       "reasonForCreation": "test",
       "recordCompleteness": "complete",
       "vehicleClass": {
-        "description": "motorbikes up to 200cc"
+        "description": "not applicable"
       },
       "vehicleSubclass": [
         "a"
