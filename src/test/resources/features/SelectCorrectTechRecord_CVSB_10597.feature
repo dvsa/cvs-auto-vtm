@@ -104,7 +104,6 @@ Feature: Select correct vehicle when multiple vehicles are returned following a 
     When I click "Back" link
     Then I should see "Multiple technical records found matching this search"
     When I click link to select technical record with index 3
-    Then I should see "Change technical record"
     When I open all tech record sections
     Then tech record fields should have values
       | Field               | Value        |

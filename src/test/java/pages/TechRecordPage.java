@@ -165,13 +165,13 @@ public class TechRecordPage extends GenericPage {
 
     public void openAllSections() {
 
-        WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
+        List<WebElement> elements = getDriver().findElements(By.cssSelector("a.govuk-link"));
         FluentWait wait = globalFluentWait(10, 200);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
-        wait.until(ExpectedConditions.textToBePresentInElement(findElementByCss("a.govuk-link"), "Open all"));
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.govuk-link")));
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
+        wait.until(ExpectedConditions.textToBePresentInElement(elements.get(1), "Open all"));
+        wait.until(ExpectedConditions.elementToBeClickable(elements.get(1)));
         Actions actions = new Actions(getDriver());
-        actions.moveToElement(element);
+        actions.moveToElement(elements.get(1));
         actions.perform();
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(getDriver()
                 .findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)))));
@@ -183,12 +183,12 @@ public class TechRecordPage extends GenericPage {
 
     public void closeAllSections() {
 
-        WebElement element = getDriver().findElement(By.cssSelector("a.govuk-link"));
+        List<WebElement> elements = getDriver().findElements(By.cssSelector("a.govuk-link"));
         FluentWait wait = globalFluentWait(10, 200);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
-        wait.until(ExpectedConditions.textToBePresentInElement(find(By.cssSelector("a.govuk-link")), "Close all"));
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.govuk-link")));
+        wait.until(ExpectedConditions.textToBePresentInElement(elements.get(1), "Close all"));
         Actions actions = new Actions(getDriver());
-        actions.moveToElement(element);
+        actions.moveToElement(elements.get(1));
         actions.perform();
         new WebDriverWait(getDriver(), 5).until(ExpectedConditions.not(ExpectedConditions.stalenessOf(getDriver()
                 .findElement(By.cssSelector(OPEN_CLOSE_ALL_SECTIONS)))));
@@ -1976,5 +1976,35 @@ public class TechRecordPage extends GenericPage {
 
     public void clickSendMinistryPlate() {
         getDriver().findElement(By.id(SEND_MINISTRY_PLATE_BUTTON)).click();
+    }
+
+    public boolean isViewButtonShownForRecordOfStatus(String status) {
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+            String xpath = "//*[@id='test-statusCode-" + row + "']";
+            if (getDriver().findElement(By.xpath(xpath)).getText().equalsIgnoreCase(status)) {
+                if (getDriver().findElements(By.xpath("//a[@id='test-tech-rec-" + row + "']")).size() > 0 &&
+                        getDriver().findElement(By.xpath("//a[@id='test-tech-rec-" + row + "']")).isDisplayed()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void checkViewButtonShownForRecordOfStatus(String status) {
+        Assert.assertTrue("Button for record of status " + status + " is not shown (it should be).", isViewButtonShownForRecordOfStatus(status));
+    }
+
+    public void checkViewButtonNotShownForRecordOfStatus(String status) {
+        Assert.assertFalse("Button for record of status " + status + " is shown (it should not be).", isViewButtonShownForRecordOfStatus(status));
+    }
+
+    public void clickOnViewButtonForTechnicalRecordWithStatusOf(String status) {
+        for (int row = 0; row < getDriver().findElements(By.cssSelector(TECHNICAL_RECORD_HISTORY_SECTION)).size() - 1; row++) {
+            String xpath = "//*[@id='test-statusCode-" + row + "']";
+            if (getDriver().findElement(By.xpath(xpath)).getText().equalsIgnoreCase(status)) {
+                getDriver().findElement(By.xpath("//a[@id='test-tech-rec-" + row + "']")).click();
+            }
+        }
     }
 }

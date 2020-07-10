@@ -134,7 +134,7 @@ Feature: Search tech record - CVSB-10089
   only has technical records with status "archived" in DynamoDB
   AC8 - "-" is displayed, when an attribute has a value of 'null' or space within DynamoDB
    When I search for vehicle with identifier "CT70001"
-   Then wait until I see "Technical record"
+   Then wait until I see "Technical record history"
    When I open all tech record sections
    Then tech record fields should have values
      | Field                               | Value               |
