@@ -1,4 +1,4 @@
-Feature: Test details screen
+Feature: CVSB-11570 - Ability to navigate to test details screen
   As an admin user I can log in the VTM app
   After I search for a tech record
   Then I should be able to navigate to test details screen

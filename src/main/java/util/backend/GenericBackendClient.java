@@ -204,6 +204,22 @@ public class GenericBackendClient {
         return response;
     }
 
+    public Response getTestResultsNo404(String token, String systemNumber) {
+
+        Response response = callGetTestResults(token, systemNumber);
+
+        if (response.getStatusCode() == HttpStatus.SC_UNAUTHORIZED || response.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
+            response = callGetTestResults(token, systemNumber);
+        }
+        int i = 0;
+        while (response.getStatusCode() == HttpStatus.SC_NOT_FOUND && i < 100) {
+            response = callGetTestResults(token, systemNumber);
+            i++;
+        }
+        Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
+        return response;
+    }
+
     private Response callGetTestResults(String token, String systemNumber) {
 
         Response response = given().headers(

@@ -4,6 +4,7 @@ import net.thucydides.core.annotations.Step;
 import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.util.SystemEnvironmentVariables;
 import org.apache.commons.exec.environment.EnvironmentUtils;
+import org.openqa.selenium.WebDriverException;
 import pages.LoginPage;
 import util.TypeLoader;
 
@@ -38,7 +39,11 @@ public class LoginPageSteps extends GenericPageSteps {
             loginPage.setDefaultBaseUrl(System.getProperty("baseUrl"));
         }
 
-        loginPage.open();
+        try {
+            loginPage.open();
+        } catch (WebDriverException e) {
+            e.printStackTrace();
+        }
         loginPage.inputEmail(username);
         loginPage.goToPasswordScreen();
         loginPage.inputPassword(password);
